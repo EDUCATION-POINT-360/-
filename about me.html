@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Me - Muhammad Rizwan</title>
+  <link rel="shortcut icon" href="logo.png" type="image/png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"/>
+
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      scroll-behavior: smooth;
+    }
+
+    /* Navigation Bar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background-color: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar h2 {
+      color: #00f7ff;
+      text-shadow: 0 0 10px #00f7ff;
+      font-size: 1.5em;
+      margin: 0;
+    }
+
+    .navbar a {
+      margin-left: 20px;
+      color: #00f7ff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .navbar a:hover {
+      color: #fff;
+      text-shadow: 0 0 10px #00f7ff;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 40px 30px;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.8em;
+      margin-bottom: 25px;
+      color: #00f7ff;
+      text-shadow: 0 0 15px #00f7ff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    p {
+      font-size: 1.2em;
+      line-height: 1.8;
+      color: #d0faff;
+      margin: 20px 0;
+    }
+
+    .logo {
+      display: block;
+      margin: 40px auto;
+      max-width: 100%;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+    }
+
+    /* Call to Action Section */
+    .cta {
+      margin-top: 40px;
+      font-size: 1.1em;
+    }
+
+    .cta a {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #00f7ff;
+      color: #000;
+      font-weight: bold;
+      border-radius: 30px;
+      text-decoration: none;
+      box-shadow: 0 0 15px #00f7ff;
+      transition: 0.3s;
+    }
+
+    .cta a:hover {
+      background: #fff;
+      color: #00f7ff;
+      box-shadow: 0 0 25px #00f7ff;
+    }
+
+    /* Scroll to Top Button */
+    #topBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #00f7ff;
+      color: #000;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 50%;
+      font-size: 18px;
+      box-shadow: 0 0 15px #00f7ff;
+      cursor: pointer;
+      display: none;
+      z-index: 100;
+    }
+
+    #topBtn:hover {
+      background: #fff;
+      color: #00f7ff;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 25px;
+        margin: 20px;
+      }
+      h1 {
+        font-size: 2.2em;
+      }
+      p {
+        font-size: 1em;
+      }
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <h2>Education Point</h2>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="contact me.html">Contact</a>
+      <a href="about web.html">About Website</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container" data-aos="zoom-in-up">
+    <h1>About Me</h1>
+    <p>
+      My name is <strong>Muhammad Rizwan</strong>, and I am a passionate student committed to public welfare and educational empowerment. My goal is to make a meaningful impact in society by collecting and sharing vital resources that support learners and educators alike.
+    </p>
+    <p>
+      I believe in the transformative power of knowledge. Through my efforts, I hope to help others reach their potential by making information easily accessible, fostering education, and promoting collective growth. This website is a step toward that vision.
+    </p>
+
+   
+ 
+    
+   
+
+ 
+
+  <!-- Scroll to Top Button -->
+  <button onclick="scrollToTop()" id="topBtn" title="Go to top">↑</button>
+
+  <!-- AOS Animation Script -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000 });
+
+    // Show/hide scroll-to-top button
+    window.onscroll = function () {
+      document.getElementById("topBtn").style.display = 
+        window.pageYOffset > 300 ? "block" : "none";
+    };
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Education Point</title>
+  <link rel="icon" href="logo.png" type="image/png" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    /* RESET */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(130deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      scroll-behavior: smooth;
+      position: relative;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background: #121212;
+      color: #e0e0e0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* HEADER NAVBAR */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: rgba(0,0,0,0.7);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+
+    .navbar .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #00f7ff;
+      text-shadow: 0 0 5px #00f7ff;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .navbar a:hover {
+      color: #00f7ff;
+    }
+
+    .toggle-dark {
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #00f7ff;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .title {
+      font-size: 3rem;
+      text-shadow: 0 0 10px #00f7ff;
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      margin: 1rem 0 2rem;
+      max-width: 600px;
+    }
+
+    .neon-button {
+      padding: 10px 25px;
+      border: 2px solid #00f7ff;
+      border-radius: 25px;
+      color: #00f7ff;
+      background: transparent;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 0 10px #00f7ff;
+      transition: all 0.3s ease;
+    }
+
+    .neon-button:hover {
+      background-color: #00f7ff;
+      color: #000;
+    }
+
+    /* SECTION */
+    .section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .neon-heading {
+      font-size: 2.2rem;
+      margin-bottom: 40px;
+      color: #00f7ff;
+      text-shadow: 0 0 8px #00f7ff;
+    }
+
+    .resources {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .resource-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 20px;
+      width: 280px;
+      transition: 0.3s ease;
+    }
+
+    .resource-card:hover {
+      transform: scale(1.03);
+    }
+
+    .resource-card h3 {
+      color: #00f7ff;
+    }
+
+    .resource-card p {
+      font-size: 0.95rem;
+      margin: 10px 0 15px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #111;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    /* CHAT BUTTON */
+    .chat-button {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #00f7ff;
+      color: #000;
+      border: none;
+      padding: 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.4rem;
+      box-shadow: 0 0 10px #00f7ff;
+    }
+
+    .chat-button:hover {
+      background-color: #00e1e1;
+    }
+
+    /* SCROLL TO TOP */
+    #scrollTopBtn {
+      display: none;
+      position: fixed;
+      bottom: 90px;
+      right: 25px;
+      z-index: 99;
+      background-color: #00f7ff;
+      color: black;
+      border: none;
+      outline: none;
+      padding: 12px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 0 8px #00f7ff;
+    }
+
+    #scrollTopBtn:hover {
+      background-color: #00e1e1;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .title { font-size: 2.4rem; }
+      .tagline { font-size: 1rem; }
+      .navbar ul {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">Education Point</div>
+    <ul>
+      <li><a href="#resources">Resources</a></li>
+      <li><a href="ABOUT US.html">About</a></li>
+    </ul>
+    <div class="toggle-dark" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+      <i class="fas fa-moon"></i>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div data-aos="zoom-in">
+      <h1 class="title">Education Point</h1>
+      <p class="tagline">Your path to knowledge begins here. Explore curated resources to help you succeed.</p>
+      <a href="#resources" class="neon-button">Explore Resources</a>
+    </div>
+  </header>
+
+  <!-- Resources Section -->
+  <main>
+    <section id="resources" class="section">
+      <h2 class="neon-heading" data-aos="fade-up">Our Resources</h2>
+      <div class="resources">
+        <div class="resource-card" data-aos="fade-up"><h3>Notes</h3><p>Subject-wise concise and accurate notes.</p><a href="notes.html" class="neon-button">View Notes</a></div>
+        <div class="resource-card" data-aos="fade-up"><h3>Guess Papers</h3><p>Smart guess papers based on trends.</p><a href="guess-papers.html" class="neon-button">Guess Papers</a></div>
+        <div class="resource-card" data-aos="fade-up"><h3>Keybooks</h3><p>Solutions, summaries, and highlights.</p><a href="keybooks.html" class="neon-button">Get Keybooks</a></div>
+        <div class="resource-card" data-aos="fade-up"><h3>Scheme</h3><p>Updated exam paper schemes included.</p><a href="scheme.html" class="neon-button">View Scheme</a></div>
+        <div class="resource-card" data-aos="fade-up"><h3>Guide Book</h3><p>Understand hard concepts easily.</p><a href="guidebook.html" class="neon-button">Explore Guide</a></div>
+        <div class="resource-card" data-aos="fade-up"><h3>About Us</h3><p>Get to know our story and team.</p><a href="ABOUT US.html" class="neon-button">About Us</a></div>
+      </div>
+    </section>
+  </main>
+<style>
+.site-footer {
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  color: #ffffff;
+  padding: 40px 0 10px;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  box-shadow: 0 -5px 15px rgba(0, 255, 255, 0.2);
+  animation: fadeInUp 1.2s ease-out;
+  margin-top: 60px;
+}
+
+.site-footer h3 {
+  margin-bottom: 10px;
+  font-size: 28px;
+  color: #00f7ff;
+  text-shadow: 0 0 5px #00f7ff;
+}
+
+.site-footer p {
+  font-size: 16px;
+  color: #bbb;
+}
+
+.footer-content {
+  max-width: 800px;
+  margin: auto;
+}
+
+.socials {
+  margin: 20px 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+.socials li a {
+  color: #00f7ff;
+  font-size: 22px;
+  transition: 0.3s;
+}
+
+.socials li a:hover {
+  color: #ffffff;
+  transform: scale(1.2);
+}
+
+.footer-bottom {
+  border-top: 1px solid #333;
+  padding-top: 12px;
+  font-size: 14px;
+  color: #888;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+  .site-footer {
+    padding: 30px 15px;
+  }
+
+  .socials {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}
+</style>
+  <!-- Footer -->
+<!-- Footer Start -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <h3>Education Point</h3>
+    <p>Your Path to Knowledge Glows Here!</p>
+
+    <ul class="socials">
+      <li><a href="https://www.facebook.com/groups/668168478898904/?ref=share&mibextid=NSMWBT"><i class="fab fa-facebook-f"></i></a></li>
+     <li><a href="https://whatsapp.com/channel/0029VayfTrh8PgsHHebiwc2k" ><i class="fab fa-whatsapp"></i></a></li>
+      <li><a href="https://www.instagram.com/itx.wani1?igsh=MTVwYjY0N2YwMnRqNg=="><i class="fab fa-instagram"></i></a></li>
+      <li><a href="https://youtube.com/@educationpoint998?si=s99BJgdK5SEr01I5"><i class="fab fa-youtube"></i></a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+     <p>© 2025 Education Point. All rights reserved. | Developed by Muhammad Rizwan</p>
+  </div>
+</footer>
+<!-- Footer End -->
+
+
+  <!-- Floating Chat Button -->
+  <button class="chat-button" title="Need Help?" onclick="alert('Chat feature coming soon!')">
+    <i class="fas fa-comments"></i>
+  </button>
+
+  <!-- Scroll to Top -->
+  <button onclick="topFunction()" id="scrollTopBtn" title="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- AOS Animations -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+
+    // Scroll to Top
+    const btn = document.getElementById("scrollTopBtn");
+    window.onscroll = () => {
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        btn.style.display = "block";
+      } else {
+        btn.style.display = "none";
+      }
+    };
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+
+    // Dark Mode
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+  </script>
+</body>
+</html>

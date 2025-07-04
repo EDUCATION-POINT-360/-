@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Education Updates | Education Point</title>
+   <link rel="icon" href="logo.png" type="image/png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(130deg, #0f2027, #203a43, #2c5364);
+      color: #fff; margin: 0;
+    }
+
+    .ticker {
+      background: #00f7ff;
+      color: #000;
+      padding: 10px;
+      font-weight: bold;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ticker-content {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll-left 25s linear infinite;
+    }
+
+    @keyframes scroll-left {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    header {
+      padding: 30px 20px;
+      text-align: center;
+      background-color: rgba(0,0,0,0.6);
+      border-bottom: 2px solid #00f7ff;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #00f7ff;
+      text-shadow: 0 0 10px #00f7ff;
+    }
+
+    .filter-bar {
+      text-align: center;
+      margin: 30px 0 10px;
+    }
+
+    .filter-bar select {
+      padding: 10px;
+      border-radius: 30px;
+      background: #00f7ff;
+      color: #000;
+      border: none;
+      font-weight: bold;
+    }
+
+    .news-container {
+      max-width: 1200px;
+      margin: 0 auto 50px;
+      padding: 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+    }
+
+    .news-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      overflow: hidden;
+      width: 300px;
+      transition: 0.3s ease;
+    }
+
+    .news-card:hover {
+      transform: scale(1.03);
+      border: 1px solid #00f7ff;
+    }
+
+    .news-content {
+      padding: 15px;
+    }
+
+    .news-content h3 {
+      color: #00f7ff;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+
+    .news-content p {
+      font-size: 0.9rem;
+      color: #ddd;
+    }
+
+    .news-date {
+      font-size: 0.75rem;
+      color: #aaa;
+      margin-top: 10px;
+    }
+
+    .news-link {
+      display: inline-block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #00f7ff;
+      text-decoration: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #aaa;
+      background: rgba(0, 0, 0, 0.6);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Breaking News Ticker -->
+<div class="ticker"><div class="ticker-content" id="tickerText">Loading latest breaking news...</div></div>
+
+<!-- Page Header -->
+<header data-aos="fade-down">
+  <h1>Educational News & Updates</h1>
+  <p>Live updates from trusted education sources around the world.</p>
+</header>
+
+<!-- Filter Dropdown -->
+<div class="filter-bar">
+  <label for="filterSelect">Filter:</label>
+  <select id="filterSelect">
+    <option value="education">All Education News</option>
+    <option value="https://24newshd.tv/education">Pakistan Education</option>
+    <option value="mdcat">MDCAT</option>
+    <option value="ecat">ECAT</option>
+	<option value="https://www.bolnews.com/pakistan/2025/06/result-dates-for-class-9-and-10-annual-exams-announced-in-punjab/">Result Updates</option>
+  </select>
+</div>
+
+<!-- News Grid -->
+<div class="news-container" id="newsContainer">
+  <p style="text-align:center; width:100%;">Loading news articles...</p>
+</div>
+
+<!-- Footer -->
+<footer>© 2025 Education Point. Live educational insights delivered to you.</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<!-- Add this just below the filter bar -->
+<div style="text-align:center; margin-top: 5px; font-size: 0.85rem; color: #ccc;" id="lastUpdated">
+  Last updated: Loading...
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+
+  const container = document.getElementById("newsContainer");
+  const ticker = document.getElementById("tickerText");
+  const filterSelect = document.getElementById("filterSelect");
+  const lastUpdated = document.getElementById("lastUpdated");
+
+  function updateTimestamp() {
+    const now = new Date();
+    lastUpdated.innerText = `Last updated: ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+  }
+
+  function loadNews(query = "education") {
+    const url = `https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=${query}&hl=en&gl=PK&ceid=PK:en`;
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        container.innerHTML = "";
+        ticker.innerHTML = "";
+
+        const items = data.items.slice(0, 10);
+
+        items.forEach(item => {
+          const card = document.createElement("div");
+          card.className = "news-card";
+          card.setAttribute("data-aos", "fade-up");
+
+          card.innerHTML = `
+            <div class="news-content">
+              <h3>${item.title}</h3>
+              <p>${item.description.replace(/<[^>]+>/g, '').slice(0, 100)}...</p>
+              <div class="news-date">${new Date(item.pubDate).toLocaleDateString()}</div>
+              <a class="news-link" href="${item.link}" target="_blank">Read More</a>
+            </div>
+          `;
+          container.appendChild(card);
+
+          const span = document.createElement("span");
+          span.style.marginRight = "50px";
+          span.innerText = item.title;
+          ticker.appendChild(span);
+        });
+
+        updateTimestamp();
+      })
+      .catch(err => {
+        container.innerHTML = "<p style='text-align:center;'>Unable to load news at the moment.</p>";
+        ticker.innerText = "News loading failed.";
+        console.error(err);
+      });
+  }
+
+  // Initial load
+  let currentQuery = "education";
+  loadNews(currentQuery);
+
+  // Filter change
+  filterSelect.addEventListener("change", e => {
+    currentQuery = e.target.value;
+    loadNews(currentQuery);
+  });
+
+  // Auto refresh every 10 minutes
+  setInterval(() => {
+    loadNews(currentQuery);
+  }, 600000); // 600,000 ms = 10 minutes
+</script>
+
+</body>
+</html>

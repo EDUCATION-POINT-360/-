@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About - Education Point</title>
+  <link rel="shortcut icon" href="logo.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(130deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      scroll-behavior: smooth;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: rgba(0,0,0,0.7);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+    .navbar .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #00f7ff;
+      text-shadow: 0 0 5px #00f7ff;
+    }
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 500;
+    }
+    .navbar a:hover {
+      color: #00f7ff;
+    }
+    .neon-title {
+      font-size: 3rem;
+      text-align: center;
+      margin: 40px 0 20px;
+      color: #00f7ff;
+      text-shadow: 0 0 10px #00f7ff;
+    }
+    .section {
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .neon-heading {
+      font-size: 2.2rem;
+      margin-bottom: 40px;
+      color: #00f7ff;
+      text-shadow: 0 0 8px #00f7ff;
+    }
+    .resource-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 20px;
+      width: 280px;
+      margin: 15px auto;
+      transition: transform 0.3s ease;
+    }
+    .resource-card:hover {
+      transform: scale(1.05);
+    }
+    .neon-button {
+      padding: 10px 25px;
+      border: 2px solid #00f7ff;
+      border-radius: 25px;
+      color: #00f7ff;
+      background: transparent;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 0 10px #00f7ff;
+      transition: all 0.3s ease;
+    }
+    .neon-button:hover {
+      background-color: #00f7ff;
+      color: #000;
+    }
+    footer {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #bbb;
+      text-align: center;
+      padding: 20px 10px;
+      margin-top: 60px;
+      box-shadow: 0 -5px 15px rgba(0, 255, 255, 0.2);
+    }
+    @media (max-width: 768px) {
+      .neon-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">Education Point</div>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <!-- Title -->
+  <h1 class="neon-title" data-aos="fade-down">MUHAMMAD RIZWAN</h1>
+
+  <!-- Main Section -->
+  <main class="section">
+    <h2 class="neon-heading" data-aos="fade-up">ABOUT ME</h2>
+
+    <div class="resource-card" data-aos="fade-up">
+      <a href="about me.html" class="neon-button">ABOUT ME</a>
+    </div>
+
+    <div class="resource-card" data-aos="fade-up" data-aos-delay="100">
+      <a href="contact me.html" class="neon-button">CONTACT ME</a>
+    </div>
+
+    <div class="resource-card" data-aos="fade-up" data-aos-delay="200">
+      <a href="about web.html" class="neon-button">ABOUT WEBSITE</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Education Point. All rights reserved. | MUHAMMAD RIZWAN</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+  </script>
+</body>
+</html>

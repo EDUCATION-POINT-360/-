@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Education Point</title>
+  <link rel="shortcut icon" type="image/x-icon" href="logo.png">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 120px;
+      display: block;
+      margin: 20px auto;
+    }
+
+    .neon-title {
+      font-size: 3em;
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+      margin-bottom: 10px;
+    }
+
+    .neon-button {
+      display: inline-block;
+      padding: 12px 24px;
+      margin: 15px 10px;
+      background: #00e6e6;
+      color: #000;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    .neon-button:hover {
+      background: #fff;
+      color: #000;
+      box-shadow: 0 0 15px #00ffff;
+    }
+
+    .typing-text {
+      font-size: 1.4em;
+      margin-top: 20px;
+      color: #0ff;
+    }
+
+    .feature-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #0ff;
+      padding: 20px;
+      width: 280px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #0ff;
+      transition: 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 20px #00ffff;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 20px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    #scrollToTop {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #0ff;
+      color: #000;
+      border: none;
+      padding: 10px 15px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <img src="eduction point.png" alt="Education Point" class="logo" />
+  <div class="container">
+    <h1 class="neon-title">Education Point</h1>
+    <p class="typing-text" id="typed-text"></p>
+  </div>
+</header>
+
+<main class="container">
+  <section data-aos="fade-up">
+    <h2 class="neon-title">About the Website</h2>
+    <p>
+      <strong>Education Point</strong> is a platform dedicated to academic success and personal development. 
+      Our goal is to provide a central hub of curated educational content, resources, and tools that make learning more effective, enjoyable, and accessible for students and teachers.
+    </p>
+    <p>
+      We offer organized access to resources in science, technology, math, language, general knowledge, and much more. Whether you're a high school student, college learner, or self-study enthusiast—Education Point is your go-to destination.
+    </p>
+ <a href="index.html" class="neon-button">Back to Home</a>
+
+  
+ 
+</main>
+
+<footer>
+  <p>© 2025 Education Point. All rights reserved. | Developed by Muhammad Rizwan</p>
+</footer>
+
+<button id="scrollToTop" onclick="scrollToTop()">↑</button>
+
+<!-- Typing Effect -->
+<script>
+  const text = "Your gateway to quality learning, simplified.";
+  const typedText = document.getElementById("typed-text");
+  let i = 0;
+
+  function typeWriter() {
+    if (i < text.length) {
+      typedText.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, 70);
+    }
+  }
+
+  window.onload = typeWriter;
+</script>
+
+<!-- Scroll to Top -->
+<script>
+  const scrollToTopBtn = document.getElementById("scrollToTop");
+
+  window.onscroll = function () {
+    if (document.documentElement.scrollTop > 200) {
+      scrollToTopBtn.style.display = "block";
+    } else {
+      scrollToTopBtn.style.display = "none";
+    }
+  };
+
+  function scrollToTop() {
+    document.documentElement.scrollTop = 0;
+  }
+</script>
+
+<!-- AOS Animation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  AOS.init({ duration: 1000 });
+</script>
+
+</body>
+</html>

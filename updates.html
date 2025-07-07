@@ -1,259 +1,244 @@
-<!DOCTYPE html><html lang="ur" dir="rtl">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>پاکستان تعلیمی خبریں | ایجوکیشن پوائنٹ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pakistan Education News | Education Point</title>
   <link rel="icon" href="logo.png" type="image/png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <style>
     body {
-      font-family: 'Noto Nastaliq Urdu', 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(130deg, #0f2027, #203a43, #2c5364);
       color: #fff;
       margin: 0;
-    }.ticker {
-  background: #00f7ff;
-  color: #000;
-  padding: 10px;
-  font-weight: bold;
-  overflow: hidden;
-  position: relative;
-}
+    }
 
-.ticker-content {
-  display: inline-block;
-  white-space: nowrap;
-  animation: scroll-left 25s linear infinite;
-}
+    .ticker {
+      background: #00f7ff;
+      color: #000;
+      padding: 10px;
+      font-weight: bold;
+      overflow: hidden;
+      position: relative;
+    }
 
-@keyframes scroll-left {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-}
+    .ticker-content {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll-left 25s linear infinite;
+    }
 
-header {
-  padding: 40px 20px 20px;
-  text-align: center;
-  background: url('header-bg.jpg') center/cover no-repeat;
-  border-bottom: 3px solid #00f7ff;
-  position: relative;
-}
+    @keyframes scroll-left {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
 
-header::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-}
+    header {
+      padding: 30px 20px;
+      text-align: center;
+      background-color: rgba(0,0,0,0.6);
+      border-bottom: 2px solid #00f7ff;
+    }
 
-header h1, header p {
-  position: relative;
-  z-index: 2;
-}
+    h1 {
+      font-size: 2.5rem;
+      color: #00f7ff;
+      text-shadow: 0 0 10px #00f7ff;
+    }
 
-h1 {
-  font-size: 2.8rem;
-  color: #00f7ff;
-  text-shadow: 0 0 10px #00f7ff;
-  margin: 0;
-}
+    .filter-bar {
+      text-align: center;
+      margin: 30px 0 10px;
+    }
 
-header p {
-  font-size: 1rem;
-  color: #ccc;
-}
+    .filter-bar select, .filter-bar input[type="text"] {
+      padding: 10px;
+      border-radius: 30px;
+      background: #00f7ff;
+      color: #000;
+      border: none;
+      font-weight: bold;
+      margin: 0 5px;
+    }
 
-.category-buttons {
-  text-align: center;
-  margin: 20px auto;
-  flex-wrap: wrap;
-}
+    .news-container {
+      max-width: 1200px;
+      margin: 0 auto 50px;
+      padding: 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+    }
 
-.category-buttons button {
-  margin: 5px;
-  padding: 10px 20px;
-  background-color: #00f7ff;
-  color: #000;
-  border: none;
-  border-radius: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
+    .news-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      overflow: hidden;
+      width: 300px;
+      transition: 0.3s ease;
+    }
 
-.category-buttons button:hover {
-  background-color: #00c0cc;
-}
+    .news-card:hover {
+      transform: scale(1.03);
+      border: 1px solid #00f7ff;
+    }
 
-.search-bar {
-  text-align: center;
-  margin: 10px auto;
-}
+    .news-content {
+      padding: 15px;
+    }
 
-.search-bar input {
-  padding: 10px;
-  width: 280px;
-  border-radius: 25px;
-  border: none;
-  outline: none;
-}
+    .news-content h3 {
+      color: #00f7ff;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
 
-.news-container {
-  max-width: 1200px;
-  margin: 0 auto 50px;
-  padding: 0 20px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 25px;
-  justify-content: center;
-}
+    .news-content p {
+      font-size: 0.9rem;
+      color: #ddd;
+    }
 
-.news-card {
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  overflow: hidden;
-  width: 300px;
-  transition: 0.3s ease;
-  box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
-}
+    .news-date {
+      font-size: 0.75rem;
+      color: #aaa;
+      margin-top: 10px;
+    }
 
-.news-card:hover {
-  transform: scale(1.03);
-  border: 1px solid #00f7ff;
-}
+    .news-link {
+      display: inline-block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #00f7ff;
+      text-decoration: none;
+    }
 
-.news-content {
-  padding: 15px;
-}
-
-.news-content h3 {
-  color: #00f7ff;
-  font-size: 1.1rem;
-  margin-bottom: 10px;
-}
-
-.news-content p {
-  font-size: 0.9rem;
-  color: #ddd;
-}
-
-.news-date {
-  font-size: 0.75rem;
-  color: #aaa;
-  margin-top: 10px;
-}
-
-.news-link {
-  display: inline-block;
-  margin-top: 10px;
-  font-weight: bold;
-  color: #00f7ff;
-  text-decoration: none;
-}
-
-footer {
-  text-align: center;
-  padding: 30px;
-  color: #aaa;
-  background: rgba(0, 0, 0, 0.6);
-  border-top: 2px solid #00f7ff;
-}
-
-#lastUpdated {
-  text-align: center;
-  margin-top: 10px;
-  font-size: 0.85rem;
-  color: #ccc;
-}
-
-@media (max-width: 600px) {
-  .news-card {
-    width: 90%;
-  }
-  .search-bar input {
-    width: 90%;
-  }
-}
-
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #aaa;
+      background: rgba(0, 0, 0, 0.6);
+    }
   </style>
 </head>
-<body><div class="ticker"><div class="ticker-content" id="tickerText">تازہ ترین خبریں لوڈ ہو رہی ہیں...</div></div><header data-aos="fade-down">
-  <h1>پاکستان تعلیمی خبریں</h1>
-  <p>قابل اعتماد تعلیمی ذرائع سے براہِ راست خبریں</p>
-</header><div class="category-buttons">
-  <button onclick="loadNews('MDCAT')">MDCAT</button>
-  <button onclick="loadNews('ECAT')">ECAT</button>
-  <button onclick="loadNews('Result Dates')">نتائج کی تاریخیں</button>
-  <button onclick="loadNews('Punjab Board Exams')">پنجاب بورڈ</button>
-</div><div class="search-bar">
-  <input type="text" id="searchInput" placeholder="تلاش کریں مثلاً: انٹر کا رزلٹ..." oninput="customSearch()">
-</div><div id="lastUpdated">آخری اپڈیٹ: لوڈ ہو رہا ہے...</div><div class="news-container" id="newsContainer">
-  <p style="text-align:center; width:100%;">خبریں لوڈ ہو رہی ہیں...</p>
-</div><footer>© 2025 ایجوکیشن پوائنٹ۔ پاکستان کی تعلیمی دنیا کی مکمل جھلک</footer><script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script><script>
-  AOS.init();
+<body>
 
+<!-- Breaking News Ticker -->
+<div class="ticker"><div class="ticker-content" id="tickerText">Loading latest breaking news...</div></div>
+
+<!-- Page Header -->
+<header data-aos="fade-down">
+  <h1>Pakistan Education News</h1>
+  <p>Live updates from reliable educational sources in Pakistan.</p>
+</header>
+
+<!-- Filter Dropdown and Search -->
+<div class="filter-bar">
+  <label for="filterSelect">Filter:</label>
+  <select id="filterSelect">
+    <option value="education">All Education</option>
+    <option value="MDCAT">MDCAT</option>
+    <option value="ECAT">ECAT</option>
+    <option value="result">Results</option>
+  </select>
+  <input type="text" id="searchInput" placeholder="Search news...">
+</div>
+<div style="text-align:center; margin-top: 5px; font-size: 0.85rem; color: #ccc;" id="lastUpdated">
+  Last updated: Loading...
+</div>
+
+<!-- News Grid -->
+<div class="news-container" id="newsContainer">
+  <p style="text-align:center; width:100%;">Loading news articles...</p>
+</div>
+
+<!-- Footer -->
+<footer>© 2025 EduPoint. Powered by live feeds from Pakistani educational news sources.</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
   const container = document.getElementById("newsContainer");
   const ticker = document.getElementById("tickerText");
+  const filterSelect = document.getElementById("filterSelect");
   const lastUpdated = document.getElementById("lastUpdated");
+  const searchInput = document.getElementById("searchInput");
+
+  let currentQuery = 'education';
+  let newsData = [];
 
   function updateTimestamp() {
     const now = new Date();
-    lastUpdated.innerText = `آخری اپڈیٹ: ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    lastUpdated.innerText = `Last updated: ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
   }
 
-  async function loadNews(query = "تعلیم پاکستان") {
-    const url = `https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=ur&gl=PK&ceid=PK:ur`;
+  function renderNews(items) {
+    container.innerHTML = "";
+    ticker.innerHTML = "";
+
+    const filtered = items.filter(item => item.title.toLowerCase().includes(searchInput.value.toLowerCase()));
+
+    filtered.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "news-card";
+      card.setAttribute("data-aos", "fade-up");
+
+      card.innerHTML = `
+        <div class="news-content">
+          <h3>${item.title}</h3>
+          <p>${item.description.slice(0, 100)}...</p>
+          <div class="news-date">${new Date(item.pubDate).toLocaleDateString()}</div>
+          <a class="news-link" href="${item.link}" target="_blank">Read More</a>
+        </div>`;
+
+      container.appendChild(card);
+
+      const span = document.createElement("span");
+      span.style.marginRight = "50px";
+      span.innerText = item.title;
+      ticker.appendChild(span);
+    });
+    updateTimestamp();
+  }
+
+  async function loadNews(query) {
+    const rssToJson = "https://api.rss2json.com/v1/api.json?rss_url=";
+    const feeds = {
+      education: "https://propakistani.pk/feed",
+      MDCAT: "https://www.bolnews.com/feed",
+      ECAT: "https://www.bolnews.com/feed",
+      result: "https://www.bolnews.com/feed"
+    };
+    const url = `${rssToJson}${encodeURIComponent(feeds[query])}`;
 
     try {
       const res = await fetch(url);
       const data = await res.json();
-
-      container.innerHTML = "";
-      ticker.innerHTML = "";
-
-      const items = data.items.slice(0, 10);
-
-      items.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "news-card";
-        card.setAttribute("data-aos", "fade-up");
-
-        card.innerHTML = `
-          <div class="news-content">
-            <h3>${item.title}</h3>
-            <p>${item.description.replace(/<[^>]+>/g, '').slice(0, 100)}...</p>
-            <div class="news-date">${new Date(item.pubDate).toLocaleDateString('ur-PK')}</div>
-            <a class="news-link" href="${item.link}" target="_blank">مزید پڑھیں</a>
-          </div>
-        `;
-        container.appendChild(card);
-
-        const span = document.createElement("span");
-        span.style.marginRight = "50px";
-        span.innerText = item.title;
-        ticker.appendChild(span);
-      });
-
-      updateTimestamp();
+      newsData = data.items;
+      renderNews(newsData);
     } catch (err) {
-      container.innerHTML = "<p style='text-align:center;'>خبریں لوڈ نہیں ہو سکیں</p>";
-      ticker.innerText = "نیوز لوڈنگ ناکام رہی";
+      container.innerHTML = "<p style='text-align:center;'>Unable to load news at the moment.</p>";
+      ticker.innerText = "News loading failed.";
       console.error(err);
     }
   }
 
-  function customSearch() {
-    const value = document.getElementById("searchInput").value.trim();
-    if (value.length > 2) loadNews(value);
-    if (value.length === 0) loadNews();
-  }
+  filterSelect.addEventListener("change", e => {
+    currentQuery = e.target.value;
+    loadNews(currentQuery);
+  });
 
-  loadNews();
-  setInterval(() => loadNews(), 300000);
-</script></body>
+  searchInput.addEventListener("input", () => {
+    renderNews(newsData);
+  });
+
+  // Auto-refresh every 5 minutes
+  setInterval(() => loadNews(currentQuery), 300000);
+  loadNews(currentQuery);
+</script>
+
+</body>
 </html>

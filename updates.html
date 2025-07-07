@@ -4,14 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Education Updates | Education Point</title>
-   <link rel="icon" href="logo.png" type="image/png" />
+  <link rel="icon" href="logo.png" type="image/png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(130deg, #0f2027, #203a43, #2c5364);
-      color: #fff; margin: 0;
+      color: #fff;
+      margin: 0;
     }
 
     .ticker {
@@ -78,6 +79,7 @@
       overflow: hidden;
       width: 300px;
       transition: 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
     }
 
     .news-card:hover {
@@ -120,6 +122,13 @@
       color: #aaa;
       background: rgba(0, 0, 0, 0.6);
     }
+
+    #lastUpdated {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: #ccc;
+    }
   </style>
 </head>
 <body>
@@ -137,13 +146,15 @@
 <div class="filter-bar">
   <label for="filterSelect">Filter:</label>
   <select id="filterSelect">
-    <option value="https://24newshd.tv/education">Pakistan Education</option>
+    <option value="education">Pakistan Education</option>
     <option value="mdcat">MDCAT</option>
-    <option value="https://propakistani.pk/category/others/education/">ECAT</option>
-	<option value="https://news.google.com/search?for=education+news+today+in+pakistan&hl=en-PK&gl=PK&ceid=PK%3Aen">News</option>
-	  <option value="https://www.bolnews.com/pakistan/2025/06/result-dates-for-class-9-and-10-annual-exams-announced-in-punjab/">Result Updates</option>
+    <option value="ECAT">ECAT</option>
+    <option value="education+news+today+in+pakistan">News</option>
+    <option value="results+2025+punjab+board">Result Updates</option>
   </select>
 </div>
+
+<div id="lastUpdated">Last updated: Loading...</div>
 
 <!-- News Grid -->
 <div class="news-container" id="newsContainer">
@@ -152,12 +163,6 @@
 
 <!-- Footer -->
 <footer>© 2025 Education Point. Live educational insights delivered to you.</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<!-- Add this just below the filter bar -->
-<div style="text-align:center; margin-top: 5px; font-size: 0.85rem; color: #ccc;" id="lastUpdated">
-  Last updated: Loading...
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>
@@ -173,44 +178,45 @@
     lastUpdated.innerText = `Last updated: ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
   }
 
+  async function loadNews(query) {
+    const url = `https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-PK&gl=PK&ceid=PK:en`;
 
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
 
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        container.innerHTML = "";
-        ticker.innerHTML = "";
+      container.innerHTML = "";
+      ticker.innerHTML = "";
 
-        const items = data.items.slice(0, 10);
+      const items = data.items.slice(0, 10);
 
-        items.forEach(item => {
-          const card = document.createElement("div");
-          card.className = "news-card";
-          card.setAttribute("data-aos", "fade-up");
+      items.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "news-card";
+        card.setAttribute("data-aos", "fade-up");
 
-          card.innerHTML = `
-            <div class="news-content">
-              <h3>${item.title}</h3>
-              <p>${item.description.replace(/<[^>]+>/g, '').slice(0, 100)}...</p>
-              <div class="news-date">${new Date(item.pubDate).toLocaleDateString()}</div>
-              <a class="news-link" href="${item.link}" target="_blank">Read More</a>
-            </div>
-          `;
-          container.appendChild(card);
+        card.innerHTML = `
+          <div class="news-content">
+            <h3>${item.title}</h3>
+            <p>${item.description.replace(/<[^>]+>/g, '').slice(0, 100)}...</p>
+            <div class="news-date">${new Date(item.pubDate).toLocaleDateString()}</div>
+            <a class="news-link" href="${item.link}" target="_blank">Read More</a>
+          </div>
+        `;
+        container.appendChild(card);
 
-          const span = document.createElement("span");
-          span.style.marginRight = "50px";
-          span.innerText = item.title;
-          ticker.appendChild(span);
-        });
-
-        updateTimestamp();
-      })
-      .catch(err => {
-        container.innerHTML = "<p style='text-align:center;'>Unable to load news at the moment.</p>";
-        ticker.innerText = "News loading failed.";
-        console.error(err);
+        const span = document.createElement("span");
+        span.style.marginRight = "50px";
+        span.innerText = item.title;
+        ticker.appendChild(span);
       });
+
+      updateTimestamp();
+    } catch (err) {
+      container.innerHTML = "<p style='text-align:center;'>Unable to load news at the moment.</p>";
+      ticker.innerText = "News loading failed.";
+      console.error(err);
+    }
   }
 
   // Initial load
@@ -223,11 +229,10 @@
     loadNews(currentQuery);
   });
 
-  // Auto refresh every 10 minutes
+  // Auto refresh every 5 minutes
   setInterval(() => {
     loadNews(currentQuery);
-  }, 600000); // 600,000 ms = 10 minutes
+  }, 300000); // 300,000 ms = 5 minutes
 </script>
-
 </body>
 </html>

@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Education Updates | Education Point</title>
+  <title>Pakistan Education Updates | Education Point</title>
   <link rel="icon" href="logo.png" type="image/png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
@@ -13,164 +12,119 @@
       background: linear-gradient(130deg, #0f2027, #203a43, #2c5364);
       color: #fff;
       margin: 0;
-    }
+    }.ticker {
+  background: #00f7ff;
+  color: #000;
+  padding: 10px;
+  font-weight: bold;
+  overflow: hidden;
+  position: relative;
+}
 
-    .ticker {
-      background: #00f7ff;
-      color: #000;
-      padding: 10px;
-      font-weight: bold;
-      overflow: hidden;
-      position: relative;
-    }
+.ticker-content {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scroll-left 25s linear infinite;
+}
 
-    .ticker-content {
-      display: inline-block;
-      white-space: nowrap;
-      animation: scroll-left 25s linear infinite;
-    }
+@keyframes scroll-left {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
 
-    @keyframes scroll-left {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
-    }
+header {
+  padding: 30px 20px;
+  text-align: center;
+  background-color: rgba(0,0,0,0.6);
+  border-bottom: 2px solid #00f7ff;
+}
 
-    header {
-      padding: 30px 20px;
-      text-align: center;
-      background-color: rgba(0,0,0,0.6);
-      border-bottom: 2px solid #00f7ff;
-    }
+h1 {
+  font-size: 2.5rem;
+  color: #00f7ff;
+  text-shadow: 0 0 10px #00f7ff;
+}
 
-    h1 {
-      font-size: 2.5rem;
-      color: #00f7ff;
-      text-shadow: 0 0 10px #00f7ff;
-    }
+.news-container {
+  max-width: 1200px;
+  margin: 0 auto 50px;
+  padding: 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+}
 
-    .filter-bar {
-      text-align: center;
-      margin: 30px 0 10px;
-    }
+.news-card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  overflow: hidden;
+  width: 300px;
+  transition: 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+}
 
-    .filter-bar select {
-      padding: 10px;
-      border-radius: 30px;
-      background: #00f7ff;
-      color: #000;
-      border: none;
-      font-weight: bold;
-    }
+.news-card:hover {
+  transform: scale(1.03);
+  border: 1px solid #00f7ff;
+}
 
-    .news-container {
-      max-width: 1200px;
-      margin: 0 auto 50px;
-      padding: 0 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 25px;
-      justify-content: center;
-    }
+.news-content {
+  padding: 15px;
+}
 
-    .news-card {
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(10px);
-      border-radius: 12px;
-      overflow: hidden;
-      width: 300px;
-      transition: 0.3s ease;
-      box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
-    }
+.news-content h3 {
+  color: #00f7ff;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
 
-    .news-card:hover {
-      transform: scale(1.03);
-      border: 1px solid #00f7ff;
-    }
+.news-content p {
+  font-size: 0.9rem;
+  color: #ddd;
+}
 
-    .news-content {
-      padding: 15px;
-    }
+.news-date {
+  font-size: 0.75rem;
+  color: #aaa;
+  margin-top: 10px;
+}
 
-    .news-content h3 {
-      color: #00f7ff;
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-    }
+.news-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #00f7ff;
+  text-decoration: none;
+}
 
-    .news-content p {
-      font-size: 0.9rem;
-      color: #ddd;
-    }
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #aaa;
+  background: rgba(0, 0, 0, 0.6);
+}
 
-    .news-date {
-      font-size: 0.75rem;
-      color: #aaa;
-      margin-top: 10px;
-    }
+#lastUpdated {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #ccc;
+}
 
-    .news-link {
-      display: inline-block;
-      margin-top: 10px;
-      font-weight: bold;
-      color: #00f7ff;
-      text-decoration: none;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px;
-      color: #aaa;
-      background: rgba(0, 0, 0, 0.6);
-    }
-
-    #lastUpdated {
-      text-align: center;
-      margin-top: 10px;
-      font-size: 0.85rem;
-      color: #ccc;
-    }
   </style>
 </head>
-<body>
-
-<!-- Breaking News Ticker -->
-<div class="ticker"><div class="ticker-content" id="tickerText">Loading latest breaking news...</div></div>
-
-<!-- Page Header -->
-<header data-aos="fade-down">
-  <h1>Educational News & Updates</h1>
-  <p>Live updates from trusted education sources around the world.</p>
-</header>
-
-<!-- Filter Dropdown -->
-<div class="filter-bar">
-  <label for="filterSelect">Filter:</label>
-  <select id="filterSelect">
-    <option value="education+in+Pakistan">Pakistan Education</option>
-    <option value="mdcat">MDCAT</option>
-    <option value="ECAT">ECAT</option>
-    <option value="education+news+today+in+pakistan">News</option>
-    <option value="results+2025+punjab+board+Pakistan">Result Updates</option>
-  </select>
-</div>
-
-<div id="lastUpdated">Last updated: Loading...</div>
-
-<!-- News Grid -->
-<div class="news-container" id="newsContainer">
+<body><!-- Breaking News Ticker --><div class="ticker"><div class="ticker-content" id="tickerText">Loading latest breaking news...</div></div><!-- Page Header --><header data-aos="fade-down">
+  <h1>Pakistan Educational News & Updates</h1>
+  <p>Live updates from trusted education sources in Pakistan.</p>
+</header><div id="lastUpdated">Last updated: Loading...</div><!-- News Grid --><div class="news-container" id="newsContainer">
   <p style="text-align:center; width:100%;">Loading news articles...</p>
-</div>
-
-<!-- Footer -->
-<footer>© 2025 Education Point. Live educational insights delivered to you.</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script>
+</div><!-- Footer --><footer>© 2025 Education Point. Live educational insights delivered to you.</footer><script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script><script>
   AOS.init();
 
   const container = document.getElementById("newsContainer");
   const ticker = document.getElementById("tickerText");
-  const filterSelect = document.getElementById("filterSelect");
   const lastUpdated = document.getElementById("lastUpdated");
 
   function updateTimestamp() {
@@ -178,8 +132,8 @@
     lastUpdated.innerText = `Last updated: ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
   }
 
-  async function loadNews(query) {
-    const url = `https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-PK&gl=PK&ceid=PK:en`;
+  async function loadNews() {
+    const url = `https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=education+in+pakistan&hl=en-PK&gl=PK&ceid=PK:en`;
 
     try {
       const res = await fetch(url);
@@ -220,19 +174,11 @@
   }
 
   // Initial load
-  let currentQuery = "education";
-  loadNews(currentQuery);
-
-  // Filter change
-  filterSelect.addEventListener("change", e => {
-    currentQuery = e.target.value;
-    loadNews(currentQuery);
-  });
+  loadNews();
 
   // Auto refresh every 5 minutes
   setInterval(() => {
-    loadNews(currentQuery);
-  }, 300000); // 300,000 ms = 5 minutes
-</script>
-</body>
+    loadNews();
+  }, 300000); // 5 minutes
+</script></body>
 </html>

@@ -139,7 +139,21 @@ body.loaded #loader {
     }
     .resource-card img {
       width: 100%; border-radius: 10px; margin-bottom: 10px;
-    }
+  }
+  .resource-icon {
+  font-size: 48px;
+  color: #00f7ff;
+  margin-bottom: 15px;
+  text-shadow: 0 0 8px #00f7ff, 0 0 16px #00f7ff;
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.resource-card:hover .resource-icon {
+  transform: scale(1.1);
+  text-shadow: 0 0 12px #00f7ff, 0 0 24px #00f7ff;
+}
+
+  }
     .counter { font-size: 2rem; display: block; }
     .swiper-slide {
       background: rgba(255,255,255,0.08);
@@ -240,7 +254,80 @@ body.loaded #loader {
   top: 20px;
   right: 20px;
 }
-
+* { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(130deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark-mode { background: #121212; color: #e0e0e0; }
+    #heroCanvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      background: transparent;
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    .hero .title, .hero .tagline, .hero .neon-button {
+      position: relative;
+      z-index: 2;
+    }
+    .title {
+      font-size: 3rem; text-shadow: 0 0 10px #00f7ff;
+    }
+    .tagline {
+      font-size: 1.2rem; margin: 1rem 0 2rem; max-width: 600px;
+    }
+    .neon-button {
+      display: inline-block; padding: 10px 25px;
+      border: 2px solid #00f7ff; border-radius: 25px;
+      color: #00f7ff; background: transparent; font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 8px #00f7ff, 0 0 15px #00f7ff;
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+    }
+    .neon-button:hover {
+      background: #00f7ff; color: #000;
+      box-shadow: 0 0 12px #00f7ff, 0 0 25px #00f7ff;
+    }
+    .site-footer {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      padding: 40px 0 10px; text-align: center;
+      margin-top: 60px;
+      animation: glowFade 4s ease-in-out infinite alternate;
+    }
+    @keyframes glowFade {
+      0% { box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff; }
+      100% { box-shadow: 0 0 25px #00f7ff, 0 0 50px #00f7ff; }
+    }
+}
+    .whatsapp-button {
+      position: fixed;
+      bottom: 20px; left: 20px;
+      z-index: 999;
+      background-color: #25D366;
+      color: white;
+      padding: 12px 14px;
+      border-radius: 50%;
+      font-size: 24px;
+      box-shadow: 0 0 10px rgba(0, 247, 255, 0.6);
+      text-decoration: none;
+    }
+    .whatsapp-button:hover {
+      background-color: #1ebe5d;
 @media(max-width:768px) {
   .hamburger { display: block; }
   .navbar ul { display: none; }
@@ -249,6 +336,10 @@ body.loaded #loader {
   </style>
 </head>
 <body>
+ <a href="https://wa.me/923314220506" target="_blank" class="whatsapp-button" title="Chat with us">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
   <nav class="navbar">
     <div class="logo">Education Point</div>
    <ul>
@@ -269,59 +360,70 @@ body.loaded #loader {
       <i class="fas fa-moon"></i>
     </div>
   </nav>
-  <header class="hero" data-aos="zoom-in">
+  <header class="hero">
+  <canvas id="heroCanvas"></canvas>
     <h1 class="title">Education Point</h1>
     <p class="tagline">Your path to knowledge starts here. Explore curated educational resources designed to help you excel.</p>
     <a href="#resources" class="neon-button">Explore Resources</a>
   </header>
  
  <main>
-    <section id="resources" class="section">
-      <h2 class="neon-heading" data-aos="fade-up">Our Resources</h2>
-      <div class="resources">
-        <div class="resource-card" data-aos="fade-up"><h3>Notes</h3><p>Subject-wise concise and accurate notes.</p><a href="notes.html" class="neon-button">View Notes</a></div>
-        <div class="resource-card" data-aos="fade-up"><h3>Guess Papers</h3><p>Smart guess papers based on trends.</p><a href="guess-papers.html" class="neon-button">Guess Papers</a></div>
-        <div class="resource-card" data-aos="fade-up"><h3>Keybooks</h3><p>Solutions, summaries, and highlights.</p><a href="keybooks.html" class="neon-button">Get Keybooks</a></div>
-        <div class="resource-card" data-aos="fade-up"><h3>Scheme</h3><p>Updated exam paper schemes included.</p><a href="scheme.html" class="neon-button">View Scheme</a></div>
-        <div class="resource-card" data-aos="fade-up"><h3>Guide Book</h3><p>Understand hard concepts easily.</p><a href="guidebook.html" class="neon-button">Explore Guide</a></div>
-        <div class="resource-card" data-aos="fade-up"><h3>About Us</h3><p>Get to know our story and team.</p><a href="ABOUT US.html" class="neon-button">About Us</a></div>
-         <div class="resource-card" data-aos="fade-up">
-  <h3>Preparation Material</h3>
-  <p>Best preparation material for universities, MDCAT, ECAT, and more.</p>
-  <a href="preparation.html" class="neon-button">Explore more</a>
-</div>
-<div class="resource-card" data-aos="fade-up">
-  <h3>Updates</h3>
-  <p>Stay informed with the latest academic news, syllabus changes, and exam alerts.</p>
-  <a href="updates.html" class="neon-button">Check Updates</a>
-</div>
-
-	</div>
-	  
-    </section>
-	<section id="resources" class="section">
-<section id="news" class="section">
-  <h2 class="neon-heading" data-aos="fade-up">Latest Educational News</h2>
+<section id="resources" class="section">
+  <h2 class="neon-heading" data-aos="fade-up">Our Resources</h2>
   <div class="resources">
+
     <div class="resource-card" data-aos="fade-up">
-      <h3>MDCAT 2025 Date Announced</h3>
-      <p>The official MDCAT 2025 exam date has been confirmed by the PMC. Registration begins soon!</p>
-      <a href="updates.html" class="neon-button">Read More</a>
+      <div class="resource-icon"><i class="fas fa-book-open"></i></div>
+      <h3>Notes</h3>
+      <p>Subject-wise concise and accurate notes.</p>
+      <a href="notes.html" class="neon-button">View Notes</a>
     </div>
+
     <div class="resource-card" data-aos="fade-up">
-      <h3>FBISE Releases New Syllabus</h3>
-      <p>Federal Board has released an updated syllabus for Class 11 and 12 students. Major changes included.</p>
-      <a href="updates.html" class="neon-button">Read More</a>
+      <div class="resource-icon"><i class="fas fa-lightbulb"></i></div>
+      <h3>Guess Papers</h3>
+      <p>Smart guess papers based on trends.</p>
+      <a href="guess-papers.html" class="neon-button">Guess Papers</a>
     </div>
+
     <div class="resource-card" data-aos="fade-up">
-      <h3>HEC Scholarship Deadline Near</h3>
-      <p>Students aiming to apply for HEC Undergraduate Scholarships must submit applications before July 20.</p>
-      <a href="updates.html" class="neon-button">Read More</a>
+      <div class="resource-icon"><i class="fas fa-book"></i></div>
+      <h3>Keybooks</h3>
+      <p>Solutions, summaries, and highlights.</p>
+      <a href="keybooks.html" class="neon-button">Get Keybooks</a>
     </div>
+
+    <div class="resource-card" data-aos="fade-up">
+      <div class="resource-icon"><i class="fas fa-sitemap"></i></div>
+      <h3>Scheme</h3>
+      <p>Updated exam paper schemes included.</p>
+      <a href="scheme.html" class="neon-button">View Scheme</a>
+    </div>
+
+    <div class="resource-card" data-aos="fade-up">
+      <div class="resource-icon"><i class="fas fa-compass"></i></div>
+      <h3>Guide Book</h3>
+      <p>Understand hard concepts easily.</p>
+      <a href="guidebook.html" class="neon-button">Explore Guide</a>
+    </div>
+
+    <div class="resource-card" data-aos="fade-up">
+      <div class="resource-icon"><i class="fas fa-users"></i></div>
+      <h3>About Us</h3>
+      <p>Get to know our story and team.</p>
+      <a href="ABOUT US.html" class="neon-button">About Us</a>
+    </div>
+
+    <div class="resource-card" data-aos="fade-up">
+      <div class="resource-icon"><i class="fas fa-graduation-cap"></i></div>
+      <h3>Preparation Material</h3>
+      <p>Best preparation material for universities, MDCAT, ECAT, and more.</p>
+      <a href="preparation.html" class="neon-button">Explore more</a>
+    </div>
+
   </div>
-  <p style="margin-top: 30px; color: #ccc;" data-aos="fade-up">
-    For more news, <a href="updates.html" class="neon-button" style="display:inline-block; margin-top:10px;">Explore Updates Section</a>
-  </p>
+</section>
+
 </section>
     <section id="spotlight" class="section">
       <h2 class="neon-heading" data-aos="fade-up">Student Spotlight</h2>
@@ -375,20 +477,95 @@ body.loaded #loader {
     </div>
   </div>
 </section>
-    <section id="testimonials" class="section">
-      <h2 class="neon-heading" data-aos="fade-up">What Students Say</h2>
-      <div class="swiper testimonial-slider" data-aos="fade-up">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide"><p>"Education Point made learning easy and effective!"</p><h4>Sajid</h4></div>
-          <div class="swiper-slide"><p>"Fantastic notes and keybooks. Highly recommended!"</p><h4>Bilal</h4></div>
-		   <div class="swiper-slide"><p>"Empowering every student with quality, free academic resources."</p><h4>Samiq Raza</h4></div>
-      <div class="swiper-slide"><p>"Notes, guides, and success — all in one."</p><h4>Farhan</h4></div>
-	  <div class="swiper-slide"><p>"Helping students succeed with curated, powerful resources."</p><h4>Mubarak Shah</h4></div>
-	  <div class="swiper-slide"><p>"Helping every student prepare, perform, and progress confidently."</p><h4>Tayyab Abdullah</h4></div>
-	  </div>
-        <div class="swiper-pagination"></div>
+   <style>
+    /* Your existing CSS remains here - omitted for brevity */
+
+    /* NEW FEATURES UI SECTION */
+    .features-section {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(8px);
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .features-section h2 {
+      font-size: 2.2rem;
+      color: #00f7ff;
+      text-shadow: 0 0 8px #00f7ff;
+      margin-bottom: 40px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      padding: 0 20px;
+    }
+    .feature-card {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(0, 247, 255, 0.2);
+      border-radius: 15px;
+      padding: 30px 20px;
+      color: #fff;
+      transition: 0.4s;
+      box-shadow: 0 0 10px #00f7ff50;
+    }
+    .feature-card:hover {
+      background-color: rgba(0, 247, 255, 0.1);
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px #00f7ff80;
+    }
+    .feature-card i {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #00f7ff;
+    }
+    .feature-card h4 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #00f7ff;
+    }
+    .feature-card p {
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <!-- Loader, Navbar, Hero, and Sections Already Present -->
+
+  <!-- NEW FEATURES SECTION -->
+  <section class="features-section" id="features">
+    <h2 data-aos="fade-up">Why Choose Education Point?</h2>
+    <div class="features-grid">
+      <div class="feature-card" data-aos="zoom-in">
+        <i class="fas fa-book"></i>
+        <h4>Vast Resources</h4>
+        <p>Access notes, guides, schemes, keybooks, and more across various subjects.</p>
       </div>
-    </section>
+      <div class="feature-card" data-aos="zoom-in">
+        <i class="fas fa-bolt"></i>
+        <h4>Fast Loading</h4>
+        <p>Lightning-fast experience powered by modern web technologies and optimized assets.</p>
+      </div>
+      
+      <div class="feature-card" data-aos="zoom-in">
+        <i class="fas fa-users"></i>
+        <h4>Student Focused</h4>
+        <p>Real testimonials, student spotlights, and success stories from actual users.</p>
+      </div>
+      <div class="feature-card" data-aos="zoom-in">
+        <i class="fas fa-code"></i>
+        <h4>Modern Design</h4>
+        <p>Clean, futuristic UI with smooth animations, neon effects, and responsive design.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scripts Already Present Below -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+  </script>
   </main>
   <footer class="site-footer">
     <div class="footer-content">
@@ -406,12 +583,54 @@ body.loaded #loader {
     </div>
   </footer>
 
-  <button onclick="topFunction()" id="scrollTopBtn" title="Back to top">
-    <i class="fas fa-arrow-up"></i>
-  </button>
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script>
+    AOS.init({ duration: 1000, once: true });
+    const canvas = document.getElementById('heroCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = document.querySelector('.hero').offsetHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function createParticles() {
+      particles = [];
+      for (let i = 0; i < 60; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 2 + 1,
+          dx: (Math.random() - 0.5) * 1,
+          dy: (Math.random() - 0.5) * 1,
+        });
+      }
+    }
+    createParticles();
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = '#00f7ff';
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    window.addEventListener("scroll", () => {
+      document.querySelector('.hero').style.backgroundPositionY = `${window.scrollY * 0.3}px`;
+    });
     AOS.init({ duration: 1000, once: true });
     const btn = document.getElementById("scrollTopBtn");
     window.onscroll = () => {

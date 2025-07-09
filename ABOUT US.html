@@ -41,6 +41,7 @@
     .navbar a:hover {
       color: #00f7ff;
     }
+
     .neon-title {
       font-size: 3rem;
       text-align: center;
@@ -48,43 +49,68 @@
       color: #00f7ff;
       text-shadow: 0 0 10px #00f7ff;
     }
+
     .section {
       padding: 40px 20px;
       text-align: center;
     }
+
     .neon-heading {
       font-size: 2.2rem;
       margin-bottom: 40px;
       color: #00f7ff;
       text-shadow: 0 0 8px #00f7ff;
     }
+
     .resource-card {
       background: rgba(255,255,255,0.08);
       backdrop-filter: blur(10px);
       border-radius: 15px;
       padding: 20px;
-      width: 280px;
+      width: 300px;
       margin: 15px auto;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
     .resource-card:hover {
       transform: scale(1.05);
+      box-shadow: 0 0 20px #00f7ff;
     }
+
     .neon-button {
-      padding: 10px 25px;
+      padding: 12px 25px;
       border: 2px solid #00f7ff;
-      border-radius: 25px;
+      border-radius: 30px;
       color: #00f7ff;
       background: transparent;
       text-decoration: none;
       font-weight: bold;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       box-shadow: 0 0 10px #00f7ff;
       transition: all 0.3s ease;
     }
+
+    .neon-button i {
+      animation: bounce 2s infinite;
+    }
+
     .neon-button:hover {
       background-color: #00f7ff;
       color: #000;
     }
+
+    .neon-button:hover i {
+      color: #000;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
     footer {
       background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       color: #bbb;
@@ -93,8 +119,10 @@
       margin-top: 60px;
       box-shadow: 0 -5px 15px rgba(0, 255, 255, 0.2);
     }
+
     @media (max-width: 768px) {
       .neon-title { font-size: 2rem; }
+      .resource-card { width: 90%; }
     }
   </style>
 </head>
@@ -116,15 +144,21 @@
     <h2 class="neon-heading" data-aos="fade-up">ABOUT ME</h2>
 
     <div class="resource-card" data-aos="fade-up">
-      <a href="about me.html" class="neon-button">ABOUT ME</a>
+      <a href="about me.html" class="neon-button">
+        <i class="fas fa-user"></i> ABOUT ME
+      </a>
     </div>
 
     <div class="resource-card" data-aos="fade-up" data-aos-delay="100">
-      <a href="contact me.html" class="neon-button">CONTACT ME</a>
+      <a href="contact me.html" class="neon-button">
+        <i class="fas fa-envelope"></i> CONTACT ME
+      </a>
     </div>
 
     <div class="resource-card" data-aos="fade-up" data-aos-delay="200">
-      <a href="about web.html" class="neon-button">ABOUT WEBSITE</a>
+      <a href="about web.html" class="neon-button">
+        <i class="fas fa-globe"></i> ABOUT WEBSITE
+      </a>
     </div>
   </main>
 
@@ -139,4 +173,4 @@
     AOS.init({ duration: 1000, once: true });
   </script>
 </body>
-</html>
+      </html>

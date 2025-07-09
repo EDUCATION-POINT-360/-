@@ -1,667 +1,314 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>Education Point | Login & Register</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Education Point</title>
-  <link rel="icon" href="logo.png" type="image/png" />
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link rel="shortcut icon" href="logo.png" type="image/png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-  body::before {
-  content: '';
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.05), transparent 70%),
-              radial-gradient(circle at 20% 80%, rgba(0, 247, 255, 0.07), transparent 70%),
-              radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.04), transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-  animation: floatBG 20s ease-in-out infinite;
-}
-
-@keyframes floatBG {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-main, .section, .navbar, footer {
-  position: relative;
-  z-index: 1;
-}
-
-#bgCanvas {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  z-index: 0;
-  pointer-events: none;
-}
-
-  body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(130deg, #0f2027, #203a43, #2c5364);
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0d47a1, #1976d2);
       color: #fff;
-      scroll-behavior: smooth;
-      transition: background 0.3s, color 0.3s;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
-    body.dark-mode { background: #121212; color: #e0e0e0; }
-    html { scroll-behavior: smooth; }
-    .navbar {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 15px 30px; background: rgba(0,0,0,0.7);
-      position: sticky; top: 0; z-index: 1000;
-      backdrop-filter: blur(10px);
+    .form-box {
+      width: 100%;
+      max-width: 500px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.5);
+      margin: 10px;
     }
-	#loader {
-  position: fixed;
-  z-index: 9999;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background-color: #0f2027;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.6s ease;
-}
-.loader-logo {
-  width: 100px;
-  animation: spin 2s linear infinite;
-  filter: drop-shadow(0 0 10px #00f7ff);
-}
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-body.loaded #loader {
-  opacity: 0;
-  pointer-events: none;
-}
-
-    .navbar .logo {
-      font-size: 1.8rem; font-weight: bold; color: #00f7ff;
-      text-shadow: 0 0 5px #00f7ff;
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 26px;
+      color: #4fc3f7;
     }
-    .navbar ul { list-style: none; display: flex; gap: 20px; }
-    .navbar a { color: white; text-decoration: none; font-weight: 500; }
-    .navbar a:hover { color: #00f7ff; }
-    .toggle-dark { font-size: 1.2rem; cursor: pointer; color: #00f7ff; }
-    .hero {
-      min-height: 90vh; display: flex;
-      flex-direction: column; justify-content: center; align-items: center;
-      text-align: center; padding: 2rem 1rem;
+    .field {
+      position: relative;
+      margin: 15px 0;
     }
-    .title {
-      font-size: 3rem; text-shadow: 0 0 10px #00f7ff;
-    }
-    .tagline {
-      font-size: 1.2rem; margin: 1rem 0 2rem; max-width: 600px;
-    }
-    .neon-button {
-      display: inline-block; padding: 10px 25px;
-      border: 2px solid #00f7ff; border-radius: 25px;
-      color: #00f7ff; background: transparent; font-weight: bold;
-      text-decoration: none;
-      box-shadow: 0 0 8px #00f7ff, 0 0 15px #00f7ff;
-      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
-    }
-    .neon-button:hover {
-      background: #00f7ff; color: #000;
-      box-shadow: 0 0 12px #00f7ff, 0 0 25px #00f7ff;
-    }
-    .section { padding: 60px 20px; text-align: center; }
-    .neon-heading {
-      font-size: 2.2rem; margin-bottom: 40px;
-      color: #00f7ff; text-shadow: 0 0 8px #00f7ff;
-    }
-    .resources {
-      display: flex; flex-wrap: wrap;
-      justify-content: center; gap: 20px;
-    }
-    .resource-card {
+    .field input, .field select {
+      width: 100%;
+      padding: 12px 40px 12px 40px;
       background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(10px);
-      border-radius: 15px; padding: 50px; width: 280px;
-      transition: 0.5s ease;
+      border: 1px solid #2196f3;
+      color: white;
+      border-radius: 8px;
+      font-size: 15px;
     }
-    .resource-card:hover {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid #00f7ff;
+    .field i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #03a9f4;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #2196f3;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 16px;
+      margin-top: 10px;
       cursor: pointer;
     }
-    .resource-card:hover h3 { color: #00f7ff; }
-    .resource-card:hover .neon-button {
-      background: #00f7ff; color: #000;
+    button:hover {
+      background: #1976d2;
     }
-    .resource-card img {
-      width: 100%; border-radius: 10px; margin-bottom: 10px;
-  }
-  .resource-icon {
-  font-size: 48px;
-  color: #00f7ff;
-  margin-bottom: 15px;
-  text-shadow: 0 0 8px #00f7ff, 0 0 16px #00f7ff;
-  transition: transform 0.3s ease, text-shadow 0.3s ease;
-}
-
-.resource-card:hover .resource-icon {
-  transform: scale(1.1);
-  text-shadow: 0 0 12px #00f7ff, 0 0 24px #00f7ff;
-}
-
-  }
-    .counter { font-size: 2rem; display: block; }
-    .swiper-slide {
-      background: rgba(255,255,255,0.08);
-      border-radius: 15px; padding: 20px; width: 280px;
-    }
-    .swiper-pagination-bullet { background: #00f7ff !important; }
-    #searchInput {
-      padding: 10px; width: 260px;
-      border-radius: 25px; border: none;
-      box-shadow: 0 0 5px #00f7ff; margin-bottom: 20px;
-    }
-    .site-footer {
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      padding: 40px 0 10px; text-align: center;
-      margin-top: 60px;
-    }
-    .site-footer h3 {
-      font-size: 28px; color: #00f7ff; margin-bottom: 10px;
-      text-shadow: 0 0 5px #00f7ff;
-    }
-    .site-footer p { color: #bbb; }
-    .socials {
-      display: flex; justify-content: center; gap: 25px;
-      margin: 20px 0; list-style: none;
-    }
-    .socials li a {
-      color: #00f7ff; font-size: 22px; transition: 0.3s;
-    }
-    .socials li a:hover {
-      color: #fff; transform: scale(1.2);
-    }
-    .footer-bottom {
-      border-top: 1px solid #333; padding-top: 12px;
-      font-size: 14px; color: #888;
-    }
-    .chat-button, #scrollTopBtn {
-      position: fixed; border: none; border-radius: 50%;
-      font-size: 18px; cursor: pointer;
-      box-shadow: 0 0 10px #00f7ff; display: none;
-    }
-    .chat-button {
-      bottom: 25px; right: 25px;
-      background: #00f7ff; color: #000; padding: 15px;
-    }
-    .chat-button:hover { background: #00e1e1; }
-    #scrollTopBtn {
-      bottom: 90px; right: 25px;
-      background: #00f7ff; color: black; padding: 12px;
-    }
-    #scrollTopBtn:hover { background: #00e1e1; }
-    @media(max-width:768px) {
-      .navbar ul { display: none; }
-      .title { font-size: 2.4rem; }
-      .tagline { font-size: 1rem; }
-    }
-	.hamburger {
-  display: none;
-  font-size: 24px;
-  color: #00f7ff;
-  position: absolute;
-  right: 30px;
-  top: 18px;
-  cursor: pointer;
-  z-index: 1100;
-}
-.side-menu {
-  position: fixed;
-  top: 0; right: -260px;
-  width: 260px; height: 100%;
-  background: #1a1a1a;
-  padding: 30px 20px;
-  transition: right 0.4s ease;
-  z-index: 1050;
-}
-.side-menu ul {
-  list-style: none;
-  padding: 0;
-  margin-top: 50px;
-}
-.side-menu ul li {
-  margin-bottom: 20px;
-}
-.side-menu ul li a {
-  color: #00f7ff;
-  font-size: 18px;
-  text-decoration: none;
-  display: block;
-  transition: 0.3s;
-}
-.side-menu ul li a:hover {
-  color: #fff;
-}
-.side-menu .close-btn {
-  font-size: 30px;
-  color: #fff;
-  cursor: pointer;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(130deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
-      transition: background 0.3s, color 0.3s;
-    }
-    body.dark-mode { background: #121212; color: #e0e0e0; }
-    #heroCanvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-      background: transparent;
-    }
-    .hero {
-      position: relative;
-      overflow: hidden;
-      min-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    .toggle-link {
+      color: #03a9f4;
       text-align: center;
-      padding: 2rem 1rem;
+      display: block;
+      margin-top: 12px;
+      cursor: pointer;
     }
-    .hero .title, .hero .tagline, .hero .neon-button {
-      position: relative;
-      z-index: 2;
-    }
-    .title {
-      font-size: 3rem; text-shadow: 0 0 10px #00f7ff;
-    }
-    .tagline {
-      font-size: 1.2rem; margin: 1rem 0 2rem; max-width: 600px;
-    }
-    .neon-button {
-      display: inline-block; padding: 10px 25px;
-      border: 2px solid #00f7ff; border-radius: 25px;
-      color: #00f7ff; background: transparent; font-weight: bold;
-      text-decoration: none;
-      box-shadow: 0 0 8px #00f7ff, 0 0 15px #00f7ff;
-      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
-    }
-    .neon-button:hover {
-      background: #00f7ff; color: #000;
-      box-shadow: 0 0 12px #00f7ff, 0 0 25px #00f7ff;
-    }
-    .site-footer {
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      padding: 40px 0 10px; text-align: center;
-      margin-top: 60px;
-      animation: glowFade 4s ease-in-out infinite alternate;
-    }
-    @keyframes glowFade {
-      0% { box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff; }
-      100% { box-shadow: 0 0 25px #00f7ff, 0 0 50px #00f7ff; }
-    }
-}
-    .whatsapp-button {
-      position: fixed;
-      bottom: 20px; left: 20px;
-      z-index: 999;
-      background-color: #25D366;
-      color: white;
-      padding: 12px 14px;
+    .error { color: red; text-align: center; font-size: 13px; }
+    .hidden { display: none; }
+    img.preview {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
       border-radius: 50%;
-      font-size: 24px;
-      box-shadow: 0 0 10px rgba(0, 247, 255, 0.6);
-      text-decoration: none;
+      margin: 10px auto;
+      display: block;
+      border: 2px solid #03a9f4;
     }
-    .whatsapp-button:hover {
-      background-color: #1ebe5d;
-@media(max-width:768px) {
-  .hamburger { display: block; }
-  .navbar ul { display: none; }
+    @media (max-width: 600px) {
+      .form-box { padding: 20px; }
+      h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login Form -->
+  <div class="form-box" id="loginForm">
+    <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+    <div class="field"><i class="fas fa-user"></i>
+      <input type="text" id="loginUsername" placeholder="Username" />
+    </div>
+    <div class="field"><i class="fas fa-lock"></i>
+      <input type="password" id="loginPassword" placeholder="Password" />
+    </div>
+    <div id="loginError" class="error"></div>
+    <button onclick="loginUser()">Login</button>
+    <span class="toggle-link" onclick="toggleForms()">Don't have an account? Register</span>
+    <span class="toggle-link" onclick="showForget()">Forgot Password?</span>
+    <span class="toggle-link" onclick="accessAdmin()">Admin Panel</span>
+  </div>
+
+  <!-- Register Form -->
+  <div class="form-box hidden" id="registerForm">
+    <h2><i class="fas fa-user-plus"></i> Register</h2>
+    <div class="field"><i class="fas fa-user"></i>
+      <input type="text" id="regUsername" placeholder="Username" />
+    </div>
+    <div class="field"><i class="fas fa-envelope"></i>
+      <input type="email" id="regEmail" placeholder="Email (required)" />
+    </div>
+    <div class="field"><i class="fas fa-lock"></i>
+      <input type="password" id="regPassword" placeholder="Password" />
+    </div>
+    <div class="field"><i class="fas fa-graduation-cap"></i>
+      <select id="regClass">
+        <option value="">Select Class</option>
+        <option>9th</option><option>10th</option><option>11th</option><option>12th</option>
+      </select>
+    </div>
+    <div class="field"><i class="fas fa-calendar-alt"></i>
+      <input type="date" id="regDOB" />
+    </div>
+    <div class="field"><i class="fas fa-city"></i>
+      <select id="regCity">
+        <option value="">Select City</option>
+        <option>Karachi</option><option>Lahore</option><option>Islamabad</option><option>Rawalpindi</option>
+        <option>Faisalabad</option><option>Multan</option><option>Quetta</option><option>Peshawar</option>
+        <option>Hyderabad</option><option>Sialkot</option><option>Gujranwala</option><option>Sargodha</option>
+        <option>Bahawalpur</option><option>Mianwali</option><option>Abbottabad</option><option>Sukkur</option>
+        <option>Larkana</option><option>D.G. Khan</option><option>Mirpur</option><option>Okara</option>
+        <option>Kasur</option><option>Others</option>
+      </select>
+    </div>
+    <div class="field"><i class="fas fa-image"></i>
+      <input type="file" id="regPic" accept="image/*" onchange="previewImage(event)" />
+    </div>
+    <img id="picPreview" class="preview hidden" />
+    <div class="field"><i class="fas fa-venus-mars"></i>
+      <select id="regGender">
+        <option value="">Select Gender</option>
+        <option>Male</option><option>Female</option><option>Other</option>
+      </select>
+    </div>
+    <div id="registerError" class="error"></div>
+    <button onclick="registerUser()">Register</button>
+    <span class="toggle-link" onclick="toggleForms()">Already have an account? Login</span>
+  </div>
+
+  <!-- Profile Page -->
+  <div class="form-box hidden" id="profilePage">
+    <h2><i class="fas fa-user-circle"></i> Profile</h2>
+    <img id="profilePic" class="preview" />
+    <div id="profileDetails"></div>
+    <button onclick="goHome()">Go to Home</button>
+  </div>
+
+  <!-- Admin Panel -->
+  <div class="form-box hidden" id="adminPanel">
+    <h2><i class="fas fa-user-shield"></i> Admin Panel</h2>
+    <div id="userList" style="max-height: 300px; overflow-y: auto;"></div>
+    <button onclick="goBack()">Logout</button>
+  </div>
+
+  <!-- Forget Password -->
+  <div class="form-box hidden" id="forgetForm">
+    <h2><i class="fas fa-key"></i> Recover Password</h2>
+    <div class="field"><i class="fas fa-envelope"></i>
+      <input type="email" id="forgetEmail" placeholder="Enter your email" />
+    </div>
+    <div id="forgetMsg" class="error"></div>
+    <button onclick="recoverPassword()">Recover</button>
+    <span class="toggle-link" onclick="goBack()">Back to Login</span>
+  </div>
+
+<script>
+const adminPassword = "admin123";
+
+function toggleForms() {
+  document.getElementById("loginForm").classList.toggle("hidden");
+  document.getElementById("registerForm").classList.toggle("hidden");
+  clearErrors();
 }
 
-  </style>
-</head>
-<body>
- 
+function registerUser() {
+  const username = document.getElementById("regUsername").value.trim();
+  const email = document.getElementById("regEmail").value.trim();
+  const password = document.getElementById("regPassword").value.trim();
+  const regClass = document.getElementById("regClass").value;
+  const dob = document.getElementById("regDOB").value;
+  const city = document.getElementById("regCity").value;
+  const gender = document.getElementById("regGender").value;
+  const pic = document.getElementById("regPic").files[0];
 
-  <nav class="navbar">
-    <div class="logo">Education Point</div>
-   <ul>
-	<div class="hamburger" onclick="toggleMenu()">
-  <i class="fas fa-bars"></i>
-</div>
-<div id="loader">
-  <img src="logo.png" alt="Loading..." class="loader-logo" />
-</div>
+  if (!username || !email || !password || !regClass || !dob || !city || !gender) {
+    showError("registerError", "Please fill all required fields.");
+    return;
+  }
 
- <li><a href="#resources">Resources</a></li>
-      <li><a href="#spotlight">Spotlight</a></li>
-      <li><a href="#testimonials">Testimonials</a></li>
-      <li><a href="ABOUT US.html">About</a></li>
+  const reader = new FileReader();
+  reader.onload = () => {
+    const user = { username, email, password, regClass, dob, city, gender, picData: reader.result };
+    let users = JSON.parse(localStorage.getItem("users") || "[]");
+    users.push(user);
+    localStorage.setItem("users", JSON.stringify(users));
+    toggleForms();
+  };
 
-    </ul>
-    <div class="toggle-dark" onclick="toggleDarkMode()" title="Toggle Dark Mode">
-      <i class="fas fa-moon"></i>
+  if (pic) {
+    reader.readAsDataURL(pic);
+  } else {
+    reader.onload();
+  }
+}
+
+function loginUser() {
+  const username = document.getElementById("loginUsername").value.trim();
+  const password = document.getElementById("loginPassword").value.trim();
+  const users = JSON.parse(localStorage.getItem("users") || "[]");
+  const user = users.find(u => u.username === username && u.password === password);
+
+  if (user) {
+    showProfile(user);
+  } else {
+    showError("loginError", "Invalid credentials.");
+  }
+}
+
+function showProfile(user) {
+  hideAll();
+  document.getElementById("profilePage").classList.remove("hidden");
+  document.getElementById("profileDetails").innerHTML = `
+    <p><strong>Username:</strong> ${user.username}</p>
+    <p><strong>Email:</strong> ${user.email}</p>
+    <p><strong>Class:</strong> ${user.regClass}</p>
+    <p><strong>DOB:</strong> ${user.dob}</p>
+    <p><strong>City:</strong> ${user.city}</p>
+    <p><strong>Gender:</strong> ${user.gender}</p>
+  `;
+  document.getElementById("profilePic").src = user.picData || "https://via.placeholder.com/100";
+}
+
+function accessAdmin() {
+  const entered = prompt("Enter Admin Password:");
+  if (entered === adminPassword) showAdminPanel();
+  else alert("Incorrect admin password!");
+}
+
+function showAdminPanel() {
+  hideAll();
+  document.getElementById("adminPanel").classList.remove("hidden");
+  const users = JSON.parse(localStorage.getItem("users") || "[]");
+  const list = document.getElementById("userList");
+  list.innerHTML = users.length === 0 ? "<p>No users registered.</p>" : users.map((u, i) => `
+    <div style="margin-bottom: 10px; border-bottom: 1px solid #4fc3f7; padding-bottom: 8px;">
+      <strong>${i + 1}. ${u.username}</strong><br/>
+      <span>Email: ${u.email}</span><br/>
+      <span>Class: ${u.regClass}, City: ${u.city}, Gender: ${u.gender}</span>
     </div>
-  </nav>
-  <header class="hero">
-  <canvas id="heroCanvas"></canvas>
-    <h1 class="title">Education Point</h1>
-    <p class="tagline">Your path to knowledge starts here. Explore curated educational resources designed to help you excel.</p>
-    <a href="#resources" class="neon-button">Explore Resources</a>
-  </header>
- 
+  `).join('');
+}
 
-<section id="resources" class="section">
-  <h2 class="neon-heading" data-aos="fade-up">Our Resources</h2>
-  <div class="resources">
+function recoverPassword() {
+  const email = document.getElementById("forgetEmail").value.trim();
+  const users = JSON.parse(localStorage.getItem("users") || "[]");
+  const user = users.find(u => u.email === email);
+  document.getElementById("forgetMsg").innerHTML = user
+    ? `Your password is: <strong>${user.password}</strong>`
+    : "Email not found.";
+}
 
-    <div class="resource-card" data-aos="fade-up">
-      <div class="resource-icon"><i class="fas fa-book-open"></i></div>
-      <h3>Notes</h3>
-      <p>Subject-wise concise and accurate notes.</p>
-      <a href="notes.html" class="neon-button">View Notes</a>
-    </div>
+function previewImage(event) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    document.getElementById("picPreview").src = reader.result;
+    document.getElementById("picPreview").classList.remove("hidden");
+  };
+  reader.readAsDataURL(event.target.files[0]);
+}
 
-    <div class="resource-card" data-aos="fade-up">
-      <div class="resource-icon"><i class="fas fa-lightbulb"></i></div>
-      <h3>Guess Papers</h3>
-      <p>Smart guess papers based on trends.</p>
-      <a href="guess-papers.html" class="neon-button">Guess Papers</a>
-    </div>
+function goBack() {
+  hideAll();
+  document.getElementById("loginForm").classList.remove("hidden");
+  clearErrors();
+}
 
-    <div class="resource-card" data-aos="fade-up">
-      <div class="resource-icon"><i class="fas fa-book"></i></div>
-      <h3>Keybooks</h3>
-      <p>Solutions, summaries, and highlights.</p>
-      <a href="keybooks.html" class="neon-button">Get Keybooks</a>
-    </div>
+function goHome() {
+  alert("Redirecting to Home Page...");
+  window.location.href = "home.html";
+}
 
-    <div class="resource-card" data-aos="fade-up">
-      <div class="resource-icon"><i class="fas fa-sitemap"></i></div>
-      <h3>Scheme</h3>
-      <p>Updated exam paper schemes included.</p>
-      <a href="scheme.html" class="neon-button">View Scheme</a>
-    </div>
-    <div class="resource-card" data-aos="fade-up">
-      <div class="resource-icon"><i class="fas fa-graduation-cap"></i></div>
-      <h3>Preparation Material</h3>
-      <p>Best preparation material for universities, MDCAT, ECAT, and more.</p>
-      <a href="preparation.html" class="neon-button">Explore more</a>
-    </div>
-<div class="resource-card" data-aos="fade-up">
-  <div class="resource-icon"><i class="fas fa-mobile-alt"></i></div>
-  <h3>Education Point App</h3>
-  <p>The Education Point App provides students with educational news, important updates, study resources, and smart features to stay ahead — all in one place.</p>
-  <a href="Education Point app.html" class="neon-button">Check Now</a>
-</div>
-	  <div class="resource-card" data-aos="fade-up">
-      <div class="resource-icon"><i class="fas fa-users"></i></div>
-      <h3>About Us</h3>
-      <p>Get to know our story and team.</p>
-      <a href="ABOUT US.html" class="neon-button">About Us</a>
-	  </div>
-  </div>
-</section>
+function hideAll() {
+  document.querySelectorAll(".form-box").forEach(box => box.classList.add("hidden"));
+}
 
-</section>
-    <section id="spotlight" class="section">
-      <h2 class="neon-heading" data-aos="fade-up">Student Spotlight</h2>
-      <div class="resources">
-       
-		<div class="resources">
-        <div class="resource-card" data-aos="zoom-in">
-          <img src="student 3.jpg" alt="Bilal">
-          <h3>BILAL</h3>
-          <p>"Education Point helped me understand tough topics easily. The notes were clear and concise!"</p>
-        </div>
-		<div class="resource-card" data-aos="zoom-in">
-          <img src="student 4.jpg" alt="Hamza">
-          <h3>Hamza Shah</h3>
-          <p>"I improved my grades after following their study schemes and guidebooks!"</p>
-        </div>
-		<div class="resource-card" data-aos="zoom-in">
-          <img src="student 5.jpg" alt="Ali">
-          <h3>Ali Raza</h3>
-          <p>"Education Point made my studies so much easier. The notes were just perfect!"</p>
-        </div>
-		<div class="resource-card" data-aos="zoom-in">
-          <img src="student 6.jpg" alt="Usman">
-          <h3>Usman Tariq</h3>
-          <p>"Clean design, easy access, and everything I needed to prepare!"</p>
-        </div>
-        <div class="resource-card" data-aos="zoom-in">
-          <img src="student 2.jpg" alt="Ahmed">
-          <h3>Ahmed Khan</h3>
-          <p>“The guess papers were spot-on. A huge help before exams!”</p>
-        </div>
-      </div>
-    </section>
-	<section id="blog" class="section">
-  <h2 class="neon-heading" data-aos="fade-up">Latest Blog Posts</h2>
-  <div class="resources">
-    <div class="resource-card" data-aos="fade-up">
-      <h3>Top 5 Study Techniques That Actually Work</h3>
-      <p>Discover scientifically proven techniques to improve retention and focus. Perfect for exam prep!</p>
-      <a href="blog-post-1.html" class="neon-button">Read More</a>
-    </div>
-    <div class="resource-card" data-aos="fade-up">
-      <h3>How to Stay Motivated During Exams</h3>
-      <p>Feeling burnt out? Here's how to keep your energy and motivation high through tough exam weeks.</p>
-      <a href="blog-post-2.html" class="neon-button">Read More</a>
-    </div>
-    <div class="resource-card" data-aos="fade-up">
-      <h3>Benefits of Using Guess Papers & Schemes</h3>
-      <p>Learn how guess papers and exam schemes give students a smart edge in competitive exams.</p>
-      <a href="blog-post-3.html" class="neon-button">Read More</a>
-    </div>
-  </div>
-</section>
-   <style>
-    /* Your existing CSS remains here - omitted for brevity */
+function showError(id, msg) {
+  document.getElementById(id).innerText = msg;
+}
 
-    /* NEW FEATURES UI SECTION */
-    .features-section {
-      background: rgba(255,255,255,0.04);
-      backdrop-filter: blur(8px);
-      padding: 60px 20px;
-      text-align: center;
-    }
-    .features-section h2 {
-      font-size: 2.2rem;
-      color: #00f7ff;
-      text-shadow: 0 0 8px #00f7ff;
-      margin-bottom: 40px;
-    }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 30px;
-      padding: 0 20px;
-    }
-    .feature-card {
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(0, 247, 255, 0.2);
-      border-radius: 15px;
-      padding: 30px 20px;
-      color: #fff;
-      transition: 0.4s;
-      box-shadow: 0 0 10px #00f7ff50;
-    }
-    .feature-card:hover {
-      background-color: rgba(0, 247, 255, 0.1);
-      transform: translateY(-5px);
-      box-shadow: 0 0 20px #00f7ff80;
-    }
-    .feature-card i {
-      font-size: 2.5rem;
-      margin-bottom: 15px;
-      color: #00f7ff;
-    }
-    .feature-card h4 {
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-      color: #00f7ff;
-    }
-    .feature-card p {
-      font-size: 0.95rem;
-      color: #ccc;
-    }
-  </style>
-</head>
-<body>
-  <!-- Loader, Navbar, Hero, and Sections Already Present -->
-
-  <!-- NEW FEATURES SECTION -->
-  <section class="features-section" id="features">
-    <h2 data-aos="fade-up">Why Choose Education Point?</h2>
-    <div class="features-grid">
-      <div class="feature-card" data-aos="zoom-in">
-        <i class="fas fa-book"></i>
-        <h4>Vast Resources</h4>
-        <p>Access notes, guides, schemes, keybooks, and more across various subjects.</p>
-      </div>
-      <div class="feature-card" data-aos="zoom-in">
-        <i class="fas fa-bolt"></i>
-        <h4>Fast Loading</h4>
-        <p>Lightning-fast experience powered by modern web technologies and optimized assets.</p>
-      </div>
-      
-      <div class="feature-card" data-aos="zoom-in">
-        <i class="fas fa-users"></i>
-        <h4>Student Focused</h4>
-        <p>Real testimonials, student spotlights, and success stories from actual users.</p>
-      </div>
-      <div class="feature-card" data-aos="zoom-in">
-        <i class="fas fa-code"></i>
-        <h4>Modern Design</h4>
-        <p>Clean, futuristic UI with smooth animations, neon effects, and responsive design.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Scripts Already Present Below -->
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script>
-    AOS.init({ duration: 1000, once: true });
-  </script>
-  </main>
-  <footer class="site-footer">
-    <div class="footer-content">
-      <h3>Education Point</h3>
-      <p>Empowering Students to Shine Brighter!</p>
-      <ul class="socials">
-        <li><a href="https://www.facebook.com/profile.php?id=61561221331392&mibextid=ZbWKwL"><i class="fab fa-facebook-f"></i></a></li>
-        <li><a href="https://whatsapp.com/channel/0029VayfTrh8PgsHHebiwc2k"><i class="fab fa-whatsapp"></i></a></li>
-        <li><a href="https://www.instagram.com/itx.wani1?igsh=MTVwYjY0N2YwMnRqNg=="><i class="fab fa-instagram"></i></a></li>
-        <li><a href="https://youtube.com/@educationpoint998?si=s99BJgdK5SEr01I5"><i class="fab fa-youtube"></i></a></li>
-      </ul>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2025 Education Point. All rights reserved. | Developed by Muhammad Rizwan</p>
-    </div>
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({ duration: 1000, once: true });
-    const canvas = document.getElementById('heroCanvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = document.querySelector('.hero').offsetHeight;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    function createParticles() {
-      particles = [];
-      for (let i = 0; i < 60; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          radius: Math.random() * 2 + 1,
-          dx: (Math.random() - 0.5) * 1,
-          dy: (Math.random() - 0.5) * 1,
-        });
-      }
-    }
-    createParticles();
-
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#00f7ff';
-        ctx.fill();
-        p.x += p.dx;
-        p.y += p.dy;
-
-        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-      });
-      requestAnimationFrame(animateParticles);
-    }
-    animateParticles();
-
-    window.addEventListener("scroll", () => {
-      document.querySelector('.hero').style.backgroundPositionY = `${window.scrollY * 0.3}px`;
-    });
-    AOS.init({ duration: 1000, once: true });
-    const btn = document.getElementById("scrollTopBtn");
-    window.onscroll = () => {
-      btn.style.display = (document.body.scrollTop >300 || document.documentElement.scrollTop >300) ? "block" : "none";
-    };
-	window.addEventListener("load", () => {
-  document.body.classList.add("loaded");
-  setTimeout(() => {
-    document.getElementById("loader").style.display = "none";
-  }, 700); // Wait for fade-out
-});
-
-
-    function topFunction() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-    }
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark-mode");
-    }
-    document.querySelectorAll('.counter').forEach(counter => {
-      const update = () => {
-        let target = +counter.getAttribute('data-count');
-        let count = +counter.innerText;
-        let inc = target / 50;
-        if (count < target) {
-          counter.innerText = Math.ceil(count + inc);
-          setTimeout(update, 40);
-        } else counter.innerText = target;
-      };
-      update();
-    });
-    new Swiper(".testimonial-slider", {
-      loop: true,
-      autoplay: { delay: 3000 },
-      pagination: { el: ".swiper-pagination", clickable: true },
-    });
-  </script>
+function clearErrors() {
+  document.querySelectorAll(".error").forEach(e => e.innerHTML = "");
+}
+</script>
 </body>
 </html>

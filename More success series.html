@@ -1,144 +1,118 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Education Point</title>
-	<link rel="shortcut icon" type="image/x" href="logo.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Education Point</title>
+  <link rel="shortcut icon" type="image/x-icon" href="logo.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      color: #fff;
+      background: url('bg6.jpg') no-repeat center center/cover;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+    }
+    .section {
+      padding: 50px 20px;
+      text-align: center;
+    }
+    .neon-heading {
+      font-size: 2.5rem;
+      color: #00f5ff;
+      text-shadow: 0 0 10px #00f5ff, 0 0 30px #00f5ff;
+      margin-bottom: 30px;
+    }
+    .resource-card {
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid #00f5ff;
+      box-shadow: 0 0 15px #00f5ff;
+      padding: 30px;
+      margin: 20px auto;
+      max-width: 600px;
+      border-radius: 15px;
+    }
+    .resource-card h2,
+    .resource-card h3 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #00f5ff;
+    }
+    .resource-card p {
+      margin-bottom: 20px;
+      color: #ddd;
+    }
+    .neon-button {
+      font-size: 1.1rem;
+      color: #fff;
+      background-color: transparent;
+      border: 2px solid #00f5ff;
+      padding: 10px 25px;
+      border-radius: 5px;
+      text-shadow: 0 0 5px #00f5ff;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .neon-button i {
+      font-size: 1.2rem;
+    }
+    .neon-button:hover {
+      background-color: #00f5ff;
+      color: #000;
+      box-shadow: 0 0 10px #00f5ff, 0 0 30px #00f5ff;
+      transform: scale(1.05);
+    }
 
+    footer {
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+      box-shadow: 0 -5px 10px #00f5ff;
+      font-size: 1rem;
+      font-weight: bold;
+      margin-top: 60px;
+    }
+
+    @media screen and (max-width: 600px) {
+      .neon-heading {
+        font-size: 2rem;
+      }
+      .resource-card {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
-<style>
-/* Global Styles */
-body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    color: #fff;
-   background: url('bg6.jpg') no-repeat center center/cover;
-    line-height: 1.6;
-}
-.container {
-    text-align: center;
-    padding: 20px;
-}
-a {
-    text-decoration: none;
-}
-
-/* Hero Section */
-.hero {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-     background: url('bg3.jpg') no-repeat center center/cover;
-}
-.neon-title {
-    font-size: 4rem;
-    color: #ffff;
-    text-shadow: 0 0 5px #00f5ff, 0 0 20px #00f5ff, 0 0 40px #00f5ff;
-}
-.tagline {
-    font-size: 1.5rem;
-    margin: 10px 0 30px;
-    color: #e0e0e0;
-}
-.neon-button {
-    font-size: 1.2rem;
-     color: #fff;
-    background-color: transparent;
-    border: 2px solid #00f5ff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-shadow: 0 0 5px #00f5ff;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-.neon-button:hover {
-    background-color: #00f5ff;
-      color: #fff;
-    box-shadow: 0 0 10px #00f5ff, 0 0 30px #00f5ff;
-}
-
-/* Section Styles */
-.section {
-    padding: 50px 20px;
-}
-.neon-heading {
-    font-size: 2.5rem;
-    color: #00f5ff;
-    text-shadow: 0 0 10px #00f5ff, 0 0 30px #00f5ff;
-    margin-bottom: 30px;
-}
-.resource-card {
-    margin: 20px auto;
-}
-
-.resource-card a {
-   
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    text-decoration: none;
-    color: #fff;
-    border: 2px solid #00f5ff;
-    border-radius: 5px;
-    transition: 0.3s;
-   f5;
-}.resource-card a:hover {
-	 background-color: #00f5ff;
-      color: #fff;
-    transform: scale(1.1);
-}
-
-/* Contact Form */
-.contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 400px;
-    margin: 0 auto;
-}
-.contact-form input, .contact-form textarea {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background: #16213e;
-    color: #fff;
-    box-shadow: 0 0 10px #00f5ff;
-}
-.contact-form button {
-    align-self: center;
-}
-
-/* Footer */
-footer {
-  color: #fff;
-    text-align: center;
-    padding: 10px;
- box-shadow: 0 -5px 10px #00f5ff;
-    margin-top: 339px;
-    font-size: 1rem;
-    font-weight: bold;
-}
-
-</style>
 <body>
-<div class="resources">
- <section id="resources" class="section">
-<div class="resource-card">
-    <h2>Ambition Academy </h2>
-    <p>Find detailed resources and data from Ambition Academy, including study materials and guides tailored for academic excellence.</p>
-    <a href="important data.html" class="neon-button">Important Data</a>
-</div>
-<div class="resource-card">
-                   <h3>Dawn Academy</h3>
-<p>Dawn Academy provides top-notch educational resources, including expert-guided notes, practice exams, and personalized learning strategies to help students excel in their academic journey.</p>
-                    <a href="coming soon.html" class="neon-button">Important Data</a>
-</div>
+
+  <section id="resources" class="section">
+    <h2 class="neon-heading"><i class="fas fa-graduation-cap"></i> Education Point Academies</h2>
+
+    <div class="resource-card">
+      <h2><i class="fas fa-school"></i> Ambition Academy</h2>
+      <p>Find detailed resources and data from Ambition Academy, including study materials and guides tailored for academic excellence.</p>
+      <a href="important data.html" class="neon-button"><i class="fas fa-download"></i> Important Data</a>
+    </div>
+
+    <div class="resource-card">
+      <h3><i class="fas fa-lightbulb"></i> Dawn Academy</h3>
+      <p>Dawn Academy provides top-notch educational resources, including expert-guided notes, practice exams, and personalized learning strategies to help students excel in their academic journey.</p>
+      <a href="coming soon.html" class="neon-button"><i class="fas fa-file-alt"></i> Important Data</a>
+    </div>
+  </section>
+
   <footer>
-        <p>© 2025 Education Point. All rights reserved.</p>
-    </footer>
+    <p>© 2025 Education Point. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
 </body>
 </html>

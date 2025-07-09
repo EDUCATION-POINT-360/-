@@ -1,139 +1,175 @@
-/* General reset for consistency */
+/* Import Font Awesome for icons */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
+
+/* Reset and box-sizing */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Body styling */
-header {
-     background: url('bg9.jpg') no-repeat center center/cover
-    padding: 40px 0;
-    text-align: center;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-   
+/* Animated Black & Blue Gradient Background */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(-45deg, #0d0d0d, #0a1a2f, #0c2c57, #102a43);
+  background-size: 400% 400%;
+  animation: gradientMove 12s ease infinite;
+  color: #ffffff;
+  line-height: 1.6;
+  overflow-x: hidden;
 }
-   body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #fff;
-    }
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Header */
+header {
+  background: transparent;
+  padding: 60px 0;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+  border-bottom: 4px solid #2196f3;
+}
+
 .logo-container {
-    margin-bottom: 20px; /* Space between logo and title */
+  margin-bottom: 20px;
 }
 
 .logo {
-    max-width: 150px; /* Logo size adjustment */
-    height: auto;
-    display: block;
-    margin: 0 auto; /* Center the logo */
+  max-width: 130px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 .neon-title {
-    font-size: 3.5rem;
-    font-weight: bold;
-    color: #fff;
-    text-shadow: 0 0 15px rgba(52, 152, 219, 0.7), 0 0 30px rgba(52, 152, 219, 0.8);
-    margin-bottom: 20px;
-    letter-spacing: 2px; /* Adds a modern touch with spacing */
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px #2196f3, 0 0 20px #64b5f6;
+  margin-bottom: 20px;
 }
 
+/* Button */
 .neon-button {
-    display: inline-block;
-    padding: 12px 30px;
-    margin: 10px 0;
-    background-color: #fff;
-    border: 2px solid #3498db; /* Soft blue border */
-    color: #3498db;
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 30px; /* Rounded edges for a more modern look */
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 0 10px rgba(52, 152, 219, 0.4);
+  display: inline-block;
+  padding: 14px 34px;
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #2196f3;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 30px;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow: 0 0 10px rgba(33, 150, 243, 0.6);
+  transition: all 0.3s ease;
+  margin-top: 20px;
 }
 
 .neon-button:hover {
-    background-color: #3498db;
-    color: #fff;
-    text-shadow: 0 0 15px rgba(52, 152, 219, 0.7), 0 0 30px rgba(52, 152, 219, 0.8);
-    transform: translateY(-3px); /* Slight lift effect */
+  background-color: #2196f3;
+  color: #000;
+  box-shadow: 0 0 20px #2196f3;
+  transform: translateY(-3px);
 }
 
-/* Main section */
+/* Main Section */
 main.section {
-    padding: 60px 0;
-    text-align: center;
+  padding: 80px 20px;
+  text-align: center;
 }
 
 .neon-heading {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #fff;
-    font-weight: 500; /* Slightly lighter text for headings */
-    text-shadow: 0 0 15px rgba(52, 152, 219, 0.7), 0 0 30px rgba(41, 15, 29, 0.8);
+  font-size: 2.4rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #ffffff;
+  text-shadow: 0 0 8px #2196f3;
 }
 
-.neon-title {
-    font-size: 1.8rem;
-    text-align: center;
-    color: #3498db; /* Soft blue text */
-    margin-top: 30px;
+.neon-subtitle {
+  font-size: 1.2rem;
+  color: #b3e5fc;
+  opacity: 0.9;
+  max-width: 700px;
+  margin: 0 auto 40px;
 }
 
-/* Footer Section */
+/* Icons Section */
+.icon-box {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.07);
+  color: #64b5f6;
+  padding: 20px;
+  border-radius: 20px;
+  margin: 20px;
+  box-shadow: 0 0 15px rgba(33, 150, 243, 0.2);
+  transition: transform 0.3s ease;
+  text-align: center;
+  width: 200px;
+}
+
+.icon-box i {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.icon-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(33, 150, 243, 0.4);
+}
+
+/* Footer */
 footer {
-    background-color: #ffffff; /* White background for contrast */
-    text-align: center;
-    padding: 20px;
-    font-size: 1rem;
-    color: #777; /* Subtle gray text */
-    border-top: 2px solid #ddd; /* Soft separation for footer */
+  background: transparent;
+  color: #ffffff;
+  padding: 25px 10px;
+  text-align: center;
+  font-size: 1rem;
+  border-top: 2px solid #2196f3;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
 }
 
 footer p {
-    margin-top: 10px;
-    font-size: 0.9rem;
+  margin-top: 10px;
+  font-size: 0.9rem;
 }
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
-    .container {
-        width: 100%;
-        padding: 10px;
-    }
-    
-    .neon-title {
-        font-size: 2.8rem;
-    }
-
-    .neon-heading {
-        font-size: 1.5rem;
-    }
-
-    .neon-button {
-        font-size: 1rem;
-        padding: 10px 20px;
-    }
-
-    footer p {
-        font-size: 0.8rem;
-    }
+  .neon-title {
+    font-size: 2.4rem;
+  }
+  .neon-heading {
+    font-size: 1.8rem;
+  }
+  .neon-button {
+    padding: 12px 28px;
+    font-size: 1rem;
+  }
+  .icon-box {
+    width: 100%;
+    margin: 15px auto;
+  }
 }
 
 @media (max-width: 480px) {
-    .neon-title {
-        font-size: 2.2rem;
+  .neon-title {
+    font-size: 2rem;
+  }
+  .neon-heading {
+    font-size: 1.4rem;
+  }
+  .neon-button {
+    font-size: 0.95rem;
+    padding: 10px 20px;
+  }
+  footer {
+    font-size: 0.85rem;
+  }
     }
-
-    .neon-heading {
-        font-size: 1.3rem;
-    }
-
-    .neon-button {
-        font-size: 0.9rem;
-        padding: 8px 15px;
-    }
-}

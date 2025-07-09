@@ -6,19 +6,21 @@
   <title>Education Point | Scheme</title>
   <link rel="shortcut icon" type="image/x-icon" href="logo.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
   <style>
-  /* Header Styles */
-header {
-    background: url('bg7.jpg') no-repeat center center/cover;
-    padding: 20px 0;
-    text-align: center;
-	}
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
       background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       color: #fff;
+    }
+
+    header {
+      background: url('bg7.jpg') no-repeat center center/cover;
+      padding: 20px 0;
+      text-align: center;
     }
 
     .container {
@@ -60,12 +62,17 @@ header {
       font-weight: bold;
       transition: 0.3s ease;
       box-shadow: 0 0 10px #0ff;
+      cursor: pointer;
     }
 
     .neon-button:hover {
       background: #fff;
       color: #000;
       box-shadow: 0 0 20px #00ffff;
+    }
+
+    .neon-button i {
+      margin-right: 8px;
     }
 
     .resource-list {
@@ -98,6 +105,66 @@ header {
       display: none;
     }
 
+    .icon-links {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .icon-links i {
+      font-size: 2em;
+      margin: 0 15px;
+      cursor: pointer;
+      color: #0ff;
+      transition: 0.3s ease;
+    }
+
+    .icon-links i:hover {
+      color: #fff;
+      text-shadow: 0 0 10px #0ff;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #111;
+      padding: 30px;
+      border-radius: 12px;
+      color: #0ff;
+      box-shadow: 0 0 20px #0ff;
+      animation: zoomIn 0.5s ease;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .close {
+      float: right;
+      font-size: 24px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    @keyframes zoomIn {
+      from {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
     @media (max-width: 768px) {
       .neon-title {
         font-size: 2em;
@@ -105,6 +172,10 @@ header {
 
       .neon-button {
         padding: 10px 18px;
+      }
+
+      .icon-links i {
+        font-size: 1.5em;
       }
     }
   </style>
@@ -124,25 +195,54 @@ header {
   <main class="section">
     <h2 class="neon-heading" data-aos="fade-up">Choose Your Class Scheme</h2>
     <ul class="resource-list">
-      <li data-aos="zoom-in"><a href="Scheme-page1.html" class="neon-button">Class 9</a></li>
-      <li data-aos="zoom-in" data-aos-delay="100"><a href="Scheme-page2.html" class="neon-button">Class 10</a></li>
-      <li data-aos="zoom-in" data-aos-delay="200"><a href="Scheme-page3.html" class="neon-button">Class 11</a></li>
-      <li data-aos="zoom-in" data-aos-delay="300"><a href="Scheme-page4.html" class="neon-button">Class 12</a></li>
+      <li data-aos="zoom-in">
+        <button onclick="showScheme('Class 9')" class="neon-button">
+          <i class="fas fa-book-open"></i> Class 9
+        </button>
+      </li>
+      <li data-aos="zoom-in" data-aos-delay="100">
+        <button onclick="showScheme('Class 10')" class="neon-button">
+          <i class="fas fa-calculator"></i> Class 10
+        </button>
+      </li>
+      <li data-aos="zoom-in" data-aos-delay="200">
+        <button onclick="showScheme('Class 11')" class="neon-button">
+          <i class="fas fa-flask"></i> Class 11
+        </button>
+      </li>
+      <li data-aos="zoom-in" data-aos-delay="300">
+        <button onclick="showScheme('Class 12')" class="neon-button">
+          <i class="fas fa-graduation-cap"></i> Class 12
+        </button>
+      </li>
     </ul>
+
+    <div class="icon-links" data-aos="fade-up">
+      <i class="fas fa-info-circle" onclick="openModal('info')"></i>
+      <i class="fas fa-phone" onclick="openModal('contact')"></i>
+      <i class="fas fa-envelope" onclick="openModal('email')"></i>
+    </div>
   </main>
-<button id="scrollToTop" onclick="scrollToTop()">Top ↑</button>
+
+  <button id="scrollToTop" onclick="scrollToTop()">Top ↑</button>
+
   <footer>
     <p>© 2025 Education Point. All rights reserved. | Developed by Muhammad Rizwan</p>
   </footer>
 
-  
+  <!-- Shared Popup Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div id="modal-text">Default popup text</div>
+    </div>
+  </div>
 
   <!-- Typing Effect -->
   <script>
     const text = "Select your class to access schemes.";
     const typedHeading = document.getElementById("typed-heading");
     let i = 0;
-
     function typeWriter() {
       if (i < text.length) {
         typedHeading.innerHTML += text.charAt(i);
@@ -150,32 +250,60 @@ header {
         setTimeout(typeWriter, 60);
       }
     }
-
     window.onload = typeWriter;
   </script>
 
   <!-- Scroll to Top -->
   <script>
     const scrollToTopBtn = document.getElementById("scrollToTop");
-
     window.onscroll = function () {
-      if (document.documentElement.scrollTop > 200) {
-        scrollToTopBtn.style.display = "block";
-      } else {
-        scrollToTopBtn.style.display = "none";
-      }
+      scrollToTopBtn.style.display = document.documentElement.scrollTop > 200 ? "block" : "none";
     };
-
     function scrollToTop() {
       document.documentElement.scrollTop = 0;
     }
   </script>
 
-  <!-- AOS Animation -->
+  <!-- Modal Handling -->
+  <script>
+    const modal = document.getElementById("modal");
+    const modalText = document.getElementById("modal-text");
+
+    function openModal(type) {
+      let content = "";
+      if (type === "info") {
+        content = "<h3>About Education Point</h3><p>This site helps students access class schemes and learning resources.</p>";
+      } else if (type === "contact") {
+        content = "<h3>Contact Us</h3><p>Phone: +923314220506</p>";
+      } else if (type === "email") {
+        content = "<h3>Email</h3><p>mrizwank585@gmail.com</p>";
+      }
+      modalText.innerHTML = content;
+      modal.style.display = "flex";
+    }
+
+    function showScheme(className) {
+      const message = `<h3>${className} Scheme</h3><p>The scheme for ${className} will be shared soon. Please stay connected with Education Point for updates and announcements. Thank you for your patience!</p>`;
+      modalText.innerHTML = message;
+      modal.style.display = "flex";
+    }
+
+    function closeModal() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+  </script>
+
+  <!-- AOS Animation Init -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script>
     AOS.init({ duration: 1000 });
   </script>
 
 </body>
-</html>
+	    </html>

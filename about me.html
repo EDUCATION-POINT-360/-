@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"/>
 
   <style>
-    /* Global Styles */
     body {
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
@@ -18,7 +17,6 @@
       scroll-behavior: smooth;
     }
 
-    /* Navigation Bar */
     .navbar {
       display: flex;
       justify-content: space-between;
@@ -51,7 +49,6 @@
       text-shadow: 0 0 10px #00f7ff;
     }
 
-    /* Main Container */
     .container {
       max-width: 900px;
       margin: 60px auto;
@@ -79,16 +76,20 @@
       margin: 20px 0;
     }
 
-    .logo {
-      display: block;
-      margin: 40px auto;
+    .profile-img {
+      margin-top: 30px;
+      width: 280px;
       max-width: 100%;
       height: auto;
-      border-radius: 16px;
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+      border-radius: 20px;
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.3);
+      transition: transform 0.5s;
     }
 
-    /* Call to Action Section */
+    .profile-img:hover {
+      transform: scale(1.05);
+    }
+
     .cta {
       margin-top: 40px;
       font-size: 1.1em;
@@ -113,7 +114,6 @@
       box-shadow: 0 0 25px #00f7ff;
     }
 
-    /* Scroll to Top Button */
     #topBtn {
       position: fixed;
       bottom: 30px;
@@ -155,7 +155,6 @@
 </head>
 <body>
 
-  <!-- Navigation -->
   <nav class="navbar">
     <h2>Education Point</h2>
     <div>
@@ -165,7 +164,6 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
   <div class="container" data-aos="zoom-in-up">
     <h1>About Me</h1>
     <p>
@@ -175,22 +173,16 @@
       I believe in the transformative power of knowledge. Through my efforts, I hope to help others reach their potential by making information easily accessible, fostering education, and promoting collective growth. This website is a step toward that vision.
     </p>
 
-   
- 
-    
-   
+    <!-- Added Image with Animation -->
+    <img src="mrizwan.jpg" alt="Muhammad Rizwan" class="profile-img" data-aos="fade-left" />
+  </div>
 
- 
-
-  <!-- Scroll to Top Button -->
   <button onclick="scrollToTop()" id="topBtn" title="Go to top">↑</button>
 
-  <!-- AOS Animation Script -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init({ duration: 1000 });
 
-    // Show/hide scroll-to-top button
     window.onscroll = function () {
       document.getElementById("topBtn").style.display = 
         window.pageYOffset > 300 ? "block" : "none";
@@ -200,6 +192,5 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   </script>
-
 </body>
 </html>

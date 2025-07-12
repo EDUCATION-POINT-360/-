@@ -1,0 +1,400 @@
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Education Point | Portal</title>
+  <link rel="icon" href="logo.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="logo.png" type="image/png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #000, #111);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    /* Moving shapes */
+    .background-shapes {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+      top: 0;
+      left: 0;
+    }
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      animation: float 10s infinite ease-in-out;
+    }
+    .shape1 { width: 100px; height: 100px; top: 10%; left: 20%; animation-delay: 0s; }
+    .shape2 { width: 120px; height: 120px; top: 60%; left: 70%; animation-delay: 2s; }
+    .shape3 { width: 80px; height: 80px; top: 40%; left: 50%; animation-delay: 4s; }
+    .shape4 { width: 60px; height: 60px; top: 80%; left: 30%; animation-delay: 6s; }
+
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 0.3; }
+      50% { transform: translateY(-30px) scale(1.2); opacity: 0.1; }
+      100% { transform: translateY(0) scale(1); opacity: 0.3; }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 460px;
+      background: rgba(255,255,255,0.05);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+      animation: fadeIn 1s ease;
+      z-index: 1;
+      position: relative;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+
+    input::placeholder {
+      color: #bbb;
+    }
+
+    input[type="file"] {
+      background: none;
+      color: #fff;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      background: linear-gradient(45deg, #ffffff20, #ffffff40);
+      color: #fff;
+      border: 1px solid #fff;
+      border-radius: 10px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    .link-btn {
+      background: none;
+      border: none;
+      color: #aaa;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 14px;
+      display: inline-block;
+      margin-top: 5px;
+    }
+
+    .link-btn:hover {
+      color: #fff;
+    }
+
+    .toggle-password {
+      float: right;
+      margin-top: -30px;
+      margin-right: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #ccc;
+    }
+
+    .dashboard, .admin-panel {
+      display: none;
+      animation: slideIn 0.7s ease;
+    }
+
+    @keyframes slideIn {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 15px;
+      display: block;
+      border: 3px solid #fff;
+    }
+
+    #banner {
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #4caf50;
+      color: #fff;
+      padding: 12px 25px;
+      border-radius: 8px;
+      display: none;
+      z-index: 999;
+      font-size: 15px;
+    }
+
+    @media (max-width: 500px) {
+      .container { padding: 20px; }
+      h2 { font-size: 20px; }
+      input, select, button { font-size: 14px; padding: 10px; }
+      .profile-pic { width: 80px; height: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="background-shapes">
+  <div class="shape shape1"></div>
+  <div class="shape shape2"></div>
+  <div class="shape shape3"></div>
+  <div class="shape shape4"></div>
+</div>
+
+<div id="banner"></div>
+
+<!-- Login/Register Section -->
+<div class="container" id="auth-section">
+  <h2 id="form-title"><i class="fas fa-user-plus"></i> Register</h2>
+  <input type="text" id="name" placeholder="Full Name" />
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="password" placeholder="Password" />
+  <span class="toggle-password" onclick="togglePassword()">Show</span>
+  <select id="class">
+    <option value="">Select Class</option>
+    <option>9th</option>
+    <option>10th</option>
+    <option>11th</option>
+    <option>12th</option>
+  </select>
+  <select id="city">  
+  <option value="">Select City</option>  
+  <option>Lahore</option>  
+  <option>Faisalabad</option>  
+  <option>Rawalpindi</option>  
+  <option>Multan</option>  
+  <option>Gujranwala</option>  
+  <option>Sargodha</option>  
+  <option>Bahawalpur</option>  
+  <option>Sialkot</option>  
+  <option>Sheikhupura</option>  
+  <option>Rahim Yar Khan</option>  
+  <option>Jhelum</option>  
+  <option>Okara</option>  
+  <option>Wah Cantt</option>  
+  <option>Vehari</option>  
+  <option>Kasur</option>  
+  <option>Chiniot</option>  
+  <option>Khanewal</option>  
+  <option>Muzaffargarh</option>  
+  <option>Mianwali</option>  
+  <option>Lodhran</option>  
+  <option>Bhakkar</option>  
+  <option>Dera Ghazi Khan</option>  
+  <option>Pakpattan</option>  
+  <option>Attock</option>  
+  <option>Toba Tek Singh</option>  
+  <option>Jhang</option>  
+  <option>Hafizabad</option>  
+  <option>Narowal</option>  
+  <option>Chakwal</option>  
+  <option>Bahawalnagar</option>  
+  <option>Layyah</option>  
+  <option>Gujrat</option>  
+  <option>Rajanpur</option>  
+  <option>Mandi Bahauddin</option>  
+  <option>Nankana Sahib</option>  
+  <option>Other City</option>  
+</select>
+  <input type="file" id="profile-pic" accept="image/*" />
+  <button onclick="register()"><i class="fas fa-user-plus"></i> Register</button>
+  <button class="link-btn" onclick="switchToLogin()">Already have an account? Login</button><br>
+  <button class="link-btn" onclick="adminAccess()"><i class="fas fa-lock"></i> Admin Panel</button>
+</div>
+
+<!-- Student Dashboard -->
+<div class="container dashboard" id="dashboard">
+  <h2>Welcome, <span id="studentName"></span></h2>
+  <img id="studentPic" class="profile-pic" src="" alt="Profile" />
+  <p><strong>Email:</strong> <span id="studentEmail"></span></p>
+  <p><strong>Class:</strong> <span id="studentClass"></span></p>
+  <p><strong>City:</strong> <span id="studentCity"></span></p>
+  <button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+  <button class="link-btn" onclick="goToHome()"><i class="fas fa-home"></i> Explore More</button>
+</div>
+
+<!-- Admin Panel -->
+<div class="container admin-panel" id="adminPanel">
+  <h2><i class="fas fa-user-shield"></i> Admin Panel</h2>
+  <div id="adminContent" style="max-height: 300px; overflow-y: auto; text-align:left; font-size:14px;"></div>
+  <button onclick="hideAdmin()">Close Admin Panel</button>
+</div>
+
+<script>
+  const users = JSON.parse(localStorage.getItem("users") || "[]");
+  const history = JSON.parse(localStorage.getItem("history") || "[]");
+
+  function togglePassword() {
+    const pass = document.getElementById("password");
+    pass.type = pass.type === "password" ? "text" : "password";
+    document.querySelector(".toggle-password").innerText = pass.type === "password" ? "Show" : "Hide";
+  }
+
+  function switchToLogin() {
+    document.getElementById("form-title").innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+    document.getElementById("name").style.display = "none";
+    document.getElementById("class").style.display = "none";
+    document.getElementById("city").style.display = "none";
+    document.getElementById("profile-pic").style.display = "none";
+    document.querySelector("button[onclick='register()']").innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+    document.querySelector("button[onclick='register()']").setAttribute("onclick", "login()");
+  }
+
+  function register() {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const cls = document.getElementById("class").value;
+    const city = document.getElementById("city").value;
+    const pic = document.getElementById("profile-pic").files[0];
+
+    if (!name || !email || !password || !cls || !city || !pic) {
+      showBanner("Please fill all fields including profile picture.");
+      return;
+    }
+
+    if (users.find(u => u.email === email)) {
+      showBanner("Email already registered.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const profileURL = e.target.result;
+      const user = { name, email, password, cls, city, pic: profileURL };
+      users.push(user);
+      localStorage.setItem("users", JSON.stringify(users));
+      history.push({ email, action: "Registered", time: new Date().toLocaleString() });
+      localStorage.setItem("history", JSON.stringify(history));
+      showBanner("Registered successfully.");
+      switchToLogin();
+    };
+    reader.readAsDataURL(pic);
+  }
+
+  function login() {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const user = users.find(u => u.email === email && u.password === password);
+    if (!user) return showBanner("Invalid login credentials.");
+
+    history.push({ email, action: "Logged In", time: new Date().toLocaleString() });
+    localStorage.setItem("history", JSON.stringify(history));
+
+    document.getElementById("auth-section").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+    document.getElementById("studentName").innerText = user.name;
+    document.getElementById("studentEmail").innerText = user.email;
+    document.getElementById("studentClass").innerText = user.cls;
+    document.getElementById("studentCity").innerText = user.city;
+    document.getElementById("studentPic").src = user.pic;
+    showBanner("Login successful.");
+  }
+
+  function logout() {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("auth-section").style.display = "block";
+    switchToRegister();
+  }
+
+  function goToHome() {
+    window.location.href = "paid.html"; // replace with your homepage
+  }
+
+  function adminAccess() {
+    const pass = prompt("Enter admin password:");
+    if (pass === "admin123") {
+      document.getElementById("auth-section").style.display = "none";
+      document.getElementById("adminPanel").style.display = "block";
+
+      const log = JSON.parse(localStorage.getItem("history") || "[]").reverse();
+      const users = JSON.parse(localStorage.getItem("users") || "[]");
+
+      let html = "<h3>Login & Register History:</h3><ul>";
+      for (let item of log) {
+        html += `<li>${item.email} — ${item.action} at ${item.time}</li>`;
+      }
+      html += "</ul><hr><h3>Registered Users:</h3>";
+      for (let u of users) {
+        html += `
+          <div style="margin-bottom:15px;">
+            <img src="${u.pic}" width="40" height="40" style="border-radius:50%;vertical-align:middle;" />
+            <strong>${u.name}</strong> (${u.email}) — Class ${u.cls}, ${u.city}
+          </div>`;
+      }
+      document.getElementById("adminContent").innerHTML = html;
+    } else {
+      showBanner("Incorrect admin password.");
+    }
+  }
+
+  function hideAdmin() {
+    document.getElementById("adminPanel").style.display = "none";
+    document.getElementById("auth-section").style.display = "block";
+  }
+
+  function showBanner(msg) {
+    const banner = document.getElementById("banner");
+    banner.innerText = msg;
+    banner.style.display = "block";
+    setTimeout(() => banner.style.display = "none", 3000);
+  }
+
+  function switchToRegister() {
+    document.getElementById("form-title").innerHTML = '<i class="fas fa-user-plus"></i> Register';
+    document.getElementById("name").style.display = "block";
+    document.getElementById("class").style.display = "block";
+    document.getElementById("city").style.display = "block";
+    document.getElementById("profile-pic").style.display = "block";
+    document.querySelector("button[onclick='login()']").innerHTML = '<i class="fas fa-user-plus"></i> Register';
+    document.querySelector("button[onclick='login()']").setAttribute("onclick", "register()");
+  }
+</script>
+</body>
+    </html>

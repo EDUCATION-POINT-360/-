@@ -48,6 +48,42 @@
       background: #00f2ff33;
       color: #00f2ff;
     }
+	.hamburger {
+  display: none;
+  font-size: 1.6rem;
+  color: #00f2ff;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.9);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+  }
+
+  nav.active {
+    max-height: 500px;
+    padding: 1rem 0;
+  }
+
+  nav a {
+    padding: 1rem;
+    border-top: 1px solid #222;
+    text-align: center;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
 .neon-button {
       display: inline-block; padding: 10px 25px;
       border: 2px solid #00f7ff; border-radius: 25px;
@@ -394,16 +430,22 @@
 <body>
 
   <header>
-    <div class="logo">Education Point</div>
-    <nav>
-      <a href="#">Home</a>
-      <a href="home.html">Resources</a>
-      <a href="Education Point app.html">App</a>
-      <a href="ABOUT US.html">About</a>
-      <a href="login.html">Login/sigin</a>
-      
-    </nav>
-  </header>
+  <div class="logo">Education Point</div>
+  <nav id="nav-links">
+    <a href="#">Home</a>
+    <a href="home.html">Resources</a>
+    <a href="Education Point app.html">App</a>
+    <a href="ABOUT US.html">About</a>
+    <a href="login.html">Login/SignIn</a>
+  </nav>
+  <div class="hamburger" onclick="toggleMenu()">
+    <i class="fas fa-bars"></i>
+  </div>
+  
+
+  
+</header>
+
 
   <div class="hero">
     <h1>Welcome to Education Point</h1>
@@ -520,6 +562,13 @@
         </div>
       </div>
     </section>
+	  <script>
+  function toggleMenu() {
+    const nav = document.getElementById('nav-links');
+    nav.classList.toggle('active');
+  }
+
+</script>
  <style>
     /* Your existing CSS remains here - omitted for brevity */
 
@@ -571,8 +620,7 @@
       color: #ccc;
     }
   </style>
-</head>
-<body>
+
   <!-- Loader, Navbar, Hero, and Sections Already Present -->
 
   <!-- NEW FEATURES SECTION -->
@@ -637,6 +685,7 @@
         <li><a href="https://whatsapp.com/channel/0029VayfTrh8PgsHHebiwc2k"><i class="fab fa-whatsapp"></i></a></li>
         <li><a href="https://www.instagram.com/itx.wani1?igsh=MTVwYjY0N2YwMnRqNg=="><i class="fab fa-instagram"></i></a></li>
         <li><a href="https://youtube.com/@educationpoint998?si=s99BJgdK5SEr01I5"><i class="fab fa-youtube"></i></a></li>
-      </ul></div>
+    	</ul></div>
+		
 </body>
 </html>

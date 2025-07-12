@@ -1,400 +1,642 @@
-</html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Education Point | Portal</title>
-  
+  <title>Education Point | Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="logo.png" type="image/png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+ <link rel="icon" href="logo.png" type="image/png" />
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <style>
-    * {
+    
+* {
       margin: 0; padding: 0; box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Poppins', sans-serif;
     }
+	
     body {
-      background: linear-gradient(135deg, #000, #111);
-      color: #fff;
+  background: #000; /* Fallback color */
+  color: #fff;
+  overflow-x: hidden;
+  position: relative;
+}
+    header {
+      position: fixed; top: 0; left: 0; width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(12px);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem; z-index: 1000;
+      box-shadow: 0 0 15px #00f2ff66;
+    }
+	
+    .logo {
+      font-size: 1.8rem; font-weight: bold;
+      color: #00f2ff;
+      text-shadow: 0 0 10px #00f2ff;
+    }
+    nav {
+      display: flex; gap: 1rem;
+    }
+    nav a, .login-btn {
+      color: #fff; text-decoration: none;
+      font-weight: 500; cursor: pointer;
+      transition: 0.3s ease;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+    }
+    nav a:hover, .login-btn:hover {
+      background: #00f2ff33;
+      color: #00f2ff;
+    }
+.neon-button {
+      display: inline-block; padding: 10px 25px;
+      border: 2px solid #00f7ff; border-radius: 25px;
+      color: #00f7ff; background: transparent; font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 8px #00f7ff, 0 0 15px #00f7ff;
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+    }
+    .neon-button:hover {
+      background: #00f7ff; color: #000;
+      box-shadow: 0 0 12px #00f7ff, 0 0 25px #00f7ff;
+    }
+    .hero {
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 20px;
-      overflow-x: hidden;
-    }
-
-    /* Moving shapes */
-    .background-shapes {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      overflow: hidden;
-      top: 0;
-      left: 0;
-    }
-    .shape {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.05);
-      animation: float 10s infinite ease-in-out;
-    }
-    .shape1 { width: 100px; height: 100px; top: 10%; left: 20%; animation-delay: 0s; }
-    .shape2 { width: 120px; height: 120px; top: 60%; left: 70%; animation-delay: 2s; }
-    .shape3 { width: 80px; height: 80px; top: 40%; left: 50%; animation-delay: 4s; }
-    .shape4 { width: 60px; height: 60px; top: 80%; left: 30%; animation-delay: 6s; }
-
-    @keyframes float {
-      0% { transform: translateY(0) scale(1); opacity: 0.3; }
-      50% { transform: translateY(-30px) scale(1.2); opacity: 0.1; }
-      100% { transform: translateY(0) scale(1); opacity: 0.3; }
-    }
-
-    .container {
-      width: 100%;
-      max-width: 460px;
-      background: rgba(255,255,255,0.05);
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 25px rgba(255,255,255,0.1);
-      backdrop-filter: blur(12px);
-      animation: fadeIn 1s ease;
-      z-index: 1;
-      position: relative;
-    }
-
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: scale(0.9); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-
-    h2 {
       text-align: center;
-      margin-bottom: 20px;
-      color: #fff;
-      font-weight: 600;
+      padding: 7rem 1rem 4rem;
+      animation: fadeInUp 1s ease;
     }
-
-    input, select {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.1);
-      color: #fff;
+    .hero h1 {
+      font-size: 2.8rem;
+      color: #00f2ff;
+      text-shadow: 0 0 20px #00f2ff99;
     }
-
-    input::placeholder {
-      color: #bbb;
-    }
-
-    input[type="file"] {
-      background: none;
-      color: #fff;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      background: linear-gradient(45deg, #ffffff20, #ffffff40);
-      color: #fff;
-      border: 1px solid #fff;
-      border-radius: 10px;
-      font-size: 15px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    button:hover {
-      background: #fff;
-      color: #000;
-    }
-
-    .link-btn {
-      background: none;
-      border: none;
-      color: #aaa;
-      text-decoration: underline;
-      cursor: pointer;
-      font-size: 14px;
-      display: inline-block;
-      margin-top: 5px;
-    }
-
-    .link-btn:hover {
-      color: #fff;
-    }
-
-    .toggle-password {
-      float: right;
-      margin-top: -30px;
-      margin-right: 10px;
-      cursor: pointer;
-      font-size: 13px;
+    .hero p {
+      max-width: 700px;
+      margin-top: 1rem;
+      font-size: 1.1rem;
       color: #ccc;
     }
 
-    .dashboard, .admin-panel {
-      display: none;
-      animation: slideIn 0.7s ease;
+    section {
+      padding: 4rem 1.5rem;
+      text-align: center;
+      animation: fadeIn 2s ease;
+    }
+    section h2 {
+      font-size: 2rem;
+      color: #00f2ff;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 15px #00f2ff;
+    }
+    section p {
+      max-width: 800px;
+      margin: auto;
+      color: #bbb;
+      line-height: 1.7;
     }
 
-    @keyframes slideIn {
-      0% { opacity: 0; transform: translateY(30px); }
-      100% { opacity: 1; transform: translateY(0); }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .feature-box {
+      background: #1b1b1b;
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid #00f2ff44;
+      box-shadow: 0 0 10px #00f2ff22;
+      transition: transform 0.3s ease, box-shadow 0.3s;
+    }
+    .feature-box:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 25px #00f2ff88;
+    }
+    .feature-box i {
+      font-size: 2.3rem;
+      color: #00f2ff;
+      margin-bottom: 1rem;
     }
 
-    .profile-pic {
-      width: 100px;
-      height: 100px;
+    .student-img {
+      margin-top: 2rem;
+      animation: fadeInUp 1.2s ease;
+    }
+    .student-img img {
+      width: 140px;
       border-radius: 50%;
-      object-fit: cover;
-      margin: 0 auto 15px;
-      display: block;
-      border: 3px solid #fff;
+      box-shadow: 0 0 25px #00f2ff99;
+    }
+.animated-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  background: linear-gradient(120deg, #000000 0%, #1a1a1a 100%);
+}
+
+.particle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: rgba(0, 247, 255, 0.2);
+  box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff;
+  border-radius: 50%;
+  animation: float 10s infinite ease-in-out;
+}
+
+.particle:nth-child(1) {
+  top: 20%; left: 15%;
+  animation-delay: 0s;
+}
+.particle:nth-child(2) {
+  top: 50%; left: 30%;
+  animation-delay: 2s;
+}
+.particle:nth-child(3) {
+  top: 70%; left: 70%;
+  animation-delay: 4s;
+}
+.particle:nth-child(4) {
+  top: 40%; left: 80%;
+  animation-delay: 6s;
+}
+.particle:nth-child(5) {
+  top: 10%; left: 60%;
+  animation-delay: 8s;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) scale(1); opacity: 0.5; }
+  50% { transform: translateY(-50px) scale(1.3); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 0.5; }
+}
+
+    .testimonials .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    .card {
+      background: #1a1a1a;
+      padding: 1rem;
+      border-radius: 10px;
+      width: 280px;
+      box-shadow: 0 0 15px #00f2ff22;
+      text-align: center;
+    }
+    .card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      border: 2px solid #00f2ff;
+    }
+    .card h4 {
+      color: #00f2ff;
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      color: #aaa;
+      font-size: 0.95rem;
     }
 
-    #banner {
-      position: fixed;
-      top: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #4caf50;
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .stat-box {
+      background: #1a1a1a;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00f2ff22;
+    }
+    .stat-box h3 {
+      font-size: 2rem;
+      color: #00f2ff;
+    }
+    .stat-box p {
+      color: #ccc;
+      font-size: 0.95rem;
+  
+    }
+#spotlight {
+  background: #0d0d0d;
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+#spotlight .neon-heading {
+  font-size: 2rem;
+  color: #00f2ff;
+  text-shadow: 0 0 15px #00f2ff, 0 0 25px #00f2ff88;
+  margin-bottom: 2.5rem;
+}
+
+#spotlight .resources {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.resource-card {
+  background: #141414;
+  border: 2px solid #00f2ff33;
+  border-radius: 15px;
+  padding: 1.5rem;
+  width: 260px;
+  box-shadow: 0 0 15px #00f2ff22;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  position: relative;
+}
+
+.resource-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 30px #00f2ff88;
+}
+
+.resource-card img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px solid #00f2ff;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 20px #00f2ff55;
+}
+
+.resource-card h3 {
+  color: #00f2ff;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px #00f2ff;
+}
+
+.resource-card p {
+  font-size: 0.95rem;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .resource-card {
+    width: 100%;
+    margin: 0 auto;
+  }
+   .neon-button {
+      display: inline-block; padding: 10px 25px;
+      border: 2px solid #00f7ff; border-radius: 25px;
+      color: #00f7ff; background: transparent; font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 8px #00f7ff, 0 0 15px #00f7ff;
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+    }
+    .neon-button:hover {
+      background: #00f7ff; color: #000;
+      box-shadow: 0 0 12px #00f7ff, 0 0 25px #00f7ff;
+    }
+    .section { padding: 60px 20px; text-align: center; }
+    .neon-heading {
+      font-size: 2.2rem; margin-bottom: 40px;
+      color: #00f7ff; text-shadow: 0 0 8px #00f7ff;
+}
+
+    footer {
+      background: #0d0d0d;
+      padding: 2rem 1rem;
+      text-align: center;
+      color: #aaa;
+      margin-top: 4rem;
+      border-top: 1px solid #222;
+    }
+    .socials i {
+      margin: 0 0.5rem;
+      color: #00f2ff;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .socials i:hover {
       color: #fff;
-      padding: 12px 25px;
-      border-radius: 8px;
-      display: none;
-      z-index: 999;
-      font-size: 15px;
     }
 
-    @media (max-width: 500px) {
-      .container { padding: 20px; }
-      h2 { font-size: 20px; }
-      input, select, button { font-size: 14px; padding: 10px; }
-      .profile-pic { width: 80px; height: 80px; }
+    .login-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .login-box {
+      background: #111;
+      padding: 2rem;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 30px #00f2ff44;
+      text-align: center;
+    }
+    .login-box input {
+      width: 100%;
+      margin: 0.5rem 0;
+      padding: 0.7rem;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+    }
+    .login-box button {
+      margin-top: 1rem;
+      padding: 0.7rem 2rem;
+      background: #00f2ff;
+      border: none;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+	
+	
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @media(max-width: 600px){
+      .hero h1 { font-size: 2rem; }
+      .card, .feature-box, .spotlight-card { width: 100%; }
+    }
+  </style>
+</head>
+<!-- Animated Background -->
+<div class="animated-bg">
+ 
+  <div class="particle"></div>
+  <div class="particle"></div>
+</div>
+
+<body>
+
+  <header>
+    <div class="logo">Education Point</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="home.html">Resources</a>
+      <a href="Education Point app.html">App</a>
+      <a href="ABOUT US.html">About</a>
+      <a href="login.html">Login/sigin</a>
+      
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>Welcome to Education Point</h1>
+    <p>Pakistan's trusted platform for educational material, board exam resources & digital learning content. Learn smarter, not harder!</p>
+  </div>
+
+  <section>
+    <h2>Our Vision</h2>
+    <p>To provide accessible, smart, and interactive learning resources to every student — anytime, anywhere.</p>
+  </section>
+
+  <section>
+    <h2> What We Offer</h2>
+    <div class="features">
+      <div class="feature-box">
+        <i class="fas fa-book-open"></i>
+        <h4>Keybooks & Notes</h4>
+        <p>Curated content for 9th–12th grades — fast, simple, and free.</p>
+      </div>
+      <div class="feature-box">
+        <i class="fas fa-chalkboard-teacher"></i>
+        <h4>Expert Guidance</h4>
+        <p>Tips & lessons from top educators across Pakistan.</p>
+      </div>
+      <div class="feature-box">
+        <i class="fas fa-laptop-code"></i>
+        <h4>Digital Access</h4>
+        <p>Download notes, take quizzes & view lectures on any device.</p>
+      </div>
+      <div class="feature-box">
+        <i class="fas fa-user-graduate"></i>
+        <h4>Student Support</h4>
+        <p>Helping students grow emotionally & academically.</p>
+      </div>
+    </div>
+    <div class="student-img">
+      <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" alt="Student">
+    </div>
+  </section>
+<div class="hero">
+  
+    <h1 class="title">Education Point</h1>
+    <p class="tagline">Your path to knowledge starts here. Explore curated educational resources designed to help you excel.</p>
+    <a href="home.html" class="neon-button">Explore Resources</a>
+  </div>
+  <section class="testimonials">
+    <h2>What Students Say</h2>
+    <div class="cards">
+      <div class="card">
+        
+        <h4>Fatima Zafar</h4>
+        <p>"Education Point helped me prepare for my board exams confidently."</p>
+      </div>
+      <div class="card">
+       
+        <h4>Ali Hassan</h4>
+        <p>"Resources are free and mobile-friendly. Highly recommended!"</p>
+      </div>
+      <div class="card">
+       
+        <h4>Sana Tariq</h4>
+        <p>"From notes to past papers, everything is well-organized."</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <h2>Our Achievements</h2>
+    <div class="stat-grid">
+      <div class="stat-box">
+        <h3>500+</h3>
+        <p>Students Benefited</p>
+      </div>
+      <div class="stat-box">
+        <h3>1000+</h3>
+        <p>Resources Provided</p>
+      </div>
+      <div class="stat-box">
+        <h3>100%</h3>
+        <p>Free & Accessible</p>
+      </div>
+    </div>
+  </section>
+
+ <section id="spotlight" class="section">
+      <h2 class="neon-heading" data-aos="fade-up">Student Spotlight</h2>
+      <div class="resources">
+       
+		<div class="resources">
+        <div class="resource-card" data-aos="zoom-in">
+          <img src="student 3.jpg" alt="Bilal">
+          <h3>BILAL</h3>
+          <p>"Education Point helped me understand tough topics easily. The notes were clear and concise!"</p>
+        </div>
+		<div class="resource-card" data-aos="zoom-in">
+          <img src="student 4.jpg" alt="Hamza">
+          <h3>Hamza Shah</h3>
+          <p>"I improved my grades after following their study schemes and guidebooks!"</p>
+        </div>
+		<div class="resource-card" data-aos="zoom-in">
+          <img src="student 5.jpg" alt="Ali">
+          <h3>Ali Raza</h3>
+          <p>"Education Point made my studies so much easier. The notes were just perfect!"</p>
+        </div>
+		<div class="resource-card" data-aos="zoom-in">
+          <img src="student 6.jpg" alt="Usman">
+          <h3>Usman Tariq</h3>
+          <p>"Clean design, easy access, and everything I needed to prepare!"</p>
+        </div>
+        <div class="resource-card" data-aos="zoom-in">
+          <img src="student 2.jpg" alt="Ahmed">
+          <h3>Ahmed Khan</h3>
+          <p>“The guess papers were spot-on. A huge help before exams!”</p>
+        </div>
+      </div>
+    </section>
+ <style>
+    /* Your existing CSS remains here - omitted for brevity */
+
+    /* NEW FEATURES UI SECTION */
+    .features-section {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(8px);
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .features-section h2 {
+      font-size: 2.2rem;
+      color: #00f7ff;
+      text-shadow: 0 0 8px #00f7ff;
+      margin-bottom: 40px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      padding: 0 20px;
+    }
+    .feature-card {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(0, 247, 255, 0.2);
+      border-radius: 15px;
+      padding: 30px 20px;
+      color: #fff;
+      transition: 0.4s;
+      box-shadow: 0 0 10px #00f7ff50;
+    }
+    .feature-card:hover {
+      background-color: rgba(0, 247, 255, 0.1);
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px #00f7ff80;
+    }
+    .feature-card i {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #00f7ff;
+    }
+    .feature-card h4 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #00f7ff;
+    }
+    .feature-card p {
+      font-size: 0.95rem;
+      color: #ccc;
     }
   </style>
 </head>
 <body>
+  <!-- Loader, Navbar, Hero, and Sections Already Present -->
 
-<div class="background-shapes">
-  <div class="shape shape1"></div>
-  <div class="shape shape2"></div>
-  <div class="shape shape3"></div>
-  <div class="shape shape4"></div>
-</div>
-
-<div id="banner"></div>
-
-<!-- Login/Register Section -->
-<div class="container" id="auth-section">
-  <h2 id="form-title"><i class="fas fa-user-plus"></i> Register</h2>
-  <input type="text" id="name" placeholder="Full Name" />
-  <input type="email" id="email" placeholder="Email" />
-  <input type="password" id="password" placeholder="Password" />
-  <span class="toggle-password" onclick="togglePassword()">Show</span>
-  <select id="class">
-    <option value="">Select Class</option>
-    <option>9th</option>
-    <option>10th</option>
-    <option>11th</option>
-    <option>12th</option>
-  </select>
-  <select id="city">  
-  <option value="">Select City</option>  
-  <option>Lahore</option>  
-  <option>Faisalabad</option>  
-  <option>Rawalpindi</option>  
-  <option>Multan</option>  
-  <option>Gujranwala</option>  
-  <option>Sargodha</option>  
-  <option>Bahawalpur</option>  
-  <option>Sialkot</option>  
-  <option>Sheikhupura</option>  
-  <option>Rahim Yar Khan</option>  
-  <option>Jhelum</option>  
-  <option>Okara</option>  
-  <option>Wah Cantt</option>  
-  <option>Vehari</option>  
-  <option>Kasur</option>  
-  <option>Chiniot</option>  
-  <option>Khanewal</option>  
-  <option>Muzaffargarh</option>  
-  <option>Mianwali</option>  
-  <option>Lodhran</option>  
-  <option>Bhakkar</option>  
-  <option>Dera Ghazi Khan</option>  
-  <option>Pakpattan</option>  
-  <option>Attock</option>  
-  <option>Toba Tek Singh</option>  
-  <option>Jhang</option>  
-  <option>Hafizabad</option>  
-  <option>Narowal</option>  
-  <option>Chakwal</option>  
-  <option>Bahawalnagar</option>  
-  <option>Layyah</option>  
-  <option>Gujrat</option>  
-  <option>Rajanpur</option>  
-  <option>Mandi Bahauddin</option>  
-  <option>Nankana Sahib</option>  
-  <option>Other City</option>  
-</select>
-  <input type="file" id="profile-pic" accept="image/*" />
-  <button onclick="register()"><i class="fas fa-user-plus"></i> Register</button>
-  <button class="link-btn" onclick="switchToLogin()">Already have an account? Login</button><br>
-  <button class="link-btn" onclick="adminAccess()"><i class="fas fa-lock"></i> Admin Panel</button>
-</div>
-
-<!-- Student Dashboard -->
-<div class="container dashboard" id="dashboard">
-  <h2>Welcome, <span id="studentName"></span></h2>
-  <img id="studentPic" class="profile-pic" src="" alt="Profile" />
-  <p><strong>Email:</strong> <span id="studentEmail"></span></p>
-  <p><strong>Class:</strong> <span id="studentClass"></span></p>
-  <p><strong>City:</strong> <span id="studentCity"></span></p>
-  <button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-  <button class="link-btn" onclick="goToHome()"><i class="fas fa-home"></i> Explore More</button>
-</div>
-
-<!-- Admin Panel -->
-<div class="container admin-panel" id="adminPanel">
-  <h2><i class="fas fa-user-shield"></i> Admin Panel</h2>
-  <div id="adminContent" style="max-height: 300px; overflow-y: auto; text-align:left; font-size:14px;"></div>
-  <button onclick="hideAdmin()">Close Admin Panel</button>
-</div>
-
-<script>
-  const users = JSON.parse(localStorage.getItem("users") || "[]");
-  const history = JSON.parse(localStorage.getItem("history") || "[]");
-
-  function togglePassword() {
-    const pass = document.getElementById("password");
-    pass.type = pass.type === "password" ? "text" : "password";
-    document.querySelector(".toggle-password").innerText = pass.type === "password" ? "Show" : "Hide";
-  }
-
-  function switchToLogin() {
-    document.getElementById("form-title").innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
-    document.getElementById("name").style.display = "none";
-    document.getElementById("class").style.display = "none";
-    document.getElementById("city").style.display = "none";
-    document.getElementById("profile-pic").style.display = "none";
-    document.querySelector("button[onclick='register()']").innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
-    document.querySelector("button[onclick='register()']").setAttribute("onclick", "login()");
-  }
-
-  function register() {
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-    const cls = document.getElementById("class").value;
-    const city = document.getElementById("city").value;
-    const pic = document.getElementById("profile-pic").files[0];
-
-    if (!name || !email || !password || !cls || !city || !pic) {
-      showBanner("Please fill all fields including profile picture.");
-      return;
+  <!-- NEW FEATURES SECTION -->
+  <section class="features-section" id="features">
+    <h2 data-aos="fade-up">Why Choose Education Point?</h2>
+    <div class="features-grid">
+      <div class="feature-card" data-aos="zoom-in">
+        <i class="fas fa-book"></i>
+        <h4>Vast Resources</h4>
+        <p>Access notes, guides, schemes, keybooks, and more across various subjects.</p>
+      </div>
+      <div class="feature-card" data-aos="zoom-in">
+        <i class="fas fa-bolt"></i>
+        <h4>Fast Loading</h4>
+        <p>Lightning-fast experience powered by modern web technologies and optimized assets.</p>
+      </div>
+      
+      <div class="feature-card" data-aos="zoom-in">
+        <i class="fas fa-users"></i>
+        <h4>Student Focused</h4>
+        <p>Real testimonials, student spotlights, and success stories from actual users.</p>
+      </div>
+      <div class="feature-card" data-aos="zoom-in">
+        <i class="fas fa-code"></i>
+        <h4>Modern Design</h4>
+        <p>Clean, futuristic UI with smooth animations, neon effects, and responsive design.</p>
+      </div>
+    </div>
+  </section>
+  <style>
+  .site-footer {
+     background: #000;
+      padding: 40px 0 10px; text-align: center;
+      margin-top: 60px;
     }
-
-    if (users.find(u => u.email === email)) {
-      showBanner("Email already registered.");
-      return;
+    .site-footer h3 {
+      font-size: 28px; color: #00f7ff; margin-bottom: 10px;
+      text-shadow: 0 0 5px #00f7ff;
     }
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const profileURL = e.target.result;
-      const user = { name, email, password, cls, city, pic: profileURL };
-      users.push(user);
-      localStorage.setItem("users", JSON.stringify(users));
-      history.push({ email, action: "Registered", time: new Date().toLocaleString() });
-      localStorage.setItem("history", JSON.stringify(history));
-      showBanner("Registered successfully.");
-      switchToLogin();
-    };
-    reader.readAsDataURL(pic);
-  }
-
-  function login() {
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-    const user = users.find(u => u.email === email && u.password === password);
-    if (!user) return showBanner("Invalid login credentials.");
-
-    history.push({ email, action: "Logged In", time: new Date().toLocaleString() });
-    localStorage.setItem("history", JSON.stringify(history));
-
-    document.getElementById("auth-section").style.display = "none";
-    document.getElementById("dashboard").style.display = "block";
-    document.getElementById("studentName").innerText = user.name;
-    document.getElementById("studentEmail").innerText = user.email;
-    document.getElementById("studentClass").innerText = user.cls;
-    document.getElementById("studentCity").innerText = user.city;
-    document.getElementById("studentPic").src = user.pic;
-    showBanner("Login successful.");
-  }
-
-  function logout() {
-    document.getElementById("dashboard").style.display = "none";
-    document.getElementById("auth-section").style.display = "block";
-    switchToRegister();
-  }
-
-  function goToHome() {
-    window.location.href = "home.html"; // replace with your homepage
-  }
-
-  function adminAccess() {
-    const pass = prompt("Enter admin password:");
-    if (pass === "admin123") {
-      document.getElementById("auth-section").style.display = "none";
-      document.getElementById("adminPanel").style.display = "block";
-
-      const log = JSON.parse(localStorage.getItem("history") || "[]").reverse();
-      const users = JSON.parse(localStorage.getItem("users") || "[]");
-
-      let html = "<h3>Login & Register History:</h3><ul>";
-      for (let item of log) {
-        html += `<li>${item.email} — ${item.action} at ${item.time}</li>`;
-      }
-      html += "</ul><hr><h3>Registered Users:</h3>";
-      for (let u of users) {
-        html += `
-          <div style="margin-bottom:15px;">
-            <img src="${u.pic}" width="40" height="40" style="border-radius:50%;vertical-align:middle;" />
-            <strong>${u.name}</strong> (${u.email}) — Class ${u.cls}, ${u.city}
-          </div>`;
-      }
-      document.getElementById("adminContent").innerHTML = html;
-    } else {
-      showBanner("Incorrect admin password.");
+    .site-footer p { color: #bbb; }
+    .socials {
+      display: flex; justify-content: center; gap: 25px;
+      margin: 20px 0; list-style: none;
     }
-  }
+    .socials li a {
+      color: #00f7ff; font-size: 22px; transition: 0.3s;
+    }
+    .socials li a:hover {
+      color: #fff; transform: scale(1.2);
+    }
+    .footer-bottom {
+      border-top: 1px solid #333; padding-top: 12px;
+      font-size: 14px; color: #888;
 
-  function hideAdmin() {
-    document.getElementById("adminPanel").style.display = "none";
-    document.getElementById("auth-section").style.display = "block";
-  }
-
-  function showBanner(msg) {
-    const banner = document.getElementById("banner");
-    banner.innerText = msg;
-    banner.style.display = "block";
-    setTimeout(() => banner.style.display = "none", 3000);
-  }
-
-  function switchToRegister() {
-    document.getElementById("form-title").innerHTML = '<i class="fas fa-user-plus"></i> Register';
-    document.getElementById("name").style.display = "block";
-    document.getElementById("class").style.display = "block";
-    document.getElementById("city").style.display = "block";
-    document.getElementById("profile-pic").style.display = "block";
-    document.querySelector("button[onclick='login()']").innerHTML = '<i class="fas fa-user-plus"></i> Register';
-    document.querySelector("button[onclick='login()']").setAttribute("onclick", "register()");
-  }
-</script>
+  </style>
+  <footer class="site-footer">
+    <div class="footer-content">
+      <h3>Education Point</h3>
+      <p>Empowering Students to Shine Brighter!</p>
+      <ul class="socials">
+        <li><a href="https://www.facebook.com/profile.php?id=61561221331392&mibextid=ZbWKwL"><i class="fab fa-facebook-f"></i></a></li>
+        <li><a href="https://whatsapp.com/channel/0029VayfTrh8PgsHHebiwc2k"><i class="fab fa-whatsapp"></i></a></li>
+        <li><a href="https://www.instagram.com/itx.wani1?igsh=MTVwYjY0N2YwMnRqNg=="><i class="fab fa-instagram"></i></a></li>
+        <li><a href="https://youtube.com/@educationpoint998?si=s99BJgdK5SEr01I5"><i class="fab fa-youtube"></i></a></li>
+      </ul></div>
 </body>
-    </html>
+</html>

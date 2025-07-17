@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>1st Year Biology Notes | Education Point</title>
+  <link rel="icon" href="https://i.ibb.co/QPWXqdh/edupointlogo.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #0f2027;
+      color: #fff;
+    }
+    header {
+      text-align: center;
+      padding: 30px 15px;
+      background: rgba(0,0,0,0.6);
+      border-bottom: 2px solid #00ffcc;
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #00ffcc;
+      text-shadow: 0 0 5px #00ffcc;
+    }
+    .chapter-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 30px;
+    }
+    .chapter {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid #00ffcc;
+      border-radius: 15px;
+      padding: 20px;
+      transition: 0.3s ease;
+      position: relative;
+    }
+    .chapter:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px #00ffcc66;
+    }
+    .chapter i {
+      font-size: 2rem;
+      color: #00ffcc;
+      margin-bottom: 10px;
+    }
+    .chapter h3 {
+      font-size: 1.1rem;
+      margin: 10px 0;
+      cursor: pointer;
+    }
+    .tabs {
+      display: none;
+      margin-top: 15px;
+      animation: fade 0.4s ease-in-out;
+    }
+    .tabs a {
+      display: block;
+      margin: 8px 0;
+      padding: 10px 15px;
+      background: #00ffcc;
+      color: #000;
+      border-radius: 25px;
+      text-align: center;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 0 10px #00ffcc;
+      transition: 0.3s;
+    }
+    .tabs a:hover {
+      background: #00ffee;
+      box-shadow: 0 0 15px #00ffee, 0 0 25px #00ffee;
+    }
+    @keyframes fade {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #111;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>📘 1st Year Biology Notes<br><small>Chapter-wise Notes</small></h1>
+</header>
+
+<div class="chapter-container">
+
+  <div class="chapter" onclick="toggleTabs(this)">
+    <i class="fas fa-leaf"></i>
+    <h3>1 – Biodiversity and Classification</h3>
+    <div class="tabs">
+      <a href="https://drive.google.com/file/d/1cRP0Ly82g0rUz8oQLGSgU_2k2rPtXpeA/view?usp=drive_link" target="_blank">📄 Chapter</a>
+      <a href="https://drive.google.com/file/d/1v1b-9lLzoFom7k8WT8dmqa74HLPWIGfZ/view?usp=drive_link" target="_blank">📝 Solutions</a>
+      <a href="https://drive.google.com/file/d/1fZEYRBagBmObec7VJ2B26VfvXV3TXj9b/view?usp=drive_link" target="_blank">❓ MCQs</a>
+    </div>
+  </div>
+
+  <div class="chapter" onclick="toggleTabs(this)">
+    <i class="fas fa-bug"></i>
+    <h3>2 – Bacteria and Viruses</h3>
+    <div class="tabs">
+      <a href="https://drive.google.com/file/d/1Z_HM9mhVC1cmYN7rGZvBWG01Tfbp6bvA/view?usp=drive_link" target="_blank">📄 Chapter</a>
+      <a href="https://drive.google.com/file/d/1U0aKdJy3ELeF_yW1wV3OyWRCsWeY1exX/view?usp=drive_link" target="_blank">📝 Solutions</a>
+      <a href="https://drive.google.com/file/d/15zRFh3sNGFFJiJcbVfpup2Yu1S6QoXoJ/view?usp=drive_link" target="_blank">❓ MCQs</a>
+    </div>
+  </div>
+
+  <div class="chapter" onclick="toggleTabs(this)">
+    <i class="fas fa-dna"></i>
+    <h3>3 – Cell and Subcellular Organelles</h3>
+    <div class="tabs">
+      <a href="https://drive.google.com/file/d/14my0XGGPI1np7G0nfgbZZTGCyJKD1r-Q/view?usp=drive_link" target="_blank">📄 Chapter</a>
+      <a href="https://drive.google.com/file/d/1JSAjNZongK7-m_2ExbUrL6QBZtxbgZjc/view?usp=drive_link" target="_blank">📝 Solutions</a>
+      <a href="https://drive.google.com/file/d/1uQ0CwsNAyFT2lG0241HLvwQsVn1P4Kpw/view?usp=drive_link" target="_blank">❓ MCQs</a>
+    </div>
+  </div>
+
+  <div class="chapter" onclick="toggleTabs(this)">
+    <i class="fas fa-vials"></i>
+    <h3>4 – Molecular Biology</h3>
+    <div class="tabs">
+      <a href="https://drive.google.com/file/d/1QD6l5FDVrxI74cwfs6oaWDeEjhX_-hv0/view?usp=drive_link" target="_blank">📄 Chapter</a>
+      <a href="https://drive.google.com/file/d/18PCH4PY2OLpoaa0HAKgKsbM8Bjojy9bX/view?usp=drive_link" target="_blank">📝 Solutions</a>
+      <a href="https://drive.google.com/file/d/1b9m1cRD_sCvhNA3TY7WgQ60VFw6h2_ke/view?usp=drive_link" target="_blank">❓ MCQs</a>
+    </div>
+  </div>
+
+  <div class="chapter" onclick="toggleTabs(this)">
+    <i class="fas fa-cogs"></i>
+    <h3>5 – Enzymes</h3>
+    <div class="tabs">
+      <a href="https://drive.google.com/file/d/14uFOyrcSsIvZAdRtuLzqJfqcIdWLmq3S/view?usp=drive_link" target="_blank">📄 Chapter</a>
+      <a href="https://drive.google.com/file/d/1W-qJirkoxgwF8cNGzy8kdzNO4l6gnFDV/view?usp=drive_link" target="_blank">📝 Solutions</a>
+      <a href="https://drive.google.com/file/d/1yqORM0Xw7g7pyclAIwRSdI2FlrdI17c3/view?usp=drive_link" target="_blank">❓ MCQs</a>
+    </div>
+  </div>
+
+  <div class="chapter" onclick="toggleTabs(this)">
+    <i class="fas fa-bolt"></i>
+    <h3>6 – Bioenergetics</h3>
+    <div class="tabs">
+      <a href="https://drive.google.com/file/d/1I2QtX7-IzZN7Ka2uqERGS3qlCvS_VGqD/view?usp=drive_link" target="_blank">📄 Chapter</a>
+      <a href="https://drive.google.com/file/d/1lXrbsgtDKtaXNNhSr_U_xbw9YAczdGlX/view?usp=drive_link" target="_blank">📝 Solutions</a>
+      <a href="https://drive.google.com/file/d/1uWM6r6--Ej09HNbTsDMw03HYITKP1LfV/view?usp=drive_link" target="_blank">❓ MCQs</a>
+    </div>
+  </div>
+
+  <div class="chapter" onclick="toggleTabs(this)" style="--neon-color:#3498db;">
+    <i class="fas fa-brain" style="color:#3498db;"></i>
+    <h3>7 – Structural and Computational Biology</h3>
+    <div class="tabs">
+      <a href="https://drive.google.com/file/d/1hiKH63mEcExD828DhtqHYTABbIETSgaE/view?usp=drive_link" target="_blank">📄 Chapter</a>
+      <a href="https://drive.google.com/file/d/1BahXyK2qJ9j-2KhX91FBLziEM7QUk_8g/view?usp=drive_link" target="_blank">📝 Solutions</a>
+      <a href="https://drive.google.com/file/d/1WkOIQQcritlf_xHhZgFvvoSf77v1HTS7/view?usp=drive_link" target="_blank">❓ MCQs</a>
+    </div>
+  </div>
+
+  <div class="chapter" onclick="toggleTabs(this)" style="--neon-color:#1abc9c;">
+    <i class="fas fa-seedling" style="color:#1abc9c;"></i>
+    <h3>8 – Plant Physiology</h3>
+    <div class="tabs">
+      <a href="https://drive.google.com/file/d/1u06DB8jh1ivrzXh47hnV7ufjEJAOZ7qx/view?usp=drive_link" target="_blank">📄 Chapter</a>
+      <a href="https://drive.google.com/file/d/1cUAiQ33hHYh7CITuLnUgZuvSyVUmM9hV/view?usp=drive_link" target="_blank">📝 Solutions</a>
+      <a href="https://drive.google.com/file/d/1Gd7vTl7Bi03TZQr8GGbMAjzg_6Nzet4Y/view?usp=drive_link" target="_blank">❓ MCQs</a>
+    </div>
+  </div>
+
+  <div class="chapter" onclick="toggleTabs(this)" style="--neon-color:#e74c3c;">
+    <i class="fas fa-utensils" style="color:#e74c3c;"></i>
+    <h3>9 – Human Digestive System</h3>
+    <div class="tabs">
+      <a href="https://drive.google.com/file/d/15C7apGu25pc_rcJ6FJeIgINuzCDBnAOE/view?usp=drive_link" target="_blank">📄 Chapter</a>
+      <a href="https://drive.google.com/file/d/1hWbCfPAZY04MYoHm5dc4by_oNIOYlaYX/view?usp=drive_link" target="_blank">📝 Solutions</a>
+      <a href="https://drive.google.com/file/d/1h40uPtPUd4ig7-_Pyaa8y2Ka3R3xjL0W/view?usp=drive_link" target="_blank">❓ MCQs</a>
+    </div>
+  </div>
+
+  <div class="chapter" onclick="toggleTabs(this)" style="--neon-color:#9b59b6;">
+    <i class="fas fa-wind" style="color:#9b59b6;"></i>
+    <h3>10 – Human Respiratory System</h3>
+    <div class="tabs">
+      <a href="https://drive.google.com/file/d/1xMkLYpMAiKgdPJ3sY1dJd-pmN8TgUTuS/view?usp=drive_link" target="_blank">📄 Chapter</a>
+      <a href="https://drive.google.com/file/d/1vKitWW1Uknwv8JDrtDYZrbSqfTbXN6QB/view?usp=drive_link" target="_blank">📝 Solutions</a>
+      <a href="https://drive.google.com/file/d/1Y2WNubYmNC8abl1r-9wEwREquUWEcJUy/view?usp=drive_link" target="_blank">❓ MCQs</a>
+    </div>
+  </div>
+
+  <div class="chapter" onclick="toggleTabs(this)" style="--neon-color:#f39c12;">
+    <i class="fas fa-heartbeat" style="color:#f39c12;"></i>
+    <h3>11 – Human Circulatory System</h3>
+    <div class="tabs">
+      <a href="https://drive.google.com/file/d/1nlyfGA5IwMhImdl3b9acJhbD-z_un8QA/view?usp=drive_link" target="_blank">📄 Chapter</a>
+      <a href="https://drive.google.com/file/d/1CbgDnWkKflsb7Qlh-jL72eAyfdcDnn6m/view?usp=drive_link" target="_blank">📝 Solutions</a>
+      <a href="https://drive.google.com/file/d/16wxnCe3ukyxv_qvFDBJUyw-GVjCF_v_D/view?usp=drive_link" target="_blank">❓ MCQs</a>
+    </div>
+  </div>
+
+  <div class="chapter" onclick="toggleTabs(this)" style="--neon-color:#2ecc71;">
+    <i class="fas fa-dumbbell" style="color:#2ecc71;"></i>
+    <h3>12 – Human Skeletal and Muscular Systems</h3>
+    <div class="tabs">
+      <a href="https://drive.google.com/file/d/1Yw_G6eno6WM362dLR8DIsCr1r7FQweHF/view?usp=drive_link" target="_blank">📄 Chapter</a>
+      <a href="https://drive.google.com/file/d/1TdTxSHqye1_wuENP3Ab_6UKcMhzrmwL6/view?usp=drive_link" target="_blank">📝 Solutions</a>
+      <a href="https://drive.google.com/file/d/1hSAqKv-FLfx47JS36OGhjgnmA2O2k8oD/view?usp=drive_link" target="_blank">❓ MCQs</a>
+    </div>
+  </div>
+  <p> The new material is prepared for FSC first year students for the 2025-26 academic session and aligned with the latest PCTB syllabus and exam pattern. All Punjab Board students can get these bio solutions in both urdu and english mediums. Students can download the chapter-wise Notes for class 11 Biology as a free PDF to get a head start on exam preparation</p>
+</div>
+
+<script>
+  function toggleTabs(el) {
+    const tabs = el.querySelector('.tabs');
+    const allTabs = document.querySelectorAll('.tabs');
+    allTabs.forEach(tab => {
+      if (tab !== tabs) tab.style.display = 'none';
+    });
+    tabs.style.display = tabs.style.display === 'block' ? 'none' : 'block';
+  }
+</script>
+
+<footer>
+  © 2025 Education Point | All Rights Reserved.
+</footer>

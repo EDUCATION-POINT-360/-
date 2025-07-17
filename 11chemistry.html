@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>1st Year Chemistry | Education Point</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: linear-gradient(120deg, #fdfbfb, #ebedee);
+      min-height: 100vh;
+      padding-bottom: 100px;
+      color: #1e293b;
+    }
+    header {
+      background: linear-gradient(to right, #0f172a, #1e293b);
+      color: white;
+      padding: 30px 10px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 10px 20px;
+    }
+
+    .chapter {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    .chapter:hover {
+      transform: scale(1.01);
+    }
+
+    .chapter-header {
+      cursor: pointer;
+      background: linear-gradient(to right, #f8fafc, #e2e8f0);
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+      font-weight: 600;
+      color: #0f172a;
+      transition: background 0.3s;
+    }
+    .chapter-header:hover {
+      background: #e0f2fe;
+    }
+    .chapter-header i {
+      font-size: 22px;
+      transition: transform 0.3s;
+    }
+    .chapter-header.open i {
+      transform: rotate(180deg);
+    }
+
+    .chapter-content {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 20px;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+    .chapter-content.open {
+      padding: 16px 20px 24px;
+      max-height: 200px;
+    }
+
+    .chapter-content a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 10px 0 0;
+      padding: 12px 24px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      color: white;
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      box-shadow: 0 4px 10px rgba(37,99,235,0.3);
+    }
+    .chapter-content a:hover {
+      background: linear-gradient(135deg, #1e40af, #2563eb);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(37,99,235,0.5);
+    }
+    .chapter-content a i {
+      margin-right: 10px;
+    }
+
+    footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      font-size: 14px;
+      padding: 20px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 600px) {
+      .chapter-content a {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>📘 1st Year Chemistry Notes</header>
+
+<div class="container" id="chapters"></div>
+
+<footer>© 2025 Education Point |MUHAMMAD RIZWAN </footer>
+
+<!-- Your HTML remains the same until the <script> tag -->
+<script>
+  const chapters = [
+    { title: "🔹 Chapter 1 – Periodic Table & Properties", notes: "https://drive.google.com/file/d/1UMFSGqDZH5eTHzMMHk6e8UlLSIPRrKaI/view?usp=drive_link", exercise: "https://drive.google.com/file/d/1bmW4r0YaKYmd4s1jczz0u1sxq6wwPOqp/view?usp=drive_link" },
+    { title: "🔹 Chapter 2 – Atomic Structure", notes: "https://drive.google.com/file/d/1K2HIzaidZb1fheHfyF6EA2Ap5GKBFMGg/view?usp=drive_link", exercise: "https://drive.google.com/file/d/1QB-ofBbr1nHOBHRIgfsRXAQu_tnLE9W9/view?usp=drive_link" },
+    { title: "🔹 Chapter 3 – Chemical Bonding", notes: "https://drive.google.com/file/d/19l1uLBb4RlwU-DPzDh9dpKFAqbMwMhhW/view?usp=drive_link", exercise: "https://drive.google.com/file/d/1qffsAne1By0r1Deghc4ZheNuGLDg4Je-/view?usp=drive_link" },
+    { title: "🔹 Chapter 4 – Stoichiometry", notes: "https://drive.google.com/file/d/1qLpbcNy8UiRU2oi9elhlJoXmIKFZ9zXW/view?usp=drive_link", exercise: "https://drive.google.com/file/d/1PabvYhD5SGZ7z__WXrJHPU-inhCZUFiA/view?usp=drive_link" },
+    { title: "🔹 Chapter 5 – States of Matter", notes: "https://drive.google.com/file/d/1P_iayw7osvuRBNNGLUksEJijO8CnGC_k/view?usp=drive_link", exercise: "https://drive.google.com/file/d/1pfewAIOKFMMjWpuiWt9peMMRfSKrGZYX/view?usp=drive_link" },
+    { title: "🔹 Chapter 6 – Chemical Energetics", notes: "https://drive.google.com/file/d/1GAucqk2Gzx8-i0ZOj6b7P6V5r9c0kRQ7/view?usp=drive_link", exercise: "https://drive.google.com/file/d/1syL_QdsrUJfMq41H8aSRUXIjNzQXT9ZG/view?usp=drive_link", numerical: "https://drive.google.com/file/d/1qbNXJ33JPU8dk_ZYYTnWw1pyV099vbgy/view?usp=drive_link" },
+    { title: "🔹 Chapter 7 – Reaction Kinetics", notes: "https://drive.google.com/file/d/1idilz0Q1xDs__NijOoHKQ3bZEgDYRrZi/view?usp=drive_link", exercise: "https://drive.google.com/file/d/1SZqrsQxxzlC5kMKUgDxTnlvuKjh2Rm_O/view?usp=drive_link", numerical: "https://drive.google.com/file/d/1lHSW2neGPjmJSsJFzuO4SLgmbifwHcmi/view?usp=drive_link" },
+    { title: "🔹 Chapter 8 – Chemical Equilibrium", notes: "https://drive.google.com/file/d/1PLGRWlbKmb2uIwjs0tSgmF4sT3wZeu2G/view?usp=drive_link", exercise: "https://drive.google.com/file/d/1r9U76CtQJHDYKU7qvOVkxrC_TRVbayn8/view?usp=drive_link" },
+    { title: "🔹 Chapter 9 – Acid-Base Chemistry", notes: "https://drive.google.com/file/d/1OZHLSDG3qON2D9vsLzSroY5DsXaf-pw1/view?usp=drive_link", exercise: "https://drive.google.com/file/d/1E1v2OrqtZaa2lrneBQu0ypJiHmXhot2C/view?usp=drive_link", numerical: "https://drive.google.com/file/d/1Lf7gYwqWyJzACVwtjiaoBpA-w1eQe_ob/view?usp=drive_link" },
+    { title: "🔹 Chapter 10 – Electrochemistry", notes: "https://drive.google.com/file/d/1fXARhhbqwpiWVJCRo30KHtblW4n8hcaf/view?usp=drive_link", exercise: "https://drive.google.com/file/d/1FjhXc4FpL_j7S7MM6nQAFB1eeAaWYcEz/view?usp=drive_link", numerical: "https://drive.google.com/file/d/1NDmQkT6CnS_2QeoM5QJtfS5jAlR0kNDM/view?usp=drive_link" },
+    { title: "🔹 Chapter 11 – Hydrocarbons", notes: "https://drive.google.com/file/d/1suTy5XOvZZDvrirrAP2ZTV_ShYqe8O81/view?usp=drive_link", exercise: "https://drive.google.com/file/d/1TzCMjD6VPP4k_-cpxgjpQl0Ck23dZDhd/view?usp=drive_link" },
+    { title: "🔹 Chapter 12 – Nitrogen & Sulfur", notes: "https://drive.google.com/file/d/116mlx0WP4cX2Vw32epXPVgcETUnbEVp7/view?usp=drive_link", exercise: "https://drive.google.com/file/d/1s8rZ-PkvmavJXQta3BXbXbDodPrvF9IB/view?usp=drive_link" },
+    { title: "🔹 Chapter 13 – Halogens", notes: "https://drive.google.com/file/d/1zJQMLRupY6mSv2RO6GVx9NTzX9fHTZ7e/view?usp=drive_link", exercise: "https://drive.google.com/file/d/1Vay8hDlhEsF0fT94md0jOdQ-dcGEzlvM/view?usp=drive_link" },
+    { title: "🔹 Chapter 14 – Atmosphere", notes: "https://drive.google.com/file/d/1XPDQBi120Jomq0NTQnrTgV09qdJQcGhP/view?usp=drive_link", exercise: "https://drive.google.com/file/d/179Irq6OASNZ1WVHU8-iFY_eSUhrema9S/view?usp=drive_link" },
+    { title: "🔹 Chapter 15 – Separation Techniques", notes: "https://drive.google.com/file/d/1ZPKJg9xISJj_IPUgLaUv2rZjHHjwJjIl/view?usp=drive_link", exercise: "https://drive.google.com/file/d/1qanXzKyRtu83AvQFxDNRf7pLs-v-KDkp/view?usp=drive_link" },
+    { title: "🔹 Chapter 16 – Lab Safety & Skills", notes: "https://drive.google.com/file/d/1gHyJ8Wk9KsX4ye03FTAGdgh1JYgI3Xph/view?usp=drive_link", exercise: "https://drive.google.com/file/d/1uMDa0dCA6UMVGeBP1mzla-tmiq8-t8Ft/view?usp=drive_link" }
+  ];
+
+  const container = document.getElementById("chapters");
+
+  chapters.forEach(({ title, notes, exercise, numerical }) => {
+    const chapter = document.createElement("div");
+    chapter.className = "chapter";
+
+    const header = document.createElement("div");
+    header.className = "chapter-header";
+    header.innerHTML = `<div><i class="fas fa-flask"></i> ${title}</div><i class="fas fa-chevron-down"></i>`;
+
+    const content = document.createElement("div");
+    content.className = "chapter-content";
+    content.innerHTML = `
+      <a href="${notes}" target="_blank"><i class="fas fa-book-open"></i> Notes</a>
+      <a href="${exercise}" target="_blank"><i class="fas fa-file-alt"></i> Exercise</a>
+      ${numerical ? `<a href="${numerical}" target="_blank"><i class="fas fa-calculator"></i> Numerical</a>` : ""}
+    `;
+
+    header.addEventListener("click", () => {
+      const open = content.classList.contains("open");
+      document.querySelectorAll(".chapter-content.open").forEach(el => {
+        el.classList.remove("open");
+        el.previousElementSibling.classList.remove("open");
+      });
+      if (!open) {
+        content.classList.add("open");
+        header.classList.add("open");
+      }
+    });
+
+    chapter.appendChild(header);
+    chapter.appendChild(content);
+    container.appendChild(chapter);
+  });
+</script>

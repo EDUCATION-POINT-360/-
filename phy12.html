@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>12th Class Physics Notes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0d1117;
+      color: #e6e6e6;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #4cc9f0;
+      margin-bottom: 20px;
+    }
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      margin: 15px 0;
+      box-shadow: 0 0 15px rgba(76,201,240,0.2);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(76,201,240,0.5);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      cursor: pointer;
+      background: #1c1f26;
+    }
+    .card-header h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-header button {
+      background: none;
+      border: none;
+      color: #e6e6e6;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .collapse {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .collapse.active {
+      max-height: 500px;
+    }
+    .card-body {
+      padding: 15px 20px;
+    }
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .btn {
+      padding: 10px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+    .btn-blue {background: #007bff; color: #fff;}
+    .btn-blue:hover {background: #0056b3;}
+    .btn-green {background: #28a745; color: #fff;}
+    .btn-green:hover {background: #1e7e34;}
+    .btn-purple {background: #6f42c1; color: #fff;}
+    .btn-purple:hover {background: #4e2d91;}
+    .pill {
+      background: rgba(255,255,255,0.15);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+    }
+	/* ===== NEW STYLE ===== */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  cursor: pointer;
+  background: #1c1f26;
+  transition: background 0.3s ease;
+}
+.card-header:hover {
+  background: #222831;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #e6e6e6;
+}
+
+/* collapse animation */
+.collapse {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.3s ease;
+  padding: 0 20px;
+}
+.collapse.active {
+  max-height: 600px; /* enough to cover content */
+  padding: 15px 20px;
+}
+
+  </style>
+</head>
+<body>
+<!-- ===== HEADER ===== -->
+<header class="simple-header">
+  <h2><i class="fas fa-graduation-cap"></i>Physics Notes</h2>
+</header>
+
+  <h1><i class="fas fa-book"></i> 12th Class Physics Notes</h1>
+
+  <div class="cards">
+
+    <!-- Chapter 12 -->
+    <section class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-bolt" style="color:#ffc107"></i> Chapter 12 – Electrostatics</h3>
+        <button class="toggle"><i class="fas fa-chevron-down"></i></button>
+      </div>
+      <div class="collapse">
+        <div class="card-body">
+          <div class="links">
+            <a class="btn btn-blue" target="_blank" href="https://drive.google.com/file/d/1P1DU6i_10FOoHTokY5vR9Jh4ob9nUS3I/view?usp=share_link"><i class="fas fa-list-check"></i> MCQs <span class="pill">PDF</span></a>
+            <a class="btn btn-green" target="_blank" href="https://drive.google.com/file/d/1Vv1Bxy7YLqSl-oma2ABxdew5uBWSk_5S/view?usp=share_link"><i class="fas fa-pen-to-square"></i> Short Qs & Numericals <span class="pill">PDF</span></a>
+            <a class="btn btn-purple" target="_blank" href="https://drive.google.com/file/d/1mw5YapDP6Pjqpm5cYP2l0uztF8Tf4dEV/view?usp=share_link"><i class="fas fa-book-open"></i> Full Chapter Notes <span class="pill">PDF</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 13 -->
+    <section class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-plug" style="color:#28a745"></i> Chapter 13 – Current Electricity</h3>
+        <button class="toggle"><i class="fas fa-chevron-down"></i></button>
+      </div>
+      <div class="collapse">
+        <div class="card-body">
+          <div class="links">
+            <a class="btn btn-blue" target="_blank" href="https://drive.google.com/file/d/1a8zdoSWDDjZy4075w0I4iRo7ARFA14g7/view?usp=share_link"><i class="fas fa-list-check"></i> MCQs <span class="pill">PDF</span></a>
+            <a class="btn btn-green" target="_blank" href="https://drive.google.com/file/d/1sLzPT3RgkzpisLBEP4KyuUMeD_mxVs2R/view?usp=share_link"><i class="fas fa-pen-to-square"></i> Short Qs & Numericals <span class="pill">PDF</span></a>
+            <a class="btn btn-purple" target="_blank" href="https://drive.google.com/file/d/1nIfzDNHhDouGRQ-4mqk1a4thHQmrzyuH/view?usp=share_link"><i class="fas fa-book-open"></i> Full Chapter Notes <span class="pill">PDF</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 14 -->
+    <section class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-magnet" style="color:#ff6aa2"></i> Chapter 14 – Electromagnetism</h3>
+        <button class="toggle"><i class="fas fa-chevron-down"></i></button>
+      </div>
+      <div class="collapse">
+        <div class="card-body">
+          <div class="links">
+            <a class="btn btn-blue" target="_blank" href="https://drive.google.com/file/d/1W5pK3bRXAACXEesU85CWyHIR1o1p4WyP/view?usp=share_link"><i class="fas fa-list-check"></i> MCQs <span class="pill">PDF</span></a>
+            <a class="btn btn-green" target="_blank" href="https://drive.google.com/file/d/1p7yVxr4A8KWwhgNsdmPJi2e7aDPl45Gj/view?usp=share_link"><i class="fas fa-pen-to-square"></i> Short Qs & Numericals <span class="pill">PDF</span></a>
+            <a class="btn btn-purple" target="_blank" href="https://drive.google.com/file/d/1cdUVn-yMR4npwGnvqdu_rD-Yf3OsL1gt/view?usp=share_link"><i class="fas fa-book-open"></i> Full Chapter Notes <span class="pill">PDF</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 15 -->
+    <section class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-circle-notch" style="color:#ffd166"></i> Chapter 15 – Electromagnetic Induction</h3>
+        <button class="toggle"><i class="fas fa-chevron-down"></i></button>
+      </div>
+      <div class="collapse">
+        <div class="card-body">
+          <div class="links">
+            <a class="btn btn-blue" target="_blank" href="https://drive.google.com/file/d/15j44RoHsZbgndPaK0b1LIfOYLjDkqqDT/view?usp=share_link"><i class="fas fa-list-check"></i> MCQs <span class="pill">PDF</span></a>
+            <a class="btn btn-green" target="_blank" href="https://drive.google.com/file/d/1Dp3_UtjGOnkFN1nTBndPBX4__A-tF1O0/view?usp=share_link"><i class="fas fa-pen-to-square"></i> Short Qs & Numericals <span class="pill">PDF</span></a>
+            <a class="btn btn-purple" target="_blank" href="https://drive.google.com/file/d/1Ul_Sgn-zvLA3gRUY3vEOS-uxpZrvsLZn/view?usp=share_link"><i class="fas fa-book-open"></i> Full Chapter Notes <span class="pill">PDF</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 16 -->
+    <section class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-wave-square" style="color:#9bafff"></i> Chapter 16 – Alternating Current</h3>
+        <button class="toggle"><i class="fas fa-chevron-down"></i></button>
+      </div>
+      <div class="collapse">
+        <div class="card-body">
+          <div class="links">
+            <a class="btn btn-blue" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1G_xh9rytEG_BREp0nEBMsQMNqJWb1ZLo/view?usp=share_link"><i class="fas fa-list-check"></i> MCQs <span class="pill">PDF</span></a>
+          <a class="btn btn-green" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1x0qChoHrwBpAbB2pw27GDkGPNgQ_nb9o/view?usp=share_link"><i class="fas fa-pen-to-square"></i> Short Qs & Numericals <span class="pill">PDF</span></a>
+          <a class="btn btn-purple" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1_CQxjaCkQeKafYhqy86jlusMdRMkKMAM/view?usp=share_link"><i class="fas fa-book-open"></i> Full Chapter Notes <span class="pill">PDF</span></a>
+        </div>
+        </div>
+      </div>
+    </section>
+    <!-- Chapter 17 -->
+    <section class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-satellite-dish" style="color:#06d6a0"></i> Chapter 17 – Physics of Solids</h3>
+        <button class="toggle"><i class="fas fa-chevron-down"></i></button>
+      </div>
+      <div class="collapse">
+        <div class="card-body">
+          <div class="links">
+                      <a class="btn btn-blue" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1Xfmf2hlrS9gl2rANaAiNEQ7ERjTwyVpq/view?usp=share_link"><i class="fas fa-list-check"></i> MCQs <span class="pill">PDF</span></a>
+          <a class="btn btn-green" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1N2K8cDW7SRhM3HyQxik0n62CFQyaMux6/view?usp=share_link"><i class="fas fa-pen-to-square"></i> Short Qs & Numericals <span class="pill">PDF</span></a>
+          <a class="btn btn-purple" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1WDMWUU34pef1VZ-CNlv_vW99zFD6SaPV/view?usp=share_link"><i class="fas fa-book-open"></i> Full Chapter Notes <span class="pill">PDF</span></a>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 18 -->
+    <section class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-solar-panel" style="color:#f77f00"></i> Chapter 18 – Electronics</h3>
+        <button class="toggle"><i class="fas fa-chevron-down"></i></button>
+      </div>
+      <div class="collapse">
+        <div class="card-body">
+          <div class="links">
+             <a class="btn btn-blue" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1g367wwkFdf4wITPL7TOq9nVlyEt6Bzmj/view?usp=share_link"><i class="fas fa-list-check"></i> MCQs <span class="pill">PDF</span></a>
+          <a class="btn btn-green" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1tP-6td5VKYXoMmuHQX3_wnwsgj1hQwQT/view?usp=share_link"><i class="fas fa-pen-to-square"></i> Short Qs & Numericals <span class="pill">PDF</span></a>
+          <a class="btn btn-purple" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1GcnKryAHn3f4j4uoNej2ubUKpN4-EKjP/view?usp=share_link"><i class="fas fa-book-open"></i> Full Chapter Notes <span class="pill">PDF</span></a>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 19 -->
+    <section class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-atom" style="color:#ff006e"></i> Chapter 19 – Dawn of Modern Physics</h3>
+        <button class="toggle"><i class="fas fa-chevron-down"></i></button>
+      </div>
+      <div class="collapse">
+        <div class="card-body">
+          <div class="links">
+            <a class="btn btn-blue" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1Z--dG7bhp9RCiZccrTzDQG7-Y3SmcBOh/view?usp=share_link"><i class="fas fa-list-check"></i> MCQs <span class="pill">PDF</span></a>
+          <a class="btn btn-green" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1Aexd1iuD1dxr6STUk90rDKInKMS_RsU_/view?usp=share_link"><i class="fas fa-pen-to-square"></i> Short Qs & Numericals <span class="pill">PDF</span></a>
+          <a class="btn btn-purple" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1mn6mI7y3LZxPZKi28Yz6XuyvWNR1mNJe/view?usp=share_link"><i class="fas fa-book-open"></i> Full Chapter Notes <span class="pill">PDF</span></a>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 20 -->
+    <section class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-radiation" style="color:#7209b7"></i> Chapter 20 – Atomic Spectra</h3>
+        <button class="toggle"><i class="fas fa-chevron-down"></i></button>
+      </div>
+      <div class="collapse">
+        <div class="card-body">
+          <div class="links">
+            <a class="btn btn-blue" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1AWzyZhVrsby_Jq9h7-7qVDifLqCyI_HM/view?usp=share_link"><i class="fas fa-list-check"></i> MCQs <span class="pill">PDF</span></a>
+          <a class="btn btn-green" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1W_9t-zPFb00Ud03CKVcjx1_84fyZBWWo/view?usp=share_link"><i class="fas fa-pen-to-square"></i> Short Qs & Numericals <span class="pill">PDF</span></a>
+          <a class="btn btn-purple" target="_blank" rel="noopener" href="https://drive.google.com/file/d/14eOQR7Pe6c6aJlLMA7KwIj9Z0cAfGjFg/view?usp=share_link"><i class="fas fa-book-open"></i> Full Chapter Notes <span class="pill">PDF</span></a>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 21 -->
+    <section class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-dna" style="color:#118ab2"></i> Chapter 21 – Nuclear Physics</h3>
+        <button class="toggle"><i class="fas fa-chevron-down"></i></button>
+      </div>
+      <div class="collapse">
+        <div class="card-body">
+          <div class="links">
+            <a class="btn btn-blue" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1UYrMNC53N38nDpWcQQlg9sNgxnGJPjBz/view?usp=share_link"><i class="fas fa-list-check"></i> MCQs <span class="pill">PDF</span></a>
+          <a class="btn btn-green" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1uAKjKKYvvMTUXdpJUMjANrGe5Pxv9nl3/view?usp=share_link"><i class="fas fa-pen-to-square"></i> Short Qs & Numericals <span class="pill">PDF</span></a>
+          <a class="btn btn-purple" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1u75F-pC4n55JAe0Ei3RbgxWMrd81QeQG/view?usp=share_link"><i class="fas fa-book-open"></i> Full Chapter Notes <span class="pill">PDF</span></a>
+        </div>
+        </div>
+      </div>
+    </section>
+<section class="card">
+<div class="card-header">
+       <h3><i class="fas fa-dna" style="color:#118ab2"></i><h3>Full Book Notes</h3>
+	   <button class="toggle"><i class="fas fa-chevron-down"></i></button>
+      </div>
+    <div class="collapse">
+	<div class="card-body">
+         <a class="btn btn-blue" target="_blank" rel="noopener"  href="https://drive.google.com/file/d/1shtEDXKand5TFMol2kR8lM-kA1eHoZtt/view" target="_blank">
+          <i class="fas fa-eye"></i> View Notes
+        </a>
+       <a class="btn btn-purple" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1shtEDXKand5TFMol2kR8lM-kA1eHoZtt/view" target="_blank">
+          <i class="fas fa-download"></i> Download PDF
+        </a>
+	  </div>
+	  </div>
+	   </section>
+	   <!-- ===== FOOTER ===== -->
+	   <Style>
+	   /* FOOTER */
+.simple-footer {
+  background: #161b22;
+  color: #aaa;
+  text-align: center;
+  padding: 15px;
+  border-top: 1px solid #30363d;
+  margin-top: 30px;
+  font-size: 0.9rem;
+  </style>
+<footer class="simple-footer">
+  <p>&copy; 2025 Education Point | All Rights Reserved</p>
+</footer>
+
+  </div> <!-- end of cards -->
+
+  <script>
+    /* ===== NEW SCRIPT ===== */
+document.querySelectorAll('.card-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const collapse = header.nextElementSibling;
+    const icon = header.querySelector('i.fa-chevron-down, i.fa-chevron-up');
+
+    collapse.classList.toggle('active');
+
+    if (icon) {
+      icon.classList.toggle('fa-chevron-down');
+      icon.classList.toggle('fa-chevron-up');
+    }
+  });
+});
+
+  </script>
+</body>
+</html>

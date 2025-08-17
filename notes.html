@@ -9,9 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -30,13 +28,14 @@
     }
 
     header {
-      background: url('bg4.jpg') no-repeat center center/cover;
-      padding: 70px 0 60px;
+      padding: 50px 20px;
       text-align: center;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
       position: sticky;
       top: 0;
       z-index: 1000;
+      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.5);
+      border-bottom: 2px solid #0ff;
       animation: fadeInDown 1.5s ease;
     }
 
@@ -55,39 +54,41 @@
     .neon-title {
       font-size: 3.5em;
       color: #0ff;
-      text-shadow: 0 0 12px #0ff, 0 0 25px #0ff;
+      text-shadow: 0 0 12px #0ff, 0 0 25px #0ff, 0 0 40px #0ff;
       animation: pulse 2s infinite alternate;
     }
 
     @keyframes pulse {
       from { text-shadow: 0 0 12px #0ff; }
-      to { text-shadow: 0 0 25px #0ff, 0 0 45px #0ff; }
+      to { text-shadow: 0 0 30px #0ff, 0 0 60px #0ff; }
     }
 
     .neon-button {
       display: inline-block;
       padding: 14px 30px;
       margin: 20px 5px;
-      background: #00e6e6;
-      color: #000;
+      background: transparent;
+      color: #0ff;
+      border: 2px solid #0ff;
       text-decoration: none;
       border-radius: 10px;
       font-weight: bold;
       transition: 0.3s ease;
-      box-shadow: 0 0 10px #0ff;
+      box-shadow: 0 0 10px #0ff inset, 0 0 10px #0ff;
     }
 
     .neon-button:hover {
-      background: #fff;
-      box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+      background: #0ff;
+      color: #000;
       transform: scale(1.05);
+      box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
     }
 
     .notes-box {
       background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
       padding: 40px 30px;
       max-width: 950px;
       margin: 40px auto;
@@ -98,6 +99,7 @@
       font-size: 2.4rem;
       color: #00e6e6;
       margin-bottom: 20px;
+      text-shadow: 0 0 15px #0ff;
     }
 
     .features {
@@ -116,13 +118,8 @@
     .features li i {
       position: absolute;
       left: 0;
-      color: #28a745;
-      animation: bounceIn 0.8s ease;
-    }
-
-    @keyframes bounceIn {
-      from { transform: scale(0.5); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      color: #0ff;
+      text-shadow: 0 0 8px #0ff;
     }
 
     .notes-box p {
@@ -134,7 +131,7 @@
       font-size: 2.2em;
       margin-top: 50px;
       color: #0ff;
-      text-shadow: 0 0 8px #0ff;
+      text-shadow: 0 0 15px #0ff;
     }
 
     .resource-grid {
@@ -145,18 +142,17 @@
     }
 
     .note-card {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.4);
       padding: 25px 15px;
       border-radius: 15px;
       box-shadow: 0 0 15px #0ff;
       text-align: center;
       transition: 0.3s ease;
-      transform: translateY(0);
     }
 
     .note-card:hover {
       transform: translateY(-8px) scale(1.03);
-      box-shadow: 0 0 25px #0ff;
+      box-shadow: 0 0 25px #0ff, 0 0 50px #0ff;
     }
 
     .note-card a {
@@ -172,6 +168,7 @@
       color: #00e6e6;
       margin-bottom: 12px;
       animation: float 2s ease-in-out infinite;
+      text-shadow: 0 0 12px #0ff;
     }
 
     @keyframes float {
@@ -182,9 +179,11 @@
     footer {
       text-align: center;
       padding: 20px;
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.5);
       margin-top: 60px;
       font-size: 0.9em;
+      border-top: 1px solid #0ff;
+      text-shadow: 0 0 8px #0ff;
     }
 
     #scrollToTop {
@@ -209,9 +208,7 @@
     }
 
     @media (max-width: 768px) {
-      .neon-title {
-        font-size: 2.2em;
-      }
+      .neon-title { font-size: 2.2em; }
     }
   </style>
 </head>
@@ -226,16 +223,15 @@
 
   <div class="notes-box" data-aos="fade-up">
     <h1><i class="fas fa-book-open"></i> Punjab Board Notes</h1>
-    <p>Welcome to the <strong>Punjab Board Notes Section</strong> – your one-stop hub for high-quality, syllabus-based notes designed strictly according to the <strong>Punjab Curriculum & Textbook Board (PCTB)</strong>. Perfect for board exams, school tests, and quick revision.</p>
+    <p>Welcome to the <strong>Punjab Board Notes Section</strong> – your one-stop hub for high-quality, syllabus-based notes designed strictly according to the <strong>PCTB</strong>. Perfect for board exams, school tests, and revision.</p>
     <ul class="features">
       <li><i class="fas fa-check-circle"></i> Notes available for 9th, 10th, 1st Year, and 2nd Year.</li>
-      <li><i class="fas fa-check-circle"></i> Covers all major subjects: English, Urdu, Physics, Chemistry, Biology, Math, Islamiat, Pak Studies, and Computer.</li>
+      <li><i class="fas fa-check-circle"></i> Covers English, Urdu, Physics, Chemistry, Biology, Math, Islamiat, Pak Studies, Computer.</li>
       <li><i class="fas fa-check-circle"></i> Based on latest Punjab Board syllabus and paper pattern.</li>
       <li><i class="fas fa-check-circle"></i> Includes solved exercises, long/short questions, MCQs, past paper questions, and diagrams.</li>
       <li><i class="fas fa-check-circle"></i> Downloadable PDF format – mobile and print-friendly.</li>
-      <li><i class="fas fa-check-circle"></i> No signup required – free and accessible anytime.</li>
+      <li><i class="fas fa-check-circle"></i> Free access – no signup required.</li>
     </ul>
-    <p><strong>📥 Start learning smarter today with easy-to-access Punjab Board notes and boost your academic success!</strong></p>
   </div>
 
   <main class="container">
@@ -307,4 +303,4 @@
   <script>AOS.init({ duration: 1000 });</script>
 
 </body>
-            </html>
+</html>

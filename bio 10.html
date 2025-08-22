@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matric Part 2 (10th Class) Biology Notes</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* --- 1. General Styling & Theme --- */
+        :root {
+            --primary-color: #007BFF;   /* A vibrant blue for interactive elements */
+            --secondary-color: #28a745; /* A green associated with biology */
+            --background-color: #f4f7f9; /* A light, clean background */
+            --card-background: #ffffff;  /* White cards for content */
+            --text-color: #343a40;      /* Dark grey for readability */
+            --heading-color: #0056b3;   /* A darker blue for headings */
+            --border-color: #e3e6e9;    /* Light border for cards */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* --- 2. Main Container & Header --- */
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .header-section h1 {
+            font-size: 2.5rem;
+            color: var(--heading-color);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .header-section .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* --- 3. Animated Chapter Accordion --- */
+        .chapter-accordion .chapter-item {
+            background: var(--card-background);
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden; /* Important for smooth animation */
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .chapter-accordion .chapter-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.15);
+        }
+
+        .chapter-head {
+            display: flex;
+            align-items: center;
+            padding: 18px 25px;
+            cursor: pointer;
+            width: 100%;
+            background-color: #fff;
+            transition: background-color 0.3s ease;
+        }
+        
+        .chapter-head:hover {
+            background-color: #f8f9fa;
+        }
+
+        .chapter-head .chapter-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-right: 20px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .chapter-head h3 {
+            flex-grow: 1;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--heading-color);
+        }
+
+        .chapter-head .toggle-icon {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .chapter-content {
+            max-height: 0; /* Initially hidden */
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1), padding 0.5s ease; /* Smooth transition */
+            padding: 0 25px;
+        }
+        
+        .chapter-content a {
+            display: inline-block;
+            text-decoration: none;
+            color: #fff;
+            background-color: var(--secondary-color);
+            padding: 12px 25px;
+            border-radius: 50px;
+            margin: 20px 0;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+        }
+        
+        .chapter-content a:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+        }
+
+        /* --- 4. Active State for Accordion --- */
+        .chapter-item.active .chapter-head .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .chapter-item.active .chapter-content {
+            max-height: 150px; /* Reveal content */
+            padding-bottom: 10px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* --- 5. Footer --- */
+        .footer-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border-color);
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header-section">
+                                                 <h1>Education Point </h1>
+            <h1>Matric 10th Class Biology Notes</h1>
+            <p class="subtitle">Complete chapter-wise PDF notes for English & Urdu Medium students, aligned with the latest Punjab Boards syllabus. Download MCQs, short/long questions, and solved exercises below.</p>
+        </header>
+
+        <main class="chapter-accordion">
+            <div class="chapter-item">
+                <div class="chapter-head">
+                    <i class="fa-solid fa-lungs chapter-icon"></i>
+                    <h3>Chapter 10 - Gaseous Exchange</h3>
+                    <i class="fa fa-angle-down toggle-icon"></i>
+                </div>
+                <div class="chapter-content">
+                    <a href="https://drive.google.com/file/d/1JTzB8oByd_CQoNQ-iV5eqbfAF1kyhZdW/view?usp=share_link" target="_blank" rel="noopener">Download Complete Notes</a>
+                </div>
+            </div>
+
+            <div class="chapter-item">
+                <div class="chapter-head">
+                    <i class="fa-solid fa-house-circle-check chapter-icon"></i>
+                    <h3>Chapter 11 - Homeostasis</h3>
+                    <i class="fa fa-angle-down toggle-icon"></i>
+                </div>
+                <div class="chapter-content">
+                    <a href="https://drive.google.com/file/d/10_ZzweW3xrO9DfUHJljgmxujlxrvNgaB/view?usp=share_link" target="_blank" rel="noopener">Download Complete Notes</a>
+                </div>
+            </div>
+
+            <div class="chapter-item">
+                <div class="chapter-head">
+                    <i class="fa-solid fa-brain chapter-icon"></i>
+                    <h3>Chapter 12 - Coordination & Control</h3>
+                    <i class="fa fa-angle-down toggle-icon"></i>
+                </div>
+                <div class="chapter-content">
+                    <a href="https://drive.google.com/file/d/1RiPLSH0r50WQgkmB5vz1Cka8-S1qlHzW/view?usp=share_link" target="_blank" rel="noopener">Download Complete Notes</a>
+                </div>
+            </div>
+
+            <div class="chapter-item">
+                <div class="chapter-head">
+                    <i class="fa-solid fa-bone chapter-icon"></i>
+                    <h3>Chapter 13 - Support and Movement</h3>
+                    <i class="fa fa-angle-down toggle-icon"></i>
+                </div>
+                <div class="chapter-content">
+                    <a href="https://drive.google.com/file/d/1Ta8zP6f7JlrjHEoBIgeWCYh0_fdsFwv3/view?usp=share_link" target="_blank" rel="noopener">Download Complete Notes</a>
+                </div>
+            </div>
+
+            <div class="chapter-item">
+                <div class="chapter-head">
+                    <i class="fa-solid fa-venus-mars chapter-icon"></i>
+                    <h3>Chapter 14 - Reproduction</h3>
+                    <i class="fa fa-angle-down toggle-icon"></i>
+                </div>
+                <div class="chapter-content">
+                    <a href="https://drive.google.com/file/d/1ao1gK_Y23SNCAYko6ZML3yDplba8aTJZ/view?usp=share_link" target="_blank" rel="noopener">Download Complete Notes</a>
+                </div>
+            </div>
+            
+            <div class="chapter-item">
+                <div class="chapter-head">
+                    <i class="fa-solid fa-dna chapter-icon"></i>
+                    <h3>Chapter 15 - Inheritance</h3>
+                    <i class="fa fa-angle-down toggle-icon"></i>
+                </div>
+                <div class="chapter-content">
+                    <a href="https://drive.google.com/file/d/19BfpayTDRb3HEtm8GnEu4D8B-orJ8CwG/view?usp=share_link" target="_blank" rel="noopener">Download Complete Notes</a>
+                </div>
+            </div>
+            
+            <div class="chapter-item">
+                <div class="chapter-head">
+                    <i class="fa-solid fa-leaf chapter-icon"></i>
+                    <h3>Chapter 16 - Man and his Environment</h3>
+                    <i class="fa fa-angle-down toggle-icon"></i>
+                </div>
+                <div class="chapter-content">
+                    <a href="https://drive.google.com/file/d/1U6T2m9Qkt86aihZv4TVj0CIe4lWYhMFK/view?usp=share_link" target="_blank" rel="noopener">Download Complete Notes</a>
+                </div>
+            </div>
+
+            <div class="chapter-item">
+                <div class="chapter-head">
+                    <i class="fa-solid fa-microscope chapter-icon"></i>
+                    <h3>Chapter 17 - Biotechnology</h3>
+                    <i class="fa fa-angle-down toggle-icon"></i>
+                </div>
+                <div class="chapter-content">
+                    <a href="https://drive.google.com/file/d/1Sxi584JHYw8k-Z66vECd64_uqFF9MBS-/view?usp=share_link" target="_blank" rel="noopener">Download Complete Notes</a>
+                </div>
+            </div>
+
+            <div class="chapter-item">
+                <div class="chapter-head">
+                    <i class="fa-solid fa-pills chapter-icon"></i>
+                    <h3>Chapter 18 - Pharmacology</h3>
+                    <i class="fa fa-angle-down toggle-icon"></i>
+                </div>
+                <div class="chapter-content">
+                    <a href="https://drive.google.com/file/d/1jjE_wLvCuq1FMV75ImE16nEghAk-P5Zg/view?usp=share_link" target="_blank" rel="noopener">Download Complete Notes</a>
+                </div>
+            </div>
+
+        </main>
+        
+        <footer class="footer-section">
+            <p>&copy; 2025 Education Point. All Rights Reserved. Best study notes for Punjab Boards.</p>
+        </footer>
+    </div>
+
+    <script>
+        // JavaScript for Accordion Functionality
+        const accordionItems = document.querySelectorAll('.chapter-item');
+
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.chapter-head');
+            
+            header.addEventListener('click', () => {
+                // Check if the clicked item is already active
+                const isActive = item.classList.contains('active');
+
+                // First, close all other items
+                accordionItems.forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                });
+
+                // If the clicked item was not active, open it
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

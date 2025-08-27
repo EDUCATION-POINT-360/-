@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Class 11 | Computer Notes — Education Point</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg-1: #071226;
+      --bg-2: #092235;
+      --accent: #00e6e6;
+      --muted: #9aa7b0;
+      --card: rgba(255,255,255,0.03);
+      --glass: rgba(255,255,255,0.04);
+      --glass-2: rgba(0,0,0,0.45);
+      --radius: 12px;
+      --maxw: 1100px;
+    }
+
+    /* Reset + layout */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, #072034 0%, var(--bg-1) 20%, var(--bg-2) 100%);
+      color: #eaf6f6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding:32px 20px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .shell{
+      width:100%;
+      max-width:var(--maxw);
+      margin:auto;
+    }
+
+    /* Header / description */
+    header{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      margin-bottom:18px;
+      padding:18px;
+      border-radius:var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+      border: 1px solid rgba(0,230,230,0.06);
+      backdrop-filter: blur(6px);
+    }
+    header .logo{
+      width:68px;
+      height:68px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background: linear-gradient(135deg, rgba(0,230,230,0.10), rgba(0,150,180,0.06));
+      border:1px solid rgba(0,230,230,0.12);
+      box-shadow: 0 6px 20px rgba(0,230,230,0.06), inset 0 -6px 20px rgba(0,0,0,0.25);
+      color:var(--accent);
+      font-size:26px;
+    }
+    header h1{
+      font-size:20px;
+      margin:0;
+      font-weight:700;
+      letter-spacing:0.2px;
+      color:var(--accent);
+    }
+    header p{
+      margin:3px 0 0 0;
+      color:var(--muted);
+      font-size:13.5px;
+      max-width:780px;
+    }
+
+    /* Description block */
+    .desc{
+      margin:18px 0 26px 0;
+      padding:20px;
+      border-radius:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+      border:1px solid rgba(0,230,230,0.05);
+      color:#dff;
+    }
+    .desc p{margin:0 0 10px 0}
+    .desc ul{
+      margin:8px 0 0 18px;
+      color:var(--muted);
+    }
+    .desc strong{color:#fff}
+
+    /* Accordion list */
+    .notes{
+      display:grid;
+      gap:14px;
+    }
+
+    .card{
+      display:flex;
+      gap:18px;
+      align-items:flex-start;
+      padding:16px;
+      border-radius:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.20));
+      border: 1px solid rgba(0,230,230,0.04);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+      transition: transform .28s cubic-bezier(.2,.9,.3,1), box-shadow .28s;
+    }
+    .card:hover{ transform: translateY(-6px); box-shadow: 0 22px 40px rgba(0,0,0,0.55); }
+
+    .card .icon{
+      width:68px;height:68px;border-radius:10px;
+      display:grid;place-items:center;
+      background: linear-gradient(135deg, rgba(0,230,230,0.06), rgba(0,150,180,0.04));
+      color:var(--accent); font-size:26px;
+      border:1px solid rgba(0,230,230,0.08);
+      flex-shrink:0;
+    }
+
+    .card .meta{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .card .meta .title{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .card .meta .title h3{
+      margin:0; font-size:16px; color:var(--accent); font-weight:700;
+    }
+    .chev{ color:var(--muted); font-size:14px; transform:rotate(0); transition: transform .28s; }
+    .card.active .chev{ transform:rotate(90deg); color:#fff }
+
+    .card .meta .links{
+      display:block;
+      max-height:0;
+      overflow:hidden;
+      transition: max-height .38s ease, opacity .28s;
+      opacity:0;
+      padding-right:8px;
+    }
+
+    .card .meta .links ul{ margin:8px 0 0 18px; color:var(--muted); padding:0; }
+    .card .meta .links li{ margin:8px 0; list-style:none; font-weight:600; }
+    .card .meta .links a{
+      color:var(--accent);
+      text-decoration:none;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      font-size:14.5px;
+      padding:6px 8px;
+      border-radius:8px;
+      transition: background .18s, color .18s, transform .18s;
+    }
+    .card .meta .links a:hover{
+      transform:translateX(6px);
+      background: rgba(0,230,230,0.03);
+      color:#fff;
+    }
+
+    /* Coming soon style for units without files */
+    .soon{
+      display:inline-block;
+      font-size:13px;
+      padding:6px 10px;
+      border-radius:8px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+      color:var(--muted);
+      border:1px dashed rgba(255,255,255,0.04);
+    }
+
+    /* Footer */
+    footer{
+      margin-top:28px;
+      padding:18px;
+      border-radius:12px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(255,255,255,0.01));
+      border:1px solid rgba(0,230,230,0.05);
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+    footer .brand{ color:var(--accent); font-weight:700; font-size:15px; margin-bottom:6px; display:inline-block }
+
+    /* responsive */
+    @media (max-width:720px){
+      .card{flex-direction:row; gap:12px; padding:14px}
+      header{flex-direction:column; align-items:flex-start; gap:10px}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+
+    <header>
+      <div class="logo" aria-hidden="true">EP</div>
+      <div>
+        <h1>Class 11 Computer Notes — Education Point</h1>
+        <p>Complete, chapter-wise FSC 1st Year Computer solutions. Clear explanations and solved questions prepared to help students master concepts and perform well in board and entry exams.</p>
+      </div>
+    </header>
+
+    <!-- Visible description (user-provided, refined) -->
+    <div class="desc" role="region" aria-label="Notes description">
+      <p>
+        <strong>Class 11 Computer Notes</strong> are the perfect study guides for students preparing for board exams. These FSC 1st Year Computer solutions cover all important key points with <strong>clear and easy-to-understand explanations</strong>.
+      </p>
+      <p>
+        The notes are arranged <strong>chapter by chapter</strong>, allowing students to identify weak areas, strengthen concepts, and revise effectively. With these notes, students gain the confidence to answer both <strong>conceptual and exam-focused questions</strong>, making them highly useful for board exams and competitive tests.
+      </p>
+
+      <ul>
+        <li>✔ Unit-wise solutions and MCQs</li>
+        <li>✔ Practical examples, flowcharts and diagrams</li>
+        <li>✔ Ideal for quick revision and exam practice</li>
+      </ul>
+    </div>
+
+    <!-- Notes accordion/cards (Units 1–6) -->
+    <div class="notes" id="notesList">
+
+      <!-- Unit 1 -->
+      <article class="card" data-open="false">
+        <div class="icon" aria-hidden="true"><i class="fa-solid fa-laptop-code"></i></div>
+        <div class="meta">
+          <div class="title">
+            <h3>Unit 1 — Introduction to Software Development</h3>
+            <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
+          </div>
+
+          <div class="links">
+            <ul>
+              <li><a href="https://drive.google.com/file/d/1vtRTXIw8hsSOVRaTUN8-CzCxh8EBFBh-/view?usp=drive_link" target="_blank" rel="noopener">📄 Chapter 1 Solutions</a></li>
+              <li><a href="https://drive.google.com/file/d/1mntTYNiaCmzOJoUjrhmt_aeQuoud0G0C/view?usp=drive_link" target="_blank" rel="noopener">❓ Exercise Questions</a></li>
+              <li><a href="https://drive.google.com/file/d/1Oy4EBYEcBsKv7kRT2-ogLxFnn1QUir0i/view?usp=drive_link" target="_blank" rel="noopener">📝 SLO Short Questions</a></li>
+              <li><a href="https://drive.google.com/file/d/1JEE7falauTrAknz0URSLQY12yVyU3yw0/view?usp=drive_link" target="_blank" rel="noopener">✅ MCQs</a></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Unit 2 -->
+      <article class="card" data-open="false">
+        <div class="icon" aria-hidden="true"><i class="fa-brands fa-python"></i></div>
+        <div class="meta">
+          <div class="title">
+            <h3>Unit 2 — Python Programming</h3>
+            <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
+          </div>
+
+          <div class="links">
+            <ul>
+              <li><a href="https://drive.google.com/file/d/1Lg2mce7kzr_kVvGB_vjdIfkBh8d8ovFn/view?usp=drive_link" target="_blank" rel="noopener">📄 Chapter 2 Solutions</a></li>
+              <li><a href="https://drive.google.com/file/d/1hQ0TXx8hgxcdsgnLaDTGeshHA6eS5uJd/view?usp=drive_link" target="_blank" rel="noopener">❓ Exercise Questions</a></li>
+              <li><a href="https://drive.google.com/file/d/1AiT_J6shtJHXzzqnbZi8bOKNdc_nRl53/view?usp=drive_link" target="_blank" rel="noopener">📝 SLO Short Questions</a></li>
+              <li><a href="https://drive.google.com/file/d/1sQMnjRJGuUczF7stZiLRn_04eAlnoQ6L/view?usp=drive_link" target="_blank" rel="noopener">✅ MCQs</a></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Unit 3 -->
+      <article class="card" data-open="false">
+        <div class="icon" aria-hidden="true"><i class="fa-solid fa-project-diagram"></i></div>
+        <div class="meta">
+          <div class="title">
+            <h3>Unit 3 — Algorithms & Problem Solving</h3>
+            <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
+          </div>
+
+          <div class="links">
+            <ul>
+              <li><a href="https://drive.google.com/file/d/1MpmlgijuP4hntq8XV0L6tHq9QNh1qEtu/view?usp=drive_link" target="_blank" rel="noopener">📄 Chapter 3 Solutions</a></li>
+              <li><a href="https://drive.google.com/file/d/1fhBnFkosTeI4hLy4WvVu-LiuPniojxX3/view?usp=drive_link" target="_blank" rel="noopener">❓ Exercise Questions</a></li>
+              <li><a href="https://drive.google.com/file/d/1lSlCh0iWglts9ZRssAkpZv5Qit6OsZJ8/view?usp=drive_link" target="_blank" rel="noopener">📝 SLO Short Questions</a></li>
+              <li><a href="https://drive.google.com/file/d/1Af-P4K4pbXQD2Jn8FUpE0qbxNDEKm4QJ/view?usp=drive_link" target="_blank" rel="noopener">✅ MCQs</a></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Unit 4 -->
+      <article class="card" data-open="false">
+        <div class="icon" aria-hidden="true"><i class="fa-solid fa-database"></i></div>
+        <div class="meta">
+          <div class="title">
+            <h3>Unit 4 — Computational Structures</h3>
+            <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
+          </div>
+
+          <div class="links">
+            <ul>
+              <li><a href="https://drive.google.com/file/d/1cws60UcgSS5E8qshX_rag4zVhaarjEn1/view?usp=drive_link" target="_blank" rel="noopener">📄 Chapter 4 Solutions</a></li>
+              <li><a href="https://drive.google.com/file/d/1W5AuIs8xfNOD_A5cHOTzRE_C8dCR3aaV/view?usp=drive_link" target="_blank" rel="noopener">❓ Exercise Questions</a></li>
+              <li><a href="https://drive.google.com/file/d/19HWFWLXfjxvux0IOGlZLDNK93bcG_0_v/view?usp=drive_link" target="_blank" rel="noopener">📝 SLO Short Questions</a></li>
+              <li><a href="https://drive.google.com/file/d/1-GE0ZVNchNkrXHze5Os9oWFRxRGFbEoK/view?usp=drive_link" target="_blank" rel="noopener">✅ MCQs</a></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Unit 5 -->
+      <article class="card" data-open="false">
+        <div class="icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></div>
+        <div class="meta">
+          <div class="title">
+            <h3>Unit 5 — Data Analytics</h3>
+            <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
+          </div>
+
+          <div class="links">
+            <ul>
+              <li><a href="https://drive.google.com/file/d/1bs77qXqn2Tk0BoPxlf5MTeG3gqPd9NSr/view?usp=drive_link" target="_blank" rel="noopener">📄 Chapter 5 Solutions</a></li>
+              <li><a href="https://drive.google.com/file/d/1Hpf1oTFDKXkZ4ArZNOrKd38zqNnYQVML/view?usp=drive_link" target="_blank" rel="noopener">❓ Exercise Questions</a></li>
+              <li><a href="https://drive.google.com/file/d/1cd6V6OopKw2oHzwisVF07H8_911vhBCX/view?usp=drive_link" target="_blank" rel="noopener">📝 SLO Short Questions</a></li>
+              <li><a href="https://drive.google.com/file/d/10rhHOryMIV9PAcQVC4i5ctEM6UvUXS0n/view?usp=drive_link" target="_blank" rel="noopener">✅ MCQs</a></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Unit 6 -->
+      <article class="card" data-open="false">
+        <div class="icon" aria-hidden="true"><i class="fa-solid fa-robot"></i></div>
+        <div class="meta">
+          <div class="title">
+            <h3>Unit 6 — Emerging Technologies</h3>
+            <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
+          </div>
+
+          <div class="links">
+            <ul>
+              <li><a href="https://drive.google.com/file/d/1Kg9VR8TUziCK8VNWD0X89yltvS0aqJOl/view?usp=drive_link" target="_blank" rel="noopener">📄 Chapter 6 Solutions</a></li>
+              <li><a href="https://drive.google.com/file/d/1fNgxHu71PhElZcY96ZMdobBbN2mUP5Rq/view?usp=drive_link" target="_blank" rel="noopener">❓ Exercise Questions</a></li>
+              <li><a href="https://drive.google.com/file/d/1FJPPrOAETCTz3tyrJ3Y0P-0PWaRtCdiS/view?usp=drive_link" target="_blank" rel="noopener">📝 SLO Short Questions</a></li>
+              <li><a href="https://drive.google.com/file/d/1P4iaLOgQAKVs0LG_HuWEVzB-7b0TKgaM/view?usp=drive_link" target="_blank" rel="noopener">✅ MCQs</a></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+    </div> <!-- /notes -->
+
+    <!-- Footer -->
+    <footer>
+      <div class="brand">Education Point</div>
+      <div>Your trusted source for class notes, guides and exam practice.</div>
+      <div style="margin-top:8px; color: #7eaeb0;">&copy; 2025 Education Point — All rights reserved.</div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Accordion behavior: open/close card; only one open at a time
+    (function(){
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        const header = card.querySelector('.title');
+        header.addEventListener('click', () => {
+          const isActive = card.classList.contains('active');
+
+          // close all
+          cards.forEach(c=>{
+            c.classList.remove('active');
+            const links = c.querySelector('.links');
+            links.style.maxHeight = null;
+            links.style.opacity = 0;
+          });
+
+          // toggle clicked
+          if(!isActive){
+            card.classList.add('active');
+            const links = card.querySelector('.links');
+            links.style.maxHeight = links.scrollHeight + 'px';
+            links.style.opacity = 1;
+          }
+        });
+      });
+
+      // Make linked anchors open in new tab safely (added rel in markup)
+      // Optional: keyboard accessibility - toggle on Enter/Space
+      document.querySelectorAll('.card .title').forEach(t=>{
+        t.setAttribute('tabindex','0');
+        t.addEventListener('keydown', e => {
+          if(e.key === 'Enter' || e.key === ' '){
+            e.preventDefault();
+            t.click();
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

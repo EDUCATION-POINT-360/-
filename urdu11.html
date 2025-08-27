@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Education Point — 11th Class Urdu Notes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+  <style>
+    :root{
+      --bg:#05060a;
+      --card:#061025;
+      --neon:#00b0ff; /* neon blue */
+      --muted:#9aa7bf;
+      --glass: rgba(255,255,255,0.03);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Poppins',system-ui,Arial; background:radial-gradient(ellipse at 10% 10%, rgba(0,176,255,0.04), transparent 10%), linear-gradient(180deg,#021124 0%, #02050a 100%); color:#e6f0ff; -webkit-font-smoothing:antialiased}
+    .wrap{max-width:1100px;margin:36px auto;padding:28px}
+
+    header{display:flex;align-items:center;gap:18px}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo .mark{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg, rgba(0,176,255,0.18), rgba(0,60,120,0.06));box-shadow:0 6px 20px rgba(0,176,255,0.08) inset;display:grid;place-items:center;backdrop-filter:blur(6px)}
+    .logo h1{font-size:18px;margin:0}
+    .subtitle{font-size:13px;color:var(--muted);margin-top:4px}
+
+    .intro{margin:18px 0 20px;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(0,176,255,0.02), transparent);border:1px solid rgba(0,176,255,0.06);display:flex;gap:18px}
+    .intro p{margin:0;color:var(--muted);line-height:1.45}
+
+    /* controls */
+    .controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:18px 0}
+    .search{flex:1;min-width:220px;display:flex;align-items:center;background:var(--glass);border:1px solid rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px}
+    .search input{flex:1;background:transparent;border:0;padding:6px;color:inherit;outline:none}
+    .btn{background:linear-gradient(90deg,var(--neon),#5ad0ff);color:#021124;padding:9px 12px;border-radius:10px;border:0;font-weight:600;cursor:pointer;box-shadow:0 6px 24px rgba(0,176,255,0.08)}
+    .filter{padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--muted)}
+
+    /* grid */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:14px}
+    .card{background:linear-gradient(180deg, rgba(3,18,36,0.45), rgba(3,18,36,0.25));border-radius:12px;padding:14px;border:1px solid rgba(0,176,255,0.05);position:relative;overflow:hidden;transition:transform .28s ease, box-shadow .28s ease}
+    .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,176,255,0.06)}
+
+    .card .top{display:flex;align-items:center;gap:12px}
+    .ico{width:52px;height:52px;border-radius:10px;display:grid;place-items:center;font-size:20px;background:linear-gradient(135deg, rgba(0,176,255,0.12), rgba(0,176,255,0.04));border:1px solid rgba(0,176,255,0.06)}
+    .title{font-weight:600;margin:0}
+    .meta{font-size:13px;color:var(--muted);margin-top:6px}
+
+    .card .actions{display:flex;gap:10px;margin-top:12px}
+    .link-btn{flex:1;padding:9px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--neon);font-weight:600;cursor:pointer;text-align:center}
+    .download{background:linear-gradient(90deg, rgba(0,176,255,0.12), rgba(90,208,255,0.06));border:1px solid rgba(0,176,255,0.08);color:var(--neon)}
+
+    /* subtle neon glow */
+    .glow{position:absolute;right:-40px;top:-40px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle at 30% 30%, rgba(0,176,255,0.12), transparent 45%);filter:blur(12px);pointer-events:none}
+
+    footer{margin-top:28px;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px}
+
+    /* responsive */
+    @media (max-width:520px){.intro{flex-direction:column}.controls{flex-direction:column}.logo h1{font-size:16px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">
+        <div class="mark"><i class="fa-solid fa-book-open" style="color:var(--neon);font-size:22px"></i></div>
+        <div>
+          <h1>Education Point — 11th Urdu Notes</h1>
+          <div class="subtitle">Urdu notes compiled by subject specialists — easy, clear, syllabus-aligned</div>
+        </div>
+      </div>
+      <div style="margin-left:auto;color:var(--muted);font-size:13px">Updated: Lesson set</div>
+    </header>
+
+    <div class="intro">
+      <div style="flex:1">
+        <p>Intermediate students may face difficulty finding quality notes because of the new syllabus. These Urdu notes for 11th class are prepared by subject specialists with clear explanations. Click a lesson to view in a new tab.</p>
+      </div>
+      <div style="width:120px;display:grid;place-items:center">
+        <div style="text-align:center">
+          <div style="font-size:22px;color:var(--neon);font-weight:700">22</div>
+          <div style="font-size:12px;color:var(--muted)">Lessons</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="search">
+        <i class="fa-solid fa-magnifying-glass" style="opacity:.7;margin-right:8px"></i>
+        <input id="q" placeholder="Search lesson (e.g., Lesson 1)" />
+        <button class="btn" onclick="clearSearch()" title="Clear">Clear</button>
+      </div>
+
+      <select id="filter" class="filter" onchange="applyFilter()">
+        <option value="all">All Lessons</option>
+        <option value="1-5">Lessons 1–5</option>
+        <option value="6-10">Lessons 6–10</option>
+        <option value="11-15">Lessons 11–15</option>
+        <option value="16-22">Lessons 16–22</option>
+      </select>
+
+      <button class="btn" onclick="openAll()">Open All</button>
+    </div>
+
+    <div id="list" class="grid">
+      <!-- Cards generated by script -->
+    </div>
+
+    <footer>
+      <div>Made for Education Point • Neon UI</div>
+      <div> All right reserve 2025| Education Point</div>
+    </footer>
+  </div>
+
+  <script>
+    // Data: lessons and links provided by user
+    const lessons = [
+      {id:1,title:'Lesson 1',url:'https://drive.google.com/file/d/1_42pReAEnxgGlDBKwCwUzwCyqmvy06ka/view?usp=drive_link'},
+      {id:2,title:'Lesson 2',url:'https://drive.google.com/file/d/1OiB7_4U8XmwrDYylvYRZ2cebWeoPHDrh/view?usp=drive_link'},
+      {id:3,title:'Lesson 3',url:'https://drive.google.com/file/d/1zlEMHzjcjBx9XMdQ4_mnAl0IyXWba8S4/view?usp=drive_link'},
+      {id:4,title:'Lesson 4',url:'https://drive.google.com/file/d/1X94k20s1XnILa5lxEV4oxNc_Z4Un0iJR/view?usp=drive_link'},
+      {id:5,title:'Lesson 5',url:'https://drive.google.com/file/d/1qknsbjcw60UcDG2hY6HgiGpAL-jSq-AU/view?usp=drive_link'},
+      {id:6,title:'Lesson 6',url:'https://drive.google.com/file/d/1ddrWAP8LJcYiByeb6I_3NBsX-kREfK7B/view?usp=drive_link'},
+      {id:7,title:'Lesson 7',url:'https://drive.google.com/file/d/1IIwa1hLwfMYNOTXnR0tbR59GXb2vEcz9/view?usp=drive_link'},
+      {id:8,title:'Lesson 8',url:'https://drive.google.com/file/d/1iEd0hPX4IYCEsDc1lWrbPwnCquG3crUA/view?usp=drive_link'},
+      {id:9,title:'Lesson 9',url:'https://drive.google.com/file/d/1fssQcH2f_THI_WkbZqmmAD436oWrBo0K/view?usp=drive_link'},
+      {id:10,title:'Lesson 10',url:'https://drive.google.com/file/d/1U1Fmnc2g1-oK_m0JsJxPlVo3FgW1Mp-n/view?usp=drive_link'},
+      {id:11,title:'Lesson 11',url:'https://drive.google.com/file/d/1eBCuRWNBrHq6ngq07vJuTCDB663saT04/view?usp=drive_link'},
+      {id:12,title:'Lesson 12',url:'https://drive.google.com/file/d/1HKOD-kKnWnK0ODvm5csGyQpHx3Nafxtp/view?usp=drive_link'},
+      {id:13,title:'Lesson 13',url:'https://drive.google.com/file/d/1W1jU_UWKTBRX4J8qv7kKaEC7R26Dl_fc/view?usp=drive_link'},
+      {id:14,title:'Lesson 14',url:'https://drive.google.com/file/d/1ugFA0DRe6fKIRaiLzXy1Jh9NpcRVUfPQ/view?usp=drive_link'},
+      {id:15,title:'Lesson 15',url:'https://drive.google.com/file/d/1a0Khvofc-1hQt5P_PyJOx6h3GBrrqdoE/view?usp=drive_link'},
+      {id:16,title:'Lesson 16',url:'https://drive.google.com/file/d/1NFAecAggXXQLYNbSyOjNJtNS95Qmjo_6/view?usp=drive_link'},
+      {id:17,title:'Lesson 17',url:'https://drive.google.com/file/d/16l3Wmq0niZap-9cos8Byb4Ya6Ek5MWAQ/view?usp=drive_link'},
+      {id:18,title:'Lesson 18',url:'https://drive.google.com/file/d/1JH0BAvOh3Mdu7Z6RX3_5r92cp3j9sEeD/view?usp=drive_link'},
+      {id:19,title:'Lesson 19',url:'https://drive.google.com/file/d/1xBZnwtWW3UuT1ttnN79yGdt4KDq5G7Zx/view?usp=drive_link'},
+      {id:20,title:'Lesson 20',url:'https://drive.google.com/file/d/1mkhns4Rq7g4ObsrJhNwneisrjJHNLc_u/view?usp=drive_link'},
+      {id:21,title:'Lesson 21',url:'https://drive.google.com/file/d/1ohXKstRs5u23whkWGqrAKIFHKRO3Frn7/view?usp=drive_link'},
+      {id:22,title:'Lesson 22',url:'https://drive.google.com/file/d/1qnzjSqcBlBjwH0u6NHiyDu4YXx2Ed7yi/view?usp=drive_link'}
+    ];
+
+    const container = document.getElementById('list');
+
+    function mkCard(item){
+      const el = document.createElement('div');
+      el.className = 'card';
+      el.innerHTML = `
+        <div class="glow"></div>
+        <div class="top">
+          <div class="ico"><i class="fa-solid fa-file-lines"></i></div>
+          <div style="flex:1">
+            <div class="title">${item.title}</div>
+            <div class="meta">Lesson ${item.id} • Urdu Notes (PDF)</div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="link-btn" onclick="openLink('${item.url}')"><i class="fa-solid fa-up-right-from-square" style="margin-right:8px"></i>Open</button>
+          <button class="link-btn download" onclick="downloadLink('${item.url}')"><i class="fa-solid fa-download" style="margin-right:8px"></i>Download</button>
+        </div>
+      `;
+      return el;
+    }
+
+    function render(list){
+      container.innerHTML='';
+      list.forEach(item=>container.appendChild(mkCard(item)));
+    }
+
+    // initial render
+    render(lessons);
+
+    // search and filter
+    const q = document.getElementById('q');
+    q.addEventListener('input',()=>applyFilter());
+
+    function applyFilter(){
+      const term = (q.value || '').trim().toLowerCase();
+      const f = document.getElementById('filter').value;
+      let filtered = lessons.slice();
+      if(f !== 'all'){
+        const [a,b] = f.split('-').map(Number);
+        filtered = filtered.filter(l=>l.id>=a && l.id<=b);
+      }
+      if(term){
+        filtered = filtered.filter(l => (l.title + ' lesson ' + l.id).toLowerCase().includes(term));
+      }
+      render(filtered);
+    }
+
+    function clearSearch(){ document.getElementById('q').value=''; document.getElementById('filter').value='all'; applyFilter(); }
+
+    function openLink(url){ window.open(url, '_blank'); }
+    function downloadLink(url){
+      // Attempt to open in new tab; Google Drive will handle download if available
+      window.open(url, '_blank');
+    }
+
+    function openAll(){
+      // open up to 6 tabs to avoid popup blocking — ask user to allow popups for more
+      const limit = Math.min(6, lessons.length);
+      for(let i=0;i<limit;i++) window.open(lessons[i].url, '_blank');
+      if(lessons.length>limit) alert('Opened first '+limit+' lessons. To open more, use the lesson cards or allow popups in your browser.');
+    }
+
+  </script>
+</body>
+</html>

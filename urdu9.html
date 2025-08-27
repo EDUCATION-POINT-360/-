@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Education Point | 9th Class Urdu Notes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #001f3f, #000814);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #00bfff;
+      text-shadow: 0 0 10px #00bfff;
+      margin-bottom: 20px;
+    }
+
+    .search-box {
+      margin: 20px auto;
+      max-width: 500px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 30px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      box-shadow: 0 0 10px #00bfff;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: rgba(0, 0, 50, 0.7);
+      border-radius: 15px;
+      padding: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00bfff44;
+    }
+
+    .card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 0 20px #00bfff;
+    }
+
+    .card i {
+      font-size: 40px;
+      color: #00bfff;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      font-size: 18px;
+      margin: 0;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #001f3f;
+      padding: 30px;
+      border-radius: 15px;
+      color: #fff;
+      text-align: center;
+      box-shadow: 0 0 20px #00bfff;
+    }
+
+    .close {
+      color: #00bfff;
+      font-size: 22px;
+      cursor: pointer;
+      float: right;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>9th Class Urdu Notes</h1>
+
+  <div class="search-box">
+    <input type="text" id="search" placeholder="Search Unit...">
+  </div>
+
+  <div class="grid" id="notesGrid">
+    <!-- Units with real links -->
+    <a href="https://drive.google.com/file/d/1YbyBsLaF2rHhycv2kEvhczHxV--1eSbz/view?usp=sharing" target="_blank" class="card">
+      <i class="fas fa-book"></i>
+      <h3>Unit 1 - Urdu Notes</h3>
+    </a>
+    <a href="https://drive.google.com/file/d/1o2-UMm16n8NgE1Gy_ZXhl7hTsZzFESm3/view?usp=sharing" target="_blank" class="card">
+      <i class="fas fa-book"></i>
+      <h3>Unit 2 - Urdu Notes</h3>
+    </a>
+    <a href="https://drive.google.com/file/d/1m5GJtIm-DV7Ka9ChQ_ClRjtfWBfe84Ga/view?usp=sharing" target="_blank" class="card">
+      <i class="fas fa-book"></i>
+      <h3>Unit 3 - Urdu Notes</h3>
+    </a>
+    <a href="https://drive.google.com/file/d/12yjkLWVQ8m-ETmH8R7aL6R3pqflVb7Bq/view?usp=sharing" target="_blank" class="card">
+      <i class="fas fa-book"></i>
+      <h3>Unit 4 - Urdu Notes</h3>
+    </a>
+    <a href="https://drive.google.com/file/d/1dD4McgwrzOtL5zvpx95jFhDikpZ5ivmP/view?usp=sharing" target="_blank" class="card">
+      <i class="fas fa-book"></i>
+      <h3>Unit 5 - Urdu Notes</h3>
+    </a>
+    <a href="https://drive.google.com/file/d/1ZL7IYB9Gm7vUM2zWJS2VxXop6zOzsa1i/view?usp=sharing" target="_blank" class="card">
+      <i class="fas fa-book"></i>
+      <h3>Unit 6 - Urdu Notes</h3>
+    </a>
+    <a href="https://drive.google.com/file/d/1F47bGUsNwCC5hDpGCSkOmb9pSZTtIuPJ/view?usp=sharing" target="_blank" class="card">
+      <i class="fas fa-book"></i>
+      <h3>Unit 7 - Urdu Notes</h3>
+    </a>
+    <a href="https://drive.google.com/file/d/1kpGuYtKQnCffzkb4WlXkkYhI7yKw_gjY/view?usp=sharing" target="_blank" class="card">
+      <i class="fas fa-book"></i>
+      <h3>Unit 8 - Urdu Notes</h3>
+    </a>
+    <a href="https://drive.google.com/file/d/1COXqk2uY7Hu9YtUPPtENJhWhwMJMYDxP/view?usp=sharing" target="_blank" class="card">
+      <i class="fas fa-book"></i>
+      <h3>Unit 9 - Urdu Notes</h3>
+    </a>
+    <a href="https://drive.google.com/file/d/1efm7kqY_bZPyd10LdTEhy5ymQczdx-Fw/view?usp=sharing" target="_blank" class="card">
+      <i class="fas fa-book"></i>
+      <h3>Unit 10 - Urdu Notes</h3>
+    </a>
+    <a href="https://drive.google.com/file/d/1zYwWnVqumD4RkzM6TBL5AFYjl3OQ7WPa/view?usp=sharing" target="_blank" class="card">
+      <i class="fas fa-book"></i>
+      <h3>Unit 11 - Urdu Notes</h3>
+    </a>
+
+    <!-- Placeholder Units -->
+    <div class="card placeholder" onclick="showModal()">
+      <i class="fas fa-book"></i>
+      <h3>Unit 12 - Urdu Notes</h3>
+    </div>
+    <div class="card placeholder" onclick="showModal()">
+      <i class="fas fa-book"></i>
+      <h3>Unit 13 - Urdu Notes</h3>
+    </div>
+    <div class="card placeholder" onclick="showModal()">
+      <i class="fas fa-book"></i>
+      <h3>Unit 14 - Urdu Notes</h3>
+    </div>
+  </div>
+<div class="card placeholder" onclick="showModal()">
+      <i class="fas fa-book"></i>
+      <h3>Unit 15 - Urdu Notes</h3>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Coming Soon</h2>
+      <p>Notes will be uploaded soon.</p>
+    </div>
+  </div>
+
+  <script>
+    // Search Filter
+    const search = document.getElementById('search');
+    const cards = document.querySelectorAll('.grid .card');
+
+    search.addEventListener('keyup', () => {
+      let term = search.value.toLowerCase();
+      cards.forEach(card => {
+        let text = card.innerText.toLowerCase();
+        card.style.display = text.includes(term) ? 'block' : 'none';
+      });
+    });
+
+    // Modal Functions
+    function showModal() {
+      document.getElementById('modal').style.display = 'flex';
+    }
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+    window.onclick = function(event) {
+      let modal = document.getElementById('modal');
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+
+</body>
+</html>

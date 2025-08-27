@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Education Point | 12th Class Chemistry</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root{
+      --bg:#0b0f1a;              /* deep navy */
+      --panel:#0e1422;            /* card base */
+      --accent:#1e90ff;           /* neon blue */
+      --accent-2:#64b5ff;         /* soft blue */
+      --text:#e6f0ff;             /* off-white */
+      --muted:#9ab3d0;            /* muted text */
+      --success:#23c552;          /* green */
+      --warning:#ffcf33;          /* amber */
+      --danger:#ff5d5d;           /* red */
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --glow:0 0 0 transparent;
+    }
+
+    *{ box-sizing:border-box }
+    html,body{ height:100% }
+    body{
+      margin:0;
+      font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background: radial-gradient(1200px 800px at 70% -10%, rgba(30,144,255,.18), transparent),
+                  radial-gradient(1000px 800px at -20% 110%, rgba(30,144,255,.12), transparent),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      letter-spacing:.1px;
+    }
+
+    a{ color:inherit; text-decoration:none }
+
+    /* Header */
+    .header{
+      position:sticky; top:0; z-index:20;
+      background:rgba(11,15,26,.7);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(100,181,255,.15);
+    }
+    .wrap{ max-width:1200px; margin:auto; padding:16px 20px }
+    .brand{ display:flex; align-items:center; gap:12px }
+    .brand .logo{
+      width:44px; height:44px; border-radius:12px;
+      background:linear-gradient(135deg, var(--accent), #2a6fff);
+      box-shadow:0 8px 24px rgba(30,144,255,.35), inset 0 0 12px rgba(255,255,255,.18);
+      display:grid; place-items:center;
+    }
+    .brand .logo i{ font-size:22px; color:white }
+    .brand h1{ font-size:18px; margin:0; font-weight:700; letter-spacing:.3px }
+    .brand span{ display:block; font-size:12px; color:var(--muted); margin-top:-2px }
+
+    /* Toolbar */
+    .toolbar{
+      display:grid; grid-template-columns:1fr; gap:14px; align-items:center; margin-top:20px;
+    }
+    .search{
+      display:flex; align-items:center; gap:10px; background:var(--panel);
+      padding:10px 14px; border:1px solid rgba(100,181,255,.2); border-radius:14px; box-shadow:var(--shadow);
+    }
+    .search i{ color:var(--accent-2) }
+    .search input{
+      flex:1; background:transparent; border:none; outline:none; color:var(--text);
+      font-size:15px;
+    }
+    .search input::placeholder { color: var(--muted); opacity: 0.8; }
+
+    /* Chips */
+    .chips{ display:flex; flex-wrap:wrap; gap:10px; }
+    .chip{
+      padding:8px 14px; font-size:13px; border-radius:999px; cursor:pointer; user-select:none;
+      background:rgba(100,181,255,.12); border:1px solid rgba(100,181,255,.25);
+      color:var(--accent-2); font-weight:600; transition:.25s ease;
+    }
+    .chip.active, .chip:hover{ background:rgba(30,144,255,.22); color:#fff; border-color:rgba(30,144,255,.5) }
+
+    /* Grid */
+    .grid{ display:grid; grid-template-columns:1fr; gap:14px; margin-top:18px }
+
+    /* Accordion Card */
+    .card{
+      background:linear-gradient(180deg, rgba(15,20,36,.95), rgba(12,16,30,.95));
+      border:1px solid rgba(100,181,255,.15); border-radius:16px; box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .card-header{
+      display:flex; align-items:center; justify-content:space-between; gap:14px; padding:16px 16px;
+      cursor:pointer;
+    }
+    .card-header:hover{ background:rgba(30,144,255,.06) }
+    .chapter-left{ display:flex; align-items:center; gap:14px }
+    .chapter-badge{ width:40px; height:40px; border-radius:12px; display:grid; place-items:center; flex:0 0 40px;
+      background:linear-gradient(135deg, rgba(30,144,255,.35), rgba(30,144,255,.15)); border:1px solid rgba(100,181,255,.25) }
+    .chapter-badge i{ color:#dff0ff; font-size:18px }
+    .card-title{ margin:0; font-size:16px }
+    .chev{ transition:.25s ease; color:var(--accent-2) }
+
+    .card-content{ display:none; border-top:1px solid rgba(100,181,255,.12); background:rgba(255,255,255,.02) }
+    .card.open .card-content{ display:block }
+    .card.open .chev{ transform:rotate(180deg) }
+
+    /* List of resources */
+    .res-list{ list-style:none; margin:0; padding:12px 14px; display:grid; gap:10px }
+    .res-item{
+      display:flex; flex-wrap:wrap; align-items:center; gap:10px; padding:12px; border-radius:12px;
+      border:1px solid rgba(100,181,255,.18); background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+    }
+    .res-left{ display:flex; align-items:center; gap:12px; min-width:200px; flex:1; }
+    .res-icon{ width:36px; height:36px; border-radius:10px; display:grid; place-items:center; flex:0 0 36px;
+      background:rgba(30,144,255,.16); border:1px solid rgba(100,181,255,.25) }
+    .res-icon i{ color:#eaf4ff }
+    .res-title{ font-weight:700; font-size:14px }
+    .res-actions{ margin-left:auto; display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    .tag{ font-size:12px; font-weight:700; color:#0d1b2a; background:linear-gradient(180deg, #b3ddff, #7ec2ff); padding:4px 8px; border-radius:999px }
+    .tag.warn{ background:linear-gradient(180deg, #ffe8a5, #ffd35e) }
+
+    .action{ display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:10px; border:1px solid rgba(100,181,255,.25); cursor:pointer; background:rgba(30,144,255,.12); font-weight:600; transition: background .2s ease; }
+    .action:hover{ background:rgba(30,144,255,.2) }
+
+    /* Footer */
+    footer{ margin:42px 0 28px; color:var(--muted); text-align:center; font-size:14px; }
+    .back-link{ display:inline-flex; align-items:center; gap:10px; margin-top:10px }
+
+    /* Utilities */
+    .row{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px }
+    .count{ font-size:13px; color:var(--muted); font-weight:600; }
+
+    /* Responsive */
+    @media(min-width:768px){
+      .toolbar{ grid-template-columns:1fr auto }
+      .grid{ grid-template-columns:1fr 1fr }
+    }
+    @media(min-width:1024px){
+      .grid{ grid-template-columns:1fr 1fr 1fr }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"><i class="fa-solid fa-flask-vial"></i></div>
+        <div>
+          <h1>Education Point</h1>
+          <span>FSc / Inter Part 2 Chemistry Notes</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+      <div class="toolbar">
+        <div class="search">
+            <i class="fa-solid fa-search"></i>
+            <input type="search" id="search" placeholder="Search chapters or topics..." />
+        </div>
+      </div>
+      <div class="row" style="margin-top:20px;">
+          <div id="chips" class="chips">
+              <div class="chip active" data-filter="all" role="button">All Types</div>
+              <div class="chip" data-filter="short" role="button">Short Questions</div>
+              <div class="chip" data-filter="full" role="button">Full Notes</div>
+              <div class="chip" data-filter="mcqs" role="button">MCQs</div>
+          </div>
+          <div id="resultCount" class="count"></div>
+      </div>
+  </div>
+
+  <main class="wrap">
+    <div class="grid" id="chapters"></div>
+  </main>
+  
+  <footer class="wrap">
+    <div>Notes are prepared according to the latest Punjab Boards syllabus and are free to download or preview.</div>
+    <div class="back-link">
+      <i class="fa-solid fa-graduation-cap"></i>
+      <span>Study smart. Revise with MCQs, Short and Long Questions.</span>
+    </div>
+  </footer>
+
+  <script>
+    // Data: Provided Google Drive links
+    const DATA = [
+      {
+        id:1,
+        title:"Chapter 1 - Periodic Classification Of Elements And Periodicity",
+        items:[
+          { type:"short", label:"Short Questions", url:"https://drive.google.com/file/d/14qNoViAVBEbk0dRgJNcEWpQgjxzlDCo9/view?usp=share_link" },
+          { type:"full",  label:"Full Chapter Notes", url:"https://drive.google.com/file/d/14g9zqb5L-5hchjsc4iMcm7hcn4jWtB8w/view?usp=share_link" },
+          { type:"mcqs",  label:"MCQs with Solved Exercise", url:"https://drive.google.com/file/d/1xNgpk25fXL57TLV_iv9d4_zAn2Z1oYGg/view?usp=share_link" }
+        ]
+      },
+      {
+        id:2,
+        title:"Chapter 2 - S-Block Elements",
+        items:[
+          { type:"short", label:"Short Questions", url:"https://drive.google.com/file/d/1ji-NL9kAi8RavPj0rXi9zraoXeCu8OOj/view?usp=share_link" },
+          { type:"full",  label:"Full Chapter Notes", url:"https://drive.google.com/file/d/1lbGerMZLJkWBtVAf8A93i_F2bQiQ0X2W/view?usp=share_link" },
+          { type:"mcqs",  label:"MCQs with Solved Exercise", url:"https://drive.google.com/file/d/1b43vP6K6IRK9v9zBwhoZgsktF27DesVM/view?usp=share_link" }
+        ]
+      },
+      {
+        id:3,
+        title:"Chapter 3 - Group III-A And Group IV-A Elements",
+        items:[
+          { type:"short", label:"Short Questions", url:"https://drive.google.com/file/d/1-dc7GnkbnTPoHuww4uz6xzFxuEJi9jqM/view?usp=share_link" },
+          { type:"full",  label:"Full Chapter Notes", url:"https://drive.google.com/file/d/1dybdcD0tBCDGr5BrNoKjVoAeT_XfzZuF/view?usp=share_link" },
+          { type:"mcqs",  label:"MCQs with Solved Exercise", url:"https://drive.google.com/file/d/1jf6LfxmE69Qs5DHszjcGCu57OQM1U3wG/view?usp=share_link" }
+        ]
+      },
+      {
+        id:4,
+        title:"Chapter 4 - Group V-A And Group VI-A Elements",
+        items:[
+          { type:"short", label:"Short Questions", url:"https://drive.google.com/file/d/1mRjakBO0durUjI9hd5gdf_N9IHrXoSQE/view?usp=share_link" },
+          { type:"full",  label:"Full Chapter Notes", url:"https://drive.google.com/file/d/1DmhBPxjyoHVlks9UHNjRQbe2vleUDCAc/view?usp=share_link" },
+          { type:"mcqs",  label:"MCQs with Solved Exercise", url:"https://drive.google.com/file/d/1QwSgZcZKDmaDXEMiNgNt67dbSSvnsHmh/view?usp=share_link" }
+        ]
+      },
+      {
+        id:5,
+        title:"Chapter 5 - Halogen And Noble Gases",
+        items:[
+          { type:"short", label:"Short Questions", url:"https://drive.google.com/file/d/1rJtY9W6pfVMzSvpR64wwQ3j139HgFA-R/view?usp=share_link" },
+          { type:"full",  label:"Full Chapter Notes", url:"https://drive.google.com/file/d/1DE_2juY_XDeYIGYDgHIz5PjI9-1A7A53/view?usp=share_link" },
+          { type:"mcqs",  label:"MCQs with Solved Exercise", url:"https://drive.google.com/file/d/1lT7QX7TYQvtDO98N-PZuWS7wcmyXAyjl/view?usp=share_link" }
+        ]
+      },
+      {
+        id:6,
+        title:"Chapter 6 - Transition Elements",
+        items:[
+          { type:"short", label:"Short Questions", url:"https://drive.google.com/file/d/1LPrfnT_fZ9E9fsuTpeZH9xwWVl6lGnTs/view?usp=share_link" },
+          { type:"full",  label:"Full Chapter Notes", url:"https://drive.google.com/file/d/1mnPAtBMaKJc4drli1l2DPaXAxyldKDFB/view?usp=share_link" },
+          { type:"mcqs",  label:"MCQs with Solved Exercise", url:"https://drive.google.com/file/d/1l9LGmNO6Wddz_hNLKvO68jstowSe88J3/view?usp=share_link" }
+        ]
+      },
+      {
+        id:7,
+        title:"Chapter 7 - Fundamental Principles Of Organic Chemistry",
+        items:[
+          { type:"short", label:"Short Questions", url:"https://drive.google.com/file/d/16pKN-G-NCd3eqxY6ndJwRC6vYB6F1rdz/view?usp=share_link" },
+          { type:"full",  label:"Full Chapter Notes", url:"https://drive.google.com/file/d/1PBlGMniauQIRXfY3BmWVyeTsr-iKg-r1/view?usp=share_link" },
+          { type:"mcqs",  label:"MCQs with Solved Exercise", url:"https://drive.google.com/file/d/14tQtsDoma7B6bpVb_oAxsS0nZwI1_uW5/view?usp=share_link" }
+        ]
+      },
+      {
+        id:8,
+        title:"Chapter 8 - Aliphatic Hydrocarbons",
+        items:[
+          { type:"short", label:"Short Questions", url:"https://drive.google.com/file/d/11Ne8Goh02d0tshV6Tf3VJ9xqxtxPgOSS/view?usp=share_link" },
+          { type:"full",  label:"Full Chapter Notes", url:"https://drive.google.com/file/d/14prBQeMH32zBmBt3lhzZTNhve2KCDFfS/view?usp=share_link" },
+          { type:"mcqs",  label:"MCQs with Solved Exercise", url:"https://drive.google.com/file/d/15K76r8dWkYWtHWCHiZTdAvPtr78hI-A_/view?usp=share_link" }
+        ]
+      },
+      {
+        id:9,
+        title:"Chapter 9 - Aromatic Hydrocarbons",
+        items:[
+          { type:"short", label:"Short Questions", url:"https://drive.google.com/file/d/1RcoN9idq6zY9D7ZrN9az1reBhzNZ-pOH/view?usp=share_link" },
+          { type:"full",  label:"Full Chapter Notes", url:"https://drive.google.com/file/d/1ysVJFB_W9Xd5YzRgsX1kAWOgI9m_c3OZ/view?usp=share_link" },
+          { type:"mcqs",  label:"MCQs with Solved Exercise", url:"https://drive.google.com/file/d/1_7U9CUr1Oi5dmkPdUCQvM-WjBbNlxpQG/view?usp=share_link" }
+        ]
+      },
+      {
+        id:10,
+        title:"Chapter 10 - Alkyl Halides",
+        items:[
+          { type:"short", label:"Short Questions", url:"https://drive.google.com/file/d/1jzxH5Rde35XrYsKCfiezfVxhrZsV0plS/view?usp=share_link" },
+          { type:"full",  label:"Full Chapter Notes", url:"https://drive.google.com/file/d/1Wwb5jmgTESCkE5N2sv3Mbv6Q_-zpvdQR/view?usp=share_link" },
+          { type:"mcqs",  label:"MCQs with Solved Exercise", url:"https://drive.google.com/file/d/1UNb68DbEs__a0BvbPKKt77AZTOL7Fk1o/view?usp=share_link" }
+        ]
+      },
+      {
+        id:11,
+        title:"Chapter 11 - Alcohols, Phenols And Ethers",
+        items:[
+          { type:"short", label:"Short Questions", url:"https://drive.google.com/file/d/1J301Q38fMtuCWdVwVp7L8utWdEdxBDz3/view?usp=share_link" },
+          { type:"full",  label:"Full Chapter Notes", url:"https://drive.google.com/file/d/1alJ5oQwwWvBKKtvcfyG6w6RrP0v_o2MR/view?usp=share_link" },
+          { type:"mcqs",  label:"MCQs with Solved Exercise", url:"https://drive.google.com/file/d/1CjCmapIFlnd4-TJ9w6MhOZjVbvJIXbIa/view?usp=share_link" }
+        ]
+      },
+      {
+        id:12,
+        title:"Chapter 12 - Aldehydes And Ketones",
+        items:[
+          { type:"short", label:"Short Questions", url:"https://drive.google.com/file/d/1UmviuCQrJtE4TdA5K-_p0D-w8cI0b8xJ/view?usp=share_link" },
+          { type:"full",  label:"Full Chapter Notes", url:"https://drive.google.com/file/d/1F_u0oC9aSPiRefBe2rKNGRfqhorRaawk/view?usp=share_link" },
+          { type:"mcqs",  label:"MCQs with Solved Exercise", url:"https://drive.google.com/file/d/1EAYizy-b2j39oCy0poYw3p2C1bw356pP/view?usp=share_link" }
+        ]
+      },
+      {
+        id:13,
+        title:"Chapter 13 - Carboxylic Acids",
+        items:[
+          { type:"short", label:"Short Questions", url:"https://drive.google.com/file/d/1dosScwVagVanmVLlZPwYO_LIwBog1Wx2/view?usp=share_link" },
+          { type:"full",  label:"Full Chapter Notes", url:"https://drive.google.com/file/d/1t2aSQtuJuKN6SYgL4_0XgQqF-Zh1V2EM/view?usp=share_link" },
+          { type:"mcqs",  label:"MCQs with Solved Exercise", url:"https://drive.google.com/file/d/1kQOOtSzZSnIg7LT9Wlp-u17ASkeGQOW_/view?usp=share_link" }
+        ]
+      },
+      {
+        id:14,
+        title:"Chapter 14 - Macromolecules",
+        items:[
+          { type:"short", label:"Short Questions", url:"https://drive.google.com/file/d/1l-cnR6Ktl3fHrMMnUqmt_Sw4xFxqS0Ha/view?usp=share_link" },
+          { type:"full",  label:"Full Chapter Notes", url:"https://drive.google.com/file/d/1MbScUEJqQvsg5zuB-gG1tEjYey6PSDPK/view?usp=share_link" },
+          { type:"mcqs",  label:"MCQs with Solved Exercise", url:"https://drive.google.com/file/d/10SkOBkD-CHmcpUdpoVxvgu6ZEujubQOb/view?usp=share_link" }
+        ]
+      },
+      {
+        id:15,
+        title:"Chapter 15 - Common Chemicals Industries In Pakistan",
+        items:[
+          { type:"short", label:"Short Questions", url:"https://drive.google.com/file/d/1fZS9AsZ-AkUxryXqRzNb72jJ8Qj-Mp3S/view?usp=share_link" },
+          { type:"full",  label:"Full Chapter Notes", url:"https://drive.google.com/file/d/1RevbsdGRM-5MEy4AK4PHuVfaZuzvokW2/view?usp=share_link" },
+          { type:"mcqs",  label:"MCQs with Solved Exercise", url:"https://drive.google.com/file/d/1YaaMVovqaNDlN4jEitbwTncw-ZSashEY/view?usp=share_link" }
+        ]
+      },
+      {
+        id:16,
+        title:"Chapter 16 - Environmental Chemistry",
+        items:[
+          { type:"short", label:"Short Questions", url:"https://drive.google.com/file/d/1uw8l-F7a_XMgz6zMq2aKy24GZTk0qUDB/view?usp=share_link" },
+          { type:"full",  label:"Full Chapter Notes", url:"https://drive.google.com/file/d/1ZXUR5T0k6JchdGmnn9hjCekDwGisN5Ka/view?usp=share_link" },
+          { type:"mcqs",  label:"MCQs with Solved Exercise", url:"https://drive.google.com/file/d/1xEkyJymd2AApUAn-3VlyG_UHzJ32K7BM/view?usp=share_link" }
+        ]
+      }
+    ];
+
+    const icons = { short:"fa-bolt", mcqs:"fa-circle-check", full:"fa-book" };
+    const grid = document.getElementById('chapters');
+
+    function makeResItem(item){
+      const li = document.createElement('li');
+      li.className = 'res-item';
+      li.dataset.type = item.type;
+      li.innerHTML = `
+        <div class="res-left">
+          <div class="res-icon"><i class="fa-solid ${icons[item.type]}"></i></div>
+          <div>
+            <div class="res-title">${item.label}</div>
+            <div class="muted" style="font-size:12px;color:var(--muted)">PDF • View or Download</div>
+          </div>
+        </div>
+        <div class="res-actions">
+          <a class="action" href="${item.url}" target="_blank" rel="noopener"><i class="fa-solid fa-eye"></i> Preview</a>
+          <a class="action" href="${item.url.replace('/view?usp=share_link', '/download')}" download><i class="fa-solid fa-download"></i> Download</a>
+          <button class="action copy" data-url="${item.url}"><i class="fa-solid fa-link"></i> Copy Link</button>
+        </div>`;
+      return li;
+    }
+
+    function makeCard(ch){
+      const card = document.createElement('section');
+      card.className = 'card';
+      card.dataset.title = ch.title.toLowerCase();
+      card.innerHTML = `
+        <div class="card-header" role="button" aria-expanded="false">
+          <div class="chapter-left">
+            <div class="chapter-badge"><i class="fa-solid fa-atom"></i></div>
+            <h3 class="card-title">${ch.title}</h3>
+          </div>
+          <i class="fa-solid fa-chevron-down chev"></i>
+        </div>
+        <div class="card-content">
+          <ul class="res-list"></ul>
+        </div>`;
+
+      const list = card.querySelector('.res-list');
+      ch.items.forEach(item => list.appendChild(makeResItem(item)));
+
+      card.querySelector('.card-header').addEventListener('click',()=>{
+        const opened = card.classList.toggle('open');
+        card.querySelector('.card-header').setAttribute('aria-expanded', opened);
+      });
+
+      card.addEventListener('click', e => {
+        const btn = e.target.closest('.copy');
+        if(btn){
+          navigator.clipboard.writeText(btn.dataset.url).then(()=>{
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied';
+            setTimeout(()=> btn.innerHTML = '<i class="fa-solid fa-link"></i> Copy Link', 1200);
+          });
+        }
+      });
+      return card;
+    }
+
+    function render(list){
+      grid.innerHTML = '';
+      list.forEach(ch => grid.appendChild(makeCard(ch)));
+      document.getElementById('resultCount').textContent = `${list.length} chapter${list.length!==1?'s':''}`;
+    }
+
+    // Initial render
+    render(DATA);
+
+    // Search
+    const search = document.getElementById('search');
+    search.addEventListener('input', e => {
+      const q = e.target.value.trim().toLowerCase();
+      // Deactivate any active chip when user starts typing
+      const activeChip = document.querySelector('.chip.active');
+      if(activeChip) activeChip.classList.remove('active');
+      document.querySelector('.chip[data-filter="all"]').classList.add('active');
+
+      const filtered = DATA.filter(ch =>
+        ch.title.toLowerCase().includes(q)
+      );
+      render(filtered);
+    });
+
+    // Filter chips
+    const chips = document.getElementById('chips');
+    chips.addEventListener('click', e => {
+      const chip = e.target.closest('.chip');
+      if(!chip) return;
+
+      // Clear search input on filter click
+      search.value = '';
+
+      [...chips.querySelectorAll('.chip')].forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      const type = chip.dataset.filter;
+      
+      // Collapse all cards before filtering
+      document.querySelectorAll('.card.open').forEach(c=>c.classList.remove('open'));
+
+      if(type==='all'){
+        render(DATA);
+        return;
+      }
+
+      // Filter the data based on the selected type
+      const filtered = DATA.map(ch=>({
+        ...ch,
+        items: ch.items.filter(i=>i.type===type)
+      })).filter(ch=>ch.items.length > 0);
+      
+      render(filtered);
+
+      // Auto-open all filtered cards for convenience
+      document.querySelectorAll('.card').forEach(card => {
+        card.classList.add('open');
+        card.querySelector('.card-header').setAttribute('aria-expanded', true);
+      });
+    });
+
+    // Open first two by default for quick access on initial load
+    window.addEventListener('DOMContentLoaded',()=>{
+      const cards = document.querySelectorAll('.card');
+      cards.forEach((c,i)=>{ if(i<2) { c.classList.add('open'); c.querySelector('.card-header').setAttribute('aria-expanded', true);} });
+    });
+  </script>
+</body>
+</html>

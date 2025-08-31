@@ -446,15 +446,207 @@
 </header>
 
 
-  <div class="hero">
-    <h1>Welcome to Education Point</h1>
-    <p>Pakistan's trusted platform for educational material, board exam resources & digital learning content. Learn smarter, not harder!</p>
+ <!-- Hero Section -->
+<div class="hero">
+  <div class="hero-content">
+    <h1 class="fade-in">Welcome to <span>Education Point</span></h1>
+    <p class="slide-up">
+      Pakistan's trusted platform for educational material, board exam resources & digital learning content. 
+      <strong>Learn smarter, not harder!</strong>
+    </p>
   </div>
+</div>
 
-  <section>
-    <h2>Our Vision</h2>
-    <p>To provide accessible, smart, and interactive learning resources to every student — anytime, anywhere.</p>
-  </section>
+<!-- Vision Section -->
+<section class="vision-section">
+  <div class="vision-container glass-card">
+    <h2 class="vision-title glow-text">Our Vision</h2>
+    <p class="vision-text">
+      At <strong>Education Point</strong>, we aim to make quality education
+      accessible for every student. Our vision is to empower learners with
+      resources, notes, guidance, and real-time updates —
+      helping them achieve academic success and a brighter future.
+    </p>
+  </div>
+</section>
+
+<style>
+/* Background */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background-size: 400% 400%;
+  animation: bgAnimation 15s infinite alternate;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+@keyframes bgAnimation {
+  0% { background-position: left top; }
+  100% { background-position: right bottom; }
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 100px 20px;
+  color: #fff;
+  position: relative;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.hero h1 span {
+  color: #00e5ff;
+  text-shadow: 0 0 15px #00e5ff;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+/* Vision Section */
+.vision-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 800px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+  animation: fadeInUp 1.2s ease;
+}
+
+.vision-title {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: #00e5ff;
+  text-shadow: 0 0 10px #00e5ff;
+}
+
+.vision-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 2s ease-in;
+}
+.slide-up {
+  animation: slideUp 2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+</style>
+
+
+<style>
+/* Vision Section Styling */
+.vision-section {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  padding: 60px 20px;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Floating Glow Animation */
+.vision-section::before,
+.vision-section::after {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: rgba(0, 255, 255, 0.15);
+  border-radius: 50%;
+  animation: floatGlow 8s infinite alternate ease-in-out;
+}
+
+.vision-section::before {
+  top: -50px;
+  left: -50px;
+}
+.vision-section::after {
+  bottom: -50px;
+  right: -50px;
+}
+
+@keyframes floatGlow {
+  0% {
+    transform: scale(1) translateY(0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.3) translateY(20px);
+    opacity: 0.3;
+  }
+}
+
+/* Title */
+.vision-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #00f, 0 0 20px #00f;
+  animation: glowPulse 2s infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    text-shadow: 0 0 10px #00f, 0 0 20px #00f, 0 0 30px #00f;
+  }
+  50% {
+    text-shadow: 0 0 20px #0ff, 0 0 30px #0ff, 0 0 40px #0ff;
+  }
+}
+
+/* Text */
+.vision-text {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.7;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1.5s forwards 0.5s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+
 
   <section>
     <h2> What We Offer</h2>
@@ -480,211 +672,525 @@
         <p>Helping students grow emotionally & academically.</p>
       </div>
     </div>
-    <div class="student-img">
-      <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" alt="Student">
-    </div>
+   
   </section>
-<div class="hero">
-  
-    <h1 class="title">Education Point</h1>
-    <p class="tagline">Your path to knowledge starts here. Explore curated educational resources designed to help you excel.</p>
-    <a href="home.html" class="neon-button">Explore Resources</a>
+ <section class="stats">
+  <h2 class="section-title">Our Achievements</h2>
+  <div class="stat-grid">
+    <div class="stat-box glass">
+      <h3>500+</h3>
+      <p>Students Benefited</p>
+    </div>
+    <div class="stat-box glass">
+      <h3>1000+</h3>
+      <p>Resources Provided</p>
+    </div>
+    <div class="stat-box glass">
+      <h3>100%</h3>
+      <p>Free & Accessible</p>
+    </div>
   </div>
-  <section class="testimonials">
-    <h2>What Students Say</h2>
-    <div class="cards">
-      <div class="card">
-        
-        <h4>Fatima Zafar</h4>
-        <p>"Education Point helped me prepare for my board exams confidently."</p>
-      </div>
-      <div class="card">
-       
-        <h4>Ali Hassan</h4>
-        <p>"Resources are free and mobile-friendly. Highly recommended!"</p>
-      </div>
-      <div class="card">
-       
-        <h4>Sana Tariq</h4>
-        <p>"From notes to past papers, everything is well-organized."</p>
-      </div>
-    </div>
-  </section>
+</section>
 
-  <section class="stats">
-    <h2>Our Achievements</h2>
-    <div class="stat-grid">
-      <div class="stat-box">
-        <h3>500+</h3>
-        <p>Students Benefited</p>
-      </div>
-      <div class="stat-box">
-        <h3>1000+</h3>
-        <p>Resources Provided</p>
-      </div>
-      <div class="stat-box">
-        <h3>100%</h3>
-        <p>Free & Accessible</p>
-      </div>
-    </div>
-  </section>
+<style>
+/* Section Styling */
+.stats {
+  text-align: center;
+  padding: 80px 20px;
+  background: url('https://www.transparenttextures.com/patterns/dark-mosaic.png'), 
+              linear-gradient(135deg, rgba(0,0,0,0.9), rgba(0,0,30,0.8));
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
 
- <section id="spotlight" class="section">
-      <h2 class="neon-heading" data-aos="fade-up">Student Spotlight</h2>
-      <div class="resources">
-       
-		<div class="resources">
-        <div class="resource-card" data-aos="zoom-in">
-          <img src="student 3.jpg" alt="Bilal">
-          <h3>BILAL</h3>
-          <p>"Education Point helped me understand tough topics easily. The notes were clear and concise!"</p>
-        </div>
-		<div class="resource-card" data-aos="zoom-in">
-          <img src="student 4.jpg" alt="Hamza">
-          <h3>Hamza Shah</h3>
-          <p>"I improved my grades after following their study schemes and guidebooks!"</p>
-        </div>
-		<div class="resource-card" data-aos="zoom-in">
-          <img src="student 5.jpg" alt="Ali">
-          <h3>Ali Raza</h3>
-          <p>"Education Point made my studies so much easier. The notes were just perfect!"</p>
-        </div>
-		<div class="resource-card" data-aos="zoom-in">
-          <img src="student 6.jpg" alt="Usman">
-          <h3>Usman Tariq</h3>
-          <p>"Clean design, easy access, and everything I needed to prepare!"</p>
-        </div>
-        <div class="resource-card" data-aos="zoom-in">
-          <img src="student 2.jpg" alt="Ahmed">
-          <h3>Ahmed Khan</h3>
-          <p>“The guess papers were spot-on. A huge help before exams!”</p>
-        </div>
-      </div>
-    </section>
-	  <script>
-  function toggleMenu() {
-    const nav = document.getElementById('nav-links');
-    nav.classList.toggle('active');
-  }
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  position: relative;
+  display: inline-block;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
 
-</script>
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* Glass Effect */
+.stat-box.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 40px 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer;
+  animation: fadeInUp 1s ease forwards;
+}
+
+.stat-box.glass:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 12px 40px rgba(0, 200, 255, 0.6);
+}
+
+.stat-box h3 {
+  font-size: 2.8rem;
+  color: #00d9ff;
+  margin-bottom: 10px;
+}
+
+.stat-box p {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #f1f1f1;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+ 
  <style>
-    /* Your existing CSS remains here - omitted for brevity */
+/* ===== Global Theme Update ===== */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  background: linear-gradient(135deg, #0d0d0d, #101820, #1b2735);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  overflow-x: hidden;
+}
 
-    /* NEW FEATURES UI SECTION */
-    .features-section {
-      background: rgba(255,255,255,0.04);
-      backdrop-filter: blur(8px);
-      padding: 60px 20px;
-      text-align: center;
-    }
-    .features-section h2 {
-      font-size: 2.2rem;
-      color: #00f7ff;
-      text-shadow: 0 0 8px #00f7ff;
-      margin-bottom: 40px;
-    }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 30px;
-      padding: 0 20px;
-    }
-    .feature-card {
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(0, 247, 255, 0.2);
-      border-radius: 15px;
-      padding: 30px 20px;
-      color: #fff;
-      transition: 0.4s;
-      box-shadow: 0 0 10px #00f7ff50;
-    }
-    .feature-card:hover {
-      background-color: rgba(0, 247, 255, 0.1);
-      transform: translateY(-5px);
-      box-shadow: 0 0 20px #00f7ff80;
-    }
-    .feature-card i {
-      font-size: 2.5rem;
-      margin-bottom: 15px;
-      color: #00f7ff;
-    }
-    .feature-card h4 {
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-      color: #00f7ff;
-    }
-    .feature-card p {
-      font-size: 0.95rem;
-      color: #ccc;
-    }
-  </style>
+/* Smooth gradient animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Header */
+header {
+  background: rgba(15, 15, 30, 0.8);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 25px rgba(0, 247, 255, 0.3);
+  transition: background 0.3s ease;
+}
+header:hover {
+  background: rgba(15, 15, 30, 0.95);
+}
+
+/* Neon Blog-like Headings */
+h1, h2, h3, h4 {
+  color: #00f7ff;
+  text-shadow: 0 0 15px #00f7ff, 0 0 25px rgba(0, 247, 255, 0.5);
+}
+
+/* Section Styling like blog blocks */
+section {
+  background: rgba(255,255,255,0.02);
+  margin: 2rem auto;
+  border-radius: 15px;
+  padding: 3rem 1.5rem;
+  max-width: 1100px;
+  box-shadow: 0 0 20px rgba(0,247,255,0.15);
+  animation: fadeIn 1.5s ease;
+  transition: transform 0.3s;
+}
+section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 30px rgba(0,247,255,0.3);
+}
+
+/* Hero section more animated like blog header */
+.hero {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 7rem 1rem 4rem;
+  background: radial-gradient(circle at center, rgba(0,247,255,0.15), transparent 70%);
+  animation: fadeInUp 1.2s ease;
+}
+
+/* Animated particles for blogging vibe */
+.animated-bg::before, .animated-bg::after {
+  content: "";
+  position: absolute;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(0,247,255,0.08);
+  filter: blur(60px);
+  animation: pulse 12s infinite alternate ease-in-out;
+}
+.animated-bg::after {
+  bottom: 10%; right: 15%;
+  animation-delay: 6s;
+}
+.animated-bg::before {
+  top: 15%; left: 10%;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); opacity: 0.5; }
+  to { transform: scale(1.4); opacity: 0.8; }
+}
+
+/* Cards more blogging style */
+.feature-box, .card, .resource-card, .feature-card, .stat-box {
+  background: rgba(20,20,30,0.7);
+  border: 1px solid rgba(0,247,255,0.25);
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0,247,255,0.2);
+  transition: 0.3s ease;
+}
+.feature-box:hover, .card:hover, .resource-card:hover, .feature-card:hover, .stat-box:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 25px rgba(0,247,255,0.5);
+}
+
+/* Footer modern blog vibe */
+.site-footer {
+  background: #0b0f17;
+  padding: 3rem 1rem 1rem;
+  border-top: 1px solid rgba(0,247,255,0.2);
+}
+.site-footer p { color: #aaa; font-size: 0.9rem; }
+</style>
+
 
   <!-- Loader, Navbar, Hero, and Sections Already Present -->
 
   <!-- NEW FEATURES SECTION -->
   <section class="features-section" id="features">
-    <h2 data-aos="fade-up">Why Choose Education Point?</h2>
+    <!-- Why Use Education Point Section -->
+<section class="why-education-point">
+  <div class="container">
+    <h2 class="section-title">Why Choose <span>Education Point</span>?</h2>
+    <p class="section-subtitle">We provide everything students need in one place with a modern, interactive experience.</p>
+
     <div class="features-grid">
-      <div class="feature-card" data-aos="zoom-in">
-        <i class="fas fa-book"></i>
-        <h4>Vast Resources</h4>
-        <p>Access notes, guides, schemes, keybooks, and more across various subjects.</p>
+      <div class="feature-card">
+        <i class="fas fa-book-open"></i>
+        <h3>Complete Notes</h3>
+        <p>Access comprehensive notes, keybooks, and guess papers designed by subject specialists.</p>
       </div>
-      <div class="feature-card" data-aos="zoom-in">
-        <i class="fas fa-bolt"></i>
-        <h4>Fast Loading</h4>
-        <p>Lightning-fast experience powered by modern web technologies and optimized assets.</p>
+
+      <div class="feature-card">
+        <i class="fas fa-lightbulb"></i>
+        <h3>Smart Learning</h3>
+        <p>Interactive study materials, schemes, and guides that make preparation faster and smarter.</p>
       </div>
-      
-      <div class="feature-card" data-aos="zoom-in">
-        <i class="fas fa-users"></i>
-        <h4>Student Focused</h4>
-        <p>Real testimonials, student spotlights, and success stories from actual users.</p>
+
+      <div class="feature-card">
+        <i class="fas fa-newspaper"></i>
+        <h3>Latest Updates</h3>
+        <p>Stay up to date with education news, board updates, and exam schedules in real-time.</p>
       </div>
-      <div class="feature-card" data-aos="zoom-in">
-        <i class="fas fa-code"></i>
-        <h4>Modern Design</h4>
-        <p>Clean, futuristic UI with smooth animations, neon effects, and responsive design.</p>
+
+      <div class="feature-card">
+        <i class="fas fa-user-graduate"></i>
+        <h3>Student Support</h3>
+        <p>Our platform highlights top students, provides testimonials, and builds a learning community.</p>
       </div>
     </div>
-  </section>
-  <style>
-  .site-footer {
-     background: #000;
-      padding: 40px 0 10px; text-align: center;
-      margin-top: 60px;
-    }
-    .site-footer h3 {
-      font-size: 28px; color: #00f7ff; margin-bottom: 10px;
-      text-shadow: 0 0 5px #00f7ff;
-    }
-    .site-footer p { color: #bbb; }
-    .socials {
-      display: flex; justify-content: center; gap: 25px;
-      margin: 20px 0; list-style: none;
-    }
-    .socials li a {
-      color: #00f7ff; font-size: 22px; transition: 0.3s;
-    }
-    .socials li a:hover {
-      color: #fff; transform: scale(1.2);
-    }
-    .footer-bottom {
-      border-top: 1px solid #333; padding-top: 12px;
-      font-size: 14px; color: #888;
+  </div>
+</section>
 
-  </style>
-  <footer class="site-footer">
-    <div class="footer-content">
+<!-- Styles -->
+<style>
+.why-education-point {
+  background: linear-gradient(135deg, #0d1b2a, #1b263b);
+  color: #fff;
+  text-align: center;
+  padding: 80px 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+.section-title span {
+  color: #00b4d8;
+}
+.section-subtitle {
+  font-size: 1rem;
+  margin-bottom: 50px;
+  color: #ccc;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.feature-card {
+  background: rgba(255,255,255,0.05);
+  padding: 30px;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.feature-card:hover {
+  transform: translateY(-10px);
+  background: rgba(0,180,216,0.1);
+  box-shadow: 0 8px 20px rgba(0,180,216,0.3);
+}
+.feature-card i {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #00b4d8;
+}
+.feature-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.feature-card p {
+  font-size: 0.95rem;
+  color: #ddd;
+}
+</style>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <!-- Footer Start -->
+<footer class="footer">
+  <div class="footer-container">
+    
+    <!-- About Section -->
+    <div class="footer-col">
       <h3>Education Point</h3>
-      <p>Empowering Students to Shine Brighter!</p>
-      <ul class="socials">
-        <li><a href="https://www.facebook.com/profile.php?id=61561221331392&mibextid=ZbWKwL"><i class="fab fa-facebook-f"></i></a></li>
-        <li><a href="https://whatsapp.com/channel/0029VayfTrh8PgsHHebiwc2k"><i class="fab fa-whatsapp"></i></a></li>
-        <li><a href="https://www.instagram.com/itx.wani1?igsh=MTVwYjY0N2YwMnRqNg=="><i class="fab fa-instagram"></i></a></li>
-        <li><a href="https://youtube.com/@educationpoint998?si=s99BJgdK5SEr01I5"><i class="fab fa-youtube"></i></a></li>
-    	</ul></div>
+      <p>Your one-stop platform for study resources, notes, guess papers, and education updates. 
+      Learn smart, achieve big.</p>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="notes.html">Notes</a></li>
+        <li><a href="guess-papers.html">Guess Papers</a></li>
+        <li><a href="keybooks.html">Key Books</a></li>
+   
+      </ul>
+    </div>
+
+    <!-- Resources -->
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="schemes.html">Schemes</a></li>
+        <li><a href="guidebooks.html">Guide Books</a></li>
+		 <li><a href="home.html">All Resourses</a></li>
+       
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <ul>
+        <li>Email: <a href="mailto:mrizwank585@gmail.com">Email</a></li>
+        <li>Phone: +923314220506 </li>
+        <li><a href="contact.html">Contact Form</a></li>
+      </ul>
+    </div>
+<!-- Font Awesome for icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+<!-- Social Media Links -->
+<ul class="socials">
+  <li>
+    <a href="https://www.facebook.com/profile.php?id=61561221331392&mibextid=ZbWKwL" target="_blank">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+  </li>
+  <li>
+    <a href="https://whatsapp.com/channel/0029VayfTrh8PgsHHebiwc2k" target="_blank">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+  </li>
+  <li>
+    <a href="https://www.instagram.com/itx.wani1?igsh=MTVwYjY0N2YwMnRqNg==" target="_blank">
+      <i class="fab fa-instagram"></i>
+    </a>
+  </li>
+  <li>
+    <a href="https://youtube.com/@educationpoint998?si=s99BJgdK5SEr01I5" target="_blank">
+      <i class="fab fa-youtube"></i>
+    </a>
+  </li>
+</ul>
+
+<!-- CSS Styling -->
+<style>
+.socials {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 0;
+}
+
+.socials li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #111;
+  color: #fff;
+  font-size: 20px;
+  transition: 0.3s ease-in-out;
+  box-shadow: 0 0 8px rgba(0,0,0,0.6);
+}
+
+.socials li a:hover {
+  transform: scale(1.1);
+  color: #fff;
+  box-shadow: 0 0 15px #00f, 0 0 25px #00f;
+}
+
+.socials li a .fa-facebook-f { color: #3b5998; }
+.socials li a .fa-whatsapp { color: #25D366; }
+.socials li a .fa-instagram { color: #E1306C; }
+.socials li a .fa-youtube { color: #FF0000; }
+</style>
+
+
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="footer-bottom">
+    <p>© 2025 <a href="index.html">Education Point</a>. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<!-- CSS -->
+<style>
+/* Footer Styling */
+.footer {
+  background: linear-gradient(135deg, #0d1b2a, #1b263b);
+  color: #fff;
+  padding: 60px 20px 20px;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  width: 200px;
+  height: 200px;
+  background: #00f7ff;
+  opacity: 0.2;
+  border-radius: 50%;
+  animation: pulse 6s infinite;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer h3, .footer h4 {
+  color: #00f7ff;
+  margin-bottom: 15px;
+}
+
+.footer p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer ul li {
+  margin-bottom: 10px;
+}
+
+.footer ul li a {
+  color: #ddd;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.footer ul li a:hover {
+  color: #00f7ff;
+  padding-left: 5px;
+}
+
+.social-links a {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  margin: 0 8px;
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+.social-links a:hover {
+  background: #00f7ff;
+  color: #0d1b2a;
+  transform: scale(1.2) rotate(10deg);
+}
+
+.footer-bottom {
+  margin-top: 30px;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  padding-top: 15px;
+  font-size: 14px;
+}
+
+.footer-bottom a {
+  color: #00f7ff;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.footer-bottom a:hover {
+  color: #fff;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.9); opacity: 0.2; }
+  50% { transform: scale(1.2); opacity: 0.4; }
+  100% { transform: scale(0.9); opacity: 0.2; }
+}
+
+</style>
+
 		
 </body>
 </html>

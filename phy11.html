@@ -1,0 +1,172 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FSc Class 11 Physics — Notes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>/* small visual tweaks */
+    .accordion-summary::-webkit-details-marker { display: none; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <div class="max-w-6xl mx-auto p-6">
+    <header class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+      <div>
+        <h1 class="text-3xl font-extrabold">FSc — Class 11 Physics </h1>
+        <p class="text-sm text-slate-600 mt-1">Chapter-wise concise notes, short questions & numericals — click to preview or download.</p>
+      </div><div class="w-full sm:w-auto flex gap-2">
+    <input id="search" placeholder="Search chapters..." class="px-3 py-2 border rounded-md shadow-sm w-full sm:w-72" />
+    <a href="#all" class="px-4 py-2 bg-sky-600 text-white rounded-md shadow">All Chapters</a>
+  </div>
+</header>
+
+<main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <!-- Left: Accordion -->
+  <section class="lg:col-span-2">
+    <div id="accordion" class="space-y-3">
+      <!-- chapters will be injected by JS -->
+    </div>
+  </section>
+
+
+    <div class="bg-gradient-to-br from-sky-600 to-sky-400 text-white p-4 rounded-2xl shadow-lg">
+      <h5 class="font-bold">Overview</h5>
+      <p class="text-sm opacity-90">Compact tiles for quick preview — optimized for mobile.</p>
+
+      <div id="tiles" class="mt-3 grid grid-cols-2 gap-2"></div>
+    </div>
+
+    <div class="bg-white p-4 rounded-2xl shadow-sm border mt-4">
+      <h6 class="font-medium">About this Course</h6>
+      <p class="text-sm text-slate-500 mt-2">Concise notes prepared by subject experts to help Class 11 students revise fast and prepare for boards & competitive exams.</p>
+    </div>
+  </aside>
+</main>
+
+<footer class="mt-8 text-center text-sm text-slate-500">Made for education point • Class 11 Physics notes</footer>
+
+  </div>  <script>
+    const chapters = [
+      { id:1, title:'Chapter 1 – Measurements', links:[
+        {label:'Complete Notes', url:'https://drive.google.com/file/d/1V4nrkKRVvk-63aHuksSzyRhhiCyuMTav/view?usp=drive_link'},
+        {label:'Short Questions', url:'https://drive.google.com/file/d/1Kmm-1z2ogI-qO6HdpNg8VoHOBO1ha4LW/view?usp=drive_link'},
+        {label:'Numericals', url:'https://drive.google.com/file/d/1r70IacSmvIbqXCYo8a7BthSj6yDceE_E/view?usp=drive_link'}
+      ]},
+      { id:2, title:'Chapter 2 – Force and Motion', links:[
+        {label:'Complete Notes', url:'https://drive.google.com/file/d/1_q4epCKInR4LByAaSAgHrVvvwoQUmLG_/view?usp=drive_link'},
+        {label:'Short Questions', url:'https://drive.google.com/file/d/1jPqBXjr9oSOpWcPRe0QTw0EvQI0wegIj/view?usp=drive_link'},
+        {label:'Numericals', url:'https://drive.google.com/file/d/13eJmocrTZ9hA2ybJ2H9BLrAbUViguDCK/view?usp=drive_link'}
+      ]},
+      { id:3, title:'Chapter 3 – Circular and Rotational Motion', links:[
+        {label:'Complete Notes', url:'https://drive.google.com/file/d/1TUQq543Ky6vVFyUMnFlo9Mo_7Xr33rLz/view?usp=drive_link'},
+        {label:'Short Questions', url:'https://drive.google.com/file/d/1u_NXkJnPLAdi7BbvD3FJHthrIzOcsGhk/view?usp=drive_link'},
+        {label:'Numericals', url:'https://drive.google.com/file/d/1eAD2dNFpeNVzpWsewPWPRTNE4EbBTSmo/view?usp=drive_link'}
+      ]},
+      { id:4, title:'Chapter 4 – Work, Energy and Power', links:[
+        {label:'Complete Notes', url:'https://drive.google.com/file/d/1D3TQGsxvaK0_d8-e3yav-X3kyCvfVs9H/view?usp=drive_link'},
+        {label:'Short Questions', url:'https://drive.google.com/file/d/16-7gYimEsBsv_pJqxiTedszIgTlVpMdb/view?usp=drive_link'},
+        {label:'Numericals', url:'https://drive.google.com/file/d/1nmH3g4fEqr7b1Pyu4wIqzSGLLq0WDmh9/view?usp=drive_link'}
+      ]},
+      { id:5, title:'Chapter 5 – Solids and Fluid Dynamics', links:[
+        {label:'Complete Notes', url:'https://drive.google.com/file/d/1sMeKHLLbW7eDACCAW3YIjUBhQy75qT4U/view?usp=drive_link'},
+        {label:'Exercises', url:'https://drive.google.com/file/d/1EjoUy-4vZpSrZpEXbny1dZLDa4X-Nt6Q/view?usp=drive_link'},
+        {label:'Numericals', url:'https://drive.google.com/file/d/1iacILmwNkI9TlCyyB3R54-hXT-fUB3Jv/view?usp=drive_link'}
+      ]},
+      { id:6, title:'Chapter 6 – Heat and Thermodynamics', links:[
+        {label:'Complete Notes', url:'https://drive.google.com/file/d/1zmN5ogCb0mFIwtsBrHBl53wlR1YLLmhl/view?usp=drive_link'},
+        {label:'Short Questions', url:'https://drive.google.com/file/d/18r8e40PVITTgPbvthTbwGs9dnMJf-_XZ/view?usp=drive_link'},
+        {label:'Numericals', url:'https://drive.google.com/file/d/1zUZSLw4pJRuIwVGzL9PbNrTJVgVpsHyy/view?usp=drive_link'}
+      ]},
+      { id:7, title:'Chapter 7 – Waves and Vibrations', links:[
+        {label:'Complete Notes', url:'https://drive.google.com/file/d/1YWZGyTDsc4q4Tw7AJUa53qdhgsdVMSBs/view?usp=drive_link'},
+        {label:'Short Questions', url:'https://drive.google.com/file/d/1cL7Lp6BEwZ8HubKskZOtSYMWazkVPjyA/view?usp=drive_link'},
+        {label:'Numericals', url:'https://drive.google.com/file/d/12VfIefpXkg2Ww4uJzSDsDg9j_kFJ_fOi/view?usp=drive_link'}
+      ]},
+      { id:8, title:'Chapter 8 – Physical Optics and Gravitational Waves', links:[
+        {label:'Complete Notes', url:'https://drive.google.com/file/d/14MjKSa0Hw_sYS0uBOBv27Q8dAh_DkxxJ/view?usp=drive_link'},
+        {label:'Short Questions', url:'https://drive.google.com/file/d/1R7eS8khHzeRNZxDQedWasYTRXAPYsYvK/view?usp=drive_link'},
+        {label:'Numericals', url:'https://drive.google.com/file/d/1eRlnIxyf5xW67VjlmphF1Yo7-80C9tXG/view?usp=drive_link'}
+      ]},
+      { id:9, title:'Chapter 9 – Electrostatics and Current Electricity', links:[
+        {label:'Complete Notes', url:'https://drive.google.com/file/d/1PlOdZZkNdT4vGLBrvry8O9NI5GiYZxbP/view?usp=drive_link'},
+        {label:'Short Questions', url:'https://drive.google.com/file/d/1PHQifYo1H6p1ET26R5t_rhl4WOeGXdhH/view?usp=drive_link'},
+        {label:'Numericals', url:'https://drive.google.com/file/d/1b8gIQYb8Ki7gxSDr6G5VzL_wyeH1KEw2/view?usp=drive_link'}
+      ]},
+      { id:10, title:'Chapter 10 – Electromagnetism', links:[
+        {label:'Complete Notes', url:'https://drive.google.com/file/d/1Nd6KFqqt5ssoEtpjrLHVnBPcJCGBb9Zi/view?usp=drive_link'},
+        {label:'Short Questions', url:'https://drive.google.com/file/d/1zC30-7GqAdSx0Nf4osXd_yF2hrGc8AHc/view?usp=drive_link'},
+        {label:'Numericals', url:'https://drive.google.com/file/d/1xO-IS5R3bMCIESnLfbOykW3VI6EBSNCo/view?usp=drive_link'}
+      ]},
+      { id:11, title:'Chapter 11 – Special Theory of Relativity', links:[
+        {label:'Complete Notes', url:'https://drive.google.com/file/d/13hSa4f0nzE9c15ChH3lvD4HmCdAr8pwz/view?usp=drive_link'},
+        {label:'Short Questions', url:'https://drive.google.com/file/d/1jtXzfKgOza3px4farXfrJXDdHM7YlfSA/view?usp=drive_link'},
+        {label:'Numericals', url:'https://drive.google.com/file/d/194z_oi8AlavKMTBxCdWYl_aiTBe1fhWY/view?usp=drive_link'}
+      ]},
+      { id:12, title:'Chapter 12 – Nuclear and Particle Physics', links:[
+        {label:'Complete Notes', url:'https://drive.google.com/file/d/1rjvsmEHha2FFrzRIpeemLvaqTQYiqznD/view?usp=drive_link'},
+        {label:'Short Questions', url:'https://drive.google.com/file/d/1NUvdcIvWrBiGSz2iJpS3CTipKDWt5W_k/view?usp=drive_link'},
+        {label:'Numericals', url:'https://drive.google.com/file/d/1hn4A29SvBbQOdIE1e2JTZFFY71G-X6dQ/view?usp=drive_link'}
+      ]}
+    ];
+
+    const accordion = document.getElementById('accordion');
+    const tiles = document.getElementById('tiles');
+
+    function render(list){
+      accordion.innerHTML = '';
+      tiles.innerHTML = '';
+      list.forEach(chap => {
+        // accordion item (details/summary)
+        const d = document.createElement('details');
+        d.className = 'bg-white rounded-2xl p-4 shadow-sm border';
+
+        const s = document.createElement('summary');
+        s.className = 'accordion-summary flex items-center justify-between cursor-pointer list-none';
+        s.innerHTML = `<div><h3 class=\"font-semibold\">${chap.title}</h3><p class=\"text-xs text-slate-500 mt-1\">Download PDFs for quick revision and exams.</p></div><div class=\"text-slate-400\">+</div>`;
+
+        d.appendChild(s);
+
+        const content = document.createElement('div');
+        content.className = 'mt-4 border-t pt-3 flex flex-col gap-2';
+        chap.links.forEach(l => {
+          const a = document.createElement('a');
+          a.href = l.url; a.target = '_blank'; a.rel='noopener';
+          a.className = 'flex items-center justify-between px-3 py-2 rounded-md bg-slate-50 hover:bg-slate-100';
+          a.innerHTML = `<span class=\"truncate\">${l.label}</span><span class=\"text-xs text-sky-600\">Open</span>`;
+          content.appendChild(a);
+        });
+
+        d.appendChild(content);
+        accordion.appendChild(d);
+
+        // tile
+        const t = document.createElement('a');
+        t.href = '#';
+        t.className = 'bg-white text-slate-800 p-2 rounded-lg text-xs shadow-sm flex flex-col';
+        t.innerHTML = `<span class=\"font-medium truncate\">${chap.title}</span><span class=\"text-[10px] mt-1 text-slate-500\">PDFs</span>`;
+        tiles.appendChild(t);
+      });
+    }
+
+    render(chapters);
+
+    // Simple search/filter
+    document.getElementById('search').addEventListener('input', (e)=>{
+      const q = e.target.value.trim().toLowerCase();
+      if(!q) return render(chapters);
+      const filtered = chapters.filter(c=> c.title.toLowerCase().includes(q));
+      render(filtered);
+    });
+
+    // Optional: replace + with − when open
+    accordion.addEventListener('toggle', (ev)=>{
+      const details = ev.target;
+      if(details.tagName !== 'DETAILS') return;
+      const sign = details.querySelector('.text-slate-400');
+      sign.textContent = details.open ? '−' : '+';
+    }, true);
+
+  </script></body>
+</html>

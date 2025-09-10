@@ -11,113 +11,161 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(130deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
+      background: linear-gradient(270deg, #e0eafc, #cfdef3, #d9e4f5, #e0eafc);
+      background-size: 600% 600%;
+      animation: gradientBG 15s ease infinite;
+      color: #222;
       scroll-behavior: smooth;
     }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Navbar */
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
-      background: rgba(0,0,0,0.7);
+      background: rgba(255,255,255,0.6);
       position: sticky;
       top: 0;
       z-index: 1000;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255,255,255,0.4);
     }
     .navbar .logo {
       font-size: 1.8rem;
       font-weight: bold;
-      color: #00f7ff;
-      text-shadow: 0 0 5px #00f7ff;
+      color: #4a90e2;
+      text-shadow: 0 2px 6px rgba(74,144,226,0.3);
     }
     .navbar a {
-      color: white;
+      color: #333;
       text-decoration: none;
       margin-left: 20px;
       font-weight: 500;
+      transition: color 0.3s;
     }
     .navbar a:hover {
-      color: #00f7ff;
+      color: #4a90e2;
     }
 
+    /* Title */
     .neon-title {
       font-size: 3rem;
       text-align: center;
-      margin: 40px 0 20px;
-      color: #00f7ff;
-      text-shadow: 0 0 10px #00f7ff;
+      margin: 50px 0 20px;
+      color: #4a90e2;
+      font-weight: 700;
+      text-shadow: 0 0 15px rgba(74,144,226,0.4);
     }
 
+    /* Section */
     .section {
       padding: 40px 20px;
       text-align: center;
     }
-
     .neon-heading {
-      font-size: 2.2rem;
+      font-size: 2rem;
       margin-bottom: 40px;
-      color: #00f7ff;
-      text-shadow: 0 0 8px #00f7ff;
+      color: #4a90e2;
     }
 
+    /* Card */
     .resource-card {
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 20px;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 25px;
       width: 300px;
       margin: 15px auto;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      border: 1px solid rgba(255,255,255,0.4);
+      animation: float 5s ease-in-out infinite;
     }
-
     .resource-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #00f7ff;
+      transform: translateY(-12px) scale(1.05);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
     }
 
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Button */
     .neon-button {
       padding: 12px 25px;
-      border: 2px solid #00f7ff;
+      border: none;
       border-radius: 30px;
-      color: #00f7ff;
-      background: transparent;
-      text-decoration: none;
+      background: linear-gradient(135deg, #4a90e2, #50c9c3);
+      color: white;
       font-weight: bold;
       font-size: 1rem;
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      box-shadow: 0 0 10px #00f7ff;
+      box-shadow: 0 4px 15px rgba(74,144,226,0.4);
       transition: all 0.3s ease;
     }
-
+    .neon-button:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 25px rgba(74,144,226,0.5);
+    }
     .neon-button i {
       animation: bounce 2s infinite;
     }
 
-    .neon-button:hover {
-      background-color: #00f7ff;
-      color: #000;
-    }
-
-    .neon-button:hover i {
-      color: #000;
-    }
-
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
+      50% { transform: translateY(-4px); }
     }
 
+    /* WordPress-style Footer */
     footer {
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #bbb;
-      text-align: center;
-      padding: 20px 10px;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(15px);
+      padding: 50px 20px 20px;
       margin-top: 60px;
-      box-shadow: 0 -5px 15px rgba(0, 255, 255, 0.2);
+      border-top: 1px solid rgba(255,255,255,0.4);
+      color: #444;
+    }
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      text-align: left;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .footer-column h3 {
+      color: #4a90e2;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+    .footer-column p, .footer-column a {
+      color: #555;
+      font-size: 0.95rem;
+      text-decoration: none;
+      line-height: 1.6;
+      display: block;
+      margin-bottom: 8px;
+      transition: color 0.3s;
+    }
+    .footer-column a:hover {
+      color: #4a90e2;
+    }
+    .footer-bottom {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 15px;
+      font-size: 0.9rem;
+      color: #666;
+      border-top: 1px solid rgba(255,255,255,0.4);
     }
 
     @media (max-width: 768px) {
@@ -130,10 +178,7 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">Education Point</div>
-    <div>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-    </div>
+
   </nav>
 
   <!-- Title -->
@@ -145,32 +190,48 @@
 
     <div class="resource-card" data-aos="fade-up">
       <a href="about me.html" class="neon-button">
-        <i class="fas fa-user"></i> ABOUT ME
+        <i class="fas fa-user"></i> About me
       </a>
     </div>
 
     <div class="resource-card" data-aos="fade-up" data-aos-delay="100">
       <a href="contact me.html" class="neon-button">
-        <i class="fas fa-envelope"></i> CONTACT ME
+        <i class="fas fa-envelope"></i> Contact Me
       </a>
     </div>
 
-    <div class="resource-card" data-aos="fade-up" data-aos-delay="200">
-      <a href="about web.html" class="neon-button">
-        <i class="fas fa-globe"></i> ABOUT WEBSITE
-      </a>
-    </div>
   </main>
 
   <!-- Footer -->
   <footer>
-    <p>© 2025 Education Point. All rights reserved. | MUHAMMAD RIZWAN</p>
+    <div class="footer-container">
+      <div class="footer-column">
+        <h3>About Education Point</h3>
+        <p>Education Point is your digital learning hub, offering resources, notes, and guidance for students to excel in their studies.</p>
+      </div>
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact me.html">Contact</a>
+        <a href="about web.html">About Website</a>
+      </div>
+      <div class="footer-column">
+        <h3>Contact</h3>
+        <p><i class="fas fa-envelope"></i> mrizwank584@gmail.com</p>
+        <p><i class="fas fa-phone"></i> +92 331 4220506</p>
+        <p><i class="fas fa-map-marker-alt"></i> Mianwali, Pakistan</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 Education Point. All rights reserved. | Designed by MUHAMMAD RIZWAN
+    </div>
   </footer>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
-    AOS.init({ duration: 1000, once: true });
+    AOS.init({ duration: 1200, once: true });
   </script>
 </body>
-      </html>
+    </html>

@@ -15,80 +15,63 @@
       margin: 0;
       padding: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1b2b3b);
-      background-size: 400% 400%;
-      animation: gradientBG 12s ease infinite;
-      color: #fff;
+      background: #ffffff;
+      color: #0288d1;
+      transition: background 0.5s, color 0.5s;
     }
 
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
+    /* Compact Header */
     header {
-      padding: 50px 20px;
-      text-align: center;
+      padding: 15px 25px;
       position: sticky;
       top: 0;
       z-index: 1000;
       backdrop-filter: blur(10px);
-      background: rgba(0, 0, 0, 0.5);
-      border-bottom: 2px solid #0ff;
-      animation: fadeInDown 1.5s ease;
+      background: rgba(255, 255, 255, 0.7);
+      border-bottom: 2px solid #03a9f4;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeInDown 1s ease;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      color: #0288d1;
+      margin: 0;
+      text-shadow: 0 0 6px rgba(3,169,244,0.3);
     }
 
     @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-40px); }
+      from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 30px 20px;
-      text-align: center;
-    }
-
-    .neon-title {
-      font-size: 3.5em;
-      color: #0ff;
-      text-shadow: 0 0 12px #0ff, 0 0 25px #0ff, 0 0 40px #0ff;
-      animation: pulse 2s infinite alternate;
-    }
-
-    @keyframes pulse {
-      from { text-shadow: 0 0 12px #0ff; }
-      to { text-shadow: 0 0 30px #0ff, 0 0 60px #0ff; }
     }
 
     .neon-button {
       display: inline-block;
-      padding: 14px 30px;
-      margin: 20px 5px;
+      padding: 10px 20px;
       background: transparent;
-      color: #0ff;
-      border: 2px solid #0ff;
+      color: #0288d1;
+      border: 2px solid #0288d1;
       text-decoration: none;
       border-radius: 10px;
       font-weight: bold;
       transition: 0.3s ease;
-      box-shadow: 0 0 10px #0ff inset, 0 0 10px #0ff;
+      box-shadow: 0 0 8px rgba(3,169,244,0.3) inset;
     }
 
     .neon-button:hover {
-      background: #0ff;
-      color: #000;
+      background: #0288d1;
+      color: #fff;
       transform: scale(1.05);
-      box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+      box-shadow: 0 0 20px rgba(3,169,244,0.5);
     }
 
     .notes-box {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(15px);
       border-radius: 20px;
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+      box-shadow: 0 0 15px rgba(3,169,244,0.2);
       padding: 40px 30px;
       max-width: 950px;
       margin: 40px auto;
@@ -96,10 +79,9 @@
     }
 
     .notes-box h1 {
-      font-size: 2.4rem;
-      color: #00e6e6;
+      font-size: 2rem;
+      color: #0288d1;
       margin-bottom: 20px;
-      text-shadow: 0 0 15px #0ff;
     }
 
     .features {
@@ -110,7 +92,7 @@
     .features li {
       margin-bottom: 10px;
       font-size: 1rem;
-      color: #e2e2e2;
+      color: #0277bd;
       position: relative;
       padding-left: 30px;
     }
@@ -118,20 +100,18 @@
     .features li i {
       position: absolute;
       left: 0;
-      color: #0ff;
-      text-shadow: 0 0 8px #0ff;
+      color: #03a9f4;
     }
 
     .notes-box p {
-      color: #ccc;
+      color: #0277bd;
       font-size: 1rem;
     }
 
     h2.neon-heading {
-      font-size: 2.2em;
+      font-size: 2em;
       margin-top: 50px;
-      color: #0ff;
-      text-shadow: 0 0 15px #0ff;
+      color: #0288d1;
     }
 
     .resource-grid {
@@ -142,33 +122,33 @@
     }
 
     .note-card {
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
       padding: 25px 15px;
       border-radius: 15px;
-      box-shadow: 0 0 15px #0ff;
+      box-shadow: 0 0 10px rgba(3,169,244,0.2);
       text-align: center;
       transition: 0.3s ease;
+      cursor: pointer;
     }
 
     .note-card:hover {
       transform: translateY(-8px) scale(1.03);
-      box-shadow: 0 0 25px #0ff, 0 0 50px #0ff;
+      box-shadow: 0 0 25px rgba(3,169,244,0.3);
     }
 
     .note-card a {
-      color: #fff;
+      color: #0288d1;
       text-decoration: none;
       font-size: 1.1em;
       font-weight: bold;
-      display: inline-block;
     }
 
     .note-card i {
-      font-size: 2.7rem;
-      color: #00e6e6;
+      font-size: 2.5rem;
+      color: #03a9f4;
       margin-bottom: 12px;
       animation: float 2s ease-in-out infinite;
-      text-shadow: 0 0 12px #0ff;
     }
 
     @keyframes float {
@@ -179,46 +159,64 @@
     footer {
       text-align: center;
       padding: 20px;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
       margin-top: 60px;
       font-size: 0.9em;
-      border-top: 1px solid #0ff;
-      text-shadow: 0 0 8px #0ff;
+      color: #0288d1;
+      border-top: 2px solid #03a9f4;
     }
 
     #scrollToTop {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background: #0ff;
-      color: #000;
+      background: #03a9f4;
+      color: #fff;
       border: none;
       padding: 12px 18px;
       font-weight: bold;
       border-radius: 50px;
       cursor: pointer;
       display: none;
-      box-shadow: 0 0 15px #0ff;
-      transition: 0.4s ease;
+      box-shadow: 0 0 10px rgba(3,169,244,0.5);
+      transition: 0.3s ease;
     }
 
     #scrollToTop:hover {
       transform: scale(1.1);
-      background: #00e6e6;
+      background: #0288d1;
+    }
+
+    /* Click Animation */
+    .click-animate {
+      position: fixed;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: clickEffect 0.6s ease-out;
+      z-index: 9999;
+      pointer-events: none;
+      background: rgba(3,169,244,0.4);
+    }
+
+    @keyframes clickEffect {
+      to {
+        transform: scale(6);
+        opacity: 0;
+      }
     }
 
     @media (max-width: 768px) {
-      .neon-title { font-size: 2.2em; }
+      header h1 { font-size: 1.5em; }
+      .notes-box { padding: 25px 20px; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="container">
-      <h1 class="neon-title">NOTES</h1>
-      <a href="index.html" class="neon-button">Back to Home</a>
-    </div>
+    <h1>Notes</h1>
+    <a href="index.html" class="neon-button">Back to Home</a>
   </header>
 
   <div class="notes-box" data-aos="fade-up">
@@ -289,19 +287,57 @@
 
   <button id="scrollToTop" onclick="scrollToTop()">Top ↑</button>
 
-  <script>
-    const scrollBtn = document.getElementById("scrollToTop");
-    window.onscroll = function () {
-      scrollBtn.style.display = document.documentElement.scrollTop > 200 ? "block" : "none";
-    };
-    function scrollToTop() {
-      document.documentElement.scrollTop = 0;
-    }
-  </script>
+<script>
+document.addEventListener("click", function(e){
+  const colors = ["#03a9f4","#ff4081","#ffeb3b","#4caf50","#ff9800","#9c27b0"];
+  const count = 12; // number of particles per click
+
+  for(let i=0; i<count; i++){
+    const particle = document.createElement("span");
+    particle.classList.add("celebration-particle");
+
+    // random size
+    const size = Math.random()*12 + 8;
+    particle.style.width = particle.style.height = size + "px";
+
+    // random color
+    particle.style.background = colors[Math.floor(Math.random()*colors.length)];
+
+    // position at cursor
+    particle.style.left = e.clientX + "px";
+    particle.style.top = e.clientY + "px";
+
+    // random angle & distance
+    const angle = Math.random()*2*Math.PI;
+    const distance = Math.random()*80 + 30;
+
+    document.body.appendChild(particle);
+
+    particle.animate([
+      { transform: `translate(0,0) scale(1) rotate(0deg)`, opacity: 1 },
+      { transform: `translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px) scale(0.5) rotate(${Math.random()*360}deg)`, opacity: 0 }
+    ],{
+      duration: 800 + Math.random()*400,
+      easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+    });
+
+    setTimeout(()=>particle.remove(), 1200);
+  }
+});
+</script>
+
+<style>
+.celebration-particle{
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: screen; /* gives modern neon overlapping feel */
+}
+</style>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script>AOS.init({ duration: 1000 });</script>
 
 </body>
-</html>
-
+            </html>

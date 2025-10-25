@@ -2,332 +2,209 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Education Point | Guess Papers</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
-  <link rel="shortcut icon" type="image/x-icon" href="logo.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
   <style>
-    * { box-sizing: border-box; scroll-behavior: smooth; }
-    body {
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
       font-family: 'Poppins', sans-serif;
+    }
+
+    body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #fff;
+      background: linear-gradient(to right, #e6f3ff, #ffffff);
+      color: #222;
     }
 
     header {
-      background: url('bg6.jpg') no-repeat center center/cover;
-      padding: 60px 0 40px;
       text-align: center;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      padding: 60px 20px;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 4px 12px rgba(0, 100, 255, 0.15);
     }
 
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 20px;
-      text-align: center;
+    .file-location {
+      text-align: left;
+      padding-left: 30px;
+      font-size: 14px;
+      color: #555;
+      font-style: italic;
     }
 
-    .neon-title {
-      font-size: 3em;
-      color: #0ff;
-      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+    .section-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #000;
       margin-bottom: 10px;
     }
 
-    .neon-heading {
-      font-size: 1.5em;
-      margin: 20px 0;
-      color: #0ff;
-      text-shadow: 0 0 5px #0ff;
+    .section-subtitle {
+      color: #444;
+      font-size: 16px;
+      max-width: 700px;
+      margin: 10px auto 40px;
+      line-height: 1.5;
     }
 
-    .neon-button {
-      display: inline-block;
-      padding: 12px 30px;
-      background: #00e6e6;
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 0 40px 60px;
+    }
+
+    .subject-card {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 15px;
+      padding: 25px;
+      text-align: left;
+      box-shadow: 0 5px 20px rgba(0, 123, 255, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      backdrop-filter: blur(10px);
+      animation: fadeInUp 0.8s ease forwards;
+      opacity: 0;
+    }
+
+    .subject-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0, 123, 255, 0.2);
+    }
+
+    .subject-icon {
+      font-size: 40px;
+      color: #0099ff;
+      margin-bottom: 15px;
+    }
+
+    .subject-title {
+      font-size: 20px;
+      font-weight: 600;
       color: #000;
-      border-radius: 30px;
-      font-weight: bold;
-      text-decoration: none;
-      box-shadow: 0 0 12px #00ffff;
-      transition: all 0.3s ease;
-    }
-
-    .neon-button:hover {
-      background: #fff;
-      color: #000;
-      box-shadow: 0 0 25px #00ffff, 0 0 40px #0ff;
-      transform: scale(1.05);
-    }
-
-    .resource-list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      padding: 0;
-      margin: 40px 0;
-      list-style: none;
-    }
-
-    .resource-list li {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 20px;
-      width: 200px;
-      text-align: center;
-      transition: transform 0.3s, box-shadow 0.3s;
-      box-shadow: 0 0 10px #0ff;
-      cursor: pointer;
-    }
-
-    .resource-list li:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 0 20px #0ff;
-    }
-
-    .resource-list li a {
-      color: #fff;
-      font-weight: bold;
-      text-decoration: none;
-      display: block;
-    }
-
-    .resource-list i {
-      font-size: 2em;
       margin-bottom: 10px;
-      color: #00e6e6;
+    }
+
+    .subject-desc {
+      color: #333;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .read-more {
+      text-decoration: none;
+      color: #007bff;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .read-more:hover {
+      color: #0056b3;
+    }
+
+    @keyframes fadeInUp {
+      0% { transform: translateY(30px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
     }
 
     footer {
       text-align: center;
       padding: 20px;
-      background: rgba(0, 0, 0, 0.3);
-      margin-top: 40px;
-    }
-
-    #scrollToTop {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #0ff;
-      color: #000;
-      border: none;
-      padding: 10px 15px;
-      font-weight: bold;
-      border-radius: 50px;
-      cursor: pointer;
-      display: none;
-      box-shadow: 0 0 10px #0ff;
-    }
-
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-    }
-
-    .modal-content {
-      background-color: #1a1a1a;
-      margin: 10% auto;
-      padding: 20px;
-      border: 2px solid #00e6e6;
-      border-radius: 10px;
-      width: 80%;
-      max-width: 400px;
-      color: #fff;
-      text-align: center;
-      animation: fadeIn 0.4s;
-    }
-
-    .modal-content a {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: #00e6e6;
-      color: #000;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
-    }
-
-    .close-btn {
-      float: right;
-      font-size: 20px;
-      font-weight: bold;
-      cursor: pointer;
-      color: #0ff;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* Theme Toggle */
-    .theme-toggle {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background: #00e6e6;
-      color: #000;
-      border: none;
-      padding: 8px 16px;
-      font-weight: bold;
-      border-radius: 30px;
-      cursor: pointer;
-      z-index: 999;
-      box-shadow: 0 0 10px #00ffff;
-    }
-
-    /* Light mode */
-    body.light-mode {
-      background: #f4f4f4;
-      color: #000;
-    }
-
-    body.light-mode .neon-title,
-    body.light-mode .neon-heading {
-      color: #0077ff;
-      text-shadow: none;
-    }
-
-    body.light-mode .neon-button {
-      background: #0077ff;
-      color: #fff;
-    }
-
-    body.light-mode .resource-list li {
-      background: #e6f0ff;
-      color: #000;
-    }
-
-    body.light-mode .modal-content {
-      background: #fff;
-      color: #000;
-    }
-
-    body.light-mode .theme-toggle {
-      background: #222;
-      color: #fff;
+      font-size: 14px;
+      color: #555;
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
     }
 
     @media (max-width: 768px) {
-      .neon-title { font-size: 2em; }
-      .resource-list { flex-direction: column; align-items: center; }
-      .resource-list li { width: 90%; }
+      .section-title { font-size: 26px; }
+      .section-subtitle { font-size: 15px; }
+      .subjects-grid { padding: 0 20px 50px; }
     }
   </style>
 </head>
 <body>
 
-  <button class="theme-toggle" onclick="toggleTheme()">🌓 Theme</button>
-
   <header>
-    <div class="container">
-      <h1 class="neon-title">GUESS PAPER</h1>
-      <p class="neon-heading" id="typed-heading"></p>
-      <a href="index.html" class="neon-button">⬅ Back to Home</a>
-    </div>
+    <h1 class="section-title">Guess Papers</h1>
+    <p class="section-subtitle">
+      Download top-quality guess papers for all major subjects. Each paper is prepared by subject experts and based on the latest syllabus and board patterns.
+    </p>
   </header>
 
-  <main>
-    <h2 class="neon-heading" data-aos="fade-down">📚 Select Subject to View Guess Paper</h2>
-    <ul class="resource-list">
-      <li onclick="openModal('Math', 'Guess papers-page1.html')" data-aos="fade-up"><i class="fas fa-square-root-variable"></i><a href="#">Math</a></li>
-      <li onclick="openModal('Physics', 'Guess papers-page2.html')" data-aos="fade-up" data-aos-delay="100"><i class="fas fa-atom"></i><a href="#">Physics</a></li>
-      <li onclick="openModal('English', 'Guess papers-page3.html')" data-aos="fade-up" data-aos-delay="200"><i class="fas fa-book-open"></i><a href="#">English</a></li>
-      <li onclick="openModal('Urdu', 'Guess papers-page4.html')" data-aos="fade-up" data-aos-delay="300"><i class="fas fa-pen-nib"></i><a href="#">Urdu</a></li>
-      <li onclick="openModal('Computer', 'Guess papers-page5.html')" data-aos="fade-up" data-aos-delay="400"><i class="fas fa-desktop"></i><a href="#">Computer</a></li>
-      <li onclick="openModal('Islamiat', 'Guess papers-page6.html')" data-aos="fade-up" data-aos-delay="500"><i class="fas fa-mosque"></i><a href="#">Islamiat</a></li>
-      <li onclick="openModal('Chemistry', 'Guess papers-page7.html')" data-aos="fade-up" data-aos-delay="600"><i class="fas fa-vial"></i><a href="#">Chemistry</a></li>
-      <li onclick="openModal('Biology', 'Guess papers-page8.html')" data-aos="fade-up" data-aos-delay="700"><i class="fas fa-dna"></i><a href="#">Biology</a></li>
-      <li onclick="openModal('More Success Series', 'More success series.html')" data-aos="fade-up" data-aos-delay="800"><i class="fas fa-award"></i><a href="#">More Success Series</a></li>
-    </ul>
-  </main>
+  <section class="subjects-grid">
+    <div class="subject-card">
+      <div class="subject-icon"><i class="fas fa-book-open"></i></div>
+      <h3 class="subject-title">English</h3>
+      <p class="subject-desc">Strengthen your grammar, comprehension, and writing skills with our complete English notes. Includes solved past papers, essay outlines, grammar rules, and comprehension practice designed to improve your confidence and exam performance.</p>
+      <a href="Guess papers-page3.html" class="read-more">View Guess Paper →</a>
+    </div>
+
+    <div class="subject-card">
+      <div class="subject-icon"><i class="fas fa-atom"></i></div>
+      <h3 class="subject-title">Physics</h3>
+      <p class="subject-desc">Understand real-world concepts with easy explanations, topic-wise notes, and solved examples. Covers motion, energy, electricity, and modern physics with visual diagrams and problem-based learning.</p>
+      <a href="Guess papers-page2.html" class="read-more">View Guess Paper →</a>
+    </div>
+
+    <div class="subject-card">
+      <div class="subject-icon"><i class="fas fa-flask"></i></div>
+      <h3 class="subject-title">Chemistry</h3>
+      <p class="subject-desc">Master chemical reactions, periodic trends, and numerical problems with simplified notes. Includes organic and inorganic chemistry, MCQs, short questions, and structured guides for exam-focused preparation.</p>
+      <a href="Guess papers-page7.html" class="read-more">View Guess Paper →</a>
+    </div>
+
+    <div class="subject-card">
+      <div class="subject-icon"><i class="fas fa-dna"></i></div>
+      <h3 class="subject-title">Biology</h3>
+      <p class="subject-desc">Explore the wonders of biology through labeled diagrams, concise explanations, and past paper MCQs. Covers everything from cell biology to genetics and human physiology — ideal for FSc and MDCAT students.</p>
+      <a href="Guess papers-page8.html" class="read-more">View Guess Paper →</a>
+    </div>
+
+    <div class="subject-card">
+      <div class="subject-icon"><i class="fas fa-square-root-alt"></i></div>
+      <h3 class="subject-title">Mathematics</h3>
+      <p class="subject-desc">Ace your exams with formula sheets, solved exercises, and conceptual notes covering algebra, trigonometry, calculus, and analytical geometry. Designed for step-by-step understanding and strong problem-solving skills.</p>
+      <a href="Guess papers-page1.html" class="read-more">View Guess Paper →</a>
+    </div>
+
+    <div class="subject-card">
+      <div class="subject-icon"><i class="fas fa-laptop-code"></i></div>
+      <h3 class="subject-title">Computer Science</h3>
+      <p class="subject-desc">Learn programming, logic, and algorithm design with easy-to-follow notes and examples. Includes theory, coding basics, database concepts, and short questions to prepare you for both board and practical exams.</p>
+      <a href="Guess papers-page5.html" class="read-more">View Guess Paper →</a>
+    </div>
+
+    <div class="subject-card">
+      <div class="subject-icon"><i class="fas fa-mosque"></i></div>
+      <h3 class="subject-title">Islamiat</h3>
+      <p class="subject-desc">Comprehensive Islamiat notes including Quranic verses, Ahadith, and historical topics. Simplified explanations and summaries for quick revision before exams, covering both short and long questions.</p>
+      <a href="Guess papers-page6.html" class="read-more">View Guess Paper →</a>
+    </div>
+
+    <div class="subject-card">
+      <div class="subject-icon"><i class="fas fa-landmark"></i></div>
+      <h3 class="subject-title">Pakistan Studies</h3>
+      <p class="subject-desc">Detailed notes on Pakistan’s history, geography, culture, and current affairs. Includes past paper questions and maps to help you understand key events and prepare effectively for board exams.</p>
+      <a href="Guess papers-page9.html" class="read-more">View Guess Paper →</a>
+    </div>
+  </section>
 
   <footer>
-    <p>© 2025 Education Point. All rights reserved. | Developed by Muhammad Rizwan</p>
+    © 2025 Education Point. All Rights Reserved. | Developed by Muhammad Rizwan
   </footer>
 
-  <button id="scrollToTop" onclick="scrollToTop()">↑</button>
-
-  <!-- Modal Structure -->
-  <div id="subjectModal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal()">&times;</span>
-      <h3 id="modalSubjectTitle">Guess Paper</h3>
-      <p>Click below to download the latest guess paper.</p>
-      <a id="modalLink" href="#" target="_blank">Download Now</a>
-    </div>
-  </div>
-
-  <!-- Scripts -->
   <script>
-    // Typing animation
-    const text = "Download top-quality guess papers for better preparation.";
-    const typedHeading = document.getElementById("typed-heading");
-    let i = 0;
-    function typeWriter() {
-      if (i < text.length) {
-        typedHeading.innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, 50);
-      }
-    }
-
-    // Scroll to top
-    const scrollToTopBtn = document.getElementById("scrollToTop");
-    window.onscroll = function () {
-      scrollToTopBtn.style.display = document.documentElement.scrollTop > 200 ? "block" : "none";
-    };
-    function scrollToTop() {
-      document.documentElement.scrollTop = 0;
-    }
-
-    // Modal logic
-    const modal = document.getElementById("subjectModal");
-    const modalTitle = document.getElementById("modalSubjectTitle");
-    const modalLink = document.getElementById("modalLink");
-    function openModal(subject, url) {
-      modalTitle.innerText = subject + " Guess Paper";
-      modalLink.href = url;
-      modal.style.display = "block";
-    }
-    function closeModal() {
-      modal.style.display = "none";
-    }
-    window.onclick = function (event) {
-      if (event.target == modal) closeModal();
-    };
-
-    // Theme toggle
-    function toggleTheme() {
-      document.body.classList.toggle('light-mode');
-      localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
-    }
-    window.onload = () => {
-      if (localStorage.getItem('theme') === 'light') {
-        document.body.classList.add('light-mode');
-      }
-      typeWriter();
-    };
+    // Fade-in animation trigger
+    window.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.subject-card').forEach((card, i) => {
+        setTimeout(() => { card.style.opacity = '1'; }, i * 150);
+      });
+    });
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script> AOS.init({ duration: 1000 }); </script>
+
 </body>
-  </html>
+        </html>

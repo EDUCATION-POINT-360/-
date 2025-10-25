@@ -7,40 +7,42 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Roboto', sans-serif;
-      background: linear-gradient(-45deg, #0f0f1a, #1a1a2e, #2e2e3a, #0f0f1a);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      color: #fff;
+      background: #ffffff;
+      color: #333;
       line-height: 1.6;
-    }
-
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      overflow-x: hidden;
     }
 
     header {
       background: url('bg5.jpg') no-repeat center center/cover;
-      padding: 40px 0;
+      padding: 50px 0;
       text-align: center;
+      color: #fff;
+      position: relative;
     }
 
     .neon-title {
-      font-size: 48px;
+      font-size: 50px;
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
       text-transform: uppercase;
-      color: #fff;
-      text-shadow: 0 0 20px #0ff, 0 0 40px #f0f;
+      color: #ff66b2; /* soft pink */
+      text-shadow: 0 0 10px rgba(255, 102, 178, 0.8), 0 0 20px rgba(255, 51, 153, 0.5);
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      from { text-shadow: 0 0 10px rgba(255, 102, 178, 0.8), 0 0 20px rgba(255, 51, 153, 0.5); }
+      to { text-shadow: 0 0 25px rgba(255, 153, 204, 1), 0 0 45px rgba(255, 102, 178, 0.8); }
     }
 
     .neon-button {
-      background: #ff007f;
+      background: #ff66b2;
       color: #fff;
       font-size: 18px;
       padding: 10px 25px;
@@ -48,7 +50,7 @@
       border-radius: 5px;
       text-transform: uppercase;
       font-weight: 600;
-      box-shadow: 0 0 15px rgba(255, 0, 255, 0.6);
+      box-shadow: 0 0 10px rgba(255, 102, 178, 0.5);
       transition: all 0.3s ease;
       display: inline-block;
       text-decoration: none;
@@ -61,22 +63,29 @@
     }
 
     .section {
-      padding: 40px 20px;
+      padding: 50px 20px;
       text-align: center;
     }
 
     .heading {
       font-size: 36px;
-      color: #00ffff;
+      color: #ff66b2;
       text-transform: uppercase;
       margin-bottom: 10px;
-      text-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
     }
 
     .subheading {
       font-size: 18px;
-      margin-bottom: 30px;
-      color: #ccc;
+      margin-bottom: 15px;
+      color: #555;
+    }
+
+    .description {
+      max-width: 700px;
+      margin: 0 auto 40px;
+      color: #666;
+      font-size: 16px;
+      line-height: 1.8;
     }
 
     .resource-list {
@@ -90,10 +99,10 @@
     }
 
     .resource-item {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      padding: 20px;
-      border-radius: 10px;
+      background: #f9f9f9;
+      color: #333;
+      padding: 25px;
+      border-radius: 12px;
       font-size: 18px;
       text-align: center;
       text-transform: uppercase;
@@ -101,24 +110,41 @@
       transition: all 0.3s ease;
       text-decoration: none;
       display: block;
+      position: relative;
+      overflow: hidden;
     }
 
     .resource-item i {
-      font-size: 26px;
+      font-size: 28px;
       margin-bottom: 10px;
       display: block;
-      color: #00ffff;
+      color: #ff66b2;
+      transition: all 0.3s ease;
     }
 
     .resource-item:hover {
-      background: #00ffff;
-      color: #121212;
+      background: #ff66b2;
+      color: #fff;
       transform: translateY(-5px);
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+      box-shadow: 0 0 20px rgba(255, 102, 178, 0.6);
     }
 
     .resource-item:hover i {
-      color: #121212;
+      color: #fff;
+    }
+
+    /* Celebration particle effect */
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.8;
+      animation: explode 0.8s ease-out forwards;
+    }
+
+    @keyframes explode {
+      0% { transform: scale(1) translate(0, 0); opacity: 1; }
+      100% { transform: scale(0.5) translate(var(--x), var(--y)); opacity: 0; }
     }
 
     footer {
@@ -135,18 +161,19 @@
       right: 30px;
       font-size: 22px;
       padding: 10px 15px;
-      background: #00ffff;
-      color: #000;
+      background: #ff66b2;
+      color: #fff;
       border: none;
       border-radius: 50%;
       cursor: pointer;
       display: none;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+      box-shadow: 0 0 10px rgba(255, 102, 178, 0.6);
+      transition: 0.3s;
     }
 
     #scrollTopBtn:hover {
-      background: #ff007f;
-      color: #fff;
+      background: #00ffff;
+      color: #000;
     }
   </style>
 </head>
@@ -159,7 +186,12 @@
 
   <main class="section">
     <h2 class="heading">Available Keybooks</h2>
-    <p class="subheading">Click any subject to open its dedicated keybook page.</p>
+    <p class="subheading">Explore, Learn, and Master Every Subject</p>
+    <p class="description">
+      Welcome to <strong>Education Point Keybooks</strong> — your one-stop digital library for essential study materials. 
+      Each keybook contains summaries, solved exercises, important questions, and concept breakdowns 
+      to help you understand subjects more easily. Select a subject below to open its dedicated keybook page and start learning!
+    </p>
 
     <ul class="resource-list">
       <li><a href="keybook-page1.html" class="resource-item"><i class="fas fa-square-root-alt"></i> Math</a></li>
@@ -187,6 +219,43 @@
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // 🎉 Celebration effect
+    document.querySelectorAll(".resource-item").forEach(item => {
+      item.addEventListener("click", e => {
+        const numParticles = 15;
+        const rect = item.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        for (let i = 0; i < numParticles; i++) {
+          const particle = document.createElement("span");
+          particle.classList.add("particle");
+
+          const color = ["#ff66b2", "#00ffff", "#ffcc00", "#ff3399", "#00ffcc"][Math.floor(Math.random() * 5)];
+          const size = Math.random() * 6 + 4;
+
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.background = color;
+          particle.style.left = `${x}px`;
+          particle.style.top = `${y}px`;
+
+          const angle = Math.random() * 2 * Math.PI;
+          const radius = Math.random() * 80 + 20;
+          const translateX = Math.cos(angle) * radius + "px";
+          const translateY = Math.sin(angle) * radius + "px";
+
+          particle.style.setProperty("--x", translateX);
+          particle.style.setProperty("--y", translateY);
+
+          item.appendChild(particle);
+
+          // Remove particle after animation
+          setTimeout(() => particle.remove(), 800);
+        }
+      });
+    });
   </script>
 </body>
-  </html>
+        </html>

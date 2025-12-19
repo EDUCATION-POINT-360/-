@@ -1,1044 +1,524 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Education Point - Your Complete Study Hub</title>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
 
  <link rel="icon" href="logo.png" type="image/png" />
 <style>
-
 /* =========================
-
    2025 Professional 3D Glass Theme
-
    Non-neon, optimized for smooth performance
-
    Preserves your class names
-
    ========================= */
 
-
-
 /* Theme variables */
-
 :root{
-
   --bg-page: #f4f7fb;
-
   --surface: rgba(255,255,255,0.72);
-
   --surface-2: rgba(255,255,255,0.58);
-
   --glass-border: rgba(255,255,255,0.44);
-
   --soft-muted: #6b7280;
-
   --text: #0f1724;
-
   --accent-1: #3b62d6;    /* dignified blue */
-
   --accent-2: #6f63c7;    /* soft violet */
-
   --accent-3: #2aa7a0;    /* subtle teal */
-
   --shadow-sm: 0 6px 18px rgba(13,18,35,0.06);
-
   --shadow-md: 0 14px 40px rgba(13,18,35,0.08);
-
   --shadow-lg: 0 28px 70px rgba(8,10,18,0.12);
-
   --glass-blur: 12px;     /* tuned for performance */
-
   --radius-lg: 18px;
-
   --radius-md: 12px;
-
   --radius-sm: 8px;
-
   --nav-height: 72px;
-
   --max-width: 1200px;
-
   --ease: cubic-bezier(.16,.84,.24,1);
-
 }
-
-
 
 /* Dark mode variables (applies when html.dark present) */
-
 html.dark {
-
   --bg-page: #071025;
-
   --surface: rgba(12,16,24,0.52);
-
   --surface-2: rgba(12,16,24,0.42);
-
   --glass-border: rgba(255,255,255,0.06);
-
   --soft-muted: #9aa4bd;
-
   --text: #e6eefb;
-
   --accent-1: #5b8cff;
-
   --accent-2: #8d79ff;
-
   --accent-3: #43c2b0;
-
   --shadow-sm: 0 8px 22px rgba(2,6,18,0.6);
-
   --shadow-md: 0 18px 44px rgba(2,6,18,0.6);
-
   --shadow-lg: 0 30px 80px rgba(0,0,0,0.6);
-
 }
-
-
 
 /* ---------- reset & base ---------- */
-
 * { box-sizing: border-box; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-
 html, body { height: 100%; }
-
 body {
-
   margin: 0;
-
   font-family: "Inter", "Segoe UI", Tahoma, Verdana, sans-serif;
-
   background: linear-gradient(180deg, var(--bg-page), rgba(240,246,255,0.6));
-
   color: var(--text);
-
   line-height: 1.6;
-
   -webkit-font-smoothing: antialiased;
-
   -moz-osx-font-smoothing: grayscale;
-
   overflow-x: hidden;
-
 }
-
-
 
 /* page wrapper to allow perspective for subtle 3D */
-
 .page-wrap {
-
   perspective: 1200px;
-
   transform-style: preserve-3d;
-
   min-height: 100vh;
-
   padding-top: var(--nav-height);
-
 }
-
-
 
 /* ---------- nav (glass) ---------- */
-
 .nav {
-
   position: fixed;
-
   top: 0; left: 0; right: 0;
-
   height: var(--nav-height);
-
   display: flex;
-
   align-items: center;
-
   z-index: 9999;
-
   padding: 0.6rem 1.25rem;
-
   background: linear-gradient(180deg, rgba(255,255,255,0.70), rgba(255,255,255,0.58));
-
   border-bottom: 1px solid var(--glass-border);
-
   backdrop-filter: blur(10px) saturate(120%);
-
   box-shadow: var(--shadow-sm);
-
   transform: translateZ(0);
-
 }
-
 html.dark .nav {
-
   background: linear-gradient(180deg, rgba(12,16,24,0.56), rgba(12,16,24,0.44));
-
   border-bottom: 1px solid rgba(255,255,255,0.04);
-
 }
-
 .nav-content {
-
   max-width: var(--max-width);
-
   width: 100%;
-
   margin: 0 auto;
-
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
-
   gap: 1rem;
-
   padding: 0 1rem;
-
 }
-
 .logo {
-
   font-size: 1.15rem;
-
   font-weight: 700;
-
   color: var(--accent-1);
-
   display: flex;
-
   align-items: center;
-
   gap: .5rem;
-
 }
-
-
 
 /* nav links */
-
 .nav-links { display: flex; gap: 1rem; align-items: center; }
-
 .nav-links a {
-
   color: var(--text);
-
   text-decoration: none;
-
   padding: .45rem .85rem;
-
   border-radius: 999px;
-
   font-weight: 600;
-
   transition: transform .18s var(--ease), box-shadow .18s var(--ease);
-
   will-change: transform;
-
 }
-
 .nav-links a:hover {
-
   transform: translateY(-3px);
-
   color: #fff;
-
   background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-
   box-shadow: 0 10px 26px rgba(59,98,214,0.12);
-
 }
-
-
 
 /* ---------- header / hero ---------- */
-
 .header {
-
   height: calc(100vh - var(--nav-height));
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   padding: 3rem 1.25rem;
-
   position: relative;
-
   overflow: hidden;
-
   transform-style: preserve-3d;
-
   background: linear-gradient(135deg, rgba(62,92,206,0.94), rgba(108,86,200,0.92));
-
 }
-
 html.dark .header {
-
   background: linear-gradient(135deg, rgba(8,18,40,0.92), rgba(28,18,40,0.9));
-
 }
-
-
 
 /* faint shape for depth (keeps GPU cost low) */
-
 .header::after {
-
   content: "";
-
   position: absolute;
-
   inset: -6% -10% auto -10%;
-
   height: 60%;
-
   background: radial-gradient(closest-side, rgba(255,255,255,0.05), transparent 40%);
-
   filter: blur(24px);
-
   opacity: .45;
-
   pointer-events: none;
-
   transform: translateZ(-80px) scale(1.02);
-
 }
-
-
 
 /* glass card inside hero */
-
 .header-content {
-
   width: 100%;
-
   max-width: 920px;
-
   padding: 2.2rem;
-
   border-radius: var(--radius-lg);
-
   background: linear-gradient(180deg, var(--surface), var(--surface-2));
-
   border: 1px solid var(--glass-border);
-
   backdrop-filter: blur(var(--glass-blur)) saturate(120%);
-
   box-shadow: var(--shadow-lg);
-
   text-align: center;
-
   transform: translateZ(30px);
-
   will-change: transform;
-
 }
-
-
 
 /* avatar with layered ring for depth */
-
 .student-avatar {
-
   width: 168px;
-
   height: 168px;
-
   margin: 0 auto 1.2rem;
-
   border-radius: 50%;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   font-size: 56px;
-
   color: #fff;
-
   background: linear-gradient(135deg, var(--accent-3), var(--accent-1));
-
   box-shadow: 0 18px 60px rgba(10,14,30,0.22);
-
   position: relative;
-
   transform: translateZ(40px);
-
 }
-
 .student-avatar::before {
-
   content: "";
-
   position: absolute;
-
   inset: -10px;
-
   border-radius: 50%;
-
   border: 3px solid rgba(255,255,255,0.12);
-
   filter: blur(5px);
-
   transform: translateZ(-20px);
-
   pointer-events: none;
-
 }
-
-
 
 /* gentle float animation (low cost) */
-
 @keyframes subtle-float {
-
   0%,100% { transform: translateY(0) translateZ(40px); }
-
   50% { transform: translateY(-8px) translateZ(40px); }
-
 }
-
 .student-avatar { animation: subtle-float 5.6s ease-in-out infinite; }
 
-
-
 /* titles */
-
 .main-title {
-
   font-size: clamp(1.9rem, 4vw, 3.2rem);
-
   font-weight: 800;
-
   margin: 0 0 .5rem;
-
   line-height: 1.03;
-
   background: linear-gradient(90deg, rgba(255,255,255,0.98), rgba(255,255,255,0.9));
-
   -webkit-background-clip: text;
-
   -webkit-text-fill-color: transparent;
-
   text-shadow: 0 8px 28px rgba(6,8,23,0.14);
-
 }
-
 .subtitle {
-
   font-size: 1.12rem;
-
   margin-bottom: .6rem;
-
   color: rgba(255,255,255,0.92);
-
 }
-
 .caption {
-
   font-size: 1rem;
-
   color: rgba(255,255,255,0.88);
-
   max-width: 56ch;
-
   margin: 0 auto;
-
 }
-
-
 
 /* CTA */
-
 .cta-button {
-
   padding: .9rem 2.1rem;
-
   border-radius: 999px;
-
   font-weight: 800;
-
   background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-
   border: none;
-
   color: #fff;
-
   box-shadow: 0 18px 46px rgba(59,98,214,0.18);
-
   transition: transform .26s var(--ease), box-shadow .26s var(--ease);
-
   will-change: transform;
-
 }
-
 .cta-button:hover { transform: translateY(-6px); box-shadow: 0 28px 64px rgba(59,98,214,0.22); }
 
-
-
 /* ---------- main content ---------- */
-
 .main-content { padding: 4rem 0; background: transparent; }
-
 .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.25rem; }
 
-
-
 /* section headers */
-
 .section { margin-bottom: 5.2rem; }
-
 .section-title {
-
   text-align: center;
-
   font-size: clamp(1.4rem, 2.8vw, 2.4rem);
-
   font-weight: 800;
-
   color: var(--text);
-
   margin-bottom: .6rem;
-
 }
-
 .section-subtitle {
-
   max-width: 66ch;
-
   margin: .6rem auto 2.4rem;
-
   color: var(--soft-muted);
-
   text-align: center;
-
   font-size: .98rem;
-
 }
-
 .section-title::after {
-
   content: "";
-
   display: block;
-
   height: 4px;
-
   width: 96px;
-
   margin: 14px auto 0;
-
   border-radius: 6px;
-
   background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-
 }
-
-
 
 /* ---------- features grid (3D cards) ---------- */
-
 .features-grid {
-
   display: grid;
-
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-
   gap: 1.6rem;
-
   margin-top: 1.6rem;
-
 }
-
-
 
 /* layered glass card with subtle 3D lift */
-
 .feature-card {
-
   border-radius: var(--radius-lg);
-
   padding: 1.6rem;
-
   background: linear-gradient(180deg, var(--surface), rgba(255,255,255,0.5));
-
   border: 1px solid var(--glass-border);
-
   backdrop-filter: blur(calc(var(--glass-blur) - 2px));
-
   box-shadow: var(--shadow-md);
-
   transition: transform .34s var(--ease), box-shadow .34s var(--ease);
-
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
-
   text-align: center;
-
   min-height: 220px;
-
   transform-style: preserve-3d;
-
   will-change: transform;
-
 }
-
 html.dark .feature-card {
-
   background: linear-gradient(180deg, var(--surface), rgba(12,16,24,0.48));
-
 }
-
 .feature-card:hover {
-
   transform: translateY(-16px) translateZ(30px);
-
   box-shadow: 0 32px 80px rgba(8,10,18,0.12);
-
 }
-
-
-
 
 
 /* icon block */
-
 .card-icon {
-
   width: 78px;
-
   height: 78px;
-
   border-radius: 12px;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   font-size: 1.4rem;
-
   color: #fff;
-
   margin-bottom: 1.1rem;
-
   background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-
   box-shadow: 0 10px 30px rgba(59,98,214,0.12);
-
 }
-
-
 
 /* preserve your special gradients but keep them subtle */
-
 .guess-papers .card-icon{ background: linear-gradient(90deg,#ff6b6b,#ee5a52); }
-
 .notes .card-icon{ background: linear-gradient(90deg,#2ad7c6,#1fb4a8); }
-
 .pairing .card-icon{ background: linear-gradient(90deg,#45b7d1,#6fcf97); }
-
 .keybooks .card-icon{ background: linear-gradient(90deg,#f093fb,#f5576c); }
-
 .preparation .card-icon{ background: linear-gradient(90deg,#ffd6a5,#ffb199); }
 
-
-
 .card-title {
-
   font-size: 1.12rem;
-
   font-weight: 800;
-
   color: var(--text);
-
   margin-bottom: .45rem;
-
 }
-
 .card-description {
-
   color: var(--soft-muted);
-
   font-size: .96rem;
-
   margin-bottom: 1.1rem;
-
 }
-
-
 
 /* full width action */
-
 .card-button {
-
   margin-top: auto;
-
   width: 100%;
-
   padding: .72rem;
-
   border-radius: 12px;
-
   border: none;
-
   color: #fff;
-
   font-weight: 800;
-
   background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-
   box-shadow: 0 12px 36px rgba(59,98,214,0.12);
-
   transition: transform .22s var(--ease), box-shadow .22s var(--ease);
-
 }
-
 .card-button:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(59,98,214,0.16); }
 
-
-
 /* ---------- collapsible (glass) ---------- */
-
 .collapsible-container { margin: 3rem 0; }
-
 .collapsible {
-
   border-radius: var(--radius-md);
-
   overflow: hidden;
-
   background: linear-gradient(180deg, var(--surface), rgba(255,255,255,0.62));
-
   border: 1px solid var(--glass-border);
-
   box-shadow: var(--shadow-sm);
-
   transition: transform .22s var(--ease);
-
 }
-
 html.dark .collapsible { background: linear-gradient(180deg, rgba(12,16,24,0.5), rgba(12,16,24,0.42)); }
-
 .collapsible:hover { transform: translateY(-6px); }
-
 .collapsible-header {
-
   padding: 1rem 1.2rem;
-
   display:flex; justify-content:space-between; align-items:center;
-
   cursor: pointer;
-
   font-weight: 700;
-
   color: var(--accent-1);
-
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-
 }
-
 .collapsible-content { max-height: 0; overflow: hidden; transition: max-height .36s var(--ease); }
-
 .collapsible.active .collapsible-content { max-height: 800px; }
-
 .collapsible-body { padding: 1.2rem; background: linear-gradient(180deg, rgba(244,246,251,0.7), rgba(238,242,251,0.6)); color: var(--text); }
-
 html.dark .collapsible-body { background: linear-gradient(180deg, rgba(8,12,20,0.28), rgba(8,12,20,0.22)); }
 
-
-
 /* ---------- about / stats ---------- */
-
 .about-section { padding: 4.6rem 0; background: linear-gradient(180deg,#f9fbff,#f4f7ff); }
-
 html.dark .about-section { background: linear-gradient(180deg,#041022,#061428); }
-
 .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items:center; }
-
 .about-text { color: var(--text); font-size: 1rem; line-height: 1.8; }
-
 .about-stats { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
-
 .stat-item { padding: 1.4rem; border-radius: var(--radius-md); background: linear-gradient(180deg, var(--surface), rgba(255,255,255,0.66)); border: 1px solid var(--glass-border); box-shadow: var(--shadow-sm); text-align:center; }
-
 .stat-number { font-size: 1.9rem; font-weight: 900; color: var(--accent-1); }
-
 .stat-label { color: var(--soft-muted); font-weight: 700; }
 
-
-
 /* ---------- contact ---------- */
-
 .contact-section { padding: 4.6rem 0; }
-
 .contact-content { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-
 .contact-item {
-
   display:flex; align-items:center; gap:1rem; padding:1rem; border-radius:12px;
-
   background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.8));
-
   border: 1px solid rgba(255,255,255,0.6);
-
   transition: transform .18s var(--ease), box-shadow .18s var(--ease);
-
 }
-
 html.dark .contact-item { background: linear-gradient(180deg, rgba(10,14,24,0.44), rgba(10,14,24,0.34)); border:1px solid rgba(255,255,255,0.04); }
-
 .contact-item:hover { transform: translateX(8px); box-shadow: 0 18px 40px rgba(59,98,214,0.04); }
 
-
-
 /* forms */
-
 .contact-form {
-
   padding: 1.15rem; border-radius: 14px;
-
   background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.8));
-
   border: 1px solid rgba(255,255,255,0.6); box-shadow: var(--shadow-sm);
-
 }
-
 html.dark .contact-form { background: linear-gradient(180deg, rgba(8,12,20,0.36), rgba(8,12,20,0.24)); border:1px solid rgba(255,255,255,0.04); }
-
 .form-group label { display:block; margin-bottom: .45rem; font-weight:700; color: var(--text); }
-
 .form-group input, .form-group textarea {
-
   width:100%; padding: .9rem; border-radius: 10px; border: 1px solid rgba(34,37,51,0.06);
-
   background: rgba(255,255,255,0.84); transition: box-shadow .18s var(--ease), border-color .18s var(--ease);
-
 }
-
 html.dark .form-group input, html.dark .form-group textarea { background: rgba(8,12,20,0.28); border:1px solid rgba(255,255,255,0.04); color:var(--text); }
-
 .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent-1); box-shadow: 0 8px 30px rgba(59,98,214,0.08); }
 
-
-
 .submit-btn {
-
   width:100%; padding:.9rem; border-radius:12px; border:none;
-
   background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-
   color:#fff; font-weight:900; box-shadow: 0 10px 36px rgba(59,98,214,0.12); cursor:pointer;
-
 }
-
 .submit-btn:hover { transform: translateY(-4px); }
 
-
-
 /* ---------- footer ---------- */
-
 .footer {
-
   padding: 3.6rem 0 2.6rem;
-
   background: linear-gradient(180deg, rgba(26,30,45,0.95), rgba(31,38,61,0.95));
-
   color: #e6eefb;
-
 }
-
 .footer-content {
-
   max-width: var(--max-width);
-
   margin: 0 auto 1.4rem;
-
   display:grid;
-
   grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
-
   gap:1.6rem;
-
   padding: 0 1.25rem;
-
 }
-
 .footer-section h3 { margin-bottom: .6rem; color:#fff; }
-
 .footer-section p, .footer-section a { color:#b9c6e6; text-decoration:none; line-height:1.7; }
-
 .social-links a {
-
   width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center;
-
   border-radius:50%; background: rgba(255,255,255,0.06); color:#e8f0ff;
-
   transition: transform .18s var(--ease), background .18s var(--ease);
-
 }
-
 .social-links a:hover { transform: translateY(-4px); background: linear-gradient(90deg,var(--accent-1),var(--accent-2)); color: #fff; }
-
 .footer-bottom { text-align:center; padding-top:1.25rem; color:#9fb0da; border-top: 1px solid rgba(255,255,255,0.04); }
 
-
-
 /* ---------- utilities ---------- */
-
 .animate-on-scroll { opacity:0; transform: translateY(30px); transition: all .6s var(--ease); }
-
 .animate-on-scroll.animated { opacity:1; transform: translateY(0); }
 
-
-
 .scroll-progress {
-
   position: fixed; top: 0; left: 0; height: 4px; width: 0%;
-
   z-index: 99999; background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-
   transition: width .12s linear;
-
 }
-
-
 
 /* loading overlay (light, kept small) */
-
 .loading-overlay {
-
   position: fixed; inset:0; display:flex; align-items:center; justify-content:center;
-
   background: linear-gradient(180deg, rgba(62,92,206,0.86), rgba(108,86,200,0.86));
-
   z-index: 999998; backdrop-filter: blur(4px);
-
 }
-
 .loading-spinner {
-
   width:56px; height:56px; border-radius:50%;
-
   border:5px solid rgba(255,255,255,0.18); border-top:5px solid rgba(255,255,255,0.95);
-
   animation: spin 1s linear infinite;
-
 }
-
 @keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
 
-
-
 /* ---------- responsive ---------- */
-
 @media (max-width: 980px) {
-
   .about-content, .contact-content { grid-template-columns: 1fr; }
-
   .student-avatar { width: 140px; height: 140px; font-size: 44px; }
-
   .header-content { padding: 1.6rem; border-radius: 14px; }
-
   .cta-button { padding: .85rem 1.6rem; }
-
 }
-
 @media (max-width: 768px) {
-
   .nav-links { display: none; }
-
   .section-title { font-size: 1.5rem; }
-
   .features-grid { gap: 1rem; }
-
   .feature-card { padding: 1.25rem; min-height: 200px; }
-
 }
-
-
 
 /* accessibility */
-
 :focus { outline: 3px solid rgba(59,98,214,0.12); outline-offset: 2px; }
-
 button { -webkit-tap-highlight-color: transparent; cursor: pointer; }
-
 </style>
-
-
 
 <style>
-
 /* --- BASIC PROTECTION STYLE --- */
-
 body, html {
-
   -webkit-user-select: none;
-
   -moz-user-select: none;
-
   -ms-user-select: none;
-
   user-select: none;
-
 }
-
-
 
 img {
-
   -webkit-user-drag: none;
-
   user-drag: none;
-
   pointer-events: none;
-
 }
-
-
 
 /* Optional: protect specific sections */
-
 .protected {
-
   user-select: none;
-
   pointer-events: none;
-
 }
-
 </style>
 
-
-
 </head>
-
 <!-- Inside <body> tag -->
-
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
-
-
 
   
 <style>
@@ -1167,4 +647,871 @@ h1{
     background:rgba(255,255,255,0.28);
 }
 
-/* FIREWORK
+/* FIREWORKS */
+#fireworks{
+    position:fixed;
+    inset:0;
+    background:#000;
+    display:none;
+    z-index:10000;
+}
+
+/* SPARK */
+.spark{
+    position:absolute;
+    width:5px;
+    height:5px;
+    background:#fff;
+    border-radius:50%;
+    box-shadow:0 0 10px #fff;
+    animation: explode 1.2s linear forwards;
+}
+
+@keyframes explode{
+    to{
+        transform:translate(var(--x),var(--y)) scale(0);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="birthdayOverlay">
+    <div class="popup">
+
+        <h1><i class="fa-solid fa-cake-candles"></i> Birthday Countdown</h1>
+
+        <div class="about" id="about"></div>
+
+        <div id="countdown">Loading...</div>
+        <div id="time"></div>
+
+        <div class="buttons">
+            <button class="btn" onclick="wish()">
+                <i class="fa-brands fa-whatsapp"></i> Wish Muhammad Rizwan
+            </button>
+            <button class="btn" onclick="closePopup()">
+                <i class="fa-solid fa-xmark"></i> Cancel
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<div id="fireworks"></div>
+
+<script>
+// PARTICLES
+for(let i=0;i<45;i++){
+    const p=document.createElement("div");
+    p.className="particle";
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=5+Math.random()*6+"s";
+    document.getElementById("birthdayOverlay").appendChild(p);
+}
+
+// TYPEWRITER ABOUT
+const aboutText =
+"Muhammad Rizwan is the Founder and Owner of Education Point, dedicated to empowering students through modern education and smart learning resources. His birthday is on 23 December.";
+  let ai=0;
+function typeAbout(){
+    if(ai<aboutText.length){
+        document.getElementById("about").innerHTML+=aboutText.charAt(ai);
+        ai++;
+        setTimeout(typeAbout,30);
+    }
+}
+typeAbout();
+
+// BIRTHDAY DATE (PK TIME)
+const birthday = new Date("December 23, 2025 00:00:00 GMT+0500");
+let birthdayReached=false;
+
+// COUNTDOWN
+function updateCountdown(){
+    const now=new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Karachi"}));
+    const diff=birthday-now;
+    const cd=document.getElementById("countdown");
+
+    if(diff<=0){
+        birthdayReached=true;
+        cd.innerHTML="🎉 HAPPY BIRTHDAY <br> MUHAMMAD RIZWAN 🎂";
+        return;
+    }
+
+    const d=Math.floor(diff/(1000*60*60*24));
+    const h=Math.floor((diff/(1000*60*60))%24);
+    const m=Math.floor((diff/(1000*60))%60);
+    const s=Math.floor((diff/1000)%60);
+
+    cd.innerHTML=`${d}d ${h}h ${m}m ${s}s`;
+}
+setInterval(updateCountdown,1000);
+updateCountdown();
+
+// TIME
+setInterval(()=>{
+    document.getElementById("time").innerText=
+    "Pakistan Time: "+new Date().toLocaleTimeString("en-US",{timeZone:"Asia/Karachi"});
+},1000);
+
+// WISH
+function wish(){
+    window.open("https://wa.me/923314220506?text=Happy%20Birthday%20Muhammad%20Rizwan%20🎉");
+    const fw=document.getElementById("fireworks");
+    fw.style.display="block";
+
+    for(let i=0;i<160;i++){
+        const s=document.createElement("div");
+        s.className="spark";
+        s.style.left=Math.random()*100+"vw";
+        s.style.top=Math.random()*100+"vh";
+        s.style.setProperty("--x",(Math.random()*600-300)+"px");
+        s.style.setProperty("--y",(Math.random()*600-300)+"px");
+        fw.appendChild(s);
+        setTimeout(()=>s.remove(),1200);
+    }
+    setTimeout(()=>fw.style.display="none",5000);
+}
+
+// CLOSE
+function closePopup(){
+    document.getElementById("birthdayOverlay").style.display="none";
+}
+</script>
+
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                Education Point
+            </div>
+            <div class="nav-links"><a href="#home">Home</a>
+
+            <a href="#features">Features</a>
+
+            <a href="#about">About</a>
+
+            <a href="#contact">Contact</a>
+
+        </div>
+
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="header" id="home">
+        <div class="header-content">
+            <div class="student-avatar">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+            <h1 class="main-title">Education Point</h1>
+            <p class="subtitle">Your Complete Educational Hub</p>
+            <p class="caption">"Empowering students with comprehensive study materials, guess papers, and preparation resources for academic excellence. Join thousands of successful students on their journey to success."</p>
+            <button class="cta-button" onclick="scrollToSection('features')">
+                <i class="fas fa-rocket"></i> Start Learning
+            </button>
+        </div>
+    </header>
+<!-- Features Section -->
+<section class="section" id="features">
+    <div class="container">
+        <h2 class="section-title animate-on-scroll">Study Materials & Resources</h2>
+        <p class="section-subtitle animate-on-scroll">Comprehensive educational resources designed to help you excel in your academic journey</p>
+
+        <!-- Features Grid -->
+        <div class="features-grid">
+            <!-- Guess Papers -->
+            <div class="feature-card animate-on-scroll">
+                <div class="card-icon guess-papers">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <h3 class="card-title">
+                    <i class="fas fa-pencil-alt" style="color: #ff6b6b; margin-right: 8px;"></i>Guess Papers
+                </h3>
+                <p class="card-description">
+                    Access comprehensive guess papers for all subjects, carefully curated by expert teachers to help you focus on important topics and exam patterns.
+                </p>
+                <a href="guess-papers.html" target="_blank" class="card-button">
+                    <i class="fas fa-download"></i> Explore Guess Papers
+                </a>
+            </div>
+
+            <!-- Notes -->
+            <div class="feature-card animate-on-scroll">
+                <div class="card-icon notes">
+                    <i class="fas fa-sticky-note"></i>
+                </div>
+                <h3 class="card-title">
+                    <i class="fas fa-book" style="color: #1dd1a1; margin-right: 8px;"></i>Study Notes
+                </h3>
+                <p class="card-description">
+                    Well-organized, concise notes covering all chapters and topics. Perfect for quick revision and comprehensive exam preparation.
+                </p>
+                <a href="notes.html" target="_blank" class="card-button">
+                    <i class="fas fa-book-open"></i> Access Notes
+                </a>
+            </div>
+
+            <!-- Pairing Scheme -->
+            <div class="feature-card animate-on-scroll">
+                <div class="card-icon pairing">
+                    <i class="fas fa-link"></i>
+                </div>
+                <h3 class="card-title">
+                    <i class="fas fa-chart-pie" style="color: #feca57; margin-right: 8px;"></i>Pairing Scheme
+                </h3>
+                <p class="card-description">
+                    Detailed pairing schemes and marking criteria to understand exam patterns, scoring methodology, and assessment guidelines.
+                </p>
+                <a href="scheme.html" target="_blank" class="card-button">
+                    <i class="fas fa-chart-line"></i> View Schemes
+                </a>
+            </div>
+
+            <!-- Key Books -->
+            <div class="feature-card animate-on-scroll">
+                <div class="card-icon keybooks">
+                   <i class="fas fa-trophy"></i>
+                </div>
+                <h3 class="card-title">
+                    <i class="fas fa-book-reader" style="color: #54a0ff; margin-right: 8px;"></i>Key Books
+                </h3>
+                <p class="card-description">
+                    Essential textbooks and reference materials recommended by top educators for comprehensive learning and deep understanding.
+                </p>
+                <a href="keybooks.html" target="_blank" class="card-button">
+                    <i class="fas fa-bullseye"></i> Browse Books
+                </a>
+            </div>
+
+            <!-- Preparation Material -->
+            <div class="feature-card animate-on-scroll">
+                <div class="card-icon preparation">
+                    <i class="fas fa-pen-fancy"></i>
+                </div>
+                <h3 class="card-title">
+                    <i class="fas fa-trophy" style="color: #ff9ff3; margin-right: 8px;"></i>Preparation Material
+                </h3>
+                <p class="card-description">
+                    Complete preparation packages including practice tests, mock exams, strategic study plans, and time management techniques.
+                </p>
+                <a href="preparation.html" target="_blank" class="card-button">
+                    <i class="fas fa-play-circle"></i> Start Preparing
+                </a>
+            </div>
+        </div>
+
+        <!-- Collapsible Sections -->
+        <div class="collapsible-container animate-on-scroll">
+            <h3 style="text-align: center; margin-bottom: 2rem; font-size: 2rem; color: #333;">Frequently Asked Questions</h3>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <h3><i class="fas fa-question-circle" style="color:#ff6b6b; margin-right: 8px;"></i>How do I access the study materials?</h3>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </div>
+                <div class="collapsible-content">
+                    <div class="collapsible-body">
+                        <p>Simply click on any of the material cards above to access our comprehensive collection. All materials are organized by subject and grade level for easy navigation. You can download PDFs, view online content, and access interactive study tools.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <h3><i class="fas fa-clock" style="color:#feca57; margin-right: 8px;"></i>Are the materials updated regularly?</h3>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </div>
+                <div class="collapsible-content">
+                    <div class="collapsible-body">
+                        <p>Yes! Our team of expert educators continuously updates all study materials to reflect the latest curriculum changes, exam patterns, and educational standards. New content is added weekly, and existing materials are reviewed monthly.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <h3><i class="fas fa-users" style="color:#54a0ff; margin-right: 8px;"></i>Can I get personalized study plans?</h3>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </div>
+                <div class="collapsible-content">
+                    <div class="collapsible-body">
+                        <p>Absolutely! Our preparation materials include personalized study plan generators that adapt to your learning pace, strengths, and areas for improvement. Contact our support team for customized guidance and mentoring.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+               
+        <!-- About Section -->
+        <section class="about-section" id="about">
+            <div class="container">
+                <h2 class="section-title animate-on-scroll">About Education Point</h2>
+                <div class="about-content">
+                    <div class="about-text animate-on-scroll">
+                        <h3>Empowering Education Since 2023</h3>
+                        <p>Education Point is a comprehensive educational platform designed to support students at every level of their academic journey. We believe that quality education should be accessible to everyone, which is why we've created a centralized hub for all your study needs.</p>
+                        <p>Our team consists of experienced educators, curriculum specialists, and technology experts who work together to provide the most effective learning resources. From guess papers to comprehensive study guides, we ensure that every material meets the highest educational standards.</p>
+                        <p>Join thousands of successful students who have achieved their academic goals with Education Point's proven study materials and innovative learning approaches.</p>
+                    </div>
+                    <div class="about-stats animate-on-scroll">
+                        <div class="stat-item">
+                            <span class="stat-number">1000+</span>
+                            <span class="stat-label">Students Helped</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">1,200+</span>
+                            <span class="stat-label">Study Materials</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">95%</span>
+                            <span class="stat-label">Success Rate</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">24 / 7 </span>
+                            <span class="stat-label">Support Available</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <h2 class="section-title animate-on-scroll">Get In Touch</h2>
+                <p class="section-subtitle animate-on-scroll">Have questions or need personalized guidance? We're here to help you succeed!</p>
+                
+                <div class="contact-content">
+                    <div class="contact-info animate-on-scroll">
+                        <h3>Contact Information</h3>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Address</strong><br>
+                                Online learning website (No Address). 
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Phone</strong><br>
+                     +923314220506
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>Email</strong><br>
+                                mrizwank584@gmail.com
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>Available Hours</strong><br>
+                                Mon - Fri: 9:00 AM - 6:00 PM
+                            </div>
+                        </div>
+                    </div>
+<style>
+#contactForm {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  max-width: 420px;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+}
+
+#contactForm:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+/* Form groups */
+.form-group {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+/* Input fields */
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 12px 42px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  outline: none;
+  font-size: 15px;
+  transition: 0.3s;
+  background-color: #f9fafb;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* On focus */
+input:focus,
+textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0,123,255,0.2);
+  background: #fff;
+}
+
+/* Placeholder color */
+::placeholder {
+  color: #777;
+}
+
+/* Icon styling */
+.form-group i {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  color: #007bff;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+/* Textarea icon alignment */
+.form-group.textarea i {
+  top: 20px;
+  transform: none;
+}
+
+/* Button styling */
+.send-btn {
+  width: 100%;
+  background: #007bff;
+  border: none;
+  color: #fff;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.send-btn:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+</style>
+  <div>        
+      <h2>Contact Us</h2>
+      <form id="contactForm">
+        <div class="form-group">
+          <input type="text" name="name" placeholder="Full Name" required>
+        </div>
+
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Email Address" required>
+        </div>
+
+        <div class="form-group">
+          <input type="text" name="class" placeholder="Class (e.g. 10th, 11th, 12th)" required>
+        </div>
+
+        <div class="form-group">
+          <input type="text" name="city" placeholder="City" required>
+        </div>
+
+        <div class="form-group">
+          <textarea name="message" placeholder="Your Message" required></textarea>
+        </div>
+
+        <button type="submit" class="send-btn">Send Message</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+  const phone = '923314220506'; // Your WhatsApp number
+  document.getElementById('contactForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const userClass = e.target.class.value;
+    const city = e.target.city.value;
+    const message = e.target.message.value;
+
+    const text = `*📩 New Contact Message*\n\n*Name:* ${name}\n*Email:* ${email}\n*Class:* ${userClass}\n*City:* ${city}\n\n*Message:* ${message}`;
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+  });
+  </script>
+
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Education Point</h3>
+                    <p>Your trusted partner in academic excellence. We provide comprehensive study materials and resources to help students achieve their educational goals.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/share/1ZGmVALmpi/"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://youtube.com/@educationpoint998?si=9QxDLTVeau-dQOWu"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/itx.wani1?igsh=MTVwYjY0N2YwMnRqNg=="><i class="fab fa-instagram"></i></a>
+                        <a href="https://whatsapp.com/channel/0029VayfTrh8PgsHHebiwc2k"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Study Materials</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="policy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Study Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="guess-papers.html">Guess Papers</a></li>
+                        <li><a href="notes.html">Study Notes</a></li>
+                        <li><a href="scheme.html">Pairing Schemes</a></li>
+                        <li><a href="keybooks.html">Key Books</a></li>
+                        <li><a href="preparation.html">Practice Tests</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="contact me.html">Help Center</a></li>
+                        <li><a href="contact me.html">Student Support</a></li>
+                        <li><a href="contact me.html">Technical Support</a></li>
+                       <li><a href="https://wa.me/923314220506?text=Hello%20Education%20Point,%20I%20want%20to%20give%20feedback." target="_blank">Feedback</a></li>
+<li><a href="https://wa.me/923314220506?text=Hello%20Education%20Point,%20I%20want%20to%20report%20an%20issue." target="_blank">Report Issue</a></li>
+                      
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Education Point. All rights reserved. — Muhammad Rizwan | Education Point.</p>
+            </div>
+        </div>
+    </footer>
+<style>
+.click-particle {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #00aaff;
+  pointer-events: none;
+  opacity: 0.8;
+  animation: particleAnim 0.6s ease-out forwards;
+  z-index: 9999;
+}
+
+@keyframes particleAnim {
+  from { transform: scale(1); opacity: 0.8; }
+  to { transform: scale(4); opacity: 0; }
+}
+</style>
+<!-- Scroll Progress Bar -->
+<div id="scroll-progress"></div>
+
+<style>
+  /* Neon Blue Scroll Progress Bar */
+  #scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 0%;
+    background: linear-gradient(90deg, #00bfff, #1e90ff);
+    box-shadow: 0 0 15px #00bfff, 0 0 25px #1e90ff;
+    transition: width 0.1s linear;
+    z-index: 9999;
+  }
+</style>
+
+<script>
+  // Update progress bar on scroll
+  window.addEventListener("scroll", () => {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrollPercent = (scrollTop / scrollHeight) * 100;
+    document.getElementById("scroll-progress").style.width = scrollPercent + "%";
+  });
+</script>
+
+<script>
+document.addEventListener('click', e => {
+  const particle = document.createElement('div');
+  particle.classList.add('click-particle');
+  particle.style.left = e.clientX + 'px';
+  particle.style.top = e.clientY + 'px';
+  document.body.appendChild(particle);
+  setTimeout(() => particle.remove(), 600);
+});
+</script>
+
+    <script>
+	
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll to section function
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        // Scroll progress bar
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.querySelector('.scroll-progress');
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.offsetHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Material card interactions
+        function openMaterial(type) {
+            const messages = {
+                'guess-papers': 'Opening Guess Papers section with latest exam predictions and important questions! 📋',
+                'notes': 'Accessing comprehensive study notes organized by subjects and chapters! 📝',
+                'pairing': 'Loading pairing schemes and marking criteria for better exam understanding! 🔗',
+                'keybooks': 'Browsing essential textbooks and reference materials! 📚',
+                'preparation': 'Starting your complete exam preparation journey with practice tests! 🎯'
+            };
+            
+            alert(messages[type] || 'Opening study material...');
+            
+            // Add visual feedback
+            event.target.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                event.target.style.transform = 'scale(1)';
+            }, 150);
+        }
+
+        // Collapsible functionality
+        function toggleCollapsible(header) {
+            const collapsible = header.parentElement;
+            const isActive = collapsible.classList.contains('active');
+            
+            // Close all other collapsibles
+            document.querySelectorAll('.collapsible.active').forEach(item => {
+                if (item !== collapsible) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Toggle current collapsible
+            if (isActive) {
+                collapsible.classList.remove('active');
+            } else {
+                collapsible.classList.add('active');
+            }
+        }
+
+        // Form submission
+        function submitForm(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // Simulate form submission
+            alert(`Thank you, ${name}! Your message has been sent successfully. We'll get back to you at ${email} within 24 hours.`);
+            
+            // Reset form
+            event.target.reset();
+            
+            // Add visual feedback
+            const submitBtn = event.target.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+            submitBtn.style.background = 'linear-gradient(45deg, #27ae60, #2ecc71)';
+            
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
+            }, 3000);
+        }
+
+        // Add 3D tilt effect to cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // Counter animation for stats
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent.replace(/[^\d]/g, ''));
+                const increment = target / 100;
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        if (counter.textContent.includes('+')) {
+                            counter.textContent = Math.floor(current).toLocaleString() + '+';
+                        } else if (counter.textContent.includes('%')) {
+                            counter.textContent = Math.floor(current) + '%';
+                        } else {
+                            counter.textContent = Math.floor(current).toLocaleString();
+                        }
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = counter.textContent; // Reset to original
+                    }
+                };
+                
+                updateCounter();
+            });
+        }
+
+        // Trigger counter animation when stats section is visible
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        const statsSection = document.querySelector('.about-stats');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // Particle effect on click
+        function createParticles(x, y) {
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'fixed';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.width = '6px';
+                particle.style.height = '6px';
+                particle.style.background = '#667eea';
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '9999';
+                
+                document.body.appendChild(particle);
+                
+                const angle = (i / 8) * Math.PI * 2;
+                const velocity = 100;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                
+                let opacity = 1;
+                let scale = 1;
+                
+                const animate = () => {
+                    const currentX = parseFloat(particle.style.left);
+                    const currentY = parseFloat(particle.style.top);
+                    
+                    particle.style.left = (currentX + vx * 0.02) + 'px';
+                    particle.style.top = (currentY + vy * 0.02) + 'px';
+                    
+                    opacity -= 0.02;
+                    scale -= 0.02;
+                    
+                    particle.style.opacity = opacity;
+                    particle.style.transform = `scale(${scale})`;
+                    
+                    if (opacity > 0) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        document.body.removeChild(particle);
+                    }
+                };
+                
+                requestAnimationFrame(animate);
+            }
+        }
+
+        // Add click particle effect to buttons
+        document.querySelectorAll('.card-button, .cta-button, .submit-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                createParticles(e.clientX, e.clientY);
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9858b650b3544ef9',t:'MTc1ODk1MjEwOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

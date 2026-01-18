@@ -1,421 +1,165 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FSc Part 2 (12th Class) Biology Notes | Punjab Boards</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
+    <title>Bio Smart Prep | Education Point</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- General Styling --- */
-        :root {
-            --primary-color: #007bff;
-            --secondary-color: #6c757d;
-            --background-color: #f8f9fa;
-            --card-background: #ffffff;
-            --text-color: #343a40;
-            --heading-color: #212529;
-            --border-color: #dee2e6;
-            --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap');
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #f0fdf4; 
+            color: #1e293b;
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            margin: 0;
-            line-height: 1.6;
+        .bio-card {
+            background: white;
+            border-radius: 24px;
+            border: 1px solid #dcfce7;
+            transition: all 0.3s ease;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* --- Header Section --- */
-        .header {
-            text-align: center;
-            padding: 40px 20px;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 40px;
-        }
-
-        .header h1 {
-            color: var(--heading-color);
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            color: var(--secondary-color);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* --- Chapters Grid Layout --- */
-        .chapters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-        }
-
-        /* --- Chapter Card Styling --- */
-        .chapter-card {
-            background: var(--card-background);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .chapter-card:hover {
+        .bio-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 25px -5px rgba(21, 128, 61, 0.1);
         }
 
-        .card-header {
-            background-color: var(--primary-color);
+        .diagram-glow {
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #22c55e; }
+            to { box-shadow: 0 0 20px #22c55e; }
+        }
+
+        .pairing-badge {
+            background: #166534;
             color: white;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-        
-        .card-header .icon {
-            font-size: 1.5rem;
-            margin-right: 15px;
-            opacity: 0.8;
-        }
-
-        .card-content {
-            padding: 25px;
-        }
-
-        .card-content ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .card-content li {
-            margin-bottom: 12px;
-        }
-        
-        .card-content li:last-child {
-            margin-bottom: 0;
-        }
-
-        .card-content a, .card-content .disabled-link {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
+            padding: 4px 12px;
             border-radius: 8px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            border: 1px solid var(--border-color);
+            font-weight: bold;
         }
-
-        .card-content a:hover {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-        
-        .card-content .disabled-link {
-            color: #999;
-            background-color: #f0f0f0;
-            cursor: not-allowed;
-        }
-
-        .card-content .fa-solid {
-            margin-right: 12px;
-            width: 20px;
-            text-align: center;
-            color: var(--primary-color);
-        }
-        
-        .card-content a:hover .fa-solid {
-            color: white;
-        }
-        
-        /* --- Footer Section --- */
-        .footer-info {
-            text-align: center;
-            padding: 40px 20px;
-            margin-top: 40px;
-            background: var(--card-background);
-            border-radius: 12px;
-        }
-
-        .footer-info h2 {
-            font-size: 1.8rem;
-            color: var(--heading-color);
-        }
-        
-        .footer-info p {
-            color: var(--secondary-color);
-            max-width: 800px;
-            margin: 15px auto;
-        }
-
     </style>
 </head>
+<body class="p-4 md:p-8">
 
-<body>
+    <header class="max-w-6xl mx-auto text-center py-12">
+        <div class="inline-block mb-4 p-2 px-6 rounded-full bg-emerald-100 border border-emerald-200 text-emerald-700 font-bold text-sm tracking-widest uppercase">
+            <i class="fas fa-microscope mr-2"></i> Biology Revision Guide
+        </div>
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 text-emerald-900 tracking-tight">
+            Design Your <span class="text-emerald-600 underline decoration-wavy decoration-emerald-300">Success</span>
+        </h1>
+        <p class="text-slate-600 text-lg max-w-2xl mx-auto italic">"Good Diagrams = Good Marks. Study Smart, Score Maximum!"</p>
+    </header>
 
-    <div class="container">
-        
-        <header class="header">
-            <h1><i class="fa-solid fa-leaf"></i> FSc Part 2 Biology Notes</h1>
-            <p>Complete chapter-wise notes for 2nd Year Biology (Class 12th) according to the Punjab Boards syllabus. Download MCQs, short questions, and detailed notes in PDF.</p>
-        </header>
+    <main class="max-w-6xl mx-auto space-y-10">
 
-        <main class="chapters-grid">
-
-            <div class="chapter-card">
-                <div class="card-header">
-                    <i class="fa-solid fa-water icon"></i>
-                    <span>Chapter 15: Homeostasis</span>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <div class="bio-card p-8">
+                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-6 text-xl">
+                    <i class="fas fa-check-double"></i>
                 </div>
-                <div class="card-content">
-                    <ul>
-                        <li><a href="https://drive.google.com/file/d/1Izw90imdf0LMyP8-hyttJX62j-_RBNqT/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-list-ol"></i> MCQs</a></li>
-                        <li><a href="https://drive.google.com/file/d/1v7VpjX5Lu5EediG2cyqNIsB9iJjplmdK/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-circle-question"></i> Short Questions</a></li>
-                        <li><a href="https://drive.google.com/file/d/1pIAinER2ETd29Bxd70w1iYqPfSw54-Mt/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Chapter Notes & Exercise</a></li>
-                    </ul>
+                <h3 class="text-xl font-bold mb-4 text-emerald-900">MCQ Strategy</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    Past papers are key, but this year requires <b>Additional MCQs</b>. 
+                </p>
+                <div class="mt-4 p-3 bg-emerald-50 rounded-lg text-xs font-semibold text-emerald-800 border-l-4 border-emerald-500">
+                    Pro Tip: Chapters you prepare for Long Questions cover their MCQs automatically!
                 </div>
             </div>
 
-            <div class="chapter-card">
-                <div class="card-header">
-                    <i class="fa-solid fa-person-walking icon"></i>
-                    <span>Chapter 16: Support and Movement</span>
+            <div class="bio-card p-8">
+                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6 text-xl">
+                    <i class="fas fa-pen-nib"></i>
                 </div>
-                <div class="card-content">
-                    <ul>
-                        <li><a href="https://drive.google.com/file/d/1BF-3fTGYhuexX_87nyyvhf0DsskHsOoh/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-list-ol"></i> MCQs</a></li>
-                        <li><a href="https://drive.google.com/file/d/1xm-ymsGWDGmbqO7xNb63He43yVEvuoy6/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-circle-question"></i> Short Questions</a></li>
-                        <li><a href="https://drive.google.com/file/d/1dqg01f9swDYbTCCcS3xnDAFCacz8GLgh/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Chapter Notes & Exercise</a></li>
-                    </ul>
+                <h3 class="text-xl font-bold mb-4 text-slate-900">Short Answers</h3>
+                <p class="text-sm text-slate-600 mb-4">Focus 100% on these chapters for SQs:</p>
+                <div class="flex gap-2 mb-4">
+                    <span class="bg-blue-600 text-white px-3 py-1 rounded text-sm font-bold">18</span>
+                    <span class="bg-blue-600 text-white px-3 py-1 rounded text-sm font-bold">20</span>
+                    <span class="bg-blue-600 text-white px-3 py-1 rounded text-sm font-bold">22</span>
+                </div>
+                <p class="text-xs text-slate-500 italic"><i class="fas fa-info-circle mr-1"></i> Use a round tip marker for neatness!</p>
+            </div>
+
+            <div class="bio-card p-8 border-2 border-emerald-500 shadow-lg">
+                <div class="w-12 h-12 bg-emerald-600 text-white rounded-xl flex items-center justify-center mb-6 text-xl">
+                    <i class="fas fa-dna"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4 text-emerald-900">Recommended Pairs</h3>
+                <ul class="space-y-3 text-sm font-bold text-slate-700">
+                    <li class="flex items-center"><span class="pairing-badge mr-3">Pair 1</span> 15 & 21</li>
+                    <li class="flex items-center"><span class="pairing-badge mr-3">Pair 2</span> 16 & 25</li>
+                    <li class="flex items-center text-emerald-600"><i class="fas fa-plus-circle mr-3"></i> 17 & 24 OR 19 & 23</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="bg-emerald-900 text-white rounded-[2.5rem] p-8 md:p-12 overflow-hidden relative">
+            <div class="absolute right-0 bottom-0 opacity-10 text-9xl p-4"><i class="fas fa-heartbeat"></i></div>
+            <div class="flex flex-col md:flex-row items-center gap-10">
+                <div class="flex-1">
+                    <h2 class="text-3xl font-black mb-4">THE GOLDEN RULE 🎨</h2>
+                    <p class="text-emerald-100 text-lg mb-6">"Without diagrams, you <b>CANNOT</b> score maximum marks. Even if it's not in the book, draw it!"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="bg-white/10 p-4 rounded-2xl flex items-center">
+                            <i class="fas fa-file-pdf text-red-400 text-2xl mr-3"></i>
+                            <span class="text-sm">Special Hand-made Diagrams PDF included in drive.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full md:w-64 h-64 bg-white/10 rounded-full flex items-center justify-center border-4 border-emerald-400/30 diagram-glow">
+                    <i class="fas fa-draw-polygon text-7xl text-emerald-400"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 items-stretch">
+            <div class="bio-card p-8 bg-white border-l-8 border-l-amber-500">
+                <h3 class="text-2xl font-black mb-6 text-slate-900"><i class="fas fa-shield-alt text-amber-500 mr-2"></i> Pass with 60+ Marks</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center p-3 bg-slate-50 rounded-xl">
+                        <span class="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mr-4 font-bold">1</span>
+                        <p class="text-sm font-medium">Complete Ch 15, 21, 25 (LQs + SQs)</p>
+                    </div>
+                    <div class="flex items-center p-3 bg-slate-50 rounded-xl">
+                        <span class="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mr-4 font-bold">2</span>
+                        <p class="text-sm font-medium">Short Qs Only: 20, 22, 26, 27</p>
+                    </div>
+                    <div class="flex items-center p-3 bg-slate-50 rounded-xl">
+                        <span class="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mr-4 font-bold">3</span>
+                        <p class="text-sm font-medium">Past Paper MCQs for everything else</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="chapter-card">
-                <div class="card-header">
-                    <i class="fa-solid fa-brain icon"></i>
-                    <span>Chapter 17: Coordination & Control</span>
-                </div>
-                <div class="card-content">
-                    <ul>
-                        <li><a href="https://drive.google.com/file/d/1MOzPwiVHkIDB5Qlc1qzR9asogK5684-w/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-list-ol"></i> MCQs</a></li>
-                        <li><a href="https://drive.google.com/file/d/10Eu01inJp8fPlk5bZvOGo--vZ5l-kxHT/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-circle-question"></i> Short Questions</a></li>
-                        <li><a href="https://drive.google.com/file/d/1GQaAauOjDZM3kPaXELsmWN85LdNuzg0i/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Chapter Notes & Exercise</a></li>
-                    </ul>
-                </div>
+            <div class="bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-3xl p-8 text-center flex flex-col justify-center items-center text-white">
+                <h3 class="text-2xl font-bold mb-4 text-emerald-100">Full Biology Resource Pack</h3>
+                <p class="mb-8 text-emerald-200/80">Doctor Series, Scholar Series, and Handmade Diagrams Folder</p>
+                <a href="https://drive.google.com/drive/folders/1nBFtdma7sHlffk863GXezH5oRzYE1u3h" class="bg-white text-emerald-900 px-10 py-5 rounded-2xl font-black text-xl shadow-xl hover:scale-105 transition-all">
+                    <i class="fab fa-google-drive mr-2"></i> ACCESS DRIVE
+                </a>
             </div>
+        </div>
 
-            <div class="chapter-card">
-                <div class="card-header">
-                    <i class="fa-solid fa-venus-mars icon"></i>
-                    <span>Chapter 18: Reproduction</span>
-                </div>
-                <div class="card-content">
-                    <ul>
-                        <li><a href="https://drive.google.com/file/d/1u3Goqj7TEEXCCGsM5YnHj5N7pp_Xh2UQ/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-list-ol"></i> MCQs</a></li>
-                        <li><a href="https://drive.google.com/file/d/1_TVgVZKv1iPThbuS8nBwK1Qh_yBmveDU/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-circle-question"></i> Short Questions</a></li>
-                        <li><a href="https://drive.google.com/file/d/1nQZgV_5ptDB4nr_pHwHvY7aBQfkYNQJz/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Chapter Notes & Exercise</a></li>
-                    </ul>
-                </div>
-            </div>
+    </main>
 
-            <div class="chapter-card">
-                <div class="card-header">
-                    <i class="fa-solid fa-seedling icon"></i>
-                    <span>Chapter 19: Growth & Development</span>
-                </div>
-                <div class="card-content">
-                    <ul>
-                        <li><a href="https://drive.google.com/file/d/1g-BNbo41S1udmv77gSubAfcN8R4cUUjQ/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-list-ol"></i> MCQs</a></li>
-                        <li><a href="https://drive.google.com/file/d/1iqLDMK1vE_mJIdPEKrRAHZlvhOyVf49Z/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-circle-question"></i> Short Questions</a></li>
-                        <li><a href="https://drive.google.com/file/d/1bI-pJzdaVeuJ1hEWGHqaq0e3xpwCob5n/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Chapter Notes & Exercise</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="chapter-card">
-                <div class="card-header">
-                    <i class="fa-solid fa-dna icon"></i>
-                    <span>Chapter 20: Chromosomes and DNA</span>
-                </div>
-                <div class="card-content">
-                    <ul>
-                        <li><a href="https://drive.google.com/file/d/1xDGb57CbHLtm2fZ8zzOY98rZnwDZdPiM/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-list-ol"></i> MCQs</a></li>
-                        <li><a href="https://drive.google.com/file/d/1yHZtCjRsUA1GcqNhvZ4ajmdhBFzuZ0dk/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-circle-question"></i> Short Questions</a></li>
-                        <li><a href="https://drive.google.com/file/d/1awtrjsW4heSUoN6mA__s4cNtE2SecjZW/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Chapter Notes & Exercise</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="chapter-card">
-                <div class="card-header">
-                    <i class="fa-solid fa-arrows-spin icon"></i>
-                    <span>Chapter 21: Cell Cycle</span>
-                </div>
-                <div class="card-content">
-                    <ul>
-                        <li><a href="https://drive.google.com/file/d/1L8cXM_hX0gjvnX4rce3AaNVr6a6J1qK-/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-list-ol"></i> MCQs</a></li>
-                        <li><a href="https://drive.google.com/file/d/1TjlHF8YRBHzQGTTwKKB87AO8CCrTUh2l/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-circle-question"></i> Short Questions</a></li>
-                        <li><a href="https://drive.google.com/file/d/1w5_XKqt1uortSmBsQvsIj8mAXSvRrXDs/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Chapter Notes & Exercise</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="chapter-card">
-                <div class="card-header">
-                    <i class="fa-solid fa-code-fork icon"></i>
-                    <span>Chapter 22: Variation and Genetics</span>
-                </div>
-                <div class="card-content">
-                    <ul>
-                        <li><a href="https://drive.google.com/file/d/1jPHcXYzzh7gESV2kgyfiead9l3dijE4Y/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-list-ol"></i> MCQs</a></li>
-                        <li><a href="https://drive.google.com/file/d/18aQVx0EMnKBZhUpuZhsFHh_qiHI4WvNM/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-circle-question"></i> Short Questions</a></li>
-                        <li><a href="https://drive.google.com/file/d/1AFFNdDk3aj_AKdU10wxnusUjp0c3LNyx/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Chapter Notes & Exercise</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="chapter-card">
-                <div class="card-header">
-                    <i class="fa-solid fa-flask-vial icon"></i>
-                    <span>Chapter 23: Biotechnology</span>
-                </div>
-                <div class="card-content">
-                    <ul>
-                        <li><a href="https://drive.google.com/file/d/1LuFb4FBzOrG7u8ITULuyAkqRIXHMNyQw/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-list-ol"></i> MCQs</a></li>
-                        <li><a href="https://drive.google.com/file/d/1KcbopxV4OIlOsEH5hjeMuoLfolTu1U58/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-circle-question"></i> Short Questions</a></li>
-                        <li><a href="https://drive.google.com/file/d/1ABxUobqApF0CO2DzwkFa4sjKj4e7te4-/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Chapter Notes & Exercise</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="chapter-card">
-                <div class="card-header">
-                    <i class="fa-solid fa-paw icon"></i>
-                    <span>Chapter 24: Evolution</span>
-                </div>
-                <div class="card-content">
-                    <ul>
-                        <li><a href="https://drive.google.com/file/d/1DZ5eWncJjnKFTqxY6Sn_YXYX4qTJ5x2Z/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-list-ol"></i> MCQs</a></li>
-                        <li><a href="https://drive.google.com/file/d/1qr7UbpJqOHD69HIWxeJF8A2SbUqprQUr/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-circle-question"></i> Short Questions</a></li>
-                        <li><a href="https://drive.google.com/file/d/1DcZUO38EmXYnff1wKb69o-yGDTgq2hAR/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Chapter Notes & Exercise</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="chapter-card">
-                <div class="card-header">
-                    <i class="fa-solid fa-earth-americas icon"></i>
-                    <span>Chapter 25: Ecosystem</span>
-                </div>
-                <div class="card-content">
-                    <ul>
-                        <li><a href="https://drive.google.com/file/d/1R-oAZnCF4KniUuKTbUjnolE2hSWff-9G/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-list-ol"></i> MCQs</a></li>
-                        <li><a href="https://drive.google.com/file/d/1HTR4pmhZJqH6_f6StqhEE2K1HY5k3x4j/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-circle-question"></i> Short Questions</a></li>
-                        <li><a href="https://drive.google.com/file/d/1a2_3VYVS4SOkDgePU_jwdeRrrTbBhoMn/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Chapter Notes & Exercise</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="chapter-card">
-                <div class="card-header">
-                    <i class="fa-solid fa-mountain-sun icon"></i>
-                    <span>Chapter 26: Some Major Ecosystems</span>
-                </div>
-                <div class="card-content">
-                    <ul>
-                        <li><a href="https://drive.google.com/file/d/1ryIRJJuRDccoYJ0j6cOBsgZSIW6BYyQC/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-list-ol"></i> MCQs</a></li>
-                        <li><a href="https://drive.google.com/file/d/11ej2UCbtMSAxtbrLu9KUwX_t8ZyuO2xi/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-circle-question"></i> Short Questions</a></li>
-                        <li><a href="https://drive.google.com/file/d/1sZAXH5p2D3wv0F-vPUCGsdTmhVq8isE1/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Chapter Notes & Exercise</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="chapter-card">
-                <div class="card-header">
-                    <i class="fa-solid fa-user-group icon"></i>
-                    <span>Chapter 27: Man and His Environment</span>
-                </div>
-                <div class="card-content">
-                    <ul>
-                        <li><a href="https://drive.google.com/file/d/1hxaSa2S9-Ex58t2yvrsa9Qw_Tuw9XfOR/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-list-ol"></i> MCQs</a></li>
-                        <li><div class="disabled-link"><i class="fa-solid fa-circle-question"></i> Short Questions</div></li>
-                        <li><a href="https://drive.google.com/file/d/1GfsKKM-WjHHA8HUb1ADWYifBaFxz3k7b/view?usp=share_link" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Chapter Notes & Exercise</a></li>
-                    </ul>
-                </div>
-            </div>
-        </main>
-<style>
-  .education-point {
-    display: flex;
-    align-items: center;
-    background-color: #eef6fb;
-    border-radius: 8px;
-    padding: 12px 20px;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    margin: 20px auto;
-  }
-  .education-icon {
-    font-size: 40px;
-    color: #2a7de1;
-    margin-right: 16px;
-  }
-  .education-description {
-    font-size: 18px;
-    color: #333;
-  }
-</style>
-</head>
-<body>
-
-<div class="education-point">
-  <i class="fas fa-book education-icon" aria-hidden="true"></i>
-  <p class="education-description">
-    Education is the foundation for personal development and lifelong learning, empowering individuals with knowledge and skills to thrive in the modern world.
-  </p>
-</div>
-        <footer class="footer-info">
-            <h2>About These Notes</h2>
-            <p>These notes are prepared by a team of senior students and expert teachers to help you secure excellent marks in your final examinations. They cover the complete syllabus for all Punjab Boards, including Lahore, Gujranwala, Multan, and Rawalpindi boards. Good luck with your studies!</p>
-        </footer>
- <h3>Founder’s Vision</h3>
-        <p>
-          Muhammad Rizwan’s dedication to public welfare inspired the creation of Education Point. He envisions a future where quality education reaches every student, helping them succeed not only academically but in life.
+    <footer class="mt-20 text-center py-16 border-t border-emerald-100 bg-emerald-50/50">
+        <p class="text-2xl font-light text-slate-500 italic px-6">
+            "Please remember me in your precious prayers. May Allah grant you great success in your exams. Ameen ✨"
         </p>
-      </div>
-    </section>
+        <div class="mt-8">
+            <h4 class="text-3xl font-black text-emerald-900 tracking-widest">EDUCATION POINT</h4>
+            <p class="text-emerald-600 font-bold uppercase tracking-widest text-xs mt-2 underline">Your Biology Success Partner</p>
+        </div>
+    </footer>
 
-    <section>
-      Education Point is not just a platform – it’s a <strong>movement</strong> towards smarter, easier, and connected learning.
-    </section>
-  </div>
-
-  <footer class="footer-info">
-    &copy; 2025 Education Point. All rights reserved.
-  </footer>
 </body>
 </html>

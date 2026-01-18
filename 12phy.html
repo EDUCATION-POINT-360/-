@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Prep | Education Point</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f8fafc; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #1e40af, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-hover {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-hover:after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-hover:hover:after { left: 100%; }
+    </style>
+</head>
+<body>
+
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">E</div>
+                <span class="text-xl font-extrabold tracking-tight text-slate-900">Education<span class="text-indigo-600">Point</span></span>
+            </div>
+            <div class="hidden md:flex space-x-8 font-semibold text-slate-600">
+                <a href="#" class="hover:text-indigo-600">Notes</a>
+                <a href="#" class="hover:text-indigo-600">MCQs</a>
+                <a href="#" class="hover:text-indigo-600">Past Papers</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative pt-16 pb-24 overflow-hidden">
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-indigo-100 rounded-full blur-3xl opacity-50"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
+        
+        <div class="max-w-5xl mx-auto px-6 text-center relative">
+            <span class="inline-block py-1 px-4 rounded-full bg-indigo-50 text-indigo-700 font-bold text-sm mb-6 uppercase tracking-widest">Physics 12th Class</span>
+            <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 leading-tight mb-6">
+                Master Physics with <br><span class="gradient-text">Smart Preparation</span>
+            </h1>
+            <p class="text-lg text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Premium chapter-wise notes, solved numericals, and up-to-date past papers (2025) curated for excellence.
+            </p>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="https://drive.google.com/drive/folders/1_LZWcC8IlvBkmA57MYjlLPOxCQBhKM5h" class="btn-hover bg-indigo-600 text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-indigo-200">
+                    <i class="fas fa-cloud-download-alt mr-2"></i> All-in-One Folder
+                </a>
+                <a href="https://drive.google.com/drive/folders/12BkW7COTHMvGPiw4jthw1gqVhy8qmIYG" class="bg-white text-slate-900 border border-slate-200 px-8 py-4 rounded-xl font-bold hover:bg-slate-50">
+                    Browse Past Papers
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-7xl mx-auto px-6 pb-24">
+        
+        <div class="grid lg:grid-cols-3 gap-8">
+            
+            <div class="space-y-8">
+                <h3 class="text-xl font-bold text-slate-900 flex items-center border-l-4 border-indigo-600 pl-4">Essential PDFs</h3>
+                <div class="glass-card rounded-2xl p-2">
+                    <ul class="space-y-1">
+                        <li><a href="https://drive.google.com/file/d/1uim1aXKpttk11KMD_6yq7vFCF0b6Kphm/view" class="flex items-center p-4 hover:bg-indigo-50 rounded-xl group">
+                            <i class="fas fa-check-circle text-indigo-500 mr-4"></i>
+                            <span class="font-semibold text-slate-700 group-hover:text-indigo-700">Full Book MCQs</span>
+                        </a></li>
+                        <li><a href="https://drive.google.com/file/d/1tJvJK8JYEIEvfDYTOBiQil1-eoK2ROT0/view" class="flex items-center p-4 hover:bg-indigo-50 rounded-xl group">
+                            <i class="fas fa-file-alt text-indigo-500 mr-4"></i>
+                            <span class="font-semibold text-slate-700 group-hover:text-indigo-700">Important SQs</span>
+                        </a></li>
+                        <li><a href="https://drive.google.com/file/d/15uuHaEW3_J_HV16v-F9rtwJ13DUmW-da/view" class="flex items-center p-4 hover:bg-indigo-50 rounded-xl group">
+                            <i class="fas fa-book text-indigo-500 mr-4"></i>
+                            <span class="font-semibold text-slate-700 group-hover:text-indigo-700">Exercise Solutions</span>
+                        </a></li>
+                        <li><a href="https://drive.google.com/file/d/162u2seK4Bk_yBBS94NDwKiJFCULHCDIb/view" class="flex items-center p-4 hover:bg-indigo-50 rounded-xl group">
+                            <i class="fas fa-calculator text-indigo-500 mr-4"></i>
+                            <span class="font-semibold text-slate-700 group-hover:text-indigo-700">Full Book Numericals</span>
+                        </a></li>
+                        <li><a href="https://drive.google.com/file/d/14HTzvpUc65oWH_sZKnktngh4KYAbBWwP/view" class="flex items-center p-4 hover:bg-indigo-50 rounded-xl group">
+                            <i class="fas fa-square-root-alt text-indigo-500 mr-4"></i>
+                            <span class="font-semibold text-slate-700 group-hover:text-indigo-700">Formulas & Constants</span>
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <h3 class="text-xl font-bold text-slate-900 flex items-center border-l-4 border-blue-500 pl-4">Academy Specials</h3>
+                <div class="glass-card rounded-2xl p-6 bg-gradient-to-br from-white to-blue-50">
+                    <p class="text-sm font-bold text-blue-600 mb-4 uppercase tracking-widest">MCQ Vault</p>
+                    <div class="grid grid-cols-1 gap-3">
+                        <a href="https://drive.google.com/file/d/1vC5w2ROLA7JI_tz3DQ0PIFlhka_3m6CL/view" class="p-3 border border-blue-100 rounded-lg flex items-center hover:bg-blue-100 transition">
+                            <i class="fas fa-star text-yellow-500 mr-3 text-sm"></i> Full Book MCQs
+                        </a>
+                        <a href="https://drive.google.com/file/d/1p_7_2S9CLErxAgI0seohOe3IwO-jYLhg/view" class="p-3 border border-blue-100 rounded-lg flex items-center hover:bg-blue-100 transition">
+                            <i class="fas fa-university text-blue-500 mr-3 text-sm"></i> Youth Academy
+                        </a>
+                        <a href="https://drive.google.com/file/d/1vTuMljMFKxSjt7bMxkYs3uUpvm4ZAVLu/view" class="p-3 border border-blue-100 rounded-lg flex items-center hover:bg-blue-100 transition">
+                            <i class="fas fa-list-ol text-blue-500 mr-3 text-sm"></i> 100 Solved MCQs
+                        </a>
+                        <a href="https://drive.google.com/file/d/1wOawC3IhtOSH3IICL651sJc56sQRU8MB/view" class="p-3 border border-blue-100 rounded-lg flex items-center hover:bg-blue-100 transition">
+                            <i class="fas fa-history text-blue-500 mr-3 text-sm"></i> Past Paper MCQs
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <h3 class="text-xl font-bold text-slate-900 flex items-center border-l-4 border-purple-600 pl-4">Notes & Papers</h3>
+                <div class="space-y-4">
+                    <div class="glass-card p-5 rounded-2xl flex items-center border-r-4 border-purple-500">
+                        <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mr-4"><i class="fas fa-atlas"></i></div>
+                        <div>
+                            <h4 class="font-bold">Scholars Notes</h4>
+                            <a href="https://drive.google.com/drive/folders/1tP8Bv2NMJZqel3x9ywpShQHEHsLm3kcm" class="text-indigo-600 text-sm font-semibold hover:underline">View Folder →</a>
+                        </div>
+                    </div>
+                    <div class="glass-card p-5 rounded-2xl flex items-center border-r-4 border-pink-500">
+                        <div class="w-12 h-12 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mr-4"><i class="fas fa-pen-fancy"></i></div>
+                        <div>
+                            <h4 class="font-bold">WAK Notes</h4>
+                            <a href="https://drive.google.com/drive/folders/1tOmCH7J98uOttGhj_3QaAF5gWt5yI2pz" class="text-indigo-600 text-sm font-semibold hover:underline">View Folder →</a>
+                        </div>
+                    </div>
+                    <div class="glass-card p-5 rounded-2xl bg-slate-900 text-white">
+                        <h4 class="font-bold mb-2">Long Qs & 2024 Paper</h4>
+                        <div class="flex space-x-4">
+                            <a href="https://drive.google.com/file/d/1wU0-wi2lwdserDzUx4sv3j-UQsAykwxB/view" class="text-xs bg-white/10 px-3 py-2 rounded-lg hover:bg-white/20">Long Qs</a>
+                            <a href="https://drive.google.com/file/d/1vmBCnGoII3xt5e8GH_esv8P90QZAlJsB/view" class="text-xs bg-white/10 px-3 py-2 rounded-lg hover:bg-white/20">2024 Paper</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-16">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-red-50 text-red-500 rounded-full mb-6">
+                <i class="fas fa-heart text-2xl animate-pulse"></i>
+            </div>
+            <p class="text-2xl font-semibold text-slate-800 italic leading-relaxed">
+                "May Allah SWT give you success in your exams. Remember Education Point in your prayers. May Allah make your journey easy and full of success."
+            </p>
+            <p class="mt-8 text-indigo-600 font-extrabold text-3xl tracking-widest uppercase">Ameen ❤️</p>
+            
+            <div class="mt-12 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center text-slate-500 text-sm">
+                <p>&copy; 2026 Education Point. Quality Education Meets Success.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-indigo-600"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-indigo-600"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="hover:text-indigo-600"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

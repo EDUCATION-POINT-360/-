@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration | Education Point</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="icon" href="logo.png" type="image/png" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #050505;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .input-glass {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .input-glass:focus {
+            border-color: #3b82f6;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+            outline: none;
+        }
+
+        .neon-button {
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .neon-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.5);
+        }
+
+        .floating-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.2);
+            filter: blur(40px);
+            z-index: -1;
+        }
+
+        /* Success Popup Animation */
+        #success-popup {
+            display: none;
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="py-12 px-4">
+
+    <div class="floating-particle w-64 h-64 top-10 left-10 animate-pulse"></div>
+    <div class="floating-particle w-96 h-96 bottom-10 right-10 animate-pulse" style="background: rgba(139, 92, 246, 0.15); animation-delay: 2s;"></div>
+
+    <section class="max-w-4xl mx-auto">
+        <div class="text-center mb-12" id="header-reveal">
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tighter mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-neutral-500">
+                Join Education Point <br>Student Community
+            </h1>
+            <p class="text-neutral-400 text-lg">Fill the form below to join our official student group and receive study updates.</p>
+        </div>
+
+        <div class="glass-panel rounded-[40px] p-8 md:p-12 relative overflow-hidden" id="form-container">
+            <form id="registrationForm" class="space-y-6 relative z-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-neutral-400 mb-2 ml-1">Student Name</label>
+                        <input type="text" id="name" required placeholder="Enter full name" 
+                        class="w-full input-glass rounded-2xl px-5 py-4 text-white placeholder-neutral-600">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-neutral-400 mb-2 ml-1">WhatsApp Number</label>
+                        <input type="tel" id="whatsapp" required placeholder="e.g. 03001234567" 
+                        class="w-full input-glass rounded-2xl px-5 py-4 text-white placeholder-neutral-600">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-neutral-400 mb-2 ml-1">Select Your Class</label>
+                    <select id="classSelect" required class="w-full input-glass rounded-2xl px-5 py-4 text-white appearance-none cursor-pointer">
+                        <option value="" disabled selected>Choose your class</option>
+                        <option value="9th Class">9th Class</option>
+                        <option value="10th Class">10th Class</option>
+                        <option value="11th Class">11th Class</option>
+                        <option value="12th Class">12th Class</option>
+                        <option value="ICS">ICS</option>
+                        <option value="Pre-Medical">Pre-Medical</option>
+                        <option value="Pre-Engineering">Pre-Engineering</option>
+                        <option value="Computer Science">Computer Science</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-neutral-400 mb-2 ml-1">Home Address</label>
+                    <textarea id="address" required rows="3" placeholder="Enter your full address" 
+                    class="w-full input-glass rounded-2xl px-5 py-4 text-white placeholder-neutral-600"></textarea>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full neon-button py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 relative overflow-hidden group">
+                    <span id="btnText">Submit & Join</span>
+                    <i data-lucide="send" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    <div id="loader" class="hidden animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                </button>
+            </form>
+        </div>
+
+        <div class="mt-8 glass-panel rounded-3xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 reveal-box">
+            <div class="flex items-center gap-4 text-center md:text-left">
+                <div class="w-14 h-14 bg-green-500/20 rounded-full flex items-center justify-center text-green-500 shrink-0">
+                    <i data-lucide="message-circle" class="w-8 h-8"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl">Follow Education Point Channel</h3>
+                    <p class="text-neutral-500 text-sm">Latest study updates, notes, and announcements.</p>
+                </div>
+            </div>
+            <a href="https://whatsapp.com/channel/0029Vb7bYUSJUM2eWSlWfo36" target="_blank" 
+            class="bg-white text-black px-6 py-3 rounded-xl font-bold hover:bg-neutral-200 transition">
+                Follow Channel
+            </a>
+        </div>
+    </section>
+
+    <canvas id="idCardCanvas" width="600" height="350" class="hidden"></canvas>
+
+    <div id="success-popup" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80">
+        <div class="glass-panel p-8 rounded-[40px] max-w-sm w-full text-center scale-90 opacity-0" id="popup-content">
+            <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(34,197,94,0.4)]">
+                <i data-lucide="check" class="w-10 h-10 text-white"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">Registration Submitted Successfully!</h2>
+            <p class="text-neutral-400 text-sm mb-6">Your details have been sent. You will soon be added to the official student group.</p>
+            <button onclick="closePopup()" class="w-full py-4 bg-white/10 rounded-2xl hover:bg-white/20 transition font-bold">Awesome!</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // GSAP Revelations
+        gsap.from("#header-reveal", { y: -50, opacity: 0, duration: 1, ease: "power4.out" });
+        gsap.from("#form-container", { scale: 0.95, opacity: 0, duration: 1.2, delay: 0.3, ease: "power4.out" });
+
+        const form = document.getElementById('registrationForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const loader = document.getElementById('loader');
+        const btnText = document.getElementById('btnText');
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+
+            // Form Data
+            const name = document.getElementById('name').value;
+            const whatsapp = document.getElementById('whatsapp').value;
+            const address = document.getElementById('address').value;
+            const classVal = document.getElementById('classSelect').value;
+            const date = new Date().toLocaleDateString();
+
+            // UI Feedback
+            submitBtn.disabled = true;
+            loader.classList.remove('hidden');
+            btnText.innerText = "Processing...";
+
+            // 1. Generate Student Card Image
+            const cardUrl = await generateCard(name, whatsapp, address, classVal, date);
+
+            // 2. Format WhatsApp Message
+            const message = `🎓 *Education Point – New Student Registration*
+
+👤 *Name:* ${name}
+📱 *WhatsApp:* ${whatsapp}
+🏠 *Address:* ${address}
+📚 *Class:* ${classVal}
+
+_Submitted via Education Point Website_`;
+
+            const waLink = `https://wa.me/923314220506?text=${encodeURIComponent(message)}`;
+
+            // 3. Handle Completion
+            setTimeout(() => {
+                // Confetti
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#3b82f6', '#8b5cf6', '#ffffff'] });
+
+                // Success Popup
+                document.getElementById('success-popup').style.display = 'flex';
+                gsap.to("#popup-content", { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.7)" });
+
+                // Open WhatsApp
+                window.open(waLink, '_blank');
+
+                // Auto-Download Card for student
+                const link = document.createElement('a');
+                link.download = `EducationPoint_Card_${name}.png`;
+                link.href = cardUrl;
+                link.click();
+
+                // Reset Button
+                loader.classList.add('hidden');
+                btnText.innerText = "Submit & Join";
+                submitBtn.disabled = false;
+            }, 1500);
+        };
+
+        function closePopup() {
+            gsap.to("#popup-content", { scale: 0.9, opacity: 0, duration: 0.3, onComplete: () => {
+                document.getElementById('success-popup').style.display = 'none';
+                form.reset();
+            }});
+        }
+
+        async function generateCard(name, whatsapp, address, classVal, date) {
+            const canvas = document.getElementById('idCardCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Background
+            const gradient = ctx.createLinearGradient(0, 0, 600, 350);
+            gradient.addColorStop(0, '#1e293b');
+            gradient.addColorStop(1, '#0f172a');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 600, 350);
+
+            // Accents
+            ctx.fillStyle = 'rgba(59, 130, 246, 0.1)';
+            ctx.beginPath();
+            ctx.arc(600, 0, 200, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Logo Text
+            ctx.fillStyle = '#3b82f6';
+            ctx.font = 'bold 24px Arial';
+            ctx.fillText('Education Point', 40, 50);
+
+            // Title
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 32px Arial';
+            ctx.fillText('STUDENT ID CARD', 40, 100);
+
+            // Details
+            ctx.font = '16px Arial';
+            ctx.fillStyle = '#94a3b8';
+            ctx.fillText('NAME', 40, 150);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText(name.toUpperCase(), 40, 175);
+
+            ctx.font = '16px Arial';
+            ctx.fillStyle = '#94a3b8';
+            ctx.fillText('CLASS', 40, 220);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText(classVal, 40, 245);
+
+            ctx.font = '16px Arial';
+            ctx.fillStyle = '#94a3b8';
+            ctx.fillText('WHATSAPP', 300, 150);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText(whatsapp, 300, 175);
+
+            ctx.font = '16px Arial';
+            ctx.fillStyle = '#94a3b8';
+            ctx.fillText('DATE', 300, 220);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText(date, 300, 245);
+
+            // Footer
+            ctx.fillStyle = 'rgba(255,255,255,0.05)';
+            ctx.fillRect(0, 300, 600, 50);
+            ctx.fillStyle = '#64748b';
+            ctx.font = '12px Arial';
+            ctx.fillText('Official student registration via Education Point Web Portal', 40, 330);
+
+            return canvas.toDataURL('image/png');
+        }
+    </script>
+</body>
+</html>
+

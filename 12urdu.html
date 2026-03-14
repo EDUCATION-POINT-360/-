@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education Point | Urdu 2nd Year Elite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --accent: #00f2ff;
+            --bg: #030712;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Nastaliq Urdu', sans-serif;
+            background-color: var(--bg);
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        .urdu-font { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; }
+
+        /* Animated Mesh Background */
+        .mesh-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(at 0% 0%, rgba(0, 242, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(188, 19, 254, 0.1) 0px, transparent 50%);
+            z-index: -1;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-panel:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent);
+            transform: scale(1.02);
+        }
+
+        .neon-border {
+            position: relative;
+            background: linear-gradient(var(--bg), var(--bg)) padding-box,
+                        linear-gradient(to right, #00f2ff, #bc13fe) border-box;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: #ffffff;
+            color: #000;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+            transition: 0.3s;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 40px rgba(255,255,255,0.4);
+            transform: translateY(-2px);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .float-icon { animation: float 6s ease-in-out infinite; }
+    </style>
+</head>
+<body>
+
+    <div class="mesh-bg"></div>
+
+    <section class="relative min-h-screen flex items-center justify-center px-6">
+        <div class="absolute inset-0 flex justify-around items-center opacity-20 pointer-events-none">
+            <i data-lucide="feather" class="w-24 h-24 text-cyan-400 float-icon" style="animation-delay: 0s;"></i>
+            <i data-lucide="languages" class="w-32 h-32 text-purple-400 float-icon" style="animation-delay: 2s;"></i>
+        </div>
+
+        <div class="max-w-5xl text-center z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-md">
+                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                <span class="text-xs font-bold tracking-widest uppercase text-gray-400">Founded by Muhammad Rizwan</span>
+            </div>
+            
+            <h1 class="text-6xl md:text-9xl font-extrabold mb-6 tracking-tight">
+                Urdu <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">2nd Year</span>
+            </h1>
+            
+            <p class="urdu-font text-3xl md:text-4xl text-white mb-10">
+                ایجوکیشن پوائنٹ: بہترین نوٹس اور حوالہ جات
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="#main-content" class="btn-primary px-10 py-4 rounded-2xl font-black text-lg flex items-center gap-3">
+                    <i data-lucide="grid"></i> Explore Materials
+                </a>
+                <a href="https://whatsapp.com/channel/0029Vb7bYUSJUM2eWSlWfo36" target="_blank" class="glass-panel px-10 py-4 rounded-2xl font-bold flex items-center gap-3 hover:bg-green-600/20">
+                    <i data-lucide="message-circle" class="text-green-400"></i> WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <main id="main-content" class="py-20 px-6 max-w-7xl mx-auto">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <div class="lg:col-span-2 space-y-8">
+                <div class="glass-panel p-8 rounded-3xl flex flex-col md:flex-row items-center gap-8">
+                    <div class="w-24 h-24 rounded-2xl bg-cyan-500/10 flex items-center justify-center text-cyan-400">
+                        <i data-lucide="file-check-2" class="w-12 h-12"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold mb-2">Important MCQs</h3>
+                        <p class="text-gray-400 mb-6">PDF contains chapter-wise 15–20 essential MCQs for top marks.</p>
+                        <a href="https://drive.google.com/drive/folders/1jHznbp7GR6EEvI9ixxc8OX9FegBKE5cx" target="_blank" class="inline-flex items-center gap-2 text-cyan-400 font-bold border-b border-cyan-400/30 hover:border-cyan-400 transition-all">
+                            Access Collection <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="space-y-4" x-data="{ selected: null }">
+                    <div class="glass-panel rounded-3xl overflow-hidden border-l-4 border-purple-500">
+                        <button @click="selected !== 1 ? selected = 1 : selected = null" class="w-full flex justify-between items-center p-8 text-right">
+                            <span class="text-2xl font-bold urdu-font">اہم اسباق (خلاصہ جات)</span>
+                            <i data-lucide="plus" :class="selected === 1 ? 'rotate-45' : ''" class="transition-transform text-purple-400"></i>
+                        </button>
+                        <div x-show="selected === 1" x-collapse class="p-8 pt-0 bg-white/5 urdu-font text-xl">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300">
+                                <div class="p-3 bg-black/20 rounded-xl">1. محنت پسند خردمند</div>
+                                <div class="p-3 bg-black/20 rounded-xl">2. اکبری کی حماقتیں</div>
+                                <div class="p-3 bg-cyan-500/20 text-white font-bold rounded-xl border border-cyan-500/30">3. پہلی فتح (زیادہ اہم)</div>
+                                <div class="p-3 bg-black/20 rounded-xl">4. دستک</div>
+                                <div class="p-3 bg-black/20 rounded-xl">5. ہوائی</div>
+                                <div class="p-3 bg-purple-500/20 text-white font-bold rounded-xl border border-purple-500/30">6. قرطبہ کا قاضی (زیادہ اہم)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel rounded-3xl overflow-hidden border-l-4 border-cyan-500">
+                        <button @click="selected !== 2 ? selected = 2 : selected = null" class="w-full flex justify-between items-center p-8 text-right">
+                            <span class="text-2xl font-bold urdu-font">اہم نظمیں</span>
+                            <i data-lucide="plus" :class="selected === 2 ? 'rotate-45' : ''" class="transition-transform text-cyan-400"></i>
+                        </button>
+                        <div x-show="selected === 2" x-collapse class="p-8 pt-0 bg-white/5 urdu-font text-xl text-gray-400">
+                            خدا سرسبز رکھے اس چمن کو • نعت (زیادہ اہم) • اسلامی مساوات • آدمی • نوجوان سے خطاب
+                        </div>
+                    </div>
+                </div>
+
+                <div class="neon-border p-10 rounded-3xl text-center bg-black/40">
+                    <h3 class="text-2xl font-bold mb-8">Aap Betti: Key Verses</h3>
+                    <div class="urdu-font text-2xl md:text-3xl space-y-8 italic text-white/90">
+                        <p class="hover:text-cyan-400 transition cursor-default">"یاد ماضی عذاب ہے یا رب / چھین لے مجھ سے حافظہ میرا"</p>
+                        <p class="hover:text-purple-400 transition cursor-default">"موت سے کس کو رستگاری ہے / آج وہ کل ہماری باری ہے"</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <div class="glass-panel p-8 rounded-3xl border-t-4 border-white h-full">
+                    <h3 class="text-2xl font-bold mb-4">Handwritten Notes</h3>
+                    <p class="text-sm text-gray-400 mb-8 leading-relaxed">Exclusive notes including Hawalajaat, Tashreeh, and context for weak students.</p>
+                    <div class="space-y-4">
+                        <a href="https://drive.google.com/drive/folders/1jMTyU3xSzjrGPTkdEtyHWn3YgLYi7fZy" target="_blank" class="block w-full text-center py-4 bg-white text-black font-black rounded-xl hover:bg-gray-200 transition">Main Folder</a>
+                        <a href="https://drive.google.com/file/d/1j-Qc9bgE73DOgrfcC1msQnSYBVnDRMoh/view?usp=drivesdk" target="_blank" class="block w-full text-center py-4 border border-white/20 rounded-xl hover:bg-white/10 transition">Hawalajaat PDF</a>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-4">
+                    <a href="https://drive.google.com/drive/folders/1oqAH32EddtcUoCbPdDcdfWAOBMjf1Kst" target="_blank" class="glass-panel p-6 rounded-2xl flex justify-between items-center group">
+                        <span class="font-bold">Essays (Mazameens)</span>
+                        <i data-lucide="arrow-up-right" class="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                    </a>
+                    <a href="https://drive.google.com/drive/folders/1oz973iwUZo5fKSN8qoUKVlxaqatgj_7A" target="_blank" class="glass-panel p-6 rounded-2xl flex justify-between items-center group">
+                        <span class="font-bold">Letter Topics</span>
+                        <i data-lucide="arrow-up-right" class="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section class="py-32 bg-black/60 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="w-32 h-32 rounded-full border-4 border-cyan-400 p-1 mx-auto mb-8">
+                <div class="w-full h-full rounded-full bg-gradient-to-tr from-cyan-400 to-purple-600 flex items-center justify-center text-4xl font-black">MR</div>
+            </div>
+            <h2 class="text-4xl font-black mb-4">Muhammad Rizwan</h2>
+            <p class="text-xl text-cyan-400 font-bold mb-6 tracking-widest uppercase">Elite Educator & Founder</p>
+            <p class="text-gray-400 text-lg leading-relaxed italic">"Our mission is to democratize education by providing the highest quality, handwritten authentic materials for every student in Punjab."</p>
+        </div>
+    </section>
+
+    <footer class="py-20 px-6 border-t border-white/5">
+        <div class="max-w-4xl mx-auto glass-panel p-12 rounded-[3rem] text-center border-green-500/20">
+            <h3 class="text-4xl font-black mb-6">Stay Connected</h3>
+            <p class="text-gray-400 mb-10">Join 10,000+ students on our WhatsApp channel for daily updates.</p>
+            <a href="https://whatsapp.com/channel/0029Vb7bYUSJUM2eWSlWfo36" target="_blank" class="inline-flex items-center gap-4 bg-green-500 text-black px-12 py-5 rounded-2xl font-black text-xl hover:bg-green-400 transition-all shadow-[0_0_50px_rgba(34,197,94,0.3)]">
+                <i data-lucide="message-square" class="w-6 h-6"></i> Join Education Point
+            </a>
+        </div>
+        <div class="mt-20 text-center text-gray-600 text-sm">
+            &copy; 2026 Education Point • Designed for 2nd Year Urdu Excellence
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

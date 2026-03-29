@@ -727,7 +727,59 @@
         </div>
     </div>
 </section>
+<div class="fixed right-6 bottom-12 z-[9999] flex flex-col gap-6">
 
+    <div class="relative group">
+        <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl blur opacity-20 group-hover:opacity-60 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+        
+        <a href="https://edupointai.netlify.app" target="_blank" 
+           class="relative flex items-center justify-end bg-black border border-white/10 w-16 h-16 hover:w-64 rounded-2xl transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] overflow-hidden shadow-2xl">
+            
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-700" 
+                 style="background-image: radial-gradient(#3b82f6 0.5px, transparent 0.5px); background-size: 10px 10px;"></div>
+
+            <div class="absolute left-6 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100 translate-x-4 group-hover:translate-x-0">
+                <span class="block text-[10px] uppercase tracking-[0.3em] text-blue-400 font-black">AI System</span>
+                <span class="text-lg font-bold text-white tracking-tight">EduPoint <span class="text-blue-500">AI</span></span>
+            </div>
+
+            <div class="relative flex h-16 w-16 shrink-0 items-center justify-center bg-zinc-900 border-l border-white/5 group-hover:bg-blue-600 transition-all duration-500">
+                <i class="fa-solid fa-microchip text-blue-500 group-hover:text-black text-xl group-hover:rotate-[360deg] transition-all duration-700"></i>
+            </div>
+        </a>
+    </div>
+
+    <div class="relative group">
+        <div class="absolute -inset-0.5 bg-gradient-to-r from-emerald-600 to-teal-400 rounded-2xl blur opacity-20 group-hover:opacity-60 transition duration-1000 group-hover:duration-200"></div>
+        
+        <a href="https://nurislamic.netlify.app" target="_blank" 
+           class="relative flex items-center justify-end bg-black border border-white/10 w-16 h-16 hover:w-64 rounded-2xl transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] overflow-hidden shadow-2xl">
+            
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+
+            <div class="absolute left-6 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100 translate-x-4 group-hover:translate-x-0">
+                <span class="block text-[10px] uppercase tracking-[0.3em] text-emerald-400 font-black">Spiritual Guide</span>
+                <span class="text-lg font-bold text-white tracking-tight">Nur <span class="text-emerald-500">Islam</span></span>
+            </div>
+
+            <div class="relative flex h-16 w-16 shrink-0 items-center justify-center bg-zinc-900 border-l border-white/5 group-hover:bg-emerald-500 transition-all duration-500">
+                <i class="fa-solid fa-kaaba text-emerald-500 group-hover:text-black text-xl group-hover:scale-125 transition-all duration-500"></i>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+    /* Custom "Bounce" for the entire dock on page load */
+    @keyframes slideIn {
+        from { transform: translateX(100px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    .fixed { animation: slideIn 1s cubic-bezier(0.23, 1, 0.32, 1) both; }
+</style>
+    
     <footer id="contact" class="pt-24 pb-12 glass border-t-0 rounded-t-[3rem]">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
             <div class="col-span-1 md:col-span-1">

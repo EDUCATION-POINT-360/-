@@ -1,45 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Notes - Education Point</title>
-    <link rel="stylesheet" href="styles.css">
-	<link rel="shortcut icon" type="image/x" href="logo.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Math Library | Education Point</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="shortcut icon" type="image/x" href="logo.png">
+  <style>
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background-color: #000; 
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Apple Pro Stripe Background */
+    .apple-stripe-bg {
+      background-image: linear-gradient(
+        45deg, 
+        rgba(255, 255, 255, 0.02) 25%, 
+        transparent 25%, 
+        transparent 50%, 
+        rgba(255, 255, 255, 0.02) 50%, 
+        rgba(255, 255, 255, 0.02) 75%, 
+        transparent 75%, 
+        transparent
+      );
+      background-size: 80px 80px;
+      animation: stripe-glide 15s linear infinite;
+    }
+
+    @keyframes stripe-glide {
+      0% { background-position: 0 0; }
+      100% { background-position: 160px 160px; }
+    }
+
+    .super-glass {
+      background: rgba(22, 22, 23, 0.6);
+      backdrop-filter: blur(40px) saturate(180%);
+      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .super-glass:hover {
+      background: rgba(30, 30, 32, 0.8);
+      border-color: rgba(59, 130, 246, 0.5);
+      transform: translateY(-5px);
+    }
+
+    .download-btn {
+      background: #fff;
+      color: #000;
+      transition: all 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background: #3b82f6;
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .text-gradient {
+      background: linear-gradient(180deg, #FFFFFF 0%, #A1A1A6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
 </head>
-<body>
-    <header class="section">
-        <div class="container">
-            <h1 class="neon-title">Math Notes</h1>
-            <a href="notes.html" class="neon-button">Back to Notes</a>
+<body class="selection:bg-blue-500">
+
+  <nav class="fixed top-0 w-full z-50 super-glass border-none bg-black/30 py-4 px-8">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+            <i class="fas fa-square-root-variable text-white text-xs"></i>
         </div>
-    </header>
-	<p class="neon-title"> Education Point</p>
-    <main class="section">
+        <span class="font-semibold tracking-tight">Education Point</span>
+      </div>
+      <a href="notes.html" class="text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">
+        <i class="fas fa-chevron-left mr-2"></i> Library
+      </a>
+    </div>
+  </nav>
 
-        <h2 class="neon-heading">CLASS 9</h2>
-     
-	<a href="https://www.mediafire.com/file/ffbpxoch9l8sa5p/new_9th_maths_solution%25281%2529.pdf/file" class="neon-button" download>Download</a>
-        
-            
-			<h3 class="neon-heading">CLASS 10</h3>   
-			<a href="math10.html" class="neon-button" >Download</a>
-         
-		 <h4 class="neon-heading">CLASS 11</h4>   
-			
-			<a href="math 11.html" class="neon-button">Download</a>
-        
- 
-  <h5 class="neon-heading">CLASS 12</h5>   
-			
-			<a href="math12.html" class="neon-button" >Download</a>
- 
- </main>
-    <footer>
-        <p>© 2025 Education Point. All rights reserved. | Developed by Muhammad Rizwan</p>
-    </footer>
+  <header class="relative pt-40 pb-20 px-6 overflow-hidden">
+    <div class="absolute inset-0 apple-stripe-bg"></div>
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <h1 class="text-gradient text-5xl md:text-7xl font-bold tracking-tighter mb-4">Mathematics</h1>
+      <p class="text-neutral-500 text-lg md:text-xl font-light">Select your grade to download full PCTB solved notes.</p>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 pb-40">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <div class="super-glass p-8 rounded-[2.5rem] flex items-center justify-between group">
+        <div class="flex items-center space-x-6">
+            <div class="text-4xl font-black text-neutral-800 group-hover:text-blue-500 transition-colors">09</div>
+            <div>
+                <h3 class="text-xl font-bold">Class 9th</h3>
+                <p class="text-neutral-500 text-sm">Full Solution PDF</p>
+            </div>
+        </div>
+        <a href="https://www.mediafire.com/file/ffbpxoch9l8sa5p/new_9th_maths_solution%25281%2529.pdf/file" class="download-btn px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">
+            Download
+        </a>
+      </div>
+
+      <div class="super-glass p-8 rounded-[2.5rem] flex items-center justify-between group">
+        <div class="flex items-center space-x-6">
+            <div class="text-4xl font-black text-neutral-800 group-hover:text-blue-500 transition-colors">10</div>
+            <div>
+                <h3 class="text-xl font-bold">Class 10th</h3>
+                <p class="text-neutral-500 text-sm">Solved Exercises</p>
+            </div>
+        </div>
+        <a href="math10.html" class="download-btn px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">
+            Access
+        </a>
+      </div>
+
+      <div class="super-glass p-8 rounded-[2.5rem] flex items-center justify-between group">
+        <div class="flex items-center space-x-6">
+            <div class="text-4xl font-black text-neutral-800 group-hover:text-blue-500 transition-colors">11</div>
+            <div>
+                <h3 class="text-xl font-bold">Class 11th</h3>
+                <p class="text-neutral-500 text-sm">HSSC Part I</p>
+            </div>
+        </div>
+        <a href="math 11.html" class="download-btn px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">
+            Access
+        </a>
+      </div>
+
+      <div class="super-glass p-8 rounded-[2.5rem] flex items-center justify-between group">
+        <div class="flex items-center space-x-6">
+            <div class="text-4xl font-black text-neutral-800 group-hover:text-blue-500 transition-colors">12</div>
+            <div>
+                <h3 class="text-xl font-bold">Class 12th</h3>
+                <p class="text-neutral-500 text-sm">HSSC Part II</p>
+            </div>
+        </div>
+        <a href="math12.html" class="download-btn px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">
+            Access
+        </a>
+      </div>
+
+    </div>
+
+    <div class="mt-12 super-glass p-10 rounded-[3rem] text-center overflow-hidden relative">
+        <h4 class="text-2xl font-bold mb-4 relative z-10">Why our Math notes?</h4>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+            <div class="p-4">
+                <i class="fas fa-check-circle text-blue-500 mb-2"></i>
+                <p class="text-sm text-neutral-400">Step-by-step logic for every theorem.</p>
+            </div>
+            <div class="p-4 border-y md:border-y-0 md:border-x border-white/5">
+                <i class="fas fa-check-circle text-blue-500 mb-2"></i>
+                <p class="text-sm text-neutral-400">Clean, printable high-quality PDFs.</p>
+            </div>
+            <div class="p-4">
+                <i class="fas fa-check-circle text-blue-500 mb-2"></i>
+                <p class="text-sm text-neutral-400">Based on latest 2026 PCTB Pattern.</p>
+            </div>
+        </div>
+        <div class="absolute -bottom-20 left-1/2 -translate-x-1/2 w-full h-40 bg-blue-600/10 blur-[100px]"></div>
+    </div>
+  </main>
+
+  <footer class="py-20 border-t border-white/5 bg-neutral-950 text-center">
+    <p class="text-neutral-600 text-sm">© 2026 Education Point. Built by Muhammad Rizwan</p>
+  </footer>
+
 </body>
-</html>
-
-
-
+		  </html>
+					

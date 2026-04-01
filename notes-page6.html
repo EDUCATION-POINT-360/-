@@ -1,43 +1,188 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chemistry Notes - Education Point</title>
-    <link rel="stylesheet" href="styles.css">
-	<link rel="shortcut icon" type="image/x" href="logo.png">
-</head>
-<body>
-    <header class="section">
-        <div class="container">
-            <h1 class="neon-title">Chemistry Notes</h1>
-            <a href="notes.html" class="neon-button">Back to Notes</a>
-        </div>
-    </header>
-	<p class="neon-title"> Education Point</p>
-    <main class="section">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chemistry Library | Education Point</title>
+  <link rel="shortcut icon" type="image/x" href="logo.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-        <h2 class="neon-heading">CLASS 9</h2>
-     
-		<a href="chem9.html" class="neon-button" >Download</a>
-			<h3 class="neon-heading">CLASS 10</h3>   
-			<a href="chem 10.html" class="neon-button" >Download</a>
-         
-		 <h4 class="neon-heading">CLASS 11</h4>   
-			
-			<a href="11chemistry.html" class="neon-button">Download</a>
- 
-  <h5 class="neon-heading">CLASS 12</h5>   
-			
-			<a href="chem12.html" class="neon-button">Download</a>
- 
- </main>
-    <footer>
-        <p>© 2025 Education Point. All rights reserved. | Developed by Muhammad Rizwan</p>
-    </footer>
+  <style>
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background-color: #000; 
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Apple Pro Stripe Background */
+    .apple-stripe-bg {
+      background-image: linear-gradient(
+        45deg, 
+        rgba(255, 255, 255, 0.02) 25%, 
+        transparent 25%, 
+        transparent 50%, 
+        rgba(255, 255, 255, 0.02) 50%, 
+        rgba(255, 255, 255, 0.02) 75%, 
+        transparent 75%, 
+        transparent
+      );
+      background-size: 80px 80px;
+      animation: stripe-glide 15s linear infinite;
+    }
+
+    @keyframes stripe-glide {
+      0% { background-position: 0 0; }
+      100% { background-position: 160px 160px; }
+    }
+
+    .super-glass {
+      background: rgba(22, 22, 23, 0.6);
+      backdrop-filter: blur(40px) saturate(180%);
+      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .super-glass:hover {
+      background: rgba(30, 30, 32, 0.8);
+      border-color: rgba(249, 115, 22, 0.5); /* Orange for Chemistry */
+      transform: translateY(-5px);
+    }
+
+    .download-btn {
+      background: #fff;
+      color: #000;
+      transition: all 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background: #f97316; /* Orange */
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(249, 115, 22, 0.4);
+    }
+
+    .text-gradient {
+      background: linear-gradient(180deg, #FFFFFF 0%, #A1A1A6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="selection:bg-orange-500">
+
+  <nav class="fixed top-0 w-full z-50 super-glass border-none bg-black/30 py-4 px-8">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center">
+            <i class="fas fa-flask text-white text-xs"></i>
+        </div>
+        <span class="font-semibold tracking-tight text-white">Education Point</span>
+      </div>
+      <a href="notes.html" class="text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">
+        <i class="fas fa-chevron-left mr-2"></i> Library
+      </a>
+    </div>
+  </nav>
+
+  <header class="relative pt-40 pb-20 px-6 overflow-hidden">
+    <div class="absolute inset-0 apple-stripe-bg"></div>
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <div class="inline-block mb-4 p-4 rounded-full bg-orange-500/10 border border-orange-500/20">
+         <i class="fas fa-vial text-orange-400"></i>
+      </div>
+      <h1 class="text-gradient text-5xl md:text-7xl font-bold tracking-tighter mb-4">Chemistry</h1>
+      <p class="text-neutral-500 text-lg md:text-xl font-light">From atomic structures to complex organic reactions.</p>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 pb-40">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <div class="super-glass p-8 rounded-[2.5rem] flex items-center justify-between group">
+        <div class="flex items-center space-x-6">
+            <div class="w-12 h-12 rounded-2xl bg-neutral-900 flex items-center justify-center group-hover:bg-orange-600/20 transition-colors">
+                <i class="fas fa-atom text-neutral-500 group-hover:text-orange-400"></i>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold">Class 9th</h3>
+                <p class="text-neutral-500 text-sm">Fundamentals & Matter</p>
+            </div>
+        </div>
+        <a href="chem9.html" class="download-btn px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">
+            Download
+        </a>
+      </div>
+
+      <div class="super-glass p-8 rounded-[2.5rem] flex items-center justify-between group">
+        <div class="flex items-center space-x-6">
+            <div class="w-12 h-12 rounded-2xl bg-neutral-900 flex items-center justify-center group-hover:bg-orange-600/20 transition-colors">
+                <i class="fas fa-vials text-neutral-500 group-hover:text-orange-400"></i>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold">Class 10th</h3>
+                <p class="text-neutral-500 text-sm">Acids, Bases & Salts</p>
+            </div>
+        </div>
+        <a href="chem 10.html" class="download-btn px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">
+            Download
+        </a>
+      </div>
+
+      <div class="super-glass p-8 rounded-[2.5rem] flex items-center justify-between group">
+        <div class="flex items-center space-x-6">
+            <div class="w-12 h-12 rounded-2xl bg-neutral-900 flex items-center justify-center group-hover:bg-orange-600/20 transition-colors">
+                <i class="fas fa-microscope text-neutral-500 group-hover:text-orange-400"></i>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold">Class 11th</h3>
+                <p class="text-neutral-500 text-sm">HSSC Part I</p>
+            </div>
+        </div>
+        <a href="11chemistry.html" class="download-btn px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">
+            Download
+        </a>
+      </div>
+
+      <div class="super-glass p-8 rounded-[2.5rem] flex items-center justify-between group">
+        <div class="flex items-center space-x-6">
+            <div class="w-12 h-12 rounded-2xl bg-neutral-900 flex items-center justify-center group-hover:bg-orange-600/20 transition-colors">
+                <i class="fas fa-dna text-neutral-500 group-hover:text-orange-400"></i>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold">Class 12th</h3>
+                <p class="text-neutral-500 text-sm">Organic & Inorganic</p>
+            </div>
+        </div>
+        <a href="chem12.html" class="download-btn px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">
+            Download
+        </a>
+      </div>
+
+    </div>
+
+    <div class="mt-12 super-glass p-10 rounded-[3rem] overflow-hidden relative group">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+            <div class="max-w-md">
+                <h4 class="text-2xl font-bold mb-2 text-white">Molecular Clarity.</h4>
+                <p class="text-neutral-400 text-sm leading-relaxed">Our notes provide clear balancing for equations and detailed structures for organic compounds, perfect for PCTB exam prep.</p>
+            </div>
+            <div class="flex flex-wrap gap-3 justify-center">
+                <span class="px-4 py-2 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-400 text-[10px] font-black uppercase tracking-widest">Balanced Equations</span>
+                <span class="px-4 py-2 rounded-xl bg-neutral-800 text-neutral-300 text-[10px] font-black uppercase tracking-widest">2026 Revised</span>
+            </div>
+        </div>
+        <div class="absolute -bottom-10 right-0 w-64 h-64 bg-orange-600/10 blur-[100px]"></div>
+    </div>
+  </main>
+
+  <footer class="py-20 border-t border-white/5 bg-neutral-950 text-center">
+    <p class="text-neutral-600 text-sm">© 2026 Education Point. All rights reserved.</p>
+    <p class="text-neutral-400 font-medium mt-2 text-xs uppercase tracking-widest">Developed by Muhammad Rizwan</p>
+  </footer>
+
 </body>
 </html>
-
-
-
-

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعلیمی مرکز - قرآن و سنت نوٹس</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <style>
+        @font-face {
+            font-family: 'Jameel Noori';
+            src: url('https://cdn.jsdelivr.net/gh/m-a-k-s/font-jameel-noori-nastaleeq@master/Jameel%20Noori%20Nastaleeq.ttf') format('truetype');
+        }
+        body {
+            font-family: 'Jameel Noori', 'Noto Sans Arabic', serif;
+            background-color: #fbfbfd;
+            color: #1d1d1f;
+            overflow-x: hidden;
+        }
+        .apple-blur {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: saturate(180%) blur(20px);
+        }
+        .bento-card {
+            background: white;
+            border-radius: 24px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .bento-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #0071e3, #2997ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-animate {
+            animation: fadeInUp 1s ease-out;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="fixed top-0 w-full z-50 apple-blur border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="book-open" class="text-blue-600"></i>
+                <span class="text-xl font-bold tracking-tight">تعلیمی پوائنٹ</span>
+            </div>
+            <div class="hidden md:flex space-x-reverse space-x-8 text-sm font-medium">
+                <a href="#resources" class="hover:text-blue-600 transition">ذخیرہ کتب</a>
+                <a href="#pattern" class="hover:text-blue-600 transition">پیپر پیٹرن</a>
+                <a href="#tips" class="hover:text-blue-600 transition">تیاری کے گر</a>
+            </div>
+            <a href="https://whatsapp.com/channel/0029Vb7bYUSJUM2eWSlWfo36" 
+   target="_blank" 
+   class="flex items-center gap-2 bg-[#25D366] text-white px-5 py-2 rounded-full text-sm font-bold shadow-lg hover:bg-[#128C7E] hover:scale-105 active:scale-95 transition-all duration-300 animate-pulse">
+    <i data-lucide="message-circle" class="w-4 h-4"></i>
+    <span> چینل جوائن کریں</span>
+</a>
+
+             </div>
+    </nav>
+
+    <header class="pt-32 pb-16 px-6 text-center">
+        <div class="hero-animate">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">قرآن مجید کی <span class="gradient-text">بہترین تیاری</span></h1>
+            <p class="text-xl md:text-2xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
+                جامع نوٹس، گیس پیپرز اور مکمل رہنمائی کے ساتھ اپنے امتحان میں کامیابی یقینی بنائیں۔
+            </p>
+        </div>
+    </header>
+
+    <section id="resources" class="max-w-7xl mx-auto px-6 py-12">
+        <h2 class="text-3xl font-bold mb-10 text-right mr-4">مطالعاتی مواد (Resources)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="md:col-span-2 bento-card p-8 bg-gradient-to-br from-blue-50 to-white flex flex-col justify-between group">
+                <div>
+                    <div class="bg-blue-600 w-12 h-12 rounded-2xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform">
+                        <i data-lucide="file-text" class="text-white"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4">مکمل کتاب کے نوٹس</h3>
+                    <p class="text-gray-600 mb-6 text-lg">مکمل نصاب کی تفصیل، اہم آیات کا ترجمہ اور مفہوم ایک ہی جگہ پر۔</p>
+                </div>
+                <div class="flex gap-4">
+                    <a href="https://drive.google.com/file/d/1HQqAewun8wbsFkM2VaNdlNvWITdPXOAB/view?usp=drivesdk" target="_blank" class="bg-black text-white px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-gray-800 transition">
+                        <i data-lucide="download" size="18"></i> ڈاؤن لوڈ نوٹس 1
+                    </a>
+                    <a href="https://drive.google.com/file/d/1H-UxDTNyrPHbhXONGLtvuVKWQTJrGZtU/view?usp=drivesdk" target="_blank" class="border border-gray-300 px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-gray-50 transition">
+                         نوٹس 2
+                    </a>
+                </div>
+            </div>
+
+            <div class="bento-card p-8 bg-purple-50 group">
+                <div class="bg-purple-600 w-10 h-10 rounded-xl flex items-center justify-center mb-6">
+                    <i data-lucide="list-checks" class="text-white"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">کثیر الانتخابی سوالات</h3>
+                <p class="text-gray-600 mb-8">معروضی طرز کے سوالات کی مشق کریں۔</p>
+                <a href="https://drive.google.com/file/d/1nm9YDlzPwpixlDjOIATdEfJXt-xrVTHR/view?usp=drivesdk" class="text-purple-600 font-bold flex items-center gap-2 hover:underline">
+                    لنک کھولیں <i data-lucide="arrow-left" size="16"></i>
+                </a>
+            </div>
+
+            <div class="bento-card p-6 bg-orange-50">
+                <i data-lucide="Zap" class="text-orange-500 mb-4"></i>
+                <h4 class="font-bold text-xl mb-2">خلاصہ نوٹس</h4>
+                <a href="https://drive.google.com/file/d/1SvAJjkrwwFrxKaDcjURIP1aQ88QRyjwO/view?usp=drivesdk" class="text-sm text-orange-600 font-bold uppercase">فوری مطالعہ</a>
+            </div>
+
+            <div class="bento-card p-6 bg-green-50">
+                <i data-lucide="book" class="text-green-500 mb-4"></i>
+                <h4 class="font-bold text-xl mb-2">اصل ٹیکسٹ بک</h4>
+                <a href="https://drive.google.com/file/d/13abs27mIUM79L-iWCEYKfaBQ4a3LC5Zg/view?usp=drivesdk" class="text-sm text-green-600 font-bold uppercase">پی ڈی ایف دیکھیں</a>
+            </div>
+
+            <div class="bento-card p-6 bg-red-50">
+                <i data-lucide="help-circle" class="text-red-500 mb-4"></i>
+                <h4 class="font-bold text-xl mb-2">گیس پیپرز 2024</h4>
+                <div class="flex gap-4 mt-2">
+                    <a href="https://drive.google.com/file/d/1FEyrTWs-bNE_1VYJqCm4aVPhbYsi0c4Y/view?usp=drivesdk" class="text-xs font-bold underline">نمبر 1</a>
+                    <a href="https://drive.google.com/file/d/1UVfGOQHN7BP6jWJMqOOzsQp3LkY_Ee84/view?usp=drivesdk" class="text-xs font-bold underline">نمبر 2</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pattern" class="bg-black py-20 my-12 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-white text-4xl font-bold mb-16 text-center animate__animated animate__fadeIn">پرچہ کا پیٹرن (Paper Pattern)</h2>
+            <div class="flex flex-col gap-4">
+                <div class="flex flex-wrap justify-center gap-4">
+                    <div class="bg-gray-900 border border-gray-800 text-white p-6 rounded-3xl w-full md:w-64">
+                        <span class="text-blue-400 font-mono text-sm">سوال 1</span>
+                        <h4 class="text-xl font-bold mt-2">معروضی (MCQs)</h4>
+                        <p class="text-gray-400 text-sm mt-2">10 نمبر - بنیادی معلومات</p>
+                    </div>
+                    <div class="bg-gray-900 border border-gray-800 text-white p-6 rounded-3xl w-full md:w-64">
+                        <span class="text-blue-400 font-mono text-sm">سوال 2</span>
+                        <h4 class="text-xl font-bold mt-2">مختصر سوالات</h4>
+                        <p class="text-gray-400 text-sm mt-2">10 نمبر - قرآنی آیات</p>
+                    </div>
+                    <div class="bg-gray-900 border border-gray-800 text-white p-6 rounded-3xl w-full md:w-64">
+                        <span class="text-blue-400 font-mono text-sm">سوال 3</span>
+                        <h4 class="text-xl font-bold mt-2">الفاظ کے معنی</h4>
+                        <p class="text-gray-400 text-sm mt-2">8-10 الفاظ کی تیاری</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <div class="bg-blue-600 text-white p-8 rounded-3xl w-full md:w-80">
+                        <span class="bg-white/20 px-3 py-1 rounded-full text-xs">اہم ترین</span>
+                        <h4 class="text-2xl font-bold mt-4">آیات کا ترجمہ</h4>
+                        <p class="text-blue-100 mt-2">15 نمبر - 5 میں سے 3 یا 4 آیات</p>
+                    </div>
+                    <div class="bg-gray-900 border border-gray-800 text-white p-8 rounded-3xl w-full md:w-80">
+                        <span class="text-blue-400 font-mono text-sm">سوال 5</span>
+                        <h4 class="text-2xl font-bold mt-4">تفصیلی سوال</h4>
+                        <p class="text-gray-400 mt-2">10 نمبر - تشریح و پیغام</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tips" class="max-w-5xl mx-auto px-6 py-20">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <h2 class="text-4xl font-bold mb-8 italic">تیاری کیسے کریں؟ <span class="text-blue-600">Smart Tips</span></h2>
+                <ul class="space-y-6">
+                    <li class="flex gap-4">
+                        <div class="bg-blue-100 p-2 rounded-lg h-fit"><i data-lucide="check-circle-2" class="text-blue-600"></i></div>
+                        <div>
+                            <h5 class="font-bold text-lg">ترجمہ سمجھیں</h5>
+                            <p class="text-gray-500">رٹنے کے بجائے مفہوم اور Keywords پر توجہ دیں۔</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <div class="bg-blue-100 p-2 rounded-lg h-fit"><i data-lucide="check-circle-2" class="text-blue-600"></i></div>
+                        <div>
+                            <h5 class="font-bold text-lg">روزانہ مشق</h5>
+                            <p class="text-gray-500">روزانہ 10-15 نئے الفاظ کے معنی یاد کریں۔</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <div class="bg-blue-100 p-2 rounded-lg h-fit"><i data-lucide="check-circle-2" class="text-blue-600"></i></div>
+                        <div>
+                            <h5 class="font-bold text-lg">لکھنے کی پریکٹس</h5>
+                            <p class="text-gray-500">ترجمہ لکھ کر دیکھیں تاکہ املا کی غلطی نہ ہو۔</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="bg-gray-100 rounded-[40px] p-10 relative overflow-hidden">
+                <div class="relative z-10">
+                    <h3 class="text-2xl font-bold mb-4">اہم سورتیں</h3>
+                    <div class="space-y-3">
+                        <div class="bg-white p-3 rounded-xl shadow-sm border-r-4 border-blue-500">سورۃ النساء (ابتدائی آیات)</div>
+                        <div class="bg-white p-3 rounded-xl shadow-sm border-r-4 border-blue-500">سورۃ الأحزاب و الفتح</div>
+                        <div class="bg-white p-3 rounded-xl shadow-sm border-r-4 border-blue-500">سورۃ الحجرات و الصف</div>
+                        <div class="bg-white p-3 rounded-xl shadow-sm border-r-4 border-blue-500">سورۃ المنافقون</div>
+                    </div>
+                </div>
+                <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-200 rounded-full blur-3xl opacity-50"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white border-t border-gray-100 py-12 text-center">
+        <div class="flex justify-center gap-6 mb-8 text-gray-400">
+            <i data-lucide="instagram" class="hover:text-blue-600 cursor-pointer"></i>
+            <i data-lucide="twitter" class="hover:text-blue-600 cursor-pointer"></i>
+            <i data-lucide="facebook" class="hover:text-blue-600 cursor-pointer"></i>
+        </div>
+        <p class="text-gray-500 text-sm">© 2024 تعلیمی پوائنٹ - تمام حقوق محفوظ ہیں۔</p>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Simple Scroll Animation Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.bento-card').forEach(card => observer.observe(card));
+    </script>
+</body>
+</html>

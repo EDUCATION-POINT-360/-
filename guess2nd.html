@@ -17,9 +17,7 @@
             background: #010101; 
             color: #fff; 
             overflow-x: hidden;
-            -webkit-user-select: none; /* Disable text selection */
-            -moz-user-select: none;
-            -ms-user-select: none;
+            -webkit-user-select: none;
             user-select: none;
         }
 
@@ -34,14 +32,10 @@
     </style>
 
     <script>
-        // --- SECURITY: BLOCK INSPECT & COPY ---
-        document.addEventListener('contextmenu', event => event.preventDefault()); // Block Right Click
+        // SECURITY BLOCK
+        document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
-            if(e.keyCode == 123) return false; // Block F12
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; // Block Ctrl+Shift+I
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false; // Block Ctrl+Shift+C
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; // Block Ctrl+Shift+J
-            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Block Ctrl+U
+            if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) return false;
         }
     </script>
 </head>
@@ -49,7 +43,7 @@
 
 <div class="apple-strip"></div>
 
-<div id="step-1" class="fixed inset-0 z-[9999] bg-black flex items-center justify-center px-6">
+<div id="step-1" class="fixed inset-0 z-[9999] bg-black hidden flex items-center justify-center px-6">
     <div class="glass p-10 max-w-lg w-full text-center animate__animated animate__fadeInDown">
         <div class="w-20 h-20 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <i data-lucide="shield-check" class="text-blue-500 w-10 h-10"></i>
@@ -89,7 +83,8 @@
             <h1 class="text-7xl md:text-9xl font-black tracking-tighter mb-6 italic">2ND YEAR <br><span class="text-blue-600">GUESS 2026</span></h1>
             <div class="max-w-2xl mx-auto glass p-6 border-blue-500/20">
                 <p class="text-gray-400 text-sm leading-relaxed">
-                    <span class="text-white font-bold uppercase tracking-widest">Education Point</span>This is a platform that provides students with high-quality educational resources. Muhammad Rizwan has personally Purchase these materials and is providing it completely free of charge for everyone. This content ensures 100% success in the Punjab Board examinations. </p>
+                    <span class="text-white font-bold uppercase tracking-widest">Education Point</span> provides high-quality resources. Muhammad Rizwan has purchased these materials to provide them for free. Ensure 100% success in Punjab Board exams.
+                </p>
             </div>
         </header>
 
@@ -102,23 +97,18 @@
                 <i data-lucide="chevron-left"></i> RETURN TO MAIN PORTAL
             </button>
         </nav>
-
         <div class="max-w-6xl mx-auto px-6 py-12">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
                 <div>
                     <div id="sub-icon-box" class="w-20 h-20 bg-blue-600/20 rounded-3xl flex items-center justify-center mb-8"></div>
                     <h2 id="sub-title" class="text-7xl font-black mb-6 italic uppercase tracking-tighter"></h2>
                     <p id="sub-desc" class="text-xl text-gray-400 mb-8 italic"></p>
-                    
-                    <div id="sub-details-box" class="space-y-4 mb-10 text-gray-300">
-                        </div>
-
+                    <div id="sub-details-box" class="space-y-4 mb-10 text-gray-300"></div>
                     <div class="flex flex-col sm:flex-row gap-4">
                         <button onclick="togglePreview()" class="flex-1 py-5 glass font-black hover:bg-blue-600/20 border-blue-500/40">VIEW ONLINE</button>
                         <a id="btn-down" href="#" target="_blank" class="flex-1 py-5 bg-blue-600 text-center rounded-2xl font-black shadow-xl shadow-blue-600/30">DOWNLOAD PDF</a>
                     </div>
                 </div>
-                
                 <div id="preview-area" class="hidden lg:block sticky top-20">
                     <div class="bg-[#111] p-2 rounded-[2rem] border border-white/10">
                         <iframe id="preview-iframe" src="" class="w-full h-[600px] border-none"></iframe>
@@ -139,84 +129,42 @@
 </div>
 
 <script>
-    const subjects = [
-        { 
-            id: 'phy', name: 'Physics', icon: 'atom', 
-            desc: 'Targeted Long Questions, Solved Numericals & Conceptual MCQs.',
-            details: ['Most Important 50 Short Questions', 'Solved Examples from 12th Book', 'Past Paper Analysis (2020-2025)', 'Special 10-Point Pairing Scheme'],
-            v: 'https://drive.google.com/file/d/1DWQINtgzs5TwMj5Mkq1F6Y9CK4vofeM-/preview', 
-            d: 'https://drive.google.com/file/d/1DWQINtgzs5TwMj5Mkq1F6Y9CK4vofeM-/view' 
-        },
-        { 
-            id: 'che', name: 'Chemistry', icon: 'flask-conical', 
-            desc: 'Organic Reactions, Inorganic Compounds & Full Exam Targets.',
-            details: ['Mechanism of Named Reactions', 'Periodic Trends Shortcuts', 'Exercise MCQs Highlighted', 'Lab Preparation Methods'],
-            v: 'https://drive.google.com/file/d/15abtdO5d13Oyn8MtgDgIVG4oW4mTiCgp/preview', 
-            d: 'https://drive.google.com/file/d/15abtdO5d13Oyn8MtgDgIVG4oW4mTiCgp/view' 
-        },
-        { 
-            id: 'bio', name: 'Biology', icon: 'dna', 
-            desc: 'Essential Diagrams, Chapter-wise Cycles & Short Definitions.',
-            details: ['50 Master Diagrams', 'Difference-based Questions', 'Kingdom Analysis', 'Genetics Problem Solving'],
-            v: 'https://drive.google.com/file/d/1QncspEOpOt16yXuiB66PrKit_Ss8aHIa/preview', 
-            d: 'https://drive.google.com/file/d/1QncspEOpOt16yXuiB66PrKit_Ss8aHIa/view' 
-        },
-        { 
-            id: 'mat', name: 'Math', icon: 'calculator', 
-            desc: 'Theorems, Integration Shortcuts & Exercise-wise Targets.',
-            details: ['Derivative Formula Sheets', 'Important Theorems Chapter 4 & 6', 'Limit Concepts Explained', 'Solved Model Papers'],
-            v: 'https://drive.google.com/file/d/1SsBEQjXBGl5WbrY0L2gRASGJybVElHuU/preview', 
-            d: 'https://drive.google.com/file/d/1SsBEQjXBGl5WbrY0L2gRASGJybVElHuU/view' 
-        },
-        { 
-            id: 'urd', name: 'Urdu', icon: 'book-text', 
-            desc: 'Tashreeh-e-Ashar, Mazameen & Board Grammar Rules.',
-            details: ['10 Most Important Mazameen', 'Siyak-o-Sabak Guide', 'Ghazal & Nazam Tashreeh', 'Solved Objective 2026'],
-            v: 'https://drive.google.com/file/d/1mUlAhrI0WE8rbx605Lnb_WdSLXe-hQBT/preview', 
-            d: 'https://drive.google.com/file/d/1mUlAhrI0WE8rbx605Lnb_WdSLXe-hQBT/view' 
-        },
-        { 
-            id: 'eng', name: 'English', icon: 'languages', 
-            desc: 'Solved Essays, Idioms, Phrasal Verbs & Book Questions.',
-            details: ['Expected Essays 2026', 'Most Common Idioms List', 'Short Summary of Lessons', 'Translation Passage Tips'],
-            v: 'https://drive.google.com/file/d/1geu3A1pwMrDasRM0ZymCspgmxPqEtBQS/preview', 
-            d: 'https://drive.google.com/file/d/1geu3A1pwMrDasRM0ZymCspgmxPqEtBQS/view' 
-        },
-        { 
-            id: 'com', name: 'Computer', icon: 'monitor', 
-            desc: 'C-Language Programs, DBMS & Networking Logic.',
-            details: ['Solved Programs (C-Language)', 'Entity Relationship Diagrams', 'SQL Queries Guide', 'Database Architecture'],
-            v: 'https://drive.google.com/file/d/1yU1IYK5fQ7522T63kT-gw0wTVKvT4BNm/preview', 
-            d: 'https://drive.google.com/file/d/1yU1IYK5fQ7522T63kT-gw0wTVKvT4BNm/view' 
-        },
-        { 
-            id: 'pak', name: 'Pak Study', icon: 'map', 
-            desc: 'Timeline of History, Constitution Rules & Geographical Notes.',
-            details: ['Two Nation Theory Analysis', 'Objective Historical Dates', 'Short Questions Book-based', 'Important Personalities'],
-            v: 'https://drive.google.com/file/d/1X5pdpV5VWoA3YHts7CplTHHX3LhhR5Ox/preview', 
-            d: 'https://drive.google.com/file/d/1X5pdpV5VWoA3YHts7CplTHHX3LhhR5Ox/view' 
-        },
-        { 
-            id: 'qur', name: 'Quran', icon: 'book-open', 
-            desc: 'Surah Tarjama, Tafseer Points & Subjective Targets.',
-            details: ['Tarjama of Selected Verses', 'Historical Context of Surahs', 'Ethical Lessons', 'Model Paper Objective'],
-            v: 'https://drive.google.com/file/d/1QqiWxnhi7SSEvtxDnYIScKQj5Cx-rbtD/preview', 
-            d: 'https://drive.google.com/file/d/1QqiWxnhi7SSEvtxDnYIScKQj5Cx-rbtD/view' 
+    // LocalStorage Check on Load
+    window.onload = function() {
+        const isVerified = localStorage.getItem('ep_verified');
+        if (isVerified === 'true') {
+            document.getElementById('app-content').classList.remove('hidden');
+        } else {
+            document.getElementById('step-1').classList.remove('hidden');
         }
-    ];
+        lucide.createIcons();
+    };
 
     function showStep2() {
         setTimeout(() => {
             document.getElementById('step-1').style.display = 'none';
             document.getElementById('step-2').classList.remove('hidden');
-        }, 1500);
+        }, 1000);
     }
 
     function finalUnlock() {
+        localStorage.setItem('ep_verified', 'true'); // Save verification
         document.getElementById('step-2').style.display = 'none';
         document.getElementById('app-content').classList.remove('hidden');
         lucide.createIcons();
     }
+
+    const subjects = [
+        { id: 'phy', name: 'Physics', icon: 'atom', desc: 'Targeted Long Questions & Numericals.', details: ['Important 50 Short Questions', 'Solved Numericals', 'Pairing Scheme 2026'], v: 'https://drive.google.com/file/d/1DWQINtgzs5TwMj5Mkq1F6Y9CK4vofeM-/preview', d: 'https://drive.google.com/file/d/1DWQINtgzs5TwMj5Mkq1F6Y9CK4vofeM-/view' },
+        { id: 'che', name: 'Chemistry', icon: 'flask-conical', desc: 'Organic Reactions & Full Exam Targets.', details: ['Named Reactions', 'Inorganic Trends', 'Past Papers'], v: 'https://drive.google.com/file/d/15abtdO5d13Oyn8MtgDgIVG4oW4mTiCgp/preview', d: 'https://drive.google.com/file/d/15abtdO5d13Oyn8MtgDgIVG4oW4mTiCgp/view' },
+        { id: 'bio', name: 'Biology', icon: 'dna', desc: 'Essential Diagrams & Short Definitions.', details: ['50 Master Diagrams', 'Difference-based Qs', 'Genetics'], v: 'https://drive.google.com/file/d/1QncspEOpOt16yXuiB66PrKit_Ss8aHIa/preview', d: 'https://drive.google.com/file/d/1QncspEOpOt16yXuiB66PrKit_Ss8aHIa/view' },
+        { id: 'mat', name: 'Math', icon: 'calculator', desc: 'Theorems & Integration Shortcuts.', details: ['Derivative Formulas', 'Ch 4 & 6 Theorems', 'Limit Concepts'], v: 'https://drive.google.com/file/d/1SsBEQjXBGl5WbrY0L2gRASGJybVElHuU/preview', d: 'https://drive.google.com/file/d/1SsBEQjXBGl5WbrY0L2gRASGJybVElHuU/view' },
+        { id: 'urd', name: 'Urdu', icon: 'book-text', desc: 'Tashreeh-e-Ashar & Mazameen.', details: ['10 Important Mazameen', 'Ghazal Tashreeh', 'Grammar'], v: 'https://drive.google.com/file/d/1mUlAhrI0WE8rbx605Lnb_WdSLXe-hQBT/preview', d: 'https://drive.google.com/file/d/1mUlAhrI0WE8rbx605Lnb_WdSLXe-hQBT/view' },
+        { id: 'eng', name: 'English', icon: 'languages', desc: 'Solved Essays & Idioms.', details: ['Expected Essays', 'Common Idioms', 'Book Summaries'], v: 'https://drive.google.com/file/d/1geu3A1pwMrDasRM0ZymCspgmxPqEtBQS/preview', d: 'https://drive.google.com/file/d/1geu3A1pwMrDasRM0ZymCspgmxPqEtBQS/view' },
+        { id: 'com', name: 'Computer', icon: 'monitor', desc: 'C-Language & DBMS Logic.', details: ['Solved Programs', 'ER Diagrams', 'SQL Guide'], v: 'https://drive.google.com/file/d/1yU1IYK5fQ7522T63kT-gw0wTVKvT4BNm/preview', d: 'https://drive.google.com/file/d/1yU1IYK5fQ7522T63kT-gw0wTVKvT4BNm/view' },
+        { id: 'pak', name: 'Pak Study', icon: 'map', desc: 'Timeline & Constitution Rules.', details: ['Historical Dates', '2 Nation Theory', 'Short Qs'], v: 'https://drive.google.com/file/d/1X5pdpV5VWoA3YHts7CplTHHX3LhhR5Ox/preview', d: 'https://drive.google.com/file/d/1X5pdpV5VWoA3YHts7CplTHHX3LhhR5Ox/view' },
+        { id: 'qur', name: 'Quran', icon: 'book-open', desc: 'Surah Tarjama & Tafseer.', details: ['Verse Translation', 'Context of Surahs', 'Ethics'], v: 'https://drive.google.com/file/d/1QqiWxnhi7SSEvtxDnYIScKQj5Cx-rbtD/preview', d: 'https://drive.google.com/file/d/1QqiWxnhi7SSEvtxDnYIScKQj5Cx-rbtD/view' }
+    ];
 
     function openSubject(id) {
         const s = subjects.find(x => x.id === id);
@@ -225,13 +173,11 @@
         document.getElementById('btn-down').href = s.d;
         document.getElementById('preview-iframe').src = s.v;
         document.getElementById('sub-icon-box').innerHTML = `<i data-lucide="${s.icon}" class="text-blue-500 w-10 h-10"></i>`;
-        
         const detailsBox = document.getElementById('sub-details-box');
         detailsBox.innerHTML = '';
         s.details.forEach(item => {
             detailsBox.innerHTML += `<div class="flex items-center gap-3 bg-white/5 p-4 rounded-xl text-sm border-l-2 border-blue-500"><i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i> ${item}</div>`;
         });
-
         document.getElementById('home-page').classList.remove('active');
         document.getElementById('subject-page').classList.add('active');
         window.scrollTo(0,0);
@@ -246,7 +192,7 @@
     function togglePreview() {
         const frame = document.getElementById('preview-area');
         frame.classList.toggle('hidden');
-        frame.scrollIntoView({ behavior: 'smooth' });
+        if(!frame.classList.contains('hidden')) frame.scrollIntoView({ behavior: 'smooth' });
     }
 
     const container = document.getElementById('grid-container');
@@ -261,9 +207,8 @@
             </div>
         `;
     });
-
-    lucide.createIcons();
 </script>
 
 </body>
-</html>
+            </html>
+                                                                                                                                                                                                                               

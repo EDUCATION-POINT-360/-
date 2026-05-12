@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Education Point | 3D Interactive Portal</title>
-    <link rel="icon" href="logo.png" type="image/png" />
+  <link rel="icon" href="logo.png" type="image/png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
@@ -12,7 +12,7 @@
       --primary: #00d2ff;
       --secondary: #3a7bd5;
       --accent: #ff007a;
-      --urdu-color: #ff4d4d; /* Special accent for Urdu */
+      --urdu-color: #ff4d4d;
       --glass: rgba(255, 255, 255, 0.08);
       --glass-border: rgba(255, 255, 255, 0.15);
     }
@@ -31,7 +31,6 @@
       min-height: 100vh;
     }
 
-    /* Animated 3D Background Mesh */
     .bg-animation {
       position: fixed;
       top: 0;
@@ -83,7 +82,6 @@
       line-height: 1.6;
     }
 
-    /* 3D Grid Layout */
     .subjects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -94,7 +92,6 @@
       perspective: 2000px;
     }
 
-    /* The 3D Glass Card */
     .subject-card {
       background: var(--glass);
       backdrop-filter: blur(15px);
@@ -138,11 +135,15 @@
       filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.3));
     }
 
-    /* Specific Urdu Icon Styling */
     .urdu-icon {
         background: linear-gradient(135deg, var(--urdu-color), #fff);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+    }
+
+    .guess-icon {
+        background: linear-gradient(135deg, var(--accent), #fff) !important;
+        -webkit-background-clip: text !important;
     }
 
     .subject-title {
@@ -181,6 +182,11 @@
       box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
     }
 
+    .btn-guess {
+      background: var(--accent) !important;
+      color: white !important;
+    }
+
     footer {
       padding: 60px 20px;
       text-align: center;
@@ -214,6 +220,15 @@
 
   <section class="subjects-grid">
     
+    <div class="subject-card" style="border-color: var(--accent);">
+        <div class="card-content">
+          <div class="subject-icon guess-icon"><i class="fas fa-fire"></i></div>
+          <h3 class="subject-title" style="color: var(--accent);">Full Guess Paper</h3>
+          <p class="subject-desc">Get the complete 2026 Board Guess Papers for all subjects in one place. Highly recommended for final revision.</p>
+          <a href="guess2nd.html" class="btn-3d btn-guess">Open Full Guess</a>
+        </div>
+    </div>
+
     <div class="subject-card">
         <div class="card-content">
           <div class="subject-icon urdu-icon"><i class="fas fa-pen-nib"></i></div>
@@ -277,8 +292,6 @@
       </div>
     </div>
 
-    
-
     <div class="subject-card">
       <div class="card-content">
         <div class="subject-icon"><i class="fas fa-landmark"></i></div>
@@ -287,23 +300,23 @@
         <a href="pak.html" class="btn-3d">Get Access</a>
       </div>
     </div>
+
     <div class="subject-card">
-  <div class="card-content">
-    <div class="subject-icon"><i class="fas fa-quran"></i></div>
-    <h3 class="subject-title">Tarjama Tul Quran</h3>
-    <p class="subject-desc">In-depth translation, context, and thematic understanding of the Holy Quran for board excellence.</p>
-    <a href="quran.html" class="btn-3d">Get Access</a>
-  </div>
+      <div class="card-content">
+        <div class="subject-icon"><i class="fas fa-quran"></i></div>
+        <h3 class="subject-title">Tarjama Tul Quran</h3>
+        <p class="subject-desc">In-depth translation, context, and thematic understanding of the Holy Quran for board excellence.</p>
+        <a href="quran.html" class="btn-3d">Get Access</a>
+      </div>
     </div>
     
   </section>
 
   <footer>
-    <p>© 2025 Education Point. Designed with Innovation by <strong>Muhammad Rizwan</strong></p>
+    <p>© 2026 Education Point. Designed with Innovation by <strong>Muhammad Rizwan</strong></p>
   </footer>
 
   <script>
-    // 1. Scroll Entrance Animation (Fade and Zoom)
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
@@ -316,31 +329,22 @@
 
     document.querySelectorAll('.subject-card').forEach(card => observer.observe(card));
 
-    // 2. Ultra-Smooth 3D Tilt Logic
     const cards = document.querySelectorAll('.subject-card');
-    
     cards.forEach(card => {
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        
-        // Tilt intensity (lower number = more tilt)
         const rotateX = (centerY - y) / 12; 
         const rotateY = (x - centerX) / 12;
-        
         card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
       });
-      
       card.addEventListener('mouseleave', () => {
         card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
       });
     });
   </script>
-
 </body>
-
 </html>

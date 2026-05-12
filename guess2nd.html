@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education Point | Secure Guess Portal 2026</title>
+    <link rel="icon" href="logo.png" type="image/png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: #010101; 
+            color: #fff; 
+            overflow-x: hidden;
+            -webkit-user-select: none; /* Disable text selection */
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(30px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 2rem; }
+        .page { display: none; }
+        .page.active { display: block; }
+        .apple-strip { height: 4px; background: linear-gradient(90deg, #007AFF, #00fbff, #7000ff, #007AFF); background-size: 300% 100%; animation: moveStrip 4s linear infinite; width: 100%; position: fixed; top: 0; z-index: 10000; }
+        @keyframes moveStrip { 0% { background-position: 0% 0%; } 100% { background-position: 300% 0%; } }
+        
+        .premium-glow { box-shadow: 0 0 30px rgba(0, 122, 255, 0.2); border: 1px solid rgba(0, 122, 255, 0.4); }
+        iframe { border-radius: 1.5rem; background: #111; }
+    </style>
+
+    <script>
+        // --- SECURITY: BLOCK INSPECT & COPY ---
+        document.addEventListener('contextmenu', event => event.preventDefault()); // Block Right Click
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123) return false; // Block F12
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; // Block Ctrl+Shift+I
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false; // Block Ctrl+Shift+C
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; // Block Ctrl+Shift+J
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Block Ctrl+U
+        }
+    </script>
+</head>
+<body>
+
+<div class="apple-strip"></div>
+
+<div id="step-1" class="fixed inset-0 z-[9999] bg-black flex items-center justify-center px-6">
+    <div class="glass p-10 max-w-lg w-full text-center animate__animated animate__fadeInDown">
+        <div class="w-20 h-20 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i data-lucide="shield-check" class="text-blue-500 w-10 h-10"></i>
+        </div>
+        <h2 class="text-3xl font-black mb-4 uppercase italic">Security Check</h2>
+        <p class="text-gray-400 mb-8">Access hasil karne ke liye Education Point ka official WhatsApp channel follow karna lazmi hai.</p>
+        <a href="https://whatsapp.com/channel/0029Vb7bYUSJUM2eWSlWfo36" onclick="showStep2()" target="_blank" class="block w-full bg-[#25D366] py-5 rounded-2xl font-black text-lg hover:scale-95 transition">
+            FOLLOW TO UNLOCK
+        </a>
+    </div>
+</div>
+
+<div id="step-2" class="fixed inset-0 z-[9998] bg-black/95 backdrop-blur-2xl hidden flex items-center justify-center px-6">
+    <div class="glass p-12 max-w-xl w-full text-center premium-glow animate__animated animate__zoomIn">
+        <span class="bg-blue-600 text-[10px] font-black px-4 py-1 rounded-full tracking-[0.3em] mb-4 inline-block">MEMBER ACCESS</span>
+        <h2 class="text-4xl font-black mb-6 italic uppercase text-blue-500">Notice!</h2>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8">
+            Yeh tamam Guess Papers <span class="text-white font-bold underline italic">PAID</span> hain. Magar <span class="text-blue-400 font-bold">Education Point</span> ke purane aur loyal members ke liye yeh bilkul <span class="text-green-500 font-extrabold">FREE</span> hain!
+        </p>
+        <button onclick="finalUnlock()" class="w-full bg-white text-black py-5 rounded-2xl font-black text-lg hover:bg-blue-500 hover:text-white transition">
+            Access Now
+        </button>
+    </div>
+</div>
+
+<div id="app-content" class="hidden">
+    <div id="home-page" class="page active">
+        <nav class="p-8 flex justify-between items-center max-w-7xl mx-auto">
+            <div class="flex items-center gap-3">
+                <i data-lucide="component" class="text-blue-500"></i>
+                <span class="text-2xl font-black tracking-tighter italic uppercase">Education Point</span>
+            </div>
+            <div class="hidden md:block text-[10px] font-bold text-gray-500 tracking-widest uppercase">Secured by Rizwan Architecture</div>
+        </nav>
+
+        <header class="pt-20 pb-16 text-center px-6">
+            <h1 class="text-7xl md:text-9xl font-black tracking-tighter mb-6 italic">2ND YEAR <br><span class="text-blue-600">GUESS 2026</span></h1>
+            <div class="max-w-2xl mx-auto glass p-6 border-blue-500/20">
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    <span class="text-white font-bold uppercase tracking-widest">Education Point</span>This is a platform that provides students with high-quality educational resources. Muhammad Rizwan has personally Purchase these materials and is providing it completely free of charge for everyone. This content ensures 100% success in the Punjab Board examinations. </p>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="grid-container"></main>
+    </div>
+
+    <div id="subject-page" class="page animate__animated animate__fadeIn">
+        <nav class="p-8">
+            <button onclick="showHome()" class="flex items-center gap-2 text-gray-400 font-bold hover:text-white transition">
+                <i data-lucide="chevron-left"></i> RETURN TO MAIN PORTAL
+            </button>
+        </nav>
+
+        <div class="max-w-6xl mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                <div>
+                    <div id="sub-icon-box" class="w-20 h-20 bg-blue-600/20 rounded-3xl flex items-center justify-center mb-8"></div>
+                    <h2 id="sub-title" class="text-7xl font-black mb-6 italic uppercase tracking-tighter"></h2>
+                    <p id="sub-desc" class="text-xl text-gray-400 mb-8 italic"></p>
+                    
+                    <div id="sub-details-box" class="space-y-4 mb-10 text-gray-300">
+                        </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="togglePreview()" class="flex-1 py-5 glass font-black hover:bg-blue-600/20 border-blue-500/40">VIEW ONLINE</button>
+                        <a id="btn-down" href="#" target="_blank" class="flex-1 py-5 bg-blue-600 text-center rounded-2xl font-black shadow-xl shadow-blue-600/30">DOWNLOAD PDF</a>
+                    </div>
+                </div>
+                
+                <div id="preview-area" class="hidden lg:block sticky top-20">
+                    <div class="bg-[#111] p-2 rounded-[2rem] border border-white/10">
+                        <iframe id="preview-iframe" src="" class="w-full h-[600px] border-none"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-40 border-t border-white/5 py-24 px-8 text-center bg-[#050505]">
+        <h3 class="text-2xl font-black italic mb-2 tracking-tighter">EDUCATION POINT</h3>
+        <p class="text-gray-600 text-xs mb-8">Empowering Future Leaders through Quality Notes</p>
+        <div class="max-w-xs mx-auto glass p-4 text-[10px] font-mono tracking-widest text-blue-500 border-blue-500/20">
+            — Muhammad Rizwan | Education Point
+        </div>
+        <p class="mt-12 text-[10px] text-gray-700 uppercase tracking-[1em]">© 2026 Designed by Muhammad Rizwan</p>
+    </footer>
+</div>
+
+<script>
+    const subjects = [
+        { 
+            id: 'phy', name: 'Physics', icon: 'atom', 
+            desc: 'Targeted Long Questions, Solved Numericals & Conceptual MCQs.',
+            details: ['Most Important 50 Short Questions', 'Solved Examples from 12th Book', 'Past Paper Analysis (2020-2025)', 'Special 10-Point Pairing Scheme'],
+            v: 'https://drive.google.com/file/d/1DWQINtgzs5TwMj5Mkq1F6Y9CK4vofeM-/preview', 
+            d: 'https://drive.google.com/file/d/1DWQINtgzs5TwMj5Mkq1F6Y9CK4vofeM-/view' 
+        },
+        { 
+            id: 'che', name: 'Chemistry', icon: 'flask-conical', 
+            desc: 'Organic Reactions, Inorganic Compounds & Full Exam Targets.',
+            details: ['Mechanism of Named Reactions', 'Periodic Trends Shortcuts', 'Exercise MCQs Highlighted', 'Lab Preparation Methods'],
+            v: 'https://drive.google.com/file/d/15abtdO5d13Oyn8MtgDgIVG4oW4mTiCgp/preview', 
+            d: 'https://drive.google.com/file/d/15abtdO5d13Oyn8MtgDgIVG4oW4mTiCgp/view' 
+        },
+        { 
+            id: 'bio', name: 'Biology', icon: 'dna', 
+            desc: 'Essential Diagrams, Chapter-wise Cycles & Short Definitions.',
+            details: ['50 Master Diagrams', 'Difference-based Questions', 'Kingdom Analysis', 'Genetics Problem Solving'],
+            v: 'https://drive.google.com/file/d/1QncspEOpOt16yXuiB66PrKit_Ss8aHIa/preview', 
+            d: 'https://drive.google.com/file/d/1QncspEOpOt16yXuiB66PrKit_Ss8aHIa/view' 
+        },
+        { 
+            id: 'mat', name: 'Math', icon: 'calculator', 
+            desc: 'Theorems, Integration Shortcuts & Exercise-wise Targets.',
+            details: ['Derivative Formula Sheets', 'Important Theorems Chapter 4 & 6', 'Limit Concepts Explained', 'Solved Model Papers'],
+            v: 'https://drive.google.com/file/d/1SsBEQjXBGl5WbrY0L2gRASGJybVElHuU/preview', 
+            d: 'https://drive.google.com/file/d/1SsBEQjXBGl5WbrY0L2gRASGJybVElHuU/view' 
+        },
+        { 
+            id: 'urd', name: 'Urdu', icon: 'book-text', 
+            desc: 'Tashreeh-e-Ashar, Mazameen & Board Grammar Rules.',
+            details: ['10 Most Important Mazameen', 'Siyak-o-Sabak Guide', 'Ghazal & Nazam Tashreeh', 'Solved Objective 2026'],
+            v: 'https://drive.google.com/file/d/1mUlAhrI0WE8rbx605Lnb_WdSLXe-hQBT/preview', 
+            d: 'https://drive.google.com/file/d/1mUlAhrI0WE8rbx605Lnb_WdSLXe-hQBT/view' 
+        },
+        { 
+            id: 'eng', name: 'English', icon: 'languages', 
+            desc: 'Solved Essays, Idioms, Phrasal Verbs & Book Questions.',
+            details: ['Expected Essays 2026', 'Most Common Idioms List', 'Short Summary of Lessons', 'Translation Passage Tips'],
+            v: 'https://drive.google.com/file/d/1geu3A1pwMrDasRM0ZymCspgmxPqEtBQS/preview', 
+            d: 'https://drive.google.com/file/d/1geu3A1pwMrDasRM0ZymCspgmxPqEtBQS/view' 
+        },
+        { 
+            id: 'com', name: 'Computer', icon: 'monitor', 
+            desc: 'C-Language Programs, DBMS & Networking Logic.',
+            details: ['Solved Programs (C-Language)', 'Entity Relationship Diagrams', 'SQL Queries Guide', 'Database Architecture'],
+            v: 'https://drive.google.com/file/d/1yU1IYK5fQ7522T63kT-gw0wTVKvT4BNm/preview', 
+            d: 'https://drive.google.com/file/d/1yU1IYK5fQ7522T63kT-gw0wTVKvT4BNm/view' 
+        },
+        { 
+            id: 'pak', name: 'Pak Study', icon: 'map', 
+            desc: 'Timeline of History, Constitution Rules & Geographical Notes.',
+            details: ['Two Nation Theory Analysis', 'Objective Historical Dates', 'Short Questions Book-based', 'Important Personalities'],
+            v: 'https://drive.google.com/file/d/1X5pdpV5VWoA3YHts7CplTHHX3LhhR5Ox/preview', 
+            d: 'https://drive.google.com/file/d/1X5pdpV5VWoA3YHts7CplTHHX3LhhR5Ox/view' 
+        },
+        { 
+            id: 'qur', name: 'Quran', icon: 'book-open', 
+            desc: 'Surah Tarjama, Tafseer Points & Subjective Targets.',
+            details: ['Tarjama of Selected Verses', 'Historical Context of Surahs', 'Ethical Lessons', 'Model Paper Objective'],
+            v: 'https://drive.google.com/file/d/1QqiWxnhi7SSEvtxDnYIScKQj5Cx-rbtD/preview', 
+            d: 'https://drive.google.com/file/d/1QqiWxnhi7SSEvtxDnYIScKQj5Cx-rbtD/view' 
+        }
+    ];
+
+    function showStep2() {
+        setTimeout(() => {
+            document.getElementById('step-1').style.display = 'none';
+            document.getElementById('step-2').classList.remove('hidden');
+        }, 1500);
+    }
+
+    function finalUnlock() {
+        document.getElementById('step-2').style.display = 'none';
+        document.getElementById('app-content').classList.remove('hidden');
+        lucide.createIcons();
+    }
+
+    function openSubject(id) {
+        const s = subjects.find(x => x.id === id);
+        document.getElementById('sub-title').innerText = s.name;
+        document.getElementById('sub-desc').innerText = s.desc;
+        document.getElementById('btn-down').href = s.d;
+        document.getElementById('preview-iframe').src = s.v;
+        document.getElementById('sub-icon-box').innerHTML = `<i data-lucide="${s.icon}" class="text-blue-500 w-10 h-10"></i>`;
+        
+        const detailsBox = document.getElementById('sub-details-box');
+        detailsBox.innerHTML = '';
+        s.details.forEach(item => {
+            detailsBox.innerHTML += `<div class="flex items-center gap-3 bg-white/5 p-4 rounded-xl text-sm border-l-2 border-blue-500"><i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i> ${item}</div>`;
+        });
+
+        document.getElementById('home-page').classList.remove('active');
+        document.getElementById('subject-page').classList.add('active');
+        window.scrollTo(0,0);
+        lucide.createIcons();
+    }
+
+    function showHome() {
+        document.getElementById('subject-page').classList.remove('active');
+        document.getElementById('home-page').classList.add('active');
+    }
+
+    function togglePreview() {
+        const frame = document.getElementById('preview-area');
+        frame.classList.toggle('hidden');
+        frame.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    const container = document.getElementById('grid-container');
+    subjects.forEach(s => {
+        container.innerHTML += `
+            <div onclick="openSubject('${s.id}')" class="glass p-10 cursor-pointer group hover:border-blue-500/50 transition-all animate__animated animate__fadeInUp">
+                <div class="mb-6 p-4 bg-white/5 rounded-2xl w-fit group-hover:bg-blue-600 transition-colors">
+                    <i data-lucide="${s.icon}" class="text-blue-500 group-hover:text-white w-8 h-8"></i>
+                </div>
+                <h3 class="text-3xl font-black mb-2 italic uppercase tracking-tighter">${s.name}</h3>
+                <p class="text-xs text-blue-500 font-bold tracking-[0.2em]">ACCESS SECURE DATA <i data-lucide="arrow-right" class="inline w-3 h-3 ml-1 group-hover:translate-x-2 transition-transform"></i></p>
+            </div>
+        `;
+    });
+
+    lucide.createIcons();
+</script>
+
+</body>
+</html>

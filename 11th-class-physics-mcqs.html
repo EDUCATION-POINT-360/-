@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics MCQs Dashboard - Education Point LMS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f5f7;
+            -webkit-font-smoothing: antialiased;
+        }
+        .bento-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .bento-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
+        }
+        /* Custom Stripe-like animated progress accent */
+        .stripe-progress {
+            background: linear-gradient(90deg, #0071e3, #86dbff, #0071e3);
+            background-size: 200% auto;
+            animation: shine 3s linear infinite;
+        }
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+    </style>
+</head>
+<body class="text-[#1d1d1f] antialiased min-h-screen flex flex-col">
+
+    <header class="sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b border-gray-200/50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 bg-blue-600 rounded-xl text-white">
+                    <i data-lucide="atom" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight">Education Point LMS</h1>
+                    <p class="text-xs text-gray-500">1st Year Physics Comprehensive Test (2026)</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span id="timer" class="text-sm font-medium bg-gray-100 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                    <i data-lucide="clock" class="w-4 h-4 text-blue-600"></i> <span id="time-display">00:00:00</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <section class="lg:col-span-4 lg:sticky lg:top-24 h-fit space-y-6">
+            
+            <div class="bento-card rounded-2xl p-5 relative overflow-hidden">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Test Completion</span>
+                    <span id="progress-text" class="text-sm font-bold text-blue-600">0%</span>
+                </div>
+                <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="stripe-progress h-full w-0 transition-all duration-300 rounded-full"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bento-card rounded-2xl p-4 flex flex-col justify-between">
+                    <div class="flex justify-between items-start text-gray-400">
+                        <i data-lucide="layers" class="w-5 h-5 text-gray-500"></i>
+                        <span class="text-xs font-medium">Total MCQs</span>
+                    </div>
+                    <div class="mt-4">
+                        <span id="stat-total" class="text-2xl font-semibold tracking-tight">200</span>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-2xl p-4 flex flex-col justify-between">
+                    <div class="flex justify-between items-start text-gray-400">
+                        <i data-lucide="check-square" class="w-5 h-5 text-blue-500"></i>
+                        <span class="text-xs font-medium">Solved</span>
+                    </div>
+                    <div class="mt-4">
+                        <span id="stat-solved" class="text-2xl font-semibold tracking-tight text-blue-600">0</span>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-2xl p-4 flex flex-col justify-between">
+                    <div class="flex justify-between items-start text-gray-400">
+                        <i data-lucide="help-circle" class="w-5 h-5 text-orange-500"></i>
+                        <span class="text-xs font-medium">Remaining</span>
+                    </div>
+                    <div class="mt-4">
+                        <span id="stat-left" class="text-2xl font-semibold tracking-tight text-orange-600">200</span>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-2xl p-4 flex flex-col justify-between">
+                    <div class="flex justify-between items-start text-gray-400">
+                        <i data-lucide="percent" class="w-5 h-5 text-purple-500"></i>
+                        <span class="text-xs font-medium">Accuracy</span>
+                    </div>
+                    <div class="mt-4">
+                        <span id="stat-percentage" class="text-2xl font-semibold tracking-tight text-purple-600">0%</span>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-2xl p-4 bg-emerald-50/50 border-emerald-100 flex flex-col justify-between">
+                    <div class="flex justify-between items-start text-emerald-600/70">
+                        <i data-lucide="smile" class="w-5 h-5 text-emerald-600"></i>
+                        <span class="text-xs font-medium text-emerald-800">Correct Answers</span>
+                    </div>
+                    <div class="mt-4">
+                        <span id="stat-correct" class="text-2xl font-semibold tracking-tight text-emerald-600">0</span>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-2xl p-4 bg-rose-50/50 border-rose-100 flex flex-col justify-between">
+                    <div class="flex justify-between items-start text-rose-600/70">
+                        <i data-lucide="frown" class="w-5 h-5 text-rose-600"></i>
+                        <span class="text-xs font-medium text-rose-800">Wrong Answers</span>
+                    </div>
+                    <div class="mt-4">
+                        <span id="stat-wrong" class="text-2xl font-semibold tracking-tight text-rose-600">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-card rounded-2xl p-4">
+                <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                    <i data-lucide="grid" class="w-4 h-4"></i> Question Map Grid
+                </h3>
+                <div id="question-map" class="grid grid-cols-8 gap-1.5 max-h-[180px] overflow-y-auto pr-1">
+                    </div>
+            </div>
+        </section>
+
+        <section class="lg:col-span-8 flex flex-col justify-between min-h-[500px]">
+            
+            <div class="bento-card rounded-3xl p-6 md:p-8 flex-grow flex flex-col justify-between">
+                <div id="quiz-block">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-xs font-semibold bg-blue-50 text-blue-600 px-3 py-1 rounded-full border border-blue-100">
+                            Question <span id="current-index-lbl">1</span> of 200
+                        </span>
+                        <span id="status-badge" class="text-xs font-medium text-gray-400 flex items-center gap-1">
+                            <i data-lucide="circle-dot" class="w-3.5 h-3.5"></i> Unsolved
+                        </span>
+                    </div>
+
+                    <h2 id="question-text" class="text-xl md:text-2xl font-medium tracking-tight leading-snug text-gray-900 mb-8">
+                        Loading test modules...
+                    </h2>
+
+                    <div id="options-container" class="space-y-3.5">
+                        </div>
+                </div>
+
+                <div id="complete-block" class="hidden text-center py-12 px-4">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600">
+                        <i data-lucide="party-popper" class="w-8 h-8"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold tracking-tight mb-2">Test Terminated Successfully!</h2>
+                    <p class="text-gray-500 max-w-md mx-auto mb-8">You've reached the end of the 200 MCQ First Year Physics challenge. Review your metrics in the dashboard sidebar grid.</p>
+                    <button onclick="restartQuiz()" class="bg-gray-900 hover:bg-black text-white px-6 py-2.5 rounded-full font-medium inline-flex items-center gap-2 transition-all">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Retake Examination
+                    </button>
+                </div>
+
+                <div class="border-t border-gray-100 mt-8 pt-6 flex justify-between items-center">
+                    <button id="btn-prev" onclick="prevQuestion()" class="px-5 py-2 rounded-xl text-sm font-medium hover:bg-gray-100 transition-all flex items-center gap-2 text-gray-600">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i> Previous
+                    </button>
+                    
+                    <button id="btn-next" onclick="nextQuestion()" class="px-5 py-2 bg-gray-900 hover:bg-black text-white rounded-xl text-sm font-medium transition-all flex items-center gap-2">
+                        Next <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        // Injecting the raw structural 200 physics data from your system files
+        const mcqsDatabase = [
+  {"id":1,"question":"The ratio of the dimensions of force and energy is:","options":{"A":"T","B":"T^-1","C":"L","D":"L^-1"},"answer":"D"},
+  {"id":2,"question":"The projectile gains its maximum height at an angle of:","options":{"A":"0°","B":"45°","C":"60°","D":"90°"},"answer":"D"},
+  {"id":3,"question":"A solid floats in water with half of its volume submerged. The density of the solid is:","options":{"A":"equal to water","B":"half the density of water","C":"double","D":"zero"},"answer":"B"},
+  {"id":4,"question":"First law of thermodynamics is based upon law of conservation of:","options":{"A":"mass","B":"energy","C":"momentum","D":"charge"},"answer":"B"},
+  {"id":5,"question":"The bending of waves around an obstacle is called as:","options":{"A":"refraction","B":"reflection","C":"diffraction","D":"interference"},"answer":"C"},
+  {"id":6,"question":"If the amplitude of the wave is tripled, then the amount of energy is increased by:","options":{"A":"3 times","B":"6 times","C":"9 times","D":"12 times"},"answer":"C"},
+  {"id":7,"question":"The mathematical representation of Malus's law is:","options":{"A":"I = I_o cos^2 θ","B":"I = I_o sin^2 θ","C":"I = I_o tan^2 θ","D":"I = I_o cot^2 θ"},"answer":"A"},
+  {"id":8,"question":"What is the work done on an electron by a potential difference of 100 volts?","options":{"A":"1.6 × 10^-19 eV","B":"1.6 × 10^-17 eV","C":"6.25 × 10^-17 eV","D":"100 eV"},"answer":"D"},
+  {"id":9,"question":"When a wire of resistance R is cut into two equal parts, its resistance becomes R/2. What happens to resistivity?","options":{"A":"It becomes double","B":"It remains the same","C":"It becomes half","D":"It becomes one fourth"},"answer":"B"},
+  {"id":10,"question":"The unit NA^-1 m^-1 is called:","options":{"A":"weber","B":"tesla","C":"coulomb","D":"none of these"},"answer":"B"},
+  {"id":11,"question":"According to Faraday's law, what causes an emf to be generated in a coil?","options":{"A":"A constant magnetic field","B":"A changing magnetic flux linkage","C":"Heat applied to the coil","D":"Increasing wire thickness"},"answer":"B"},
+  {"id":12,"question":"If the rest mass m_o of a particle increases to m due to high speed, its kinetic energy is:","options":{"A":"1/2 mc^2","B":"1/2 mv^2","C":"(m - m_o)c^2","D":"1/2 (m - m_o)c^2"},"answer":"C"},
+  {"id":13,"question":"Baryon is formed by the combination of:","options":{"A":"2 quarks","B":"3 quarks","C":"4 quarks","D":"a quark & anti-quark"},"answer":"B"},
+  {"id":14,"question":"Which force has a negligible effect between the elementary particles?","options":{"A":"Strong nuclear force","B":"Weak nuclear force","C":"Gravitational force","D":"Electromagnetic force"},"answer":"C"},
+  {"id":15,"question":"Zero error of the instrument is a type of:","options":{"A":"Systematic error","B":"Classified error","C":"Personal error","D":"Random error"},"answer":"A"},
+  {"id":16,"question":"Significant figures in 0.0004813 are:","options":{"A":"8","B":"7","C":"4","D":"3"},"answer":"C"},
+  {"id":17,"question":"A number such as 5.0 × 10^4 cm can be expressed in scientific notation as:","options":{"A":"5.0 × 10^2 m","B":"5.0 × 10^6 m","C":"5.0 × 10^4 m","D":"5.0 × 10^-2 m"},"answer":"A"},
+  {"id":18,"question":"Velocity of an object has 1% uncertainty and mass has 2%. Total uncertainty in K.E will be:","options":{"A":"3%","B":"2%","C":"4%","D":"7%"},"answer":"C"},
+  {"id":19,"question":"The least count of a balance A is 10 kg, B is 1 kg, C is 0.1 kg, D is 0.01 kg. Which is most precise?","options":{"A":"A","B":"B","C":"C","D":"D"},"answer":"D"},
+  {"id":20,"question":"Time taken by light to reach from sun to earth is:","options":{"A":"8 min 20 sec","B":"3 min 20 sec","C":"1 min 20 sec","D":"2 min 20 sec"},"answer":"A"},
+  {"id":21,"question":"The dimensions of relation mc^2 are equal to the dimensions of:","options":{"A":"Force","B":"Momentum","C":"Energy","D":"Torque"},"answer":"C"},
+  {"id":22,"question":"The dimensions of acceleration are:","options":{"A":"LT^-1","B":"L^-1T","C":"LT^-2","D":"L^-2T"},"answer":"C"},
+  {"id":23,"question":"The resultant of two vectors having magnitude 10 N and 8 N cannot be:","options":{"A":"2 N","B":"9 N","C":"18 N","D":"20 N"},"answer":"D"},
+  {"id":24,"question":"The vector product (A × A) is:","options":{"A":"1","B":"A^2","C":"O vector","D":"2A"},"answer":"C"},
+  {"id":25,"question":"Mark the correct relation:","options":{"A":"a = (v_f - v_i)/t","B":"a = (v_f^2 - v_i^2)/2S","C":"a = 2(S - v_i*t)/t^2","D":"all of them"},"answer":"D"},
+  {"id":26,"question":"A stone is dropped from a tower. It takes 2 s to reach the ground. The height is:","options":{"A":"19.6 m","B":"9.8 m","C":"40 m","D":"19 m"},"answer":"A"},
+  {"id":27,"question":"A ball is thrown up with 20 ms^-1 at 60° with x-axis. The velocity at top is:","options":{"A":"0 ms^-1","B":"10 ms^-1","C":"20 ms^-1","D":"16 ms^-1"},"answer":"B"},
+  {"id":28,"question":"If a force of 20 N acts on a body for 5 s, the change in momentum will be:","options":{"A":"5 Ns","B":"20 Ns","C":"50 Ns","D":"100 Ns"},"answer":"D"},
+  {"id":29,"question":"In the absence of external force, the impulse of a body is:","options":{"A":"Constant","B":"Maximum","C":"Zero","D":"Minimum"},"answer":"C"},
+  {"id":30,"question":"What happens when a system of two bodies undergoes an elastic collision?","options":{"A":"Momentum changes","B":"Momentum does not change","C":"Bodies come to rest","D":"Energy is violated"},"answer":"B"},
+  {"id":31,"question":"A body completes 5 revolutions in a circular path of radius 5 cm. Its displacement is:","options":{"A":"Zero","B":"10 cm","C":"0.157 rad","D":"0.314 rad"},"answer":"A"},
+  {"id":32,"question":"A stone is whirled in a vertical circle. At the highest position, the tension is:","options":{"A":"Maximum","B":"Minimum","C":"Equal to weight","D":"More than weight"},"answer":"B"},
+  {"id":33,"question":"The force needed to keep the body in circular motion is called:","options":{"A":"Frictional force","B":"Gravitational force","C":"Centrifugal force","D":"Centripetal force"},"answer":"D"},
+  {"id":34,"question":"Pull of the earth on 20 kg body on surface of earth is:","options":{"A":"20 N","B":"196 N","C":"19.6 N","D":"1960 N"},"answer":"B"},
+  {"id":35,"question":"The moment of inertia of solid disc or cylinder is:","options":{"A":"mr^2","B":"1/2 mr^2","C":"2/5 mr^2","D":"1/12 mr^2"},"answer":"B"},
+  {"id":36,"question":"The product of rotational inertia I and angular velocity ω is equal to:","options":{"A":"Torque","B":"Linear momentum","C":"Angular momentum","D":"Force"},"answer":"C"},
+  {"id":37,"question":"In rotational motion, the torque is equal to rate of change of:","options":{"A":"Angular velocity","B":"Linear momentum","C":"Angular momentum","D":"Angular acceleration"},"answer":"C"},
+  {"id":38,"question":"When torque acting on a system is zero, which of the following is conserved?","options":{"A":"Linear momentum","B":"Force","C":"Angular momentum","D":"Linear impulse"},"answer":"C"},
+  {"id":39,"question":"The work done is negative when force and displacement are:","options":{"A":"parallel","B":"anti-parallel","C":"perpendicular","D":"collinear"},"answer":"B"},
+  {"id":40,"question":"Which of the following is a non-conservative force?","options":{"A":"Electrical Force","B":"Magnetic force","C":"Gravitational force","D":"Frictional force"},"answer":"D"},
+  {"id":41,"question":"The power needed to lift a mass of 5000 g to height of 1 m in 2 s is:","options":{"A":"2.45 W","B":"24.5 W","C":"245 W","D":"2450 W"},"answer":"B"},
+  {"id":42,"question":"The K.E of a bullet of mass 500 g moving at a speed of 200 ms^-1 is:","options":{"A":"250 J","B":"125 J","C":"2500 J","D":"10,000 J"},"answer":"D"},
+  {"id":43,"question":"Escape velocity on the surface of Earth is 11.2 kms^-1. Escape velocity on a planet of same mass but 1/4 radius is:","options":{"A":"5.6 kms^-1","B":"11.2 kms^-1","C":"22.4 kms^-1","D":"44.8 kms^-1"},"answer":"C"},
+  {"id":44,"question":"The escape velocity is maximum for:","options":{"A":"Moon","B":"Mercury","C":"Earth","D":"Jupiter"},"answer":"D"},
+  {"id":45,"question":"Choice of zero potential energy level is:","options":{"A":"Surface of Earth","B":"At infinity","C":"Just above Earth","D":"Arbitrary"},"answer":"D"},
+  {"id":46,"question":"A solid having regular arrangement of molecules throughout its structure is called:","options":{"A":"Amorphous solid","B":"Polymeric solid","C":"Glassy solid","D":"Crystalline solid"},"answer":"D"},
+  {"id":47,"question":"Which one is not a ductile material?","options":{"A":"Lead","B":"Steel","C":"Copper","D":"Wrought Iron"},"answer":"A"},
+  {"id":48,"question":"If the stream lines of fluid are forced closer together then:","options":{"A":"Speed increases","B":"Pressure increases","C":"Speed remains same","D":"Density decreases"},"answer":"A"},
+  {"id":49,"question":"When water falls from a tap, its cross-sectional area decreases due to:","options":{"A":"Decrease of speed","B":"Increase of speed","C":"Air pressure","D":"Gravity decrease"},"answer":"B"},
+  {"id":50,"question":"The Bernoulli's equation is for a fluid which is:","options":{"A":"Viscous","B":"Compressible","C":"In turbulent flow","D":"In steady flow"},"answer":"D"},
+  {"id":51,"question":"Venturi meter is a device used to measure:","options":{"A":"Density of fluid","B":"Viscosity of fluid","C":"Pressure of fluid","D":"Speed of fluid"},"answer":"D"},
+  {"id":52,"question":"When a droplet of water has terminal velocity, the acceleration is:","options":{"A":"Maximum","B":"Minimum","C":"Zero","D":"Constant"},"answer":"C"},
+  {"id":53,"question":"For P = Pressure and V = Volume, PΔV represents:","options":{"A":"Work","B":"Density","C":"Power","D":"Temperature"},"answer":"A"},
+  {"id":54,"question":"In a PV graph, the adiabatic curve has ____ work under the curve than isothermal curve:","options":{"A":"Greater","B":"Smaller","C":"Equal","D":"Negative"},"answer":"B"},
+  {"id":55,"question":"Which one of the following processes is irreversible?","options":{"A":"Slow compression of spring","B":"Slow evaporation","C":"Slow compression of gas","D":"A chemical explosion"},"answer":"D"},
+  {"id":56,"question":"An ideal heat engine can only be 100% efficient if its cold reservoir is at:","options":{"A":"0 K","B":"0°C","C":"100 K","D":"100°C"},"answer":"A"},
+  {"id":57,"question":"The efficiency of a Carnot engine is:","options":{"A":"Infinite","B":"Zero","C":"Greater than one","D":"Less than one"},"answer":"D"},
+  {"id":58,"question":"When heat is removed from the system, entropy is:","options":{"A":"Remain same","B":"Positive","C":"Negative","D":"Zero"},"answer":"C"},
+  {"id":59,"question":"Two waves of same frequency and moving in the same direction produces:","options":{"A":"Interference","B":"Beats","C":"Doppler effect","D":"Stationary waves"},"answer":"A"},
+  {"id":60,"question":"The result of constructive interference between two waves is represented as:","options":{"A":"decrease in amplitude","B":"increase in amplitude","C":"no change","D":"shift in phase"},"answer":"B"},
+  {"id":61,"question":"If a stationary wave is established along a stretched string of length l and it vibrates in one loop, the wavelength is:","options":{"A":"l","B":"l/2","C":"l/3","D":"2l"},"answer":"D"},
+  {"id":62,"question":"When both ends of an organ pipe are open, the frequency of n^th harmonic is:","options":{"A":"f_n = nv/4l","B":"f_n = v/2nl","C":"f_n = nv/2l","D":"f_n = 2v/nl"},"answer":"C"},
+  {"id":63,"question":"The typical frequency range of microwaves is:","options":{"A":"10^3 - 10^5 Hz","B":"10^5 - 10^7 Hz","C":"10^7 - 10^9 Hz","D":"10^9 - 10^11 Hz"},"answer":"D"},
+  {"id":64,"question":"When two notes of frequencies f_1 and f_2 are sounded together (f_1 > f_2), beat frequency is:","options":{"A":"f_1 + f_2","B":"1/2(f_1 + f_2)","C":"f_1 - f_2","D":"1/2(f_1 - f_2)"},"answer":"C"},
+  {"id":65,"question":"If an aeroplane approaches a radar, the wavelength of the reflected wave would be:","options":{"A":"Shorter","B":"Larger","C":"The same","D":"Zero"},"answer":"A"},
+  {"id":66,"question":"Intensity of light depends on:","options":{"A":"Wavelength","B":"Amplitude","C":"Velocity","D":"Frequency"},"answer":"B"},
+  {"id":67,"question":"Which of the following cannot produce colours with white light?","options":{"A":"Diffraction","B":"Interference","C":"Polarization","D":"Dispersion"},"answer":"C"},
+  {"id":68,"question":"The angle between the light wave and the analyzer is called:","options":{"A":"polarization angle","B":"refraction angle","C":"reflection angle","D":"azimuth angle"},"answer":"D"},
+  {"id":69,"question":"What are gravitational waves?","options":{"A":"Electromagnetic waves","B":"Mechanical waves","C":"Ocean waves","D":"Ripples in spacetime"},"answer":"D"},
+  {"id":70,"question":"Which of the following is a primary source of gravitational waves?","options":{"A":"Binary black hole merger","B":"Solar flares","C":"Earthquake","D":"Solar wind"},"answer":"A"},
+  {"id":71,"question":"The electric field intensity due to an infinite sheet of charge:","options":{"A":"E = (σ / 2ε_o) r̂","B":"E = (2σ / ε_o) r̂","C":"E = (σ / 2ε_o) r̂","D":"E = (σ / ε_o) r̂"},"answer":"C"},
+  {"id":72,"question":"Two opposite point charges of same magnitude separated by 2d, potential mid-way is:","options":{"A":"1 V","B":"2 V","C":"Zero","D":"V/2"},"answer":"C"},
+  {"id":73,"question":"1 J = ____ eV:","options":{"A":"1.6 × 10^-19","B":"6.25 × 10^18","C":"9.6 × 10^-18","D":"9 × 10^9"},"answer":"B"},
+  {"id":74,"question":"5 A of current flows through a conductor in 2 minutes, charge is:","options":{"A":"500 C","B":"600 C","C":"400 C","D":"10 C"},"answer":"B"},
+  {"id":75,"question":"One ohm is equal to:","options":{"A":"VC^-1","B":"CV^-1","C":"AC^-1","D":"VA^-1"},"answer":"D"},
+  {"id":76,"question":"Energy consumed by a 60 W bulb in 2 minutes is:","options":{"A":"720 J","B":"7.2 kJ","C":"120 J","D":"7600 J"},"answer":"B"},
+  {"id":77,"question":"The SI unit of resistivity is:","options":{"A":"Ωm^-2","B":"Ωm^-1","C":"Ωm","D":"Ω"},"answer":"C"},
+  {"id":78,"question":"Which one is used to determine internal resistance of a cell?","options":{"A":"Potentiometer","B":"Wheatstone bridge","C":"Ammeter","D":"Voltmeter"},"answer":"A"},
+  {"id":79,"question":"A current flowing towards the reader is denoted by:","options":{"A":"Cross","B":"A bracket","C":"A dot","D":"Positive sign"},"answer":"C"},
+  {"id":80,"question":"Magnetic lines of force are:","options":{"A":"Imaginary","B":"Real","C":"Perpendicular","D":"In phase with electric"},"answer":"A"},
+  {"id":81,"question":"The value of permeability of free space (μ_o) in SI unit is:","options":{"A":"4π × 10^-9 WbA^-1m^-1","B":"4π × 10^-7 WbA^-1m^-1","C":"4π × 10^-10 WbA^-1m^-1","D":"4π × 10^7 WbA^-1m^-1"},"answer":"B"},
+  {"id":82,"question":"Magnetic force on charge q moving parallel to magnetic field is:","options":{"A":"qvBsin θ","B":"qvB","C":"zero","D":"ILB"},"answer":"C"},
+  {"id":83,"question":"Electrons moving perpendicularly through a uniform magnetic field are:","options":{"A":"deflected towards north","B":"deflected towards south","C":"deflected along circular path","D":"not deflected"},"answer":"C"},
+  {"id":84,"question":"Electromagnetic induction obeys the law of conservation of:","options":{"A":"Charge","B":"Energy","C":"Momentum","D":"Mass"},"answer":"B"},
+  {"id":85,"question":"The negative sign with induced emf in Faraday's law is in accordance with:","options":{"A":"Lenz's law","B":"Ampere's law","C":"Gauss's law","D":"Boyle's law"},"answer":"A"},
+  {"id":86,"question":"The motional emf is given by:","options":{"A":"qvB","B":"IBL","C":"eBL","D":"vBL"},"answer":"D"},
+  {"id":87,"question":"All motions are:","options":{"A":"Absolute","B":"Uniform","C":"Relative","D":"Variable"},"answer":"C"},
+  {"id":88,"question":"In 1905, the special theory of relativity was proposed by:","options":{"A":"Einstein","B":"Bohr","C":"Maxwell","D":"De-Broglie"},"answer":"A"},
+  {"id":89,"question":"1 kg mass will be equivalent to energy:","options":{"A":"9 × 10^8 J","B":"9 × 10^12 J","C":"9 × 10^16 J","D":"9 × 10^19 J"},"answer":"C"},
+  {"id":90,"question":"The special theory of relativity is based on:","options":{"A":"One postulate","B":"Two postulates","C":"Three postulates","D":"Four postulates"},"answer":"B"},
+  {"id":91,"question":"By modern system of NAVSTAR, speed anywhere on earth can be determined to accuracy about:","options":{"A":"20 ms^-1","B":"10 ms^-1","C":"2 cms^-1","D":"2 ms^-1"},"answer":"C"},
+  {"id":92,"question":"The minimum charge on any object cannot be less than:","options":{"A":"1.8 × 10^-19 C","B":"3.2 × 10^-19 C","C":"1.6 × 10^-19 C","D":"9.1 × 10^-19 C"},"answer":"C"},
+  {"id":93,"question":"A strong nuclear force exists between the nucleons of:","options":{"A":"p-p","B":"n-n","C":"p-n","D":"all of these"},"answer":"D"},
+  {"id":94,"question":"Which pair of particles creates annihilation?","options":{"A":"proton-proton","B":"proton-neutron","C":"neutron-photon","D":"electron-positron"},"answer":"D"},
+  {"id":95,"question":"The activity of a radioactive sample:","options":{"A":"Is constant","B":"Increases with time","C":"Decreases linearly","D":"Decreases exponentially"},"answer":"D"},
+  {"id":96,"question":"The force responsible for the breaking up of radioactive elements is:","options":{"A":"Weak nuclear force","B":"Strong nuclear force","C":"Electromagnetic force","D":"Gravitational force"},"answer":"A"},
+  {"id":97,"question":"Subatomic particles are divided into:","options":{"A":"Six groups","B":"Five groups","C":"Four groups","D":"Three groups"},"answer":"D"},
+  {"id":98,"question":"Two up quarks and one down quark makes a:","options":{"A":"Proton","B":"Neutron","C":"Photon","D":"Meson"},"answer":"A"},
+  {"id":99,"question":"The substances in which atoms do not form magnetic dipoles are called:","options":{"A":"Diamagnetic","B":"Paramagnetic","C":"Ferromagnetic","D":"Crystal"},"answer":"A"},
+  {"id":100,"question":"The ability of a body to return to its original shape is called:","options":{"A":"Strain","B":"Stress","C":"Elasticity","D":"Plasticity"},"answer":"C"},
+  {"id":101,"question":"Young's modulus for water is:","options":{"A":"Zero","B":"1","C":"2","D":"3"},"answer":"A"},
+  {"id":102,"question":"SI unit of modulus of elasticity is:","options":{"A":"Coulomb","B":"Volt","C":"Pascal (Nm^-2)","D":"Ampere"},"answer":"C"},
+  {"id":103,"question":"Substances which undergo plastic deformation until they break are known as:","options":{"A":"Brittle substance","B":"Ductile substance","C":"Non-magnetic","D":"Magnetic"},"answer":"B"},
+  {"id":104,"question":"The irregular or unsteady flow of the fluid is called:","options":{"A":"Normal flow","B":"Droplet flow","C":"Turbulent flow","D":"Streamline flow"},"answer":"C"},
+  {"id":105,"question":"The mass of fluid passing through any cross-section per unit time is called:","options":{"A":"Mass flux","B":"Magnetic flux","C":"Electric flux","D":"Volume flux"},"answer":"A"},
+  {"id":106,"question":"The unit of 1/2 ρv^2 in Bernoulli's equation is same as that of:","options":{"A":"Energy","B":"Pressure","C":"Work","D":"Power"},"answer":"B"},
+  {"id":107,"question":"Bernoulli's Equation is based upon Law of Conservation of:","options":{"A":"Mass","B":"Linear Momentum","C":"Angular Momentum","D":"Energy"},"answer":"D"},
+  {"id":108,"question":"The Torricelli's expression is expressed as:","options":{"A":"v = sqrt(2g(h_1 + h_2))","B":"v = sqrt(2g / (h_1 + h_2))","C":"v = sqrt(2g(h_1 - h_2))","D":"v = sqrt((h_1 + h_2) / 2g)"},"answer":"C"},
+  {"id":109,"question":"A 10 m high tank is full of water. A hole appears at its middle (5 m). The speed of efflux will be:","options":{"A":"5 ms^-1","B":"9.9 ms^-1","C":"100 ms^-1","D":"5.11 ms^-1"},"answer":"B"},
+  {"id":110,"question":"The pressure will be low when the speed of fluid is:","options":{"A":"High","B":"Low","C":"Zero","D":"Constant"},"answer":"A"},
+  {"id":111,"question":"SI unit of viscosity are:","options":{"A":"kg^-1 m^-1 s^-1","B":"kg^-1 m^-1 s","C":"kg m^-1 s^-1","D":"kg m s^-1"},"answer":"C"},
+  {"id":112,"question":"The dimensions of viscosity are:","options":{"A":"[M^2 L^-2 T^-2]","B":"[M^-1 L T^-1]","C":"[M^-1 L^-1 T]","D":"[M L^-1 T^-1]"},"answer":"D"},
+  {"id":113,"question":"If the radius of a droplet becomes half, its terminal velocity will become:","options":{"A":"Double","B":"Half","C":"One fourth","D":"Remains same"},"answer":"C"},
+  {"id":114,"question":"A gas performs 10 J of work while expanding adiabatically. Change in internal energy is:","options":{"A":"10 J","B":"-10 J","C":"100 J","D":"-200 J"},"answer":"B"},
+  {"id":115,"question":"For an ideal gas, the internal energy is directly proportional to:","options":{"A":"Temperature","B":"Pressure","C":"Volume","D":"Mass"},"answer":"A"},
+  {"id":116,"question":"A system does 600 J of work and its internal energy increases by 320 J. Heat supplied is:","options":{"A":"280 J","B":"920 J","C":"600 J","D":"200 J"},"answer":"B"},
+  {"id":117,"question":"The first law of thermodynamics for an isothermal process is:","options":{"A":"Q = ΔU","B":"Q = W","C":"ΔU = W","D":"ΔU = -W"},"answer":"B"},
+  {"id":118,"question":"If the temperature of a system is kept constant, the process is called:","options":{"A":"Adiabatic process","B":"Isochoric process","C":"Isothermal process","D":"Isobaric process"},"answer":"C"},
+  {"id":119,"question":"An ideal reversible heat engine has:","options":{"A":"100% efficiency","B":"Highest efficiency","C":"Depends on substance","D":"None of these"},"answer":"B"},
+  {"id":120,"question":"A heat engine operates between 1000 K and 400 K. Its efficiency is:","options":{"A":"100%","B":"70%","C":"60%","D":"50%"},"answer":"C"},
+  {"id":121,"question":"If temperature of sink is absolute zero, efficiency of engine should be:","options":{"A":"100%","B":"50%","C":"Zero","D":"Infinite"},"answer":"A"},
+  {"id":122,"question":"Change in entropy of a reversible process is:","options":{"A":"Positive","B":"Negative","C":"Zero","D":"Maximum"},"answer":"C"},
+  {"id":123,"question":"The entropy of the universe with the passage of time:","options":{"A":"Increases","B":"Decreases","C":"Remains constant","D":"Fluctuates"},"answer":"A"},
+  {"id":124,"question":"The distance between a compression and its adjacent rarefaction is:","options":{"A":"λ/2","B":"λ","C":"2λ","D":"λ/4"},"answer":"A"},
+  {"id":125,"question":"Longitudinal waves of frequencies less than 20 Hz are known as:","options":{"A":"Infra sound","B":"Ultra sound","C":"Super sound","D":"Audible sound"},"answer":"A"},
+  {"id":126,"question":"The path difference for constructive interference should be:","options":{"A":"λ/2","B":"5λ/2","C":"mλ/2","D":"mλ"},"answer":"D"},
+  {"id":127,"question":"The distance between a node and the next antinode is:","options":{"A":"4λ","B":"2λ","C":"λ/4","D":"λ/2"},"answer":"C"},
+  {"id":128,"question":"In a vibrating string, the points where the amplitude is maximum are called:","options":{"A":"Nodes","B":"Antinodes","C":"Troughs","D":"Crests"},"answer":"B"},
+  {"id":129,"question":"Beats can be heard when difference of frequency is not more than:","options":{"A":"8 Hz","B":"10 Hz","C":"4 Hz","D":"6 Hz"},"answer":"B"},
+  {"id":130,"question":"Two tuning forks of frequencies 261 Hz and 258 Hz are sounded together. Beats per second are:","options":{"A":"3","B":"2","C":"261","D":"258"},"answer":"A"},
+  {"id":131,"question":"The apparent change in the pitch of sound due to relative motion is called:","options":{"A":"Carnot theorem","B":"Interference","C":"Doppler effect","D":"Beats"},"answer":"C"},
+  {"id":132,"question":"The location of submarines can be detected by:","options":{"A":"Doppler effect","B":"Compton's effect","C":"Photoelectric effect","D":"Temperature effect"},"answer":"A"},
+  {"id":133,"question":"Sound waves cannot be:","options":{"A":"Reflected","B":"Refracted","C":"Polarized","D":"Diffracted"},"answer":"C"},
+  {"id":134,"question":"Which phenomenon proves that light waves are transverse in nature?","options":{"A":"Refraction","B":"Reflection","C":"Diffraction","D":"Polarization"},"answer":"D"},
+  {"id":135,"question":"Which of the following is not optically active?","options":{"A":"Sugar","B":"Tartaric acid","C":"Water","D":"Sodium Chlorate"},"answer":"C"},
+  {"id":136,"question":"The intensity of light when it passes through a polarizer:","options":{"A":"increases","B":"decreases","C":"remains the same","D":"becomes zero"},"answer":"B"},
+  {"id":137,"question":"If distance between two charges is halved and charges doubled, force becomes:","options":{"A":"Two times","B":"Four times","C":"Eight times","D":"Sixteen times"},"answer":"D"},
+  {"id":138,"question":"Equation φ = E · A is applicable to surface:","options":{"A":"Spherical","B":"Cylindrical","C":"Conical","D":"Flat"},"answer":"D"},
+  {"id":139,"question":"A particle carrying a charge of 2e falls through a p.d. of 3 V. Energy acquired is:","options":{"A":"9.6 × 10^-18 J","B":"9.6 × 10^-19 J","C":"1.6 × 10^-19 J","D":"9.6 × 10^-17 J"},"answer":"B"},
+  {"id":140,"question":"The potential at a distance of 50 cm from a charge of 50 μC is:","options":{"A":"9 × 10^-4 V","B":"18 × 10^-4 V","C":"9 × 10^5 V","D":"18 × 10^4 V"},"answer":"C"},
+  {"id":141,"question":"A charged conductor has charge on its:","options":{"A":"Inner-surface","B":"outer-surface","C":"middle-surface","D":"surrounding space"},"answer":"B"},
+  {"id":142,"question":"Semiconductor diode is an example of:","options":{"A":"Super conductor","B":"Ohmic device","C":"Non ohmic device","D":"Ferromagnetic"},"answer":"C"},
+  {"id":143,"question":"The resistance of a conductor of length L, area A, and resistivity ρ is given by:","options":{"A":"R = ρ (L / A)","B":"R = ρAL","C":"R = ρ (A / L)","D":"R = A / (ρL)"},"answer":"A"},
+  {"id":144,"question":"Which one of the following bulbs has the least resistance?","options":{"A":"100 W","B":"200 W","C":"500 W","D":"1000 W"},"answer":"D"},
+  {"id":145,"question":"Kirchhoff's first rule is the manifestation of the law of conservation of:","options":{"A":"Mass","B":"Charge","C":"Energy","D":"Momentum"},"answer":"B"},
+  {"id":146,"question":"The algebraic sum of potential changes for a complete circuit is zero. This is:","options":{"A":"Ohm's law","B":"Gauss's law","C":"Kirchhoff's first law","D":"Kirchhoff's second law"},"answer":"D"},
+  {"id":147,"question":"A current carrying conductor placed in a uniform magnetic field parallel to it. Magnetic force is:","options":{"A":"F = IBL","B":"F = IBLsin θ","C":"F = IBLcos θ","D":"F is zero"},"answer":"D"},
+  {"id":148,"question":"A cross (×) represents the direction of magnetic field:","options":{"A":"Out of page","B":"Tangent to page","C":"Parallel to page","D":"Into the page"},"answer":"D"},
+  {"id":149,"question":"What is the correct relation for Tesla and Gauss?","options":{"A":"1 T = 10^4 G","B":"1 T = 10^-4 G","C":"1 T = 10^-2 G","D":"1 T = 10^2 G"},"answer":"A"},
+  {"id":150,"question":"The force exerted on a 1 m wire carrying 1 A current at right angle to field is:","options":{"A":"magnetic field intensity","B":"magnetic flux","C":"magnetic induction","D":"None"},"answer":"C"},
+  {"id":151,"question":"A moving charged particle is surrounded by:","options":{"A":"electric field only","B":"magnetic field only","C":"both fields","D":"no field"},"answer":"C"},
+  {"id":152,"question":"If we want to make magnetic field stronger, the value of induced current is:","options":{"A":"Decreased","B":"Vanished","C":"Increased","D":"Constant"},"answer":"C"},
+  {"id":153,"question":"Internal frame of reference is a frame in which:","options":{"A":"1st law holds","B":"2nd law holds","C":"3rd law holds","D":"Kelvin's law holds"},"answer":"A"},
+  {"id":154,"question":"If velocity of a body becomes equal to c, its relativistic mass becomes:","options":{"A":"0 kg","B":"m = m_o","C":"m -> ∞","D":"m = m_o / 2"},"answer":"C"},
+  {"id":155,"question":"The mass m of a moving object with speed 0.8c is:","options":{"A":"0.66 m_o","B":"0.97 m_o","C":"1.67 m_o","D":"1.08 m_o"},"answer":"C"},
+  {"id":156,"question":"A photon is a particle of light. What is its rest mass?","options":{"A":"9.1 × 10^-31 kg","B":"1.67 × 10^-27 kg","C":"1.6 × 10^-19 kg","D":"Zero"},"answer":"D"},
+  {"id":157,"question":"The number of Neutrons in ^238_92 U is:","options":{"A":"92","B":"238","C":"146","D":"330"},"answer":"C"},
+  {"id":158,"question":"The number of neutrons present in a nucleus is given by:","options":{"A":"N = A + Z","B":"N = A - Z","C":"N = Z - A","D":"N = A × Z"},"answer":"B"},
+  {"id":159,"question":"When γ-rays are emitted, the nuclear mass:","options":{"A":"Decreases by 4 units","B":"Does not change","C":"Increases by 2 units","D":"Increases by 1 unit"},"answer":"B"},
+  {"id":160,"question":"Which of the following is similar to an electron?","options":{"A":"β-particle","B":"α-particle","C":"Neutron","D":"Proton"},"answer":"A"},
+  {"id":161,"question":"In nuclear transmutation when Thorium transforms into Protactinium, the emitted particle is:","options":{"A":"A beta particle","B":"A neutron","C":"A proton","D":"An alpha particle"},"answer":"A"},
+  {"id":162,"question":"There is no change in A and Z of any radioactive element by the emission of:","options":{"A":"α-particle","B":"β-particle","C":"γ-ray","D":"X-rays"},"answer":"C"},
+  {"id":163,"question":"A pair of quark and anti-quark makes a:","options":{"A":"Meson","B":"Hadron","C":"Lepton","D":"Baryon"},"answer":"A"},
+  {"id":164,"question":"Which pair belongs to hadrons?","options":{"A":"Protons and Neutrons","B":"Neutrons and electrons","C":"Photons and electrons","D":"Positrons and electrons"},"answer":"A"},
+  {"id":165,"question":"The types of quarks (flavors) are:","options":{"A":"2","B":"3","C":"4","D":"6"},"answer":"D"},
+  {"id":166,"question":"Baryon with combination of up, up, and up quark (uuu) has charge:","options":{"A":"1e","B":"2e","C":"-1e","D":"-2e"},"answer":"B"},
+  {"id":167,"question":"A proton is composed of up and down quarks, the exact composition is:","options":{"A":"udd","B":"udu","C":"uud","B":"dud"},"answer":"C"},
+  {"id":168,"question":"An object in equilibrium must not have:","options":{"A":"Velocity","B":"Acceleration","C":"Momentum","D":"Kinetic Energy"},"answer":"B"},
+  {"id":169,"question":"The magnitude of cross product and dot product of two vectors are equal. The angle between them is:","options":{"A":"0°","B":"30°","C":"45°","D":"90°"},"answer":"C"},
+  {"id":170,"question":"One radian is equal to:","options":{"A":"45°","B":"57.3°","C":"60°","D":"90°"},"answer":"B"},
+  {"id":171,"question":"A geostationary satellite completes one rotation around earth in:","options":{"A":"12 hours","B":"24 hours","C":"1 year","D":"30 days"},"answer":"B"},
+  {"id":172,"question":"Blood pressure is measured in:","options":{"A":"Nm^-2","B":"Pa","C":"torr","D":"atm"},"answer":"C"},
+  {"id":173,"question":"The typical speed of a transverse wave in a stretched string depends on:","options":{"A":"Density","B":"Tension","C":"Pressure","D":"Temperature"},"answer":"B"},
+  {"id":174,"question":"Radar system is an application of:","options":{"A":"Interference","B":"Doppler effect","C":"Diffraction","D":"Beats"},"answer":"B"},
+  {"id":175,"question":"The focal length of an objective lens in an astronomical telescope is 100 cm and eyepiece is 5 cm. Magnification is:","options":{"A":"10","B":"15","C":"20","D":"500"},"answer":"C"},
+  {"id":176,"question":"The minimum distance of clear vision for a normal human eye is:","options":{"A":"10 cm","B":"25 cm","C":"50 cm","D":"Infinity"},"answer":"B"},
+  {"id":177,"question":"The SI unit of electric flux is:","options":{"A":"Nm^2C^-2","B":"Nm^2C^-1","C":"NCm^-2","D":"Vm^-1"},"answer":"B"},
+  {"id":178,"question":"A capacitor stores energy in the form of:","options":{"A":"Magnetic field","B":"Electric field","C":"Gravitational field","D":"Nuclear field"},"answer":"B"},
+  {"id":179,"question":"The reciprocal of resistivity is called:","options":{"A":"Conductivity","B":"Resistance","C":"Conductance","D":"Permittivity"},"answer":"A"},
+  {"id":180,"question":"The color code for a 1000 Ω resistor (1 kΩ) is:","options":{"A":"Brown, Black, Red","B":"Brown, Black, Orange","C":"Red, Black, Brown","D":"Brown, Red, Black"},"answer":"A"},
+  {"id":181,"question":"Magnetic flux is maximum when angle between B and vector area A is:","options":{"A":"0°","B":"45°","C":"90°","D":"180°"},"answer":"A"},
+  {"id":182,"question":"The device used to measure direct current accurately is:","options":{"A":"Voltmeter","B":"Ammeter","C":"Galvanometer","D":"Ohmmeter"},"answer":"B"},
+  {"id":183,"question":"The SI unit of mutual inductance is:","options":{"A":"Weber","B":"Tesla","C":"Henry","D":"Farad"},"answer":"C"},
+  {"id":184,"question":"Step-up transformer increases:","options":{"A":"Current","B":"Power","C":"Voltage","D":"Frequency"},"answer":"C"},
+  {"id":185,"question":"In an AC circuit, the current and voltage are in phase for:","options":{"A":"Inductor","B":"Capacitor","C":"Resistor","D":"Choke"},"answer":"C"},
+  {"id":186,"question":"The frequency of AC supplied in Pakistan is:","options":{"A":"60 Hz","B":"50 Hz","C":"100 Hz","D":"220 Hz"},"answer":"B"},
+  {"id":187,"question":"Electromagnetic waves travel in free space with the speed of:","options":{"A":"Sound","B":"Light","C":"Wind","D":"Electrons"},"answer":"B"},
+  {"id":188,"question":"The principle of laser production is:","options":{"A":"Spontaneous emission","B":"Stimulated emission","C":"Absorption","D":"Refraction"},"answer":"B"},
+  {"id":189,"question":"In a p-type semiconductor, the majority charge carriers are:","options":{"A":"Electrons","B":"Holes","C":"Protons","D":"Neutrons"},"answer":"B"},
+  {"id":190,"question":"A diode functions as a:","options":{"A":"Amplifier","B":"Rectifier","C":"Oscillator","D":"Modulator"},"answer":"B"},
+  {"id":191,"question":"The minimum energy required to remove an electron from a metal surface is:","options":{"A":"Kinetic energy","B":"Potential energy","C":"Work function","D":"Ionization energy"},"answer":"C"},
+  {"id":192,"question":"X-rays are:","options":{"A":"High energy electrons","B":"High energy photons","C":"High energy protons","D":"High energy neutrons"},"answer":"B"},
+  {"id":193,"question":"The half-life of a radioactive element depends on:","options":{"A":"Temperature","B":"Pressure","C":"Amount of substance","D":"Nature of element"},"answer":"D"},
+  {"id":194,"question":"1 amu is equal to:","options":{"A":"1.66 × 10^-24 kg","B":"1.66 × 10^-27 kg","C":"9.1 × 10^-31 kg","D":"1.6 × 10^-19 kg"},"answer":"B"},
+  {"id":195,"question":"The binding energy per nucleon is maximum for:","options":{"A":"Uranium","B":"Helium","C":"Iron","D":"Hydrogen"},"answer":"C"},
+  {"id":196,"question":"Which detector leaves a visible track of the ionizing particle?","options":{"A":"GM counter","B":"Solid state detector","C":"Cloud chamber","D":"Proportional counter"},"answer":"C"},
+  {"id":197,"question":"A positron is an anti-particle of:","options":{"A":"Proton","B":"Neutron","C":"Electron","D":"Photon"},"answer":"C"},
+  {"id":198,"question":"Sun radiates energy continuously due to:","options":{"A":"Nuclear fission","B":"Nuclear fusion","C":"Chemical burning","D":"Radioactivity"},"answer":"B"},
+  {"id":199,"question":"If a radioactive isotope has a half-life of 2 days, what fraction remains after 6 days?","options":{"A":"1/2","B":"1/4","C":"1/8","D":"1/16"},"answer":"C"},
+  {"id":200,"question":"The building blocks of protons and neutrons are called:","options":{"A":"Leptons","B":"Bosons","C":"Quarks","D":"Mesons"},"answer":"C"}
+];
+
+        // System State parameters
+        let currentIndex = 0;
+        let userResponses = new Array(mcqsDatabase.length).fill(null); // Track selected values
+        let startTime = Date.now();
+
+        // Initialize Exam Engine components
+        function initQuiz() {
+            lucide.createIcons();
+            buildQuestionMap();
+            loadQuestion(0);
+            startTimer();
+            updateDashboardMetrics();
+        }
+
+        // Live Clock Counter
+        function startTimer() {
+            setInterval(() => {
+                let diff = Date.now() - startTime;
+                let hrs = Math.floor(diff / 3600000).toString().padStart(2, '0');
+                let mins = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+                let secs = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+                document.getElementById('time-display').innerText = `${hrs}:${mins}:${secs}`;
+            }, 1000);
+        }
+
+        // Build Sidebar Visual Node Map Grid 
+        function buildQuestionMap() {
+            const mapContainer = document.getElementById('question-map');
+            mapContainer.innerHTML = '';
+            mcqsDatabase.forEach((q, idx) => {
+                const btn = document.createElement('button');
+                btn.id = `map-node-${idx}`;
+                btn.innerText = q.id;
+                btn.className = `text-xs font-semibold py-1 rounded transition-all border ${getMapNodeClass(idx)}`;
+                btn.onclick = () => loadQuestion(idx);
+                mapContainer.appendChild(btn);
+            });
+        }
+
+        function getMapNodeClass(idx) {
+            if (userResponses[idx] === null) {
+                return idx === currentIndex ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-500 border-gray-200 hover:bg-gray-50';
+            }
+            // If already answered
+            const isCorrect = userResponses[idx] === mcqsDatabase[idx].answer;
+            return isCorrect ? 'bg-emerald-500 text-white border-emerald-500' : 'bg-rose-500 text-white border-rose-500';
+        }
+
+        // Render Active MCQ Question Block
+        function loadQuestion(index) {
+            if (index < 0 || index >= mcqsDatabase.length) return;
+            currentIndex = index;
+
+            // Hide completeness element, display test workspace
+            document.getElementById('quiz-block').classList.remove('hidden');
+            document.getElementById('complete-block').classList.add('hidden');
+
+            const item = mcqsDatabase[currentIndex];
+            document.getElementById('current-index-lbl').innerText = item.id;
+            document.getElementById('question-text').innerText = item.question;
+
+            const statusBadge = document.getElementById('status-badge');
+            const optContainer = document.getElementById('options-container');
+            optContainer.innerHTML = '';
+
+            const savedChoice = userResponses[currentIndex];
+
+            if (savedChoice === null) {
+                statusBadge.innerHTML = `<i data-lucide="circle-dot" class="w-3.5 h-3.5"></i> Unsolved`;
+                statusBadge.className = "text-xs font-medium text-gray-400 flex items-center gap-1";
+            } else {
+                const isCorrect = savedChoice === item.answer;
+                statusBadge.innerHTML = isCorrect ? 
+                    `<i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Correct Option` : 
+                    `<i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Incorrect Option`;
+                statusBadge.className = isCorrect ? "text-xs font-semibold text-emerald-600 flex items-center gap-1" : "text-xs font-semibold text-rose-600 flex items-center gap-1";
+            }
+
+            // Loop over multiple choice variables A, B, C, D
+            Object.keys(item.options).forEach(key => {
+                const choiceText = item.options[key];
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-4 rounded-xl border text-sm font-medium transition-all flex items-start gap-3 select-none ${getOptionStyles(key, savedChoice, item.answer)}`;
+                
+                // Block clicking once answered to lock layout state
+                if (savedChoice === null) {
+                    btn.onclick = () => selectOption(key);
+                } else {
+                    btn.disabled = true;
+                }
+
+                btn.innerHTML = `
+                    <span class="w-5 h-5 flex items-center justify-center rounded-md border text-xs font-bold shrink-0 uppercase ${getOptionBadgeStyles(key, savedChoice, item.answer)}">${key}</span>
+                    <span class="leading-tight">${choiceText}</span>
+                `;
+                optContainer.appendChild(btn);
+            });
+
+            // Update Map node highlights
+            mcqsDatabase.forEach((_, idx) => {
+                const node = document.getElementById(`map-node-${idx}`);
+                if (node) node.className = `text-xs font-semibold py-1 rounded transition-all border ${getMapNodeClass(idx)}`;
+            });
+
+            // Footer controls updates
+            document.getElementById('btn-prev').disabled = currentIndex === 0;
+            document.getElementById('btn-next').innerHTML = currentIndex === mcqsDatabase.length - 1 ? 
+                `Finish Test <i data-lucide="check" class="w-4 h-4"></i>` : `Next <i data-lucide="arrow-right" class="w-4 h-4"></i>`;
+
+            lucide.createIcons();
+        }
+
+        function getOptionStyles(key, saved, correct) {
+            if (saved === null) return 'bg-white border-gray-200 hover:border-gray-400 hover:bg-gray-50 text-gray-800';
+            if (key === correct) return 'bg-emerald-50 border-emerald-300 text-emerald-900';
+            if (key === saved && saved !== correct) return 'bg-rose-50 border-rose-300 text-rose-900';
+            return 'bg-white border-gray-100 text-gray-400 opacity-60';
+        }
+
+        function getOptionBadgeStyles(key, saved, correct) {
+            if (saved === null) return 'bg-gray-50 text-gray-500 border-gray-300';
+            if (key === correct) return 'bg-emerald-500 text-white border-emerald-500';
+            if (key === saved && saved !== correct) return 'bg-rose-500 text-white border-rose-500';
+            return 'bg-gray-50 text-gray-300 border-gray-200';
+        }
+
+        // Action Handlers
+        function selectOption(key) {
+            if (userResponses[currentIndex] !== null) return; // Locked 
+            userResponses[currentIndex] = key;
+            
+            updateDashboardMetrics();
+            loadQuestion(currentIndex); // re-render with verification metrics applied
+        }
+
+        function prevQuestion() {
+            if (currentIndex > 0) loadQuestion(currentIndex - 1);
+        }
+
+        function nextQuestion() {
+            if (currentIndex < mcqsDatabase.length - 1) {
+                loadQuestion(currentIndex + 1);
+            } else {
+                // Show termination layout screen
+                document.getElementById('quiz-block').classList.add('hidden');
+                document.getElementById('complete-block').classList.remove('hidden');
+            }
+        }
+
+        function restartQuiz() {
+            userResponses.fill(null);
+            startTime = Date.now();
+            initQuiz();
+        }
+
+        // Dynamic State Metrics Dashboard Updates
+        function updateDashboardMetrics() {
+            const total = mcqsDatabase.length;
+            let solved = 0;
+            let correct = 0;
+            let wrong = 0;
+
+            userResponses.forEach((resp, idx) => {
+                if (resp !== null) {
+                    solved++;
+                    if (resp === mcqsDatabase[idx].answer) correct++;
+                    else wrong++;
+                }
+            });
+
+            const left = total - solved;
+            const percentage = solved > 0 ? Math.round((correct / solved) * 100) : 0;
+            const overallCompletion = Math.round((solved / total) * 100);
+
+            // Set content parameters 
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-solved').innerText = solved;
+            document.getElementById('stat-left').innerText = left;
+            document.getElementById('stat-correct').innerText = correct;
+            document.getElementById('stat-wrong').innerText = wrong;
+            document.getElementById('stat-percentage').innerText = `${percentage}%`;
+
+            // Progress strip adjustments
+            document.getElementById('progress-text').innerText = `${overallCompletion}%`;
+            document.getElementById('progress-bar').style.width = `${overallCompletion}%`;
+        }
+
+        // Auto-run trigger on frame acquisition
+        window.onload = initQuiz;
+    </script>
+</body>
+</html>

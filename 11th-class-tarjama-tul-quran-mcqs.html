@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ترجمۃ القرآن الکریم ٹیسٹ ڈیش بورڈ 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            background-color: #f5f5f7;
+        }
+        .urdu-text {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            line-height: 2.2;
+        }
+        /* Apple-style smooth glassmorphism and shadows */
+        .apple-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+            border-radius: 24px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .apple-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
+        }
+        /* Hide scrollbar for clean look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="text-gray-900 antialiased min-h-screen pb-12">
+
+    <header class="sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b border-gray-100 px-4 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white shadow-md shadow-emerald-200">
+                    <i data-lucide="book-open" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h1 class="text-sm font-bold text-gray-500 tracking-wider uppercase">Education Point</h1>
+                    <p class="text-lg font-bold text-gray-800 -mt-1">ترجمۃ القرآن ٹیسٹ 2026</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 bg-gray-100/80 px-3 py-1.5 rounded-full text-xs font-semibold text-gray-600">
+                <i data-lucide="layers" class="w-3.5 h-3.5 text-emerald-600"></i>
+                <span>انٹرمیڈیٹ پارٹ 1</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 mt-8">
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+            <div class="apple-card p-5 flex flex-col justify-between">
+                <div class="flex justify-between items-start">
+                    <span class="text-xs font-semibold text-gray-400">کل سوالات</span>
+                    <span class="p-2 bg-blue-50 text-blue-600 rounded-xl"><i data-lucide="help-circle" class="w-4 h-4"></i></span>
+                </div>
+                <div class="mt-4">
+                    <span class="text-3xl font-bold tracking-tight text-gray-800" id="stat-total">239</span>
+                    <span class="text-xs text-gray-400 block mt-1">منتخب شدہ کورس</span>
+                </div>
+            </div>
+
+            <div class="apple-card p-5 flex flex-col justify-between">
+                <div class="flex justify-between items-start">
+                    <span class="text-xs font-semibold text-gray-400">حل شدہ</span>
+                    <span class="p-2 bg-purple-50 text-purple-600 rounded-xl"><i data-lucide="check-square" class="w-4 h-4"></i></span>
+                </div>
+                <div class="mt-4">
+                    <span class="text-3xl font-bold tracking-tight text-gray-800" id="stat-solved">0</span>
+                    <span class="text-xs text-gray-400 block mt-1">موجودہ پراگریس</span>
+                </div>
+            </div>
+
+            <div class="apple-card p-5 flex flex-col justify-between">
+                <div class="flex justify-between items-start">
+                    <span class="text-xs font-semibold text-gray-400">باقی سوالات</span>
+                    <span class="p-2 bg-amber-50 text-amber-600 rounded-xl"><i data-lucide="clock" class="w-4 h-4"></i></span>
+                </div>
+                <div class="mt-4">
+                    <span class="text-3xl font-bold tracking-tight text-gray-800" id="stat-left">239</span>
+                    <span class="text-xs text-gray-400 block mt-1">ٹیسٹ مکمل کرنے کے لیے</span>
+                </div>
+            </div>
+
+            <div class="apple-card p-5 flex flex-col justify-between">
+                <div class="flex justify-between items-start">
+                    <span class="text-xs font-semibold text-gray-400">درست جوابات</span>
+                    <span class="p-2 bg-emerald-50 text-emerald-600 rounded-xl"><i data-lucide="check-circle" class="w-4 h-4"></i></span>
+                </div>
+                <div class="mt-4">
+                    <span class="text-3xl font-bold tracking-tight text-emerald-600" id="stat-correct">0</span>
+                    <span class="text-xs text-gray-400 block mt-1">درست نشان دہی</span>
+                </div>
+            </div>
+
+            <div class="apple-card p-5 flex flex-col justify-between">
+                <div class="flex justify-between items-start">
+                    <span class="text-xs font-semibold text-gray-400">غلط جوابات</span>
+                    <span class="p-2 bg-rose-50 text-rose-600 rounded-xl"><i data-lucide="x-circle" class="w-4 h-4"></i></span>
+                </div>
+                <div class="mt-4">
+                    <span class="text-3xl font-bold tracking-tight text-rose-600" id="stat-wrong">0</span>
+                    <span class="text-xs text-gray-400 block mt-1">غلطیاں دور کریں</span>
+                </div>
+            </div>
+
+            <div class="apple-card p-5 flex flex-col justify-between items-center justify-center col-span-2 lg:col-span-1">
+                <div class="relative w-20 h-20 flex items-center justify-center">
+                    <svg class="w-full h-full transform -rotate-90">
+                        <circle cx="40" cy="40" r="34" stroke-width="6" stroke="#f3f4f6" fill="transparent" />
+                        <circle cx="40" cy="40" r="34" stroke-width="6" stroke="#059669" fill="transparent" 
+                                stroke-dasharray="213.6" stroke-dashoffset="213.6" id="percentage-ring" stroke-linecap="round"/>
+                    </svg>
+                    <span class="absolute text-sm font-bold text-gray-800" id="stat-percent">0%</span>
+                </div>
+                <span class="text-xs font-semibold text-gray-400 mt-2">کامیابی کا تناسب</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+            
+            <div class="lg:col-span-3 apple-card p-6 md:p-8 relative overflow-hidden min-h-[450px] flex flex-col justify-between">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="bg-gray-100 text-gray-700 font-semibold text-xs px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                        <i data-lucide="bookmark" class="w-3.5 h-3.5 text-gray-500"></i>
+                        <span>سوال نمبر: <span id="current-question-num">1</span> / 239</span>
+                    </div>
+                    <button onclick="resetQuiz()" class="text-xs text-gray-400 hover:text-rose-500 flex items-center gap-1 transition-colors">
+                        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> دوبارہ شروع کریں
+                    </button>
+                </div>
+
+                <div class="my-auto py-4">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 urdu-text leading-relaxed text-right" id="question-text">
+                        لوڈنگ ہو رہی ہے...
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6" id="options-container">
+                    </div>
+
+                <div class="flex justify-between items-center mt-8 pt-6 border-t border-gray-100">
+                    <button onclick="prevQuestion()" id="btn-prev" class="px-5 py-2.5 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-2 disabled:opacity-40 disabled:pointer-events-none">
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i> سابقہ سوال
+                    </button>
+                    <button onclick="nextQuestion()" id="btn-next" class="px-5 py-2.5 rounded-xl bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 shadow-sm transition-colors flex items-center gap-2">
+                        اگلا سوال <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="apple-card p-5 max-h-[580px] flex flex-col">
+                <div class="flex items-center gap-2 mb-4">
+                    <i data-lucide="grid" class="w-4 h-4 text-gray-500"></i>
+                    <h3 class="text-sm font-bold text-gray-700">فوری نیویگیشن گریڈ</h3>
+                </div>
+                <div class="grid grid-cols-5 gap-2 overflow-y-auto pr-1 no-scrollbar" id="nav-grid-container">
+                    </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        // Full Dataset mapping the 239 Questions from JSON
+        const quizData = [
+  {
+    "number": 1,
+    "statement": "قرآن مجید کی سب سے طویل سورت ہے:",
+    "options": { "A": "سورۃ المائدہ", "B": "سورۃ النساء", "C": "سورۃ آل عمران", "D": "سورۃ البقرہ" },
+    "correct_option": "D", "correct_answer": "سورۃ البقرہ"
+  },
+  {
+    "number": 2,
+    "statement": "قرآن مجید کی سب سے فضیلت والی آیت ہے:",
+    "options": { "A": "آیت دین", "B": "آیت عدل", "C": "آیت الکرسی", "D": "آیت مباہلہ" },
+    "correct_option": "C", "correct_answer": "آیت الکرسی"
+  },
+  {
+    "number": 3,
+    "statement": "حضرت عمر رضی اللہ تعالیٰ عنہ نے سورۃ البقرہ سیکھی:",
+    "options": { "A": "دس سال میں", "B": "گیارہ سال میں", "C": "بارہ سال میں", "D": "تیرہ سال میں" },
+    "correct_option": "C", "correct_answer": "بارہ سال میں"
+  },
+  {
+    "number": 4,
+    "statement": "آیت الکرسی حصہ ہے:",
+    "options": { "A": "سورۃ الرحمن کا", "B": "سورۃ یٰسین کا", "C": "سورۃ آل عمران کا", "D": "سورۃ البقرہ کا" },
+    "correct_option": "D", "correct_answer": "سورۃ البقرہ کا"
+  },
+  {
+    "number": 5,
+    "statement": "عربی زبان میں بقرہ کا معنی ہے:",
+    "options": { "A": "ہاتھی", "B": "گائے", "C": "اونٹ", "D": "مکڑی" },
+    "correct_option": "B", "correct_answer": "گائے"
+  },
+  {
+    "number": 6,
+    "statement": "شیطان اس گھر میں داخل نہیں ہوتا جس میں تلاوت کی جائے:",
+    "options": { "A": "سورۃ النساء کی", "B": "سورۃ یٰسین کی", "C": "سورۃ یونس کی", "D": "سورۃ البقرہ کی" },
+    "correct_option": "D", "correct_answer": "سورۃ البقرہ کی"
+  },
+  {
+    "number": 7,
+    "statement": "سورۃ البقرہ کو قرار دیا گیا ہے:",
+    "options": { "A": "قرآن مجید کا دل", "B": "قرآن مجید کی زینت", "C": "قرآن مجید کی شان", "D": "قرآن مجید کی چوٹی" },
+    "correct_option": "D", "correct_answer": "قرآن مجید کی چوٹی"
+  },
+  {
+    "number": 8,
+    "statement": "سورۃ البقرہ کا مرکزی مضمون ہے:",
+    "options": { "A": "آخرت", "B": "ہدایت", "C": "تجارت", "D": "سیاست" },
+    "correct_option": "B", "correct_answer": "ہدایت"
+  },
+  {
+    "number": 9,
+    "statement": "سورۃ البقرہ میں انسانوں کی قسمیں بیان کی گئی ہیں:",
+    "options": { "A": "تین", "B": "چار", "C": "پانچ", "D": "چھ" },
+    "correct_option": "A", "correct_answer": "تین"
+  },
+  {
+    "number": 10,
+    "statement": "مدینہ منورہ کے آس پاس بڑی تعداد میں آباد تھے:",
+    "options": { "A": "مسیحی", "B": "صابی", "C": "یہودی", "D": "مجوسی" },
+    "correct_option": "C", "correct_answer": "یہودی"
+  },
+  {
+    "number": 11,
+    "statement": "حضرت ابراہیم علیہ السلام کو اپنا روحانی پیشوا مانتے ہیں:",
+    "options": { "A": "یہودی", "B": "نصاریٰ", "C": "مشرکین مکہ", "D": "یہ سب" },
+    "correct_option": "D", "correct_answer": "یہ سب"
+  },
+  {
+    "number": 12,
+    "statement": "اللہ اور رسول کے خلاف جنگ سے تعبیر کیا گیا ہے:",
+    "options": { "A": "سود کو", "B": "بدعت کو", "C": "کم تولنے کو", "D": "ملاوٹ کرنے کو" },
+    "correct_option": "A", "correct_answer": "سود کو"
+  },
+  {
+    "number": 13,
+    "statement": "ایمان کا اظہار ہوتا ہے:",
+    "options": { "A": "چہرے سے", "B": "باتوں سے", "C": "اعمال سے", "D": "آنکھوں سے" },
+    "correct_option": "C", "correct_answer": "اعمال سے"
+  },
+  {
+    "number": 14,
+    "statement": "مصائب اور تکالیف میں اللہ کی مدد طلب کرنی چاہیے:",
+    "options": { "A": "والدین کے ذریعے", "B": "مال و دولت کے ذریعے", "C": "رشتہ داروں کے ذریعے", "D": "صبر اور نماز کے ذریعے" },
+    "correct_option": "D", "correct_answer": "صبر اور نماز کے ذریعے"
+  },
+  {
+    "number": 15,
+    "statement": "سود کا انجام ہے:",
+    "options": { "A": "مفلسی", "B": "موت", "C": "بیماری", "D": "ذلت" },
+    "correct_option": "A", "correct_answer": "مفلسی"
+  },
+  {
+    "number": 16,
+    "statement": "آل عمران کا معنی ہے:",
+    "options": { "A": "عمران کے پڑوسی", "B": "عمران کا قبیلہ", "C": "عمران کا خاندان", "D": "عمران کے رشتے دار" },
+    "correct_option": "C", "correct_answer": "عمران کا خاندان"
+  },
+  {
+    "number": 17,
+    "statement": "سورۃ آل عمران کی آیات کی تعداد ہے:",
+    "options": { "A": "75", "B": "129", "C": "200", "D": "286" },
+    "correct_option": "C", "correct_answer": "200"
+  },
+  {
+    "number": 18,
+    "statement": "حضرت عمران نانا ہیں:",
+    "options": { "A": "حضرت یونس علیہ السلام کے", "B": "حضرت موسیٰ علیہ السلام کے", "C": "حضرت زکریا علیہ السلام کے", "D": "حضرت عیسیٰ علیہ السلام کے" },
+    "correct_option": "D", "correct_answer": "حضرت عیسیٰ علیہ السلام کے"
+  },
+  {
+    "number": 19,
+    "statement": "سورۃ آل عمران کی آیت 61 کہلاتی ہے:",
+    "options": { "A": "آیت احسان", "B": "آیت مباہلہ", "C": "آیت سجدہ", "D": "آیت عدل" },
+    "correct_option": "B", "correct_answer": "آیت مباہلہ"
+  },
+  {
+    "number": 20,
+    "statement": "نجران کا وفد مدینہ منورہ آیا تھا:",
+    "options": { "A": "جاسوسی کرنے", "B": "مناظرہ کرنے", "C": "جنگ کرنے", "D": "تجارت کرنے" },
+    "correct_option": "B", "correct_answer": "مناظرہ کرنے"
+  },
+  {
+    "number": 21,
+    "statement": "سورۃ آل عمران میں جن دو جنگوں کا ذکر ہے:",
+    "options": { "A": "یرموک اور یمامہ", "B": "تبوک اور موتہ", "C": "بدر اور اُحد", "D": "خندق اور حنین" },
+    "correct_option": "C", "correct_answer": "بدر اور اُحد"
+  },
+  {
+    "number": 22,
+    "statement": "غزوہ اُحد میں مشرکین کے لشکر کی قیادت کی:",
+    "options": { "A": "ابوسفیان نے", "B": "امیہ بن خلف نے", "C": "ابولہب نے", "D": "ابوجہل نے" },
+    "correct_option": "A", "correct_answer": "ابوسفیان نے"
+  },
+  {
+    "number": 23,
+    "statement": "غزوہ اُحد میں شہید ہونے والے صحابی ہیں:",
+    "options": { "A": "حضرت ابوہریرہؓ", "B": "حضرت حمزہؓ", "C": "حضرت ابوعبیدہؓ", "D": "حضرت طلحہؓ" },
+    "correct_option": "B", "correct_answer": "حضرت حمزہؓ"
+  },
+  {
+    "number": 24,
+    "statement": "غزوہ اُحد میں مسلمان شہدا کی تعداد ہے:",
+    "options": { "A": "پچاس", "B": "ساٹھ", "C": "ستر", "D": "اسی" },
+    "correct_option": "C", "correct_answer": "ستر"
+  },
+  {
+    "number": 25,
+    "statement": "سورۃ آل عمران میں خصوصیت کے ساتھ خطاب ہے:",
+    "options": { "A": "اہل کتاب کو", "B": "اہل علم کو", "C": "اہل یمن کو", "D": "اہل عرب کو" },
+    "correct_option": "A", "correct_answer": "اہل کتاب کو"
+  },
+  {
+    "number": 26,
+    "statement": "سورۃ آل عمران میں بہترین اُمت قرار دیا گیا ہے:",
+    "options": { "A": "بنی اسرائیل کو", "B": "اہل مدین کو", "C": "قوم سبا کو", "D": "اُمت مسلمہ کو" },
+    "correct_option": "D", "correct_answer": "اُمت مسلمہ کو"
+  },
+  {
+    "number": 27,
+    "statement": "اُمت مسلمہ کو سب سے زیادہ ضرورت ہے:",
+    "options": { "A": "افرادی قوت کی", "B": "اتفاق و اتحاد کی", "C": "ریاستوں کی", "D": "وسائل کی" },
+    "correct_option": "B", "correct_answer": "اتفاق و اتحاد کی"
+  },
+  {
+    "number": 28,
+    "statement": "اللہ تعالیٰ کا ذکر کرنا چاہیے:",
+    "options": { "A": "غم کی حالت میں", "B": "خوشی کی حالت میں", "C": "جنگ کی حالت میں", "D": "ہر حالت میں" },
+    "correct_option": "D", "correct_answer": "ہر حالت میں"
+  },
+  {
+    "number": 29,
+    "statement": "\"اہل کتاب کی غلطیوں کا پردہ چاک کرنا...\" مرکزی مضمون ہے:",
+    "options": { "A": "سورۃ الرحمن کا", "B": "سورۃ یٰسین کا", "C": "سورۃ آل عمران کا", "D": "سورۃ البقرہ کا" },
+    "correct_option": "C", "correct_answer": "سورۃ آل عمران کا"
+  },
+  {
+    "number": 30,
+    "statement": "مسلمان کو اللہ کی راہ میں مال خرچ کرنا چاہیے:",
+    "options": { "A": "بدحالی میں", "B": "خوشحالی میں", "C": "مفلسی میں", "D": "ہر حال میں" },
+    "correct_option": "D", "correct_answer": "ہر حال میں"
+  },
+  {
+    "number": 31,
+    "statement": "سورۃ الانفال کی کل آیات ہیں:",
+    "options": { "A": "75", "B": "129", "C": "200", "D": "286" },
+    "correct_option": "A", "correct_answer": "75"
+  },
+  {
+    "number": 32,
+    "statement": "سورۃ الانفال نازل ہوئی:",
+    "options": { "A": "پانچ ہجری میں", "B": "چار ہجری میں", "C": "تین ہجری میں", "D": "دو ہجری میں" },
+    "correct_option": "D", "correct_answer": "دو ہجری میں"
+  },
+  {
+    "number": 33,
+    "statement": "غزوہ بدر میں مکی لشکر کا سردار تھا:",
+    "options": { "A": "ابولہب", "B": "ابوجہل", "C": "ابوسفیان", "D": "امیہ بن خلف" },
+    "correct_option": "B", "correct_answer": "ابوجہل"
+  },
+  {
+    "number": 34,
+    "statement": "غزوہ بدر میں کافر جنگجوؤں کی تعداد تھی:",
+    "options": { "A": "500", "B": "1000", "C": "1500", "D": "2000" },
+    "correct_option": "B", "correct_answer": "1000"
+  },
+  {
+    "number": 35,
+    "statement": "غزوہ بدر میں مسلمان مجاہدین کی تعداد تھی:",
+    "options": { "A": "213", "B": "313", "C": "413", "D": "513" },
+    "correct_option": "B", "correct_answer": "313"
+  },
+  {
+    "number": 36,
+    "statement": "غزوہ بدر اسلام اور کفر کے درمیان جنگ تھی:",
+    "options": { "A": "پہلی", "B": "دوسری", "C": "تیسری", "D": "چوتھی" },
+    "correct_option": "A", "correct_answer": "پہلی"
+  },
+  {
+    "number": 37,
+    "statement": "مکہ والوں کے تجارتی قافلے کا سردار تھا:",
+    "options": { "A": "ابولہب", "B": "امیہ بن خلف", "C": "ابوسفیان", "D": "ابوجہل" },
+    "correct_option": "C", "correct_answer": "ابوسفیان"
+  },
+  {
+    "number": 38,
+    "statement": "غزوہ بدر کا دوسرا نام ہے:",
+    "options": { "A": "یوم الفرقان", "B": "غزوہ احزاب", "C": "جیش العسرۃ", "D": "جنگ فجار" },
+    "correct_option": "A", "correct_answer": "یوم الفرقان"
+  },
+  {
+    "number": 39,
+    "statement": "سورۃ الانفال میں احکام بیان ہوئے ہیں:",
+    "options": { "A": "جہاد کے", "B": "نماز کے", "C": "پردے کے", "D": "حج کے" },
+    "correct_option": "A", "correct_answer": "جہاد کے"
+  },
+  {
+    "number": 40,
+    "statement": "سورۃ الانفال میں اہل مکہ کو انجام سے ڈرایا گیا ہے:",
+    "options": { "A": "قوم ثمود کے", "B": "قوم عاد کے", "C": "بنی اسرائیل کے", "D": "آل فرعون کے" },
+    "correct_option": "D", "correct_answer": "آل فرعون کے"
+  },
+  {
+    "number": 41,
+    "statement": "سورۃ التوبہ کی آیات کی تعداد ہے:",
+    "options": { "A": "75", "B": "129", "C": "200", "D": "286" },
+    "correct_option": "B", "correct_answer": "129"
+  },
+  {
+    "number": 42,
+    "statement": "سورۃ التوبہ کا دوسرا نام ہے:",
+    "options": { "A": "سورۃ الملائکہ", "B": "سورۃ الاسراء", "C": "سورۃ العقود", "D": "سورۃ البراءۃ" },
+    "correct_option": "D", "correct_answer": "سورۃ البراءۃ"
+  },
+  {
+    "number": 43,
+    "statement": "جس سورت کے شروع میں \"بِسمِ اللہ\" نہیں ہے:",
+    "options": { "A": "سورۃ الانفال", "B": "سورۃ التوبہ", "C": "سورۃ الفاتحہ", "D": "سورۃ النمل" },
+    "correct_option": "B", "correct_answer": "سورۃ التوبہ"
+  },
+  {
+    "number": 44,
+    "statement": "سورۃ التوبہ نازل ہوئی:",
+    "options": { "A": "فتح مکہ کے بعد", "B": "صلح حدیبیہ کے بعد", "C": "غزوہ اُحد کے بعد", "D": "غزوہ تبوک کے بعد" },
+    "correct_option": "D", "correct_answer": "غزوہ تبوک کے بعد"
+  },
+  {
+    "number": 45,
+    "statement": "غزوہ تبوک میں مسلمانوں کا ہدف تھا:",
+    "options": { "A": "ایرانیوں کا لشکر", "B": "یہودیوں کا لشکر", "C": "مکہ والوں کا لشکر", "D": "رومیوں کا لشکر" },
+    "correct_option": "D", "correct_answer": "رومیوں کا لشکر"
+  },
+  {
+    "number": 46,
+    "statement": "مسجد کی تعمیر اور نگرانی کے لیے شرط ہے:",
+    "options": { "A": "ایمانِ کامل", "B": "تاجر ہونا", "C": "مال دار ہونا", "D": "صاحبِ علم ہونا" },
+    "correct_option": "A", "correct_answer": "ایمانِ کامل"
+  },
+  {
+    "number": 47,
+    "statement": "غزوہ تبوک میں مسلمانوں کا مقابلہ تھا:",
+    "options": { "A": "عیسائیوں سے", "B": "مشرکین سے", "C": "یہودیوں سے", "D": "منافقین سے" },
+    "correct_option": "A", "correct_answer": "عیسائیوں سے"
+  },
+  {
+    "number": 48,
+    "statement": "سورۃ التوبہ میں تفصیلی ذکر ہے:",
+    "options": { "A": "جنگ یرموک کا", "B": "فتح مکہ کا", "C": "غزوہ تبوک کا", "D": "جنگِ موتہ کا" },
+    "correct_option": "C", "correct_answer": "غزوہ تبوک کا"
+  },
+  {
+    "number": 49,
+    "statement": "سورۃ التوبہ میں ذکر ہے:",
+    "options": { "A": "عرفات کا", "B": "حدیبیہ کا", "C": "غارِ ثور کا", "D": "غارِ حراء کا" },
+    "correct_option": "C", "correct_answer": "غارِ ثور کا"
+  },
+  {
+    "number": 50,
+    "statement": "سورۃ التوبہ میں سازشیں بے نقاب کی گئی ہیں:",
+    "options": { "A": "منافقین کی", "B": "یہودیوں کی", "C": "عیسائیوں کی", "D": "مشرکین کی" },
+    "correct_option": "A", "correct_answer": "منافقین کی"
+  },
+  {
+    "number": 51,
+    "statement": "قرآن مجید کی سب سے بڑی سورت ہے:",
+    "options": { "A": "سورۃ البقرہ", "B": "سورۃ آل عمران", "C": "سورۃ التوبہ", "D": "سورۃ الانفال" },
+    "correct_option": "A", "correct_answer": "سورۃ البقرہ"
+  },
+  {
+    "number": 52,
+    "statement": "آیت الکرسی حصہ ہے:",
+    "options": { "A": "سورۃ البقرہ کا", "B": "سورۃ آل عمران کا", "C": "سورۃ الانفال کا", "D": "سورۃ التوبہ کا" },
+    "correct_option": "A", "correct_answer": "سورۃ البقرہ کا"
+  },
+  {
+    "number": 53,
+    "statement": "ہاروت و ماروت تھے:",
+    "options": { "A": "انسان", "B": "نبی", "C": "فرشته", "D": "جن" },
+    "correct_option": "C", "correct_answer": "فرشته"
+  },
+  {
+    "number": 54,
+    "statement": "قتل سے بھی زیادہ سنگین برائی ہے:",
+    "options": { "A": "فساد", "B": "فتنہ", "C": "بدتمیزی", "D": "بے حیائی" },
+    "correct_option": "B", "correct_answer": "فتنہ"
+  },
+  {
+    "number": 55,
+    "statement": "سورۃ البقرہ کا مرکزی مضمون ہے:",
+    "options": { "A": "آخرت", "B": "ہدایت", "C": "تجارت", "D": "سیاست" },
+    "correct_option": "B", "correct_answer": "ہدایت"
+  },
+  {
+    "number": 56,
+    "statement": "آگ کا ایندھن انسان اور۔۔۔۔۔۔ ہیں:",
+    "options": { "A": "حیوان", "B": "درخت", "C": "پتھر", "D": "پہاڑ" },
+    "correct_option": "C", "correct_answer": "پتھر"
+  },
+  {
+    "number": 57,
+    "statement": "ابراہیم علیہ السلام کو اپنا روحانی پیشوا مانتے تھے:",
+    "options": { "A": "یہودی", "B": "نصاریٰ", "C": "مشرکین مکہ", "D": "یہ تمام" },
+    "correct_option": "D", "correct_answer": "یہ تمام"
+  },
+  {
+    "number": 58,
+    "statement": "حضرت آدمؑ کو فرشتوں پر فضیلت کی وجہ ہے:",
+    "options": { "A": "دولت", "B": "علم", "C": "فخر", "D": "تکبیر" },
+    "correct_option": "B", "correct_answer": "علم"
+  },
+  {
+    "number": 59,
+    "statement": "اللہ تعالیٰ نے بنی اسرائیل کو ذبح کرنے کا حکم دیا:",
+    "options": { "A": "بچھڑا", "B": "اونٹ", "C": "گائے", "D": "بکری" },
+    "correct_option": "C", "correct_answer": "گائے"
+  },
+  {
+    "number": 60,
+    "statement": "ہلِ کتاب حضور صلی اللہ علیہ وسلم کو پہچانتے ہیں جیسے اپنے۔۔۔کو:",
+    "options": { "A": "بیٹیوں", "B": "بیٹوں", "C": "بھائیوں", "D": "والدین" },
+    "correct_option": "B", "correct_answer": "بیٹوں"
+  },
+  {
+    "number": 61,
+    "statement": "راہِ خدا میں شهید ہونے والوں کو۔۔۔ کہنے سے منع کیا گیا ہے:",
+    "options": { "A": "مردہ", "B": "بے اولاد", "C": "شہید", "D": "لاوارث" },
+    "correct_option": "A", "correct_answer": "مردہ"
+  },
+  {
+    "number": 62,
+    "statement": "بقرہ کا معنی ہے:",
+    "options": { "A": "گائے", "B": "ہاتھی", "C": "بکرا", "D": "مکڑی" },
+    "correct_option": "A", "correct_answer": "گائے"
+  },
+  {
+    "number": 63,
+    "statement": "سورۃ آل عمران میں ذکر ہے:",
+    "options": { "A": "غزوہ حنین کا", "B": "غزوہ بدر و اُحد کا", "C": "غزوہ خندق کا", "D": "غزوہ تبوک کا" },
+    "correct_option": "B", "correct_answer": "غزوہ بدر و اُحد کا"
+  },
+  {
+    "number": 64,
+    "statement": "حضرت عیسیٰ علیہ السلام کے حالات بیان ہوئے:",
+    "options": { "A": "سورۃ البقرہ", "B": "سورۃ آل عمران", "C": "سورۃ توبہ", "D": "سورۃ الانفال" },
+    "correct_option": "B", "correct_answer": "سورۃ آل عمران"
+  },
+  {
+    "number": 65,
+    "statement": "حضرت محمد صلی اللہ علیہ وسلم نے مباہلہ کی دعوت دی:",
+    "options": { "A": "مشرکینِ مکہ کو", "B": "کفارِ مکہ کو", "C": "عیسائیوں کو", "D": "یہودیوں کو" },
+    "correct_option": "C", "correct_answer": "عیسائیوں کو"
+  },
+  {
+    "number": 66,
+    "statement": "سب سے پہلا گھر جو عبادت کے لیے بنایا گیا:",
+    "options": { "A": "بیت اللہ", "B": "بیت المقدس", "C": "بیت اللحم", "D": "مسجد نبوی" },
+    "correct_option": "A", "correct_answer": "بیت اللہ"
+  },
+  {
+    "number": 67,
+    "statement": "تفرقے کی ممانعت اور بخل کی مذمت بیان ہوتی ہے:",
+    "options": { "A": "سورۃ البقرہ", "B": "سورۃ آل عمران", "C": "سورۃ التوبہ", "D": "سورۃ الماعون" },
+    "correct_option": "B", "correct_answer": "سورۃ آل عمران"
+  },
+  {
+    "number": 68,
+    "statement": "اللہ تعالیٰ میز بانی فرمائیں گے: (199-198v)",
+    "options": { "A": "کفار کی", "B": "اہلِ کتاب کی", "C": "ہندوؤں کی", "D": "بدھ مت کی" },
+    "correct_option": "B", "correct_answer": "اہلِ کتاب کی"
+  },
+  {
+    "number": 69,
+    "statement": "نبی کریم صلی اللہ علیہ وسلم کے پاس عیسائیوں کا ایک وفد آیا تھا:",
+    "options": { "A": "نجران سے", "B": "حبشہ سے", "C": "مدینہ منورہ سے", "D": "ایران سے" },
+    "correct_option": "A", "correct_answer": "نجران سے"
+  },
+  {
+    "number": 70,
+    "statement": "مٹی سے پرندہ بنانا۔۔۔ معجزات ہیں:",
+    "options": { "A": "حضرت موسیٰ کے", "B": "حضرت عیسیٰ کے", "C": "حضرت نوح کے", "D": "حضرت یوسف کے" },
+    "correct_option": "B", "correct_answer": "حضرت عیسیٰ کے"
+  },
+  {
+    "number": 71,
+    "statement": "سورۃ الانفال نازل ہوئی:",
+    "options": { "A": "غزوہ تبوک کے بعد", "B": "غزوہ خندق کے بعد", "C": "غزوہ بنو نضیر کے بعد", "D": "غزوہ بدر کے بعد" },
+    "correct_option": "D", "correct_answer": "غزوہ بدر کے بعد"
+  },
+  {
+    "number": 72,
+    "statement": "مالِ غنیمت کی تقسیم کے احکام ہیں:",
+    "options": { "A": "سورۃ البقرہ میں", "B": "سورۃ آل عمران میں", "C": "سورۃ الانعام میں", "D": "سورۃ الانفال میں" },
+    "correct_option": "D", "correct_answer": "سورۃ الانفال میں"
+  },
+  {
+    "number": 73,
+    "statement": "الانفال کا معنی ہے:",
+    "options": { "A": "خراج", "B": "مال و دولت", "C": "مالِ غنیمت", "D": "زکوۃ" },
+    "correct_option": "C", "correct_answer": "مالِ غنیمت"
+  },
+  {
+    "number": 74,
+    "statement": "دورِ نبوی صلی اللہ علیہ وسلم کی پہلی جنگ ہے:",
+    "options": { "A": "بدر", "B": "احد", "C": "سویق", "D": "تبوک" },
+    "correct_option": "A", "correct_answer": "بدر"
+  },
+  {
+    "number": 75,
+    "statement": "سورۃ الانفال میں احکام بیان ہوئے ہیں:",
+    "options": { "A": "جہاد کے", "B": "نماز کے", "C": "پردے کے", "D": "حج کے" },
+    "correct_option": "A", "correct_answer": "جہاد کے"
+  },
+  {
+    "number": 76,
+    "statement": "فرشتوں کا نزول کس غزوہ میں ہوا:",
+    "options": { "A": "أحد", "B": "حنین", "C": "تبوک", "D": "بدر" },
+    "correct_option": "D", "correct_answer": "بدر"
+  },
+  {
+    "number": 77,
+    "statement": "بارانِ رحمت کا نزول کس غزوہ کے موقع پر ہوا:",
+    "options": { "A": "تبوک", "B": "حنین", "C": "أحد", "D": "بدر" },
+    "correct_option": "D", "correct_answer": "بدر"
+  },
+  {
+    "number": 78,
+    "statement": "جنگِ تبوک میں پیچھے رہ جانے والے صحابی ہیں:",
+    "options": { "A": "حضرت کعب بن مالک", "B": "حضرت کعبؓ", "C": "حضرت زرارہؓ", "D": "تمام" },
+    "correct_option": "A", "correct_answer": "حضرت کعب بن مالک"
+  },
+  {
+    "number": 79,
+    "statement": "اللہ تعالیٰ سے محبت کی نشانی ہے:",
+    "options": { "A": "گناہوں سے بچنا", "B": "نیکیاں کرنا", "C": "ولی سے پیار", "D": "نبی کریم صلی اللہ علیہ وسلم سے محبت" },
+    "correct_option": "D", "correct_answer": "نبی کریم صلی اللہ علیہ وسلم سے محبت"
+  },
+  {
+    "number": 80,
+    "statement": "بنو نضیر کا قبیلہ تھا:",
+    "options": { "A": "مجوسی", "B": "مشرک", "C": "یہودی", "D": "نصرانی" },
+    "correct_option": "C", "correct_answer": "یہودی"
+  },
+  {
+    "number": 81,
+    "statement": "مالِ غنیمت اور جہاد کے احکام بیان ہوئے ہیں:",
+    "options": { "A": "سورۃ الانفال میں", "B": "سورۃ التوبہ میں", "C": "سورۃ النحل میں", "D": "سورۃ البقرہ میں" },
+    "correct_option": "A", "correct_answer": "سورۃ الانفال میں"
+  },
+  {
+    "number": 82,
+    "statement": "\"بِسْمِ اللہ\" کس سورت کے آغاز میں نہیں ہے:",
+    "options": { "A": "سورۃ البقرہ", "B": "سورۃ آل عمران", "C": "سورۃ الانفال", "D": "سورۃ التوبہ" },
+    "correct_option": "D", "correct_answer": "سورۃ التوبہ"
+  },
+  {
+    "number": 83,
+    "statement": "\"ابن مریم\" ہیں:",
+    "options": { "A": "حضرت موسیٰ", "B": "حضرت عیسیٰ", "C": "حضرت یحییٰ", "D": "حضرت یونس" },
+    "correct_option": "B", "correct_answer": "حضرت عیسیٰ"
+  },
+  {
+    "number": 84,
+    "statement": "گناہوں کے لیے کفارہ بنتا ہے:",
+    "options": { "A": "زکوۃ", "B": "صدقہ", "C": "خیرات", "D": "مناجات" },
+    "correct_option": "B", "correct_answer": "صدقہ"
+  },
+  {
+    "number": 85,
+    "statement": "غزوہ تبوک کا ذکر کس سورت میں ہے:",
+    "options": { "A": "سورۃ الانفال", "B": "سورۃ التوبہ", "C": "سورۃ البقرہ", "D": "تمام" },
+    "correct_option": "B", "correct_answer": "سورۃ التوبہ"
+  },
+  {
+    "number": 86,
+    "statement": "غزوہ تبوک پیش آیا:",
+    "options": { "A": "8 ہجری میں", "B": "9 ہجری میں", "C": "10 ہجری میں", "D": "11 ہجری میں" },
+    "correct_option": "B", "correct_answer": "9 ہجری میں"
+  },
+  {
+    "number": 87,
+    "statement": "مصارفِ زکوۃ ہیں:",
+    "options": { "A": "8", "B": "9", "C": "10", "D": "12" },
+    "correct_option": "A", "correct_answer": "8"
+  },
+  {
+    "number": 88,
+    "statement": "حرام مہینوں کی تعداد ہے:",
+    "options": { "A": "چار", "B": "پانچ", "C": "چھ", "D": "سات" },
+    "correct_option": "A", "correct_answer": "چار"
+  },
+  {
+    "number": 89,
+    "statement": "مومنین کے لیے حریص ہیں:",
+    "options": { "A": "حضرت آدم علیہ السلام", "B": "حضور خاتم النبیین صلی اللہ علیہ وسلم", "C": "حضرت نوح علیہ السلام", "D": "حضرت ہود علیہ السلام" },
+    "correct_option": "B", "correct_answer": "حضور خاتم النبیین صلی اللہ علیہ وسلم"
+  },
+  {
+    "number": 90,
+    "statement": "قرآن مجید کی سب سے لمبی سورت ہے:",
+    "options": { "A": "سورۃ آل عمران", "B": "سورۃ التوبہ", "C": "سورۃ الانفال", "D": "سورۃ البقرہ" },
+    "correct_option": "D", "correct_answer": "سورۃ البقرہ"
+  },
+  {
+    "number": 91,
+    "statement": "سورۃ البقرہ کے مجموعی رکوع ہیں:",
+    "options": { "A": "40", "B": "50", "C": "30", "D": "20" },
+    "correct_option": "A", "correct_answer": "40"
+  },
+  {
+    "number": 92,
+    "statement": "سورۃ البقرہ کی آیات کی تعداد ہے:",
+    "options": { "A": "200", "B": "286", "C": "98", "D": "293" },
+    "correct_option": "B", "correct_answer": "286"
+  },
+  {
+    "number": 93,
+    "statement": "ترتیب کے اعتبار سے دوسری سورت ہے:",
+    "options": { "A": "سورۃ المائدہ", "B": "سورۃ الفاتحہ", "C": "سورۃ البقرہ", "D": "سورۃ آل عمران" },
+    "correct_option": "C", "correct_answer": "سورۃ البقرہ"
+  },
+  {
+    "number": 94,
+    "statement": "سورۃ البقرہ کا آغاز ہوتا ہے:",
+    "options": { "A": "حروفِ انبساط سے", "B": "حروفِ قلقلہ سے", "C": "حروفِ عطف سے", "D": "حروفِ مقطعات سے" },
+    "correct_option": "D", "correct_answer": "حروفِ مقطعات سے"
+  },
+  {
+    "number": 95,
+    "statement": "حروفِ مقطعات کے معنی جانتے ہیں:",
+    "options": { "A": "اللہ تعالیٰ اور سب لوگ", "B": "اللہ اور اس کے رسول صلی اللہ علیہ وسلم", "C": "اللہ اور سب فرشتے", "D": "فرشتے اور نیک بندے" },
+    "correct_option": "B", "correct_answer": "اللہ اور اس کے رسول صلی اللہ علیہ وسلم"
+  },
+  {
+    "number": 96,
+    "statement": "عربی میں \"بقرہ\" سے مراد ہے:",
+    "options": { "A": "مینڈھا", "B": "بکرا", "C": "اونٹ", "D": "گائے" },
+    "correct_option": "D", "correct_answer": "گائے"
+  },
+  {
+    "number": 97,
+    "statement": "سورۃ البقرہ نازل ہوئی:",
+    "options": { "A": "مکہ مکرمہ میں", "B": "طائف میں", "C": "مدینہ منورہ میں", "D": "حنین میں" },
+    "correct_option": "C", "correct_answer": "مدینہ منورہ میں"
+  },
+  {
+    "number": 98,
+    "statement": "شیطان اس گھر میں داخل نہیں ہوتا جس میں تلاوت ہو:",
+    "options": { "A": "سورۃ البقرہ کی", "B": "سورۃ التوبہ کی", "C": "سورۃ الانفال کی", "D": "سورۃ الکوثر کی" },
+    "correct_option": "A", "correct_answer": "سورۃ البقرہ کی"
+  },
+  {
+    "number": 99,
+    "statement": "آپ صلی اللہ علیہ وسلم کے فرمان کے مطابق قرآن مجید کی چوٹی ہے:",
+    "options": { "A": "سورۃ الرحمن", "B": "سورۃ التغابن", "C": "سورۃ البقرہ", "D": "سورۃ التوبہ" },
+    "correct_option": "C", "correct_answer": "سورۃ البقرہ"
+  },
+  {
+    "number": 100,
+    "statement": "حضرت عمر رضی اللہ تعالیٰ عنہ کو سورۃ البقرہ سیکھنے میں لگے:",
+    "options": { "A": "بارہ سال", "B": "آٹھ سال", "C": "دس سال", "D": "سولہ سال" },
+    "correct_option": "A", "correct_answer": "بارہ سال"
+  },
+  {
+    "number": 101,
+    "statement": "حضرت عبداللہ بن عمرؓ نے سورۃ البقرہ کتنے عرصے میں سیکھی؟",
+    "options": { "A": "سورہ سال میں", "B": "دس سال میں", "C": "آٹھ سال میں", "D": "بارہ سال میں" },
+    "correct_option": "C", "correct_answer": "آٹھ سال میں"
+  },
+  {
+    "number": 102,
+    "statement": "آیۃ الکرسی سورۃ البقرہ کی کس آیت کو کہا جاتا ہے؟",
+    "options": { "A": "آیت نمبر 155", "B": "آیت نمبر 255", "C": "آیت نمبر 286", "D": "آیت نمبر 166" },
+    "correct_option": "B", "correct_answer": "آیت نمبر 255"
+  },
+  {
+    "number": 103,
+    "statement": "آیۃ الکرسی تمام آیتوں کی ہے:",
+    "options": { "A": "زینت", "B": "محافظ", "C": "شان", "D": "سردار" },
+    "correct_option": "D", "correct_answer": "سردار"
+  },
+  {
+    "number": 104,
+    "statement": "جو فرض نماز کے بعد آیۃ الکرسی پڑھے، اسے جنت سے روکتی ہے:",
+    "options": { "A": "خیانت", "B": "زندگی", "C": "بددیانتی", "D": "موت" },
+    "correct_option": "D", "correct_answer": "موت"
+  },
+  {
+    "number": 105,
+    "statement": "سورۃ البقرہ کا مرکزی مضمون ہے:",
+    "options": { "A": "ایمان", "B": "ہدایت", "C": "رحمت", "D": "آخرت" },
+    "correct_option": "B", "correct_answer": "ہدایت"
+  },
+  {
+    "number": 106,
+    "statement": "ہدایت حاصل کرنے کی صلاحیت رکھتے ہیں:",
+    "options": { "A": "نمازی", "B": "مجاہدین", "C": "متقیین", "D": "مهاجرین" },
+    "correct_option": "C", "correct_answer": "متقیین"
+  },
+  {
+    "number": 107,
+    "statement": "سورۃ البقرہ کے مطابق انسانوں کی کتنی قسمیں ہیں؟",
+    "options": { "A": "دو", "B": "چار", "C": "پانچ", "D": "تین" },
+    "correct_option": "D", "correct_answer": "تین"
+  },
+  {
+    "number": 108,
+    "statement": "مدینہ کے آس پاس بڑی تعداد میں آباد تھے:",
+    "options": { "A": "مسیحی", "B": "یہودی", "C": "کافر", "D": "مومن" },
+    "correct_option": "B", "correct_answer": "یہودی"
+  },
+  {
+    "number": 109,
+    "statement": "یہودی، عیسائی اور بت پرست اپنا پیشوا مانتے تھے:",
+    "options": { "A": "حضرت موسیٰ کو", "B": "حضرت ابراہیم کو", "C": "حضرت عیسیٰ کو", "D": "حضرت یحییٰ کو" },
+    "correct_option": "B", "correct_answer": "حضرت ابراہیم کو"
+  },
+  {
+    "number": 110,
+    "statement": "بیت اللہ کو اللہ کے حکم سے تعمیر کیا:",
+    "options": { "A": "حضرت ابراہیم و اسحاقؑ", "B": "حضرت زکریا و یحییٰؑ", "C": "حضرت ابراہیم و اسماعیلؑ", "D": "حضرت موسیٰ و ہارونؑ" },
+    "correct_option": "C", "correct_answer": "حضرت ابراہیم و اسماعیلؑ"
+  },
+  {
+    "number": 111,
+    "statement": "سورۃ البقرہ میں کسے اللہ اور رسول کے خلاف جنگ قرار دیا گیا؟",
+    "options": { "A": "سود کو", "B": "بے حیائی کو", "C": "نافرمانی کو", "D": "جھوٹ کو" },
+    "correct_option": "A", "correct_answer": "سود کو"
+  },
+  {
+    "number": 112,
+    "statement": "حضرت ابراہیم علیہ السلام قائل تھے:",
+    "options": { "A": "محنت و مشقت کے", "B": "شفاعت و مغفرت کے", "C": "ہمدردی و نرمی کے", "D": "خالص توحید کے" },
+    "correct_option": "D", "correct_answer": "خالص توحید کے"
+  },
+  {
+    "number": 113,
+    "statement": "ایمان کا اظہار کس چیز سے ہوتا ہے؟",
+    "options": { "A": "مجلس سے", "B": "تجارت سے", "C": "عمل سے", "D": "تکبر سے بچنے سے" },
+    "correct_option": "C", "correct_answer": "عمل سے"
+  },
+  {
+    "number": 114,
+    "statement": "ایمان والوں کو کس کے ذریعے اللہ سے مدد مانگنی چاہیے؟",
+    "options": { "A": "نماز اور زکوۃ سے", "B": "نماز اور روزے سے", "C": "نماز اور حج سے", "D": "نماز اور صبر سے" },
+    "correct_option": "D", "correct_answer": "نماز اور صبر سے"
+  },
+  {
+    "number": 115,
+    "statement": "یہودیوں نے حسد کی وجہ سے کس کا انکار کیا؟",
+    "options": { "A": "حضرت موسیٰ کی نبوت", "B": "آپ صلی اللہ علیہ وسلم کی رسالت کا", "C": "حضرت داؤد کی نبوت", "D": "حضرت عیسیٰ کی نبوت" },
+    "correct_option": "B", "correct_answer": "آپ صلی اللہ علیہ وسلم کی رسالت کا"
+  },
+  {
+    "number": 116,
+    "statement": "قرآن مجید کس مہینے میں نازل ہوا؟",
+    "options": { "A": "ماہِ رمضان میں", "B": "ماہِ رجب میں", "C": "ماہِ شوال میں", "D": "ماہِ شعبان میں" },
+    "correct_option": "A", "correct_answer": "ماہِ رمضان میں"
+  },
+  {
+    "number": 117,
+    "statement": "مال خرچ کرنے کی ترتیب میں سب سے پہلے حق ہے:",
+    "options": { "A": "والدین کا", "B": "رشتہ داروں کا", "C": "ضرورت مندوں کا", "D": "پڑوسیوں کا" },
+    "correct_option": "A", "correct_answer": "والدین کا"
+  },
+  {
+    "number": 118,
+    "statement": "دین میں کوئی۔۔۔ نہیں ہے:",
+    "options": { "A": "لا علمی", "B": "بددیانتی", "C": "بخل", "D": "جبر" },
+    "correct_option": "D", "correct_answer": "جبر"
+  },
+  {
+    "number": 119,
+    "statement": "نیکی ضائع ہو جاتی ہے:",
+    "options": { "A": "امانت سے", "B": "شرافت سے", "C": "احسان جتلانے سے", "D": "دیانت داری سے" },
+    "correct_option": "C", "correct_answer": "احسان جتلانے سے"
+  },
+  {
+    "number": 120,
+    "statement": "سود کا انجام کیا ہوتا ہے؟",
+    "options": { "A": "بدکرداری", "B": "مفلسی اور تباہی", "C": "نا امیدی", "D": "نا انصافی" },
+    "correct_option": "B", "correct_answer": "مفلسی اور تباہی"
+  },
+  {
+    "number": 121,
+    "statement": "قرض کے معاملات کے بارے میں کیا تلقین کی گئی ہے؟",
+    "options": { "A": "تحریر کریں اور گواہ بنائیں", "B": "تحریر کریں بتائیں نہیں", "C": "تحریر نہ کریں", "D": "سب کو بتائیں" },
+    "correct_option": "A", "correct_answer": "تحریر کریں اور گواہ بنائیں"
+  },
+  {
+    "number": 122,
+    "statement": "قرآن مجید کی سب سے لمبی آیت کس سورہ میں ہے؟",
+    "options": { "A": "سورۃ البقرہ (282)", "B": "سورۃ التوبہ", "C": "سورۃ آل عمران", "D": "سورۃ الانفال" },
+    "correct_option": "A", "correct_answer": "سورۃ البقرہ (282)"
+  },
+  {
+    "number": 123,
+    "statement": "ترتیب کے اعتبار سے تیسری سورت ہے:",
+    "options": { "A": "چوتھی", "B": "دوسری", "C": "پانچویں", "D": "تیسری (آل عمران)" },
+    "correct_option": "D", "correct_answer": "تیسری (آل عمران)"
+  },
+  {
+    "number": 124,
+    "statement": "سورۃ آل عمران کی کل آیات کتنی ہیں؟",
+    "options": { "A": "200", "B": "286", "C": "186", "D": "300" },
+    "correct_option": "A", "correct_answer": "200"
+  },
+  {
+    "number": 125,
+    "statement": "آلِ عمران سے مراد ہے:",
+    "options": { "A": "عمران کا وطن", "B": "عمران کا قبیلہ", "C": "عمران کا خاندان", "D": "عمران کے والدین" },
+    "correct_option": "C", "correct_answer": "عمران کا خاندان"
+  },
+  {
+    "number": 126,
+    "statement": "حضرت عیسیٰ علیہ السلام کی والدہ محترمہ ہیں:",
+    "options": { "A": "حضرت مریمؑ", "B": "حضرت ہاجرہؑ", "C": "حضرت رابعہ", "D": "حضرت آسیہ" },
+    "correct_option": "A", "correct_answer": "حضرت مریمؑ"
+  },
+  {
+    "number": 127,
+    "statement": "سورۃ آل عمران کا ایک نام یہ بھی ہے:",
+    "options": { "A": "زہرا", "B": "فضیلت", "C": "اخلاص", "D": "نعمت" },
+    "correct_option": "A", "correct_answer": "زہرا"
+  },
+  {
+    "number": 128,
+    "statement": "آپ صلی اللہ علیہ وسلم نے کن دو سورتوں کو \"دو روشن سورتیں\" فرمایا؟",
+    "options": { "A": "بقرہ اور توبہ", "B": "بقرہ اور آلِ عمران", "C": "بقرہ اور انفال", "D": "آلِ عمران اور توبہ" },
+    "correct_option": "B", "correct_answer": "بقرہ اور آلِ عمران"
+  },
+  {
+    "number": 129,
+    "statement": "سورۃ آل عمران کی آیت نمبر 61 کیا کہلاتی ہے؟",
+    "options": { "A": "آیت سجدہ", "B": "آیت برکت", "C": "آیت مباہلہ", "D": "آیت فضیلت" },
+    "correct_option": "C", "correct_answer": "آیت مباہلہ"
+  },
+  {
+    "number": 130,
+    "statement": "مباہلہ کا لغوی معنی کیا ہے؟",
+    "options": { "A": "لوگوں کو آمادہ کرنا", "B": "خاموشی سے حل کرنا", "C": "تعریف کرنا", "D": "جھوٹے پر لعنت ہو" },
+    "correct_option": "D", "correct_answer": "جھوٹے پر لعنت ہو"
+  },
+  {
+    "number": 131,
+    "statement": "نجران میں کون سا گروہ آباد تھا؟",
+    "options": { "A": "یہودی", "B": "بت پرست", "C": "نصاریٰ (عیسائی)", "D": "زرتشت" },
+    "correct_option": "C", "correct_answer": "نصاریٰ (عیسائی)"
+  },
+  {
+    "number": 132,
+    "statement": "نجران کا وفد کتنے افراد پر مشتمل تھا؟",
+    "options": { "A": "50", "B": "60", "C": "30", "D": "40" },
+    "correct_option": "B", "correct_answer": "60"
+  },
+  {
+    "number": 133,
+    "statement": "نجران کے پادریوں نے کس خوف سے مباہلہ نہیں کیا؟",
+    "options": { "A": "جنگ کا خوف", "B": "ہلاکت کا خوف", "C": "مال کا خوف", "D": "تجارت کا خوف" },
+    "correct_option": "B", "correct_answer": "ہلاکت کا خوف"
+  },
+  {
+    "number": 134,
+    "statement": "مسلمانوں اور کفار کے درمیان پہلا معرکہ ہے:",
+    "options": { "A": "غزوہ احد", "B": "غزوہ بدر", "C": "غزوہ احزاب", "D": "غزوہ حنین" },
+    "correct_option": "B", "correct_answer": "غزوہ بدر"
+  },
+  {
+    "number": 135,
+    "statement": "غزوہ بدر اور غزوہ احد کا مفصل ذکر کس سورت میں ہے؟",
+    "options": { "A": "سورۃ البقرہ میں", "B": "سورۃ التوبہ میں", "C": "سورۃ آل عمران میں", "D": "سورۃ الانفال میں" },
+    "correct_option": "C", "correct_answer": "سورۃ آل عمران میں"
+  },
+  {
+    "number": 136,
+    "statement": "غزوہ احد کس ہجری میں پیش آیا؟",
+    "options": { "A": "دو ہجری میں", "B": "تین ہجری میں", "C": "پانچ ہجری میں", "D": "چھ ہجری میں" },
+    "correct_option": "B", "correct_answer": "تین ہجری میں"
+  },
+  {
+    "number": 137,
+    "statement": "غزوہ احد میں مشرکینِ مکہ کی قیادت کس نے کی؟",
+    "options": { "A": "ابوجہل نے", "B": "ابوسفیان نے", "C": "ابولہب نے", "D": "عتبہ نے" },
+    "correct_option": "B", "correct_answer": "ابوسفیان نے"
+  },
+  {
+    "number": 138,
+    "statement": "غزوہ احد میں مسلمان مجاہدین کی تعداد کتنی تھی؟",
+    "options": { "A": "313", "B": "3000", "C": "1000", "D": "1500" },
+    "correct_option": "C", "correct_answer": "1000"
+  },
+  {
+    "number": 139,
+    "statement": "غزوہ احد میں مسلمانوں کے لشکر سے کتنے منافق الگ ہوئے؟",
+    "options": { "A": "100", "B": "200", "C": "150", "D": "300" },
+    "correct_option": "D", "correct_answer": "300"
+  },
+  {
+    "number": 140,
+    "statement": "غزوہ احد میں منافقین کا سردار کون تھا؟",
+    "options": { "A": "عبداللہ بن ابی", "B": "ابوجہل", "C": "مسیلمہ کذاب", "D": "عتبہ" },
+    "correct_option": "A", "correct_answer": "عبداللہ بن ابی"
+  },
+  {
+    "number": 141,
+    "statement": "غزوہ احد میں مسلمانوں کی پشت پر کون سا پہاڑ تھا؟",
+    "options": { "A": "جبلِ نور", "B": "جبلِ ثور", "C": "جبلِ رحمت", "D": "جبلِ احد" },
+    "correct_option": "D", "correct_answer": "جبلِ احد"
+  },
+  {
+    "number": 142,
+    "statement": "درّے پر مامور تیر اندازوں کا دستہ کتنے افراد پر مشتمل تھا؟",
+    "options": { "A": "100", "B": "200", "C": "50", "D": "150" },
+    "correct_option": "C", "correct_answer": "50"
+  },
+  {
+    "number": 143,
+    "statement": "درّے پر مامور دستے کی قیادت کس صحابی نے کی؟",
+    "options": { "A": "حضرت مصعب بن عمیرؓ", "B": "حضرت زید بن حارثہؓ", "C": "حضرت عبداللہ بن جبیرؓ", "D": "حضرت عثمانؓ" },
+    "correct_option": "C", "correct_answer": "حضرت عبداللہ بن جبیرؓ"
+  },
+  {
+    "number": 144,
+    "statement": "آپ صلی اللہ علیہ وسلم کے دندانِ مبارک کس غزوہ میں شہید ہوئے؟",
+    "options": { "A": "غزوہ خیبر میں", "B": "غزوہ بدر میں", "C": "غزوہ خندق میں", "D": "غزوہ احد میں" },
+    "correct_option": "D", "correct_answer": "غزوہ احد میں"
+  },
+  {
+    "number": 145,
+    "statement": "سید الشہداء حضرت حمزہؓ کس غزوہ میں شہید ہوئے؟",
+    "options": { "A": "غزوہ احد میں", "B": "غزوہ بدر میں", "C": "غزوہ خیبر میں", "D": "غزوہ خندق میں" },
+    "correct_option": "A", "correct_answer": "غزوہ احد میں"
+  },
+  {
+    "number": 146,
+    "statement": "غزوہ احد میں کل کتنے مسلمان شہید ہوئے؟",
+    "options": { "A": "100", "B": "300", "C": "70", "D": "13" },
+    "correct_option": "C", "correct_answer": "70"
+  },
+  {
+    "number": 147,
+    "statement": "سورۃ آل عمران کا مرکزی مضمون کیا ہے؟",
+    "options": { "A": "مال میں اضافہ", "B": "اہلِ کتاب کی غلطیوں کا بیان", "C": "بنی اسرائیل کی خرابیاں", "D": "تجارت و امانت" },
+    "correct_option": "B", "correct_answer": "اہلِ کتاب کی غلطیوں کا بیان"
+  },
+  {
+    "number": 148,
+    "statement": "امتِ وسط کو دنیا کے لیے کیا بنایا گیا ہے؟",
+    "options": { "A": "سپہ سالار", "B": "طلب گار", "C": "گواہ", "D": "ذمہ دار" },
+    "correct_option": "C", "correct_answer": "گواہ"
+  },
+  {
+    "number": 149,
+    "statement": "سورۃ آل عمران میں کس اہم معاشی پہلو کی حرمت بیان ہوئی ہے؟",
+    "options": { "A": "چوری", "B": "ملاوٹ", "C": "سود", "D": "ذخیرہ اندوزی" },
+    "correct_option": "C", "correct_answer": "سود"
+  },
+  {
+    "number": 150,
+    "statement": "امتِ مسلمہ کو کیا قرار دیا گیا ہے؟",
+    "options": { "A": "بہترین امت", "B": "امتِ اخلاق", "C": "امتِ خیر", "D": "امتِ امن" },
+    "correct_option": "A", "correct_answer": "بہترین امت"
+  },
+  {
+    "number": 151,
+    "statement": "امتِ مسلمہ کو بہترین امت کیوں کہا گیا؟",
+    "options": { "A": "عربی زبان کی وجہ سے", "B": "مال کی وجہ سے", "C": "نیکی کا حکم دینے پر", "D": "کثرت کی وجہ سے" },
+    "correct_option": "C", "correct_answer": "نیکی کا حکم دینے پر"
+  },
+  {
+    "number": 152,
+    "statement": "اکبرِ اعظم یا اللہ تعالیٰ کی محبت کے حصول کے لیے کیا شرط ہے؟",
+    "options": { "A": "علم و دولت", "B": "عبادت و تجارت", "C": "ذکر و حج", "D": "اتباعِ رسول صلی اللہ علیہ وسلم" },
+    "correct_option": "D", "correct_answer": "اتباعِ رسول صلی اللہ علیہ وسلم"
+  },
+  {
+    "number": 153,
+    "statement": "دعوتِ دین کا سب سے عمدہ اصول کیا ہے؟",
+    "options": { "A": "بحث و تکرار", "B": "مشترک امور پر بات کرنا", "C": "سختی کرنا", "D": "خاموش رہنا" },
+    "correct_option": "B", "correct_answer": "مشترک امور پر بات کرنا"
+  },
+  {
+    "number": 154,
+    "statement": "تمام انبیاء کرام کون سی بنیادی تعلیم لے کر آئے؟",
+    "options": { "A": "دینِ ابراہیمی", "B": "دینِ موسیٰ", "C": "انصاف اور جہاد", "D": "دینِ اسلام" },
+    "correct_option": "D", "correct_answer": "دینِ اسلام"
+  },
+  {
+    "number": 155,
+    "statement": "اصل کا میاب انسان وہ ہے جو:",
+    "options": { "A": "علم حاصل کرے", "B": "زکوۃ ادا کرے", "C": "جنت میں داخل ہو", "D": "حج ادا کرے" },
+    "correct_option": "C", "correct_answer": "جنت میں داخل ہو"
+  },
+  {
+    "number": 156,
+    "statement": "عقل مند وہ لوگ ہیں جو:",
+    "options": { "A": "دولت جمع کریں", "B": "ہر حال میں اللہ کا ذکر کریں", "C": "صرف تجارت کریں", "D": "مغرب کی پیروی کریں" },
+    "correct_option": "B", "correct_answer": "ہر حال میں اللہ کا ذکر کریں"
+  },
+  {
+    "number": 157,
+    "statement": "سورۃ الانفال ترتیب کے اعتبار سے کون سی سورت ہے؟",
+    "options": { "A": "آٹھویں", "B": "چوتھی", "C": "چھٹی", "D": "ساتویں" },
+    "correct_option": "A", "correct_answer": "آٹھویں"
+  },
+  {
+    "number": 158,
+    "statement": "سورۃ الانفال کی کل آیات کتنی ہیں؟",
+    "options": { "A": "70", "B": "73", "C": "75", "D": "100" },
+    "correct_option": "C", "correct_answer": "75"
+  },
+  {
+    "number": 159,
+    "statement": "لفظ \"انفال\" کا واحد کیا ہے؟",
+    "options": { "A": "مال", "B": "نفل", "C": "فعل", "D": "فاعل" },
+    "correct_option": "B", "correct_answer": "نفل"
+  },
+  {
+    "number": 160,
+    "statement": "شرعی اصطلاح میں \"انفال\" سے کیا مراد ہے؟",
+    "options": { "A": "نفل نماز", "B": "صدقہ", "C": "مالِ غنیمت", "D": "زکوۃ" },
+    "correct_option": "C", "correct_answer": "مالِ غنیمت"
+  },
+  {
+    "number": 161,
+    "statement": "جہاد کا اصل اور بنیادی مقصد کیا ہے؟",
+    "options": { "A": "دنیا میں عزت", "B": "طاقت میں اضافہ", "C": "مالِ غنیمت", "D": "اللہ کی رضا" },
+    "correct_option": "D", "correct_answer": "اللہ کی رضا"
+  },
+  {
+    "number": 162,
+    "statement": "مالِ غنیمت کی تقسیم کے احکام کس سورت میں نازل ہوئے ہیں؟",
+    "options": { "A": "سورۃ التوبہ میں", "B": "سورۃ آل عمران میں", "C": "سورۃ البقرہ میں", "D": "سورۃ الانفال میں" },
+    "correct_option": "D", "correct_answer": "سورۃ الانفال میں"
+  },
+  {
+    "number": 163,
+    "statement": "غزوہ بدر کس ہجری میں پیش آیا؟",
+    "options": { "A": "تین ہجری میں", "B": "ایک ہجری میں", "C": "ہجرت کے فوراً بعد", "D": "دو ہجری میں" },
+    "correct_option": "D", "correct_answer": "دو ہجری میں"
+  },
+  {
+    "number": 164,
+    "statement": "غزوہ بدر کو قرآن نے کیا نام دیا ہے؟",
+    "options": { "A": "کافروں کا دن", "B": "بدلے کا دن", "C": "قریش کا دن", "D": "یوم الفرقان" },
+    "correct_option": "D", "correct_answer": "یوم الفرقان"
+  },
+  {
+    "number": 165,
+    "statement": "فرقان کا لغوی معنی کیا ہے؟",
+    "options": { "A": "بادشاہ کا نام", "B": "کفار سے مقابلہ", "C": "حق و باطل میں فیصلہ", "D": "عظیم فتح" },
+    "correct_option": "C", "correct_answer": "حق و باطل میں فیصلہ"
+  },
+  {
+    "number": 166,
+    "statement": "آپ صلی اللہ علیہ وسلم نے اعلانِ نبوت کے بعد مکہ میں کتنا عرصہ قیام کیا؟",
+    "options": { "A": "40 سال", "B": "13 سال", "C": "23 سال", "D": "10 سال" },
+    "correct_option": "B", "correct_answer": "13 سال"
+  },
+  {
+    "number": 167,
+    "statement": "اوس قبیلے کے جلیل القدر سردار کون تھے؟",
+    "options": { "A": "حضرت ابی بن کعبؓ", "B": "حضرت عثمانؓ", "C": "حضرت سعد بن معاذؓ", "D": "حضرت ابو بکر صدیقؓ" },
+    "correct_option": "C", "correct_answer": "حضرت سعد بن معاذؓ"
+  },
+  {
+    "number": 168,
+    "statement": "ابوسفیان کا تجارتی قافلہ کہاں سے واپس آ رہا تھا؟",
+    "options": { "A": "عراق", "B": "ایران", "C": "القدس", "D": "شام" },
+    "correct_option": "D", "correct_answer": "شام"
+  },
+  {
+    "number": 169,
+    "statement": "غزوہ بدر کے موقع پر مسلمانوں کے پاس کتنے گھوڑے تھے؟",
+    "options": { "A": "20", "B": "70", "C": "2", "D": "50" },
+    "correct_option": "C", "correct_answer": "2"
+  },
+  {
+    "number": 170,
+    "statement": "غزوہ بدر میں مشرکین مکہ کے کتنے سردار مارے گئے؟",
+    "options": { "A": "70", "B": "18", "C": "30", "D": "3" },
+    "correct_option": "A", "correct_answer": "70"
+  },
+  {
+    "number": 171,
+    "statement": "اسلام کا بدترین دشمن \"ابوجہل\" کس غزوہ میں مارا گیا؟",
+    "options": { "A": "غزوہ خندق میں", "B": "غزوہ احد میں", "C": "غزوہ حنین میں", "D": "غزوہ بدر میں" },
+    "correct_option": "D", "correct_answer": "غزوہ بدر میں"
+  },
+  {
+    "number": 172,
+    "statement": "غزوہ بدر میں قریش کے کتنے افراد قیدی بنائے گئے؟",
+    "options": { "A": "17", "B": "50", "C": "70", "D": "14" },
+    "correct_option": "C", "correct_answer": "70"
+  },
+  {
+    "number": 173,
+    "statement": "سورۃ الانفال کا مرکزی مضمون کیا ہے؟",
+    "options": { "A": "سورۃ التوبہ", "B": "جہاد کے فضائل و آداب", "C": "بنی اسرائیل کا ذکر", "D": "تجارت و امانت" },
+    "correct_option": "B", "correct_answer": "جہاد کے فضائل و آداب"
+  },
+  {
+    "number": 174,
+    "statement": "فرشتوں کے ذریعے غیبی مدد کس غزوہ میں نازل ہوئی؟",
+    "options": { "A": "غزوہ خیبر میں", "B": "غزوہ بدر میں", "C": "غزوہ خندق میں", "D": "غزوہ حنین میں" },
+    "correct_option": "B", "correct_answer": "غزوہ بدر میں"
+  },
+  {
+    "number": 175,
+    "statement": "مال اور اولاد کی حد سے بڑھی ہوئی محبت کیا ہے؟",
+    "options": { "A": "فتنہ", "B": "سلامتی", "C": "امن", "D": "باعثِ فخر" },
+    "correct_option": "A", "correct_answer": "فتنہ"
+  },
+  {
+    "number": 176,
+    "statement": "دینِ اسلام میں جہاد کا ایک اہم مقصد کیا ہے؟",
+    "options": { "A": "مالِ غنیمت", "B": "فتنہ کا خاتمہ", "C": "بدلہ لینا", "D": "طاقت کا مظاہرہ" },
+    "correct_option": "B", "correct_answer": "فتنہ کا خاتمہ"
+  },
+  {
+    "number": 177,
+    "statement": "سچے ایمان والے لوگ کون ہیں؟",
+    "options": { "A": "انصار", "B": "تبلیغ کرنے والے", "C": "مہاجرین", "D": "ہجرت و جہاد کرنے والے" },
+    "correct_option": "D", "correct_answer": "ہجرت و جہاد کرنے والے"
+  },
+  {
+    "number": 178,
+    "statement": "سورۃ التوبہ ترتیبِ نزولی کے اعتبار سے کون سی سورت ہے؟",
+    "options": { "A": "نویں", "B": "آٹھویں", "C": "دسویں", "D": "چوتھی" },
+    "correct_option": "A", "correct_answer": "نویں"
+  },
+  {
+    "number": 179,
+    "statement": "سورۃ التوبہ کی کل آیات کتنی ہیں؟",
+    "options": { "A": "75", "B": "200", "C": "129", "D": "286" },
+    "correct_option": "C", "correct_answer": "129"
+  },
+  {
+    "number": 180,
+    "statement": "سورۃ التوبہ کس غزوہ کے موقع پر نازل ہوئی؟",
+    "options": { "A": "غزوہ حنین میں", "B": "غزوہ خیبر سے پہلے", "C": "غزوہ تبوک سے پہلے", "D": "غزوہ تبوک کے بعد" },
+    "correct_option": "D", "correct_answer": "غزوہ تبوک کے بعد"
+  },
+  {
+    "number": 181,
+    "statement": "سورۃ التوبہ کا دوسرا معروف نام کیا ہے؟",
+    "options": { "A": "سورۃ آل عمران", "B": "سورۃ البقرہ", "C": "سورۃ البراءۃ", "D": "سورۃ الانفال" },
+    "correct_option": "C", "correct_answer": "سورۃ البراءۃ"
+  },
+  {
+    "number": 182,
+    "statement": "لفظ \"براءت\" کا شرعی معنی کیا ہے؟",
+    "options": { "A": "راضی ہونا", "B": "توبہ کرنا", "C": "ہمیشہ رہنا", "D": "بیزاری و قطعِ تعلق" },
+    "correct_option": "D", "correct_answer": "بیزاری و قطعِ تعلق"
+  },
+  {
+    "number": 183,
+    "statement": "قرآن کی وہ واحد سورت جس کے آغاز میں بسم اللہ نہیں ہے:",
+    "options": { "A": "سورۃ العنکبوت", "B": "سورۃ آل عمران", "C": "سورۃ مریم", "D": "سورۃ التوبہ" },
+    "correct_option": "D", "correct_answer": "سورۃ التوبہ"
+  },
+  {
+    "number": 184,
+    "statement": "فتح مکہ کے بعد کس ملک کے بادشاہ نے اسلام کا راستہ روکنا چاہا؟",
+    "options": { "A": "مصر (فرعون)", "B": "روم (قیصر)", "C": "حبشہ (نجاشی)", "D": "فارس (کسریٰ)" },
+    "correct_option": "B", "correct_answer": "روم (قیصر)"
+  },
+  {
+    "number": 185,
+    "statement": "غزوہ تبوک کس کے خلاف لڑا گیا؟",
+    "options": { "A": "نجاشی سے", "B": "شاہِ ایران سے", "C": "فرعونِ مصر سے", "D": "قیصرِ روم سے" },
+    "correct_option": "D", "correct_answer": "قیصرِ روم سے"
+  },
+  {
+    "number": 186,
+    "statement": "غزوہ تبوک کے موقع پر مسلمانوں کے لیے کیا وقت تھا؟",
+    "options": { "A": "خوشحالی کا", "B": "فراوانی کا", "C": "سخت آزمائش کا", "D": "عید کی خوشی کا" },
+    "correct_option": "C", "correct_answer": "سخت آزمائش کا"
+  },
+  {
+    "number": 187,
+    "statement": "غزوہ تبوک کے وقت موسم کیسا تھا؟",
+    "options": { "A": "بے انتہا گرم", "B": "سخت سردی", "C": "شدید جاڑا", "D": "برسات" },
+    "correct_option": "A", "correct_answer": "بے انتہا گرم"
+  },
+  {
+    "number": 188,
+    "statement": "اللہ تعالیٰ نے کس غزوہ کو \"مشکل گھڑی والا\" غزوہ قرار دیا؟",
+    "options": { "A": "غزوہ بدر", "B": "غزوہ تبوک", "C": "غزوہ احد", "D": "غزوہ خیبر" },
+    "correct_option": "B", "correct_answer": "غزوہ تبوک"
+  },
+  {
+    "number": 189,
+    "statement": "غزوہ تبوک میں اسلامی لشکر کی تعداد کتنی تھی؟",
+    "options": { "A": "دس ہزار", "B": "بیس ہزار", "C": "تیس ہزار", "D": "چالیس ہزار" },
+    "correct_option": "C", "correct_answer": "تیس ہزار"
+  },
+  {
+    "number": 190,
+    "statement": "غزوہ تبوک میں سوار مجاہدین کی تعداد کتنی تھی؟",
+    "options": { "A": "دس ہزار", "B": "بیس ہزار", "C": "تیس ہزار", "D": "تین ہزار" },
+    "correct_option": "A", "correct_answer": "دس ہزار"
+  },
+  {
+    "number": 191,
+    "statement": "حضرت ابو بکر صدیقؓ نے اس غزوہ کے لیے کتنا مال دیا؟",
+    "options": { "A": "آدھا سامان", "B": "گھر کا سارا سامان", "C": "200 اونٹ", "D": "تمام عرب کا مال" },
+    "correct_option": "B", "correct_answer": "گھر کا سارا سامان"
+  },
+  {
+    "number": 192,
+    "statement": "غزوہ تبوک کب پیش آیا؟",
+    "options": { "A": "ماہِ رجب 2 ہجری", "B": "ماہِ رجب 10 ہجری", "C": "ماہِ رجب 9 ہجری", "D": "ماہِ رجب 7 ہجری" },
+    "correct_option": "C", "correct_answer": "ماہِ رجب 9 ہجری"
+  },
+  {
+    "number": 193,
+    "statement": "تبوک پہنچ کر معلوم ہوا کہ رومی فوج:",
+    "options": { "A": "بیمار ہے", "B": "راستے میں ہے", "C": "تیار ہو رہی ہے", "D": "بکھر گئی (ڈر کر بھاگ گئی)" },
+    "correct_option": "D", "correct_answer": "بکھر گئی (ڈر کر بھاگ گئی)"
+  },
+  {
+    "number": 194,
+    "statement": "مسجد کی تعمیر اور نگرانی کے لیے بنیادی شرط کیا ہے؟",
+    "options": { "A": "دولت", "B": "زکوۃ", "C": "ایمانِ کامل", "D": "معمار ہونا" },
+    "correct_option": "C", "correct_answer": "ایمانِ کامل"
+  },
+  {
+    "number": 195,
+    "statement": "ہجرت کے وقت آپ صلی اللہ علیہ وسلم اور حضرت ابو بکرؓ نے کہاں قیام کیا؟",
+    "options": { "A": "غارِ حراء", "B": "جنت البقیع", "C": "طائف", "D": "غارِ ثور" },
+    "correct_option": "D", "correct_answer": "غارِ ثور"
+  },
+  {
+    "number": 196,
+    "statement": "نیکی کے کاموں اور جہاد سے پیچھے رہنا کس کا شیوہ ہے؟",
+    "options": { "A": "منافق کا", "B": "پکے مومن کا", "C": "نو مسلم کا", "D": "بیمار کا" },
+    "correct_option": "A", "correct_answer": "منافق کا"
+  },
+  {
+    "number": 197,
+    "statement": "حروفِ مقطعات کو کیسے پڑھا جاتا ہے؟",
+    "options": { "A": "اکٹھے", "B": "کبھی کبھی", "C": "الگ الگ", "D": "دونوں طرح سے" },
+    "correct_option": "C", "correct_answer": "الگ الگ"
+  },
+  {
+    "number": 198,
+    "statement": "سورۃ البقرہ کی وجہ تسمیہ کس واقعے پر ہے؟",
+    "options": { "A": "گائے کا واقعہ", "B": "واقعہ سبت", "C": "واقعہ معراج", "D": "واقعہ رفعِ طور" },
+    "correct_option": "A", "correct_answer": "گائے کا واقعہ"
+  },
+  {
+    "number": 199,
+    "statement": "گائے ذبح کرنے کا حکم کس قوم کو دیا گیا تھا؟",
+    "options": { "A": "قومِ فرعون", "B": "بنی اسرائیل", "C": "قومِ عاد", "D": "قومِ ثمود" },
+    "correct_option": "B", "correct_answer": "بنی اسرائیل"
+  },
+  {
+    "number": 200,
+    "statement": "گائے کا واقعہ سورۃ البقرہ کی کن آیات میں ہے؟",
+    "options": { "A": "آیات 47 تا 53", "B": "آیات 37 تا 63", "C": "آیات 67 تا 73", "D": "آیات 27 تا 43" },
+    "correct_option": "C", "correct_answer": "آیات 67 تا 73"
+  },
+  {
+    "number": 201,
+    "statement": "گائے کے واقعے میں اللہ کی کون سی قدرت ظاہر ہوئی؟",
+    "options": { "A": "رزق دینے کی", "B": "خالق ہونے کی", "C": "زندہ کرنے کی", "D": "غفور ہونے کی" },
+    "correct_option": "C", "correct_answer": "زندہ کرنے کی"
+  },
+  {
+    "number": 202,
+    "statement": "سورۃ البقرہ کی تلاوت سے کون سا دشمن گھر سے بھاگتا ہے؟",
+    "options": { "A": "انسان", "B": "شیطان", "C": "کافر", "D": "منافق" },
+    "correct_option": "B", "correct_answer": "شیطان"
+  },
+  {
+    "number": 203,
+    "statement": "سات طویل سورتوں کا علم حاصل کرنے والا کیا کہلاتا ہے؟",
+    "options": { "A": "قاری", "B": "متقی", "C": "بہت بڑا عالم", "D": "عبادت گزار" },
+    "correct_option": "C", "correct_answer": "بہت بڑا عالم"
+  },
+  {
+    "number": 204,
+    "statement": "آیۃ الکرسی پڑھنے والے کے پاس رات کو کون نہیں آتا؟",
+    "options": { "A": "شیطان", "B": "ملک الموت", "C": "کافر", "D": "مومن" },
+    "correct_option": "A", "correct_answer": "شیطان"
+  },
+  {
+    "number": 205,
+    "statement": "آیۃ الکرسی میں اللہ کی کن چیزوں کا بیان ہے؟",
+    "options": { "A": "عطا و سخا", "B": "کریمی و رحیمی", "C": "ہدایت", "D": "قدرت و صفات" },
+    "correct_option": "D", "correct_answer": "قدرت و صفات"
+  },
+  {
+    "number": 206,
+    "statement": "ہدایت حاصل کرنے کے لیے اللہ نے انبیاء کے ساتھ کیا بھیجا؟",
+    "options": { "A": "فرشتے", "B": "کتابیں", "C": "اهلِ اللہ", "D": "انعامات" },
+    "correct_option": "B", "correct_answer": "کتابیں"
+  },
+  {
+    "number": 207,
+    "statement": "ابلیس کا قصہ کس نبی کے واقعے کے ساتھ بیان ہوا؟",
+    "options": { "A": "حضرت نوحؑ", "B": "حضرت آدمؑ", "C": "حضرت عیسیٰؑ", "D": "حضرت موسیٰؑ" },
+    "correct_option": "B", "correct_answer": "حضرت آدمؑ"
+  },
+  {
+    "number": 208,
+    "statement": "سود کی وجہ سے معاشرے میں کیا بڑھتا ہے؟",
+    "options": { "A": "امیر و غریب کا فرق", "B": "بھائی چارہ", "C": "دولت کی تقسیم", "D": "امن و امان" },
+    "correct_option": "A", "correct_answer": "امیر و غریب کا فرق"
+  },
+  {
+    "number": 209,
+    "statement": "عہد توڑنے والے اور قطعِ رحمی کرنے والے کیا کہلاتے ہیں؟",
+    "options": { "A": "گمراہ", "B": "منافق", "C": "کافر", "D": "یہودی" },
+    "correct_option": "A", "correct_answer": "گمراہ"
+  },
+  {
+    "number": 210,
+    "statement": "تکبر کرنا کس کا طرزِ عمل ہے؟",
+    "options": { "A": "انسان کا", "B": "فرشتوں کا", "C": "شیطان کا", "D": "مومن کا" },
+    "correct_option": "C", "correct_answer": "شیطان کا"
+  },
+  {
+    "number": 211,
+    "statement": "انسان کی عظمت خطا کے بعد فوراً کیا کرنے میں ہے؟",
+    "options": { "A": "صبر", "B": "ذکر", "C": "حج", "D": "توبہ" },
+    "correct_option": "D", "correct_answer": "توبہ"
+  },
+  {
+    "number": 212,
+    "statement": "موت کی فکر کس چیز کی علامت ہے؟",
+    "options": { "A": "صاحبِ ایمان کی", "B": "صاحبِ صدق کی", "C": "اهلِ مکہ کی", "D": "اهلِ طائف کی" },
+    "correct_option": "A", "correct_answer": "صاحبِ ایمان کی"
+  },
+  {
+    "number": 213,
+    "statement": "سعادت اور فضیلت کے لیے کیا ضروری ہے؟",
+    "options": { "A": "محنت و مزدوری", "B": "محنت و قربانی", "C": "محنت و رزق", "D": "محنت و ذکر" },
+    "correct_option": "B", "correct_answer": "محنت و قربانی"
+  },
+  {
+    "number": 214,
+    "statement": "اللہ کو یاد کرنے والے کو اللہ کیا کرتا ہے؟",
+    "options": { "A": "آباد", "B": "قریب", "C": "یاد رکھتا ہے", "D": "خوش" },
+    "correct_option": "C", "correct_answer": "یاد رکھتا ہے"
+  },
+  {
+    "number": 215,
+    "statement": "ایمان کے کمال کی علامت کیا ہے؟",
+    "options": { "A": "سب سے ماننا", "B": "زکوۃ دینا", "C": "اللہ سے شدید محبت", "D": "سب کو خوش رکھنا" },
+    "correct_option": "C", "correct_answer": "اللہ سے شدید محبت"
+  },
+  {
+    "number": 216,
+    "statement": "روزے سے کون سا جذبہ پیدا ہوتا ہے؟",
+    "options": { "A": "نرمی", "B": "احسان مندی", "C": "گناہوں سے بچنے (تقویٰ) کا", "D": "شرمندگی" },
+    "correct_option": "C", "correct_answer": "گناہوں سے بچنے (تقویٰ) کا"
+  },
+  {
+    "number": 217,
+    "statement": "صرف دنیا مانگنے والے آخرت میں کیا پائیں گے؟",
+    "options": { "A": "نعمتیں", "B": "محرومی", "C": "عزت", "D": "بادشاہت" },
+    "correct_option": "B", "correct_answer": "محرومی"
+  },
+  {
+    "number": 218,
+    "statement": "دنیا و آخرت دونوں کی بھلائی کون مانگتے ہیں؟",
+    "options": { "A": "قریش", "B": "اهلِ عرب", "C": "اهلِ مسجد", "D": "نیک بندے" },
+    "correct_option": "D", "correct_answer": "نیک بندے"
+  },
+  {
+    "number": 219,
+    "statement": "جس قوم میں اجتماعی بزدلی آ جائے، اس کا مقدر کیا ہے؟",
+    "options": { "A": "محرومی", "B": "بے بسی", "C": "زوال و ہلاکت", "D": "افسوس" },
+    "correct_option": "C", "correct_answer": "زوال و ہلاکت"
+  },
+  {
+    "number": 220,
+    "statement": "سود سے مال میں کیا ہوتا ہے؟",
+    "options": { "A": "برکت", "B": "اضافہ", "C": "برکت ختم ہو جاتی ہے", "D": "پاک ہو جاتا ہے" },
+    "correct_option": "C", "correct_answer": "برکت ختم ہو جاتی ہے"
+  },
+  {
+    "number": 221,
+    "statement": "حضرت مریمؑ کے والد کا نام کیا تھا؟",
+    "options": { "A": "آصف", "B": "عمران", "C": "لقمان", "D": "موسیٰ" },
+    "correct_option": "B", "correct_answer": "عمران"
+  },
+  {
+    "number": 222,
+    "statement": "سورۃ آل عمران میں کن کی پیدائش کا ذکر ہے؟",
+    "options": { "A": "حضرت عیسیٰؑ", "B": "حضرت موسیٰؑ", "C": "حضرت نوحؑ", "D": "حضرت ابراہیمؑ" },
+    "correct_option": "A", "correct_answer": "حضرت عیسیٰؑ"
+  },
+  {
+    "number": 223,
+    "statement": "قیامت کے دن بقرہ اور آلِ عمران کس صورت میں آئیں گی؟",
+    "options": { "A": "بادلوں یا پرندوں کی صورت", "B": "فرشتوں کی صورت", "C": "روشنی کی صورت", "D": "پہاڑوں کی صورت" },
+    "correct_option": "A", "correct_answer": "بادلوں یا پرندوں کی صورت"
+  },
+  {
+    "number": 224,
+    "statement": "آلِ عمران کے عالم کو صحابہ میں کیا دی جاتی تھی؟",
+    "options": { "A": "انعام", "B": "اہمیت و عزت", "C": "بادشاہت", "D": "خلافت" },
+    "correct_option": "B", "correct_answer": "اہمیت و عزت"
+  },
+  {
+    "number": 225,
+    "statement": "نجران کے وفد نے حضرت عیسیٰ کو کیا ثابت کرنا چاہا؟",
+    "options": { "A": "نبی", "B": "خدا یا خدا کا بیٹا", "C": "داعی", "D": "انسان" },
+    "correct_option": "B", "correct_answer": "خدا یا خدا کا بیٹا"
+  },
+  {
+    "number": 226,
+    "statement": "غزوہ احد میں مشرکین کے لشکر کی کل تعداد کتنی تھی؟",
+    "options": { "A": "10000", "B": "1000", "C": "2000", "D": "3000" },
+    "correct_option": "D", "correct_answer": "3000"
+  },
+  {
+    "number": 227,
+    "statement": "مشرکین کے لشکر میں کتنے زرہ پوش سوار تھے؟",
+    "options": { "A": "300", "B": "3000", "C": "1000", "D": "700" },
+    "correct_option": "D", "correct_answer": "700"
+  },
+  {
+    "number": 228,
+    "statement": "کس صحابی نے آپ صلی اللہ علیہ وسلم کو مشرکین کی سازش سے آگاہ کیا؟",
+    "options": { "A": "عبداللہ بن عباسؓ", "B": "ابو بکرؓ", "C": "حضرت عباسؓ", "D": "عمرؓ" },
+    "correct_option": "C", "correct_answer": "حضرت عباسؓ"
+  },
+  {
+    "number": 229,
+    "statement": "غزوہ احد میں مسلمانوں کو عارضی نقصان کس وجہ سے ہوا؟",
+    "options": { "A": "بزدلی سے", "B": "حکمِ رسول صلی اللہ علیہ وسلم کی کوتاہی سے", "C": "قلت سے", "D": "دشمن کی طاقت سے" },
+    "correct_option": "B", "correct_answer": "حکمِ رسول صلی اللہ علیہ وسلم کی کوتاہی سے"
+  },
+  {
+    "number": 230,
+    "statement": "منافقین کس غزوہ میں مکمل طور پر بے نقاب ہوئے؟",
+    "options": { "A": "غزوہ بدر میں", "B": "غزوہ احد میں", "C": "غزوہ خندق میں", "D": "غزوہ حنین میں" },
+    "correct_option": "B", "correct_answer": "غزوہ احد میں"
+  },
+  {
+    "number": 231,
+    "statement": "امتِ وسط کو دنیا کے لیے کیا بنایا گیا ہے؟",
+    "options": { "A": "سپہ سالار", "B": "طلب گار", "C": "گواہ", "D": "ذمہ دار" },
+    "correct_option": "C", "correct_answer": "گواہ"
+  },
+  {
+    "number": 232,
+    "statement": "حرمتِ سود کا تذکرہ کس سورت میں ہے؟",
+    "options": { "A": "کہف", "B": "انفال", "C": "آل عمران / بقرہ", "D": "توبہ" },
+    "correct_option": "C", "correct_answer": "آل عمران / بقرہ"
+  },
+  {
+    "number": 233,
+    "statement": "غزوہ احد کا تفصیلی ذکر کس سورت میں ہے؟",
+    "options": { "A": "بقرہ", "B": "آل عمران", "C": "انفال", "D": "توبہ" },
+    "correct_option": "B", "correct_answer": "آل عمران"
+  },
+  {
+    "number": 234,
+    "statement": "کائنات میں غور و فکر کرنے والے کون ہیں؟",
+    "options": { "A": "عقل مند", "B": "علم والے", "C": "سائنس دان", "D": "عمل والے" },
+    "correct_option": "A", "correct_answer": "عقل مند"
+  },
+  {
+    "number": 235,
+    "statement": "قولی عبادات کا تعلق کس سے ہے؟",
+    "options": { "A": "بدن سے", "B": "فعل سے", "C": "مال سے", "D": "زبان سے" },
+    "correct_option": "D", "correct_answer": "زبان سے"
+  },
+  {
+    "number": 236,
+    "statement": "بدنی عبادات کا تعلق کس سے ہے؟",
+    "options": { "A": "اعضاء (بدن) سے", "B": "زبان سے", "C": "مال سے", "D": "نیت سے" },
+    "correct_option": "A", "correct_answer": "اعضاء (بدن) سے"
+  },
+  {
+    "number": 237,
+    "statement": "اللہ کی راہ میں ہجرت اور جہاد کرنے والے کون ہیں؟",
+    "options": { "A": "انصار", "B": "سچے ایمان والے", "C": "مہاجرین", "D": "تبلیغی" },
+    "correct_option": "B", "correct_answer": "سچے ایمان والے"
+  },
+  {
+    "number": 238,
+    "statement": "سورۃ التوبہ کا مرکزی موضوع کیا ہے؟",
+    "options": { "A": "ہجرت", "B": "منافقین کا پردہ چاک کرنا", "C": "زکوۃ", "D": "نکاح" },
+    "correct_option": "B", "correct_answer": "منافقین کا پردہ چاک کرنا"
+  },
+  {
+    "number": 239,
+    "statement": "\"مشکل گھڑی والا لشکر\" (جیش العسرۃ) کسے کہا گیا؟",
+    "options": { "A": "لشکرِ بدر", "B": "لشکرِ احد", "C": "لشکرِ تبوک", "D": "لشکرِ خندق" },
+    "correct_option": "C", "correct_answer": "لشکرِ تبوک"
+  }
+];
+
+        // Core App Variables State
+        let currentIndex = 0;
+        const totalMcqs = quizData.length;
+        let userAnswers = new Array(totalMcqs).fill(null); // stores { selectedOption, isCorrect }
+
+        // Initialize Application
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            buildNavigationGrid();
+            renderQuestion();
+            updateDashboardStats();
+        });
+
+        // Construct Grid Index Sidebar
+        function buildNavigationGrid() {
+            const container = document.getElementById('nav-grid-container');
+            container.innerHTML = '';
+            
+            for(let i = 0; i < totalMcqs; i++) {
+                const btn = document.createElement('button');
+                btn.id = `nav-item-${i}`;
+                btn.innerText = i + 1;
+                btn.className = `p-2 text-xs font-semibold rounded-lg text-center border transition-all duration-200 ${getNavBtnClass(i)}`;
+                btn.onclick = () => jumpToQuestion(i);
+                container.appendChild(btn);
+            }
+        }
+
+        function getNavBtnClass(index) {
+            if (userAnswers[index] === null) {
+                return index === currentIndex 
+                    ? 'bg-gray-900 text-white border-gray-900 shadow-sm shadow-gray-200Scale' 
+                    : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50';
+            }
+            return userAnswers[index].isCorrect 
+                ? 'bg-emerald-50 text-emerald-700 border-emerald-200 font-bold' 
+                : 'bg-rose-50 text-rose-700 border-rose-200 font-bold';
+        }
+
+        // Render Current State
+        function renderQuestion() {
+            const current = quizData[currentIndex];
+            
+            // Text values updates
+            document.getElementById('current-question-num').innerText = current.number;
+            document.getElementById('question-text').innerText = current.statement;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            // Generate Apple Stripe Options Elements
+            Object.entries(current.options).forEach(([key, value]) => {
+                const button = document.createElement('button');
+                button.className = `w-full p-4 rounded-2xl border text-right transition-all duration-200 flex items-center justify-between group relative overflow-hidden ${getOptionStyle(key)}`;
+                button.onclick = () => handleAnswerSelect(key);
+                // Disable if already answered
+                if(userAnswers[currentIndex] !== null) button.disabled = true;
+
+                button.innerHTML = `
+                    <div class="flex items-center gap-3 w-full justify-between">
+                         <span class="urdu-text text-base font-medium text-gray-700 group-hover:text-gray-900">${value}</span>
+                         <span class="w-7 h-7 rounded-lg bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500 uppercase shrink-0 transition-colors option-badge">${key}</span>
+                    </div>
+                `;
+                optionsContainer.appendChild(button);
+            });
+
+            // Adjust navigation action status buttons
+            document.getElementById('btn-prev').disabled = currentIndex === 0;
+            document.getElementById('btn-next').innerText = currentIndex === totalMcqs - 1 ? 'ٹیسٹ ختم کریں' : 'اگلا سوال';
+            
+            // Sync current highlight index tracking navigation item
+            buildNavigationGrid();
+            // Scroll nav item into view smoothly
+            document.getElementById(`nav-item-${currentIndex}`).scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+
+        function getOptionStyle(optionKey) {
+            const state = userAnswers[currentIndex];
+            if (!state) {
+                return 'bg-white border-gray-100 hover:border-gray-300 hover:bg-gray-50/50 shadow-sm';
+            }
+            const currentQuestion = quizData[currentIndex];
+            // If correct key matching
+            if (optionKey === currentQuestion.correct_option) {
+                return 'bg-emerald-50 border-emerald-300 ring-2 ring-emerald-600/10 text-emerald-900';
+            }
+            // User picked wrong selection
+            if (state.selectedOption === optionKey && !state.isCorrect) {
+                return 'bg-rose-50 border-rose-300 ring-2 ring-rose-600/10 text-rose-900';
+            }
+            return 'bg-white border-gray-100 opacity-60';
+        }
+
+        // Logic processing answer actions
+        function handleAnswerSelect(selectedOptionKey) {
+            if (userAnswers[currentIndex] !== null) return; // Prevent duplication click processing
+            
+            const currentQuestion = quizData[currentIndex];
+            const isCorrect = selectedOptionKey === currentQuestion.correct_option;
+            
+            userAnswers[currentIndex] = {
+                selectedOption: selectedOptionKey,
+                isCorrect: isCorrect
+            };
+
+            // Force refresh UI view mapping updates instantly
+            renderQuestion();
+            updateDashboardStats();
+        }
+
+        // Aggregate statistics computations metrics updates
+        function updateDashboardStats() {
+            let solved = 0;
+            let correct = 0;
+            let wrong = 0;
+
+            userAnswers.forEach(ans => {
+                if(ans !== null) {
+                    solved++;
+                    if(ans.isCorrect) correct++;
+                    else wrong++;
+                }
+            });
+
+            const left = totalMcqs - solved;
+            const percentage = solved > 0 ? Math.round((correct / solved) * 100) : 0;
+
+            // Interface text insertions text content injections
+            document.getElementById('stat-solved').innerText = solved;
+            document.getElementById('stat-left').innerText = left;
+            document.getElementById('stat-correct').innerText = correct;
+            document.getElementById('stat-wrong').innerText = wrong;
+            document.getElementById('stat-percent').innerText = `${percentage}%`;
+
+            // Circular progress calculations mapping logic animations SVG
+            const circle = document.getElementById('percentage-ring');
+            const radius = circle.r.baseVal.value;
+            const circumference = 2 * Math.PI * radius; // 213.63
+            
+            circle.style.strokeDasharray = `${circumference}`;
+            const offset = circumference - (percentage / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+        }
+
+        // Controller functions
+        function nextQuestion() {
+            if(currentIndex < totalMcqs - 1) {
+                currentIndex++;
+                renderQuestion();
+            } else {
+                alert('آپ کا ٹیسٹ مکمل ہو چکا ہے! اپنے مجموعی نمبر ڈیش بورڈ پر ملاحظہ کریں۔');
+            }
+        }
+
+        function prevQuestion() {
+            if(currentIndex > 0) {
+                currentIndex--;
+                renderQuestion();
+            }
+        }
+
+        function jumpToQuestion(index) {
+            currentIndex = index;
+            renderQuestion();
+        }
+
+        function resetQuiz() {
+            if(confirm('کیا آپ واقعی یہ ٹیسٹ دوبارہ شروع کرنا چاہتے ہیں؟ آپ کا سارا ریکارڈ حذف ہو جائے گا۔')) {
+                currentIndex = 0;
+                userAnswers = new Array(totalMcqs).fill(null);
+                renderQuestion();
+                updateDashboardStats();
+            }
+        }
+    </script>
+</body>
+</html>

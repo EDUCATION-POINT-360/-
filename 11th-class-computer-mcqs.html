@@ -1,0 +1,1870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education Point - Interactive MCQs Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0f172a 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Modern Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.45);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.35);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Apple Stripe Accent Track Animation */
+        .apple-stripe {
+            position: relative;
+            overflow: hidden;
+        }
+        .apple-stripe::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #f43f5e, #eab308);
+            background-size: 200% 100%;
+            animation: stripeShift 8s linear infinite;
+        }
+
+        @keyframes stripeShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        /* Standard custom scrollbar configuration */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Perfect Micro-animations */
+        .grid-item-pop {
+            transition: all 0.2s ease;
+        }
+        .grid-item-pop:active {
+            transform: scale(0.92);
+        }
+        
+        .animated-status-bar {
+            transition: width 0.6s cubic-bezier(0.1, 1, 0.1, 1);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 flex flex-col items-center justify-start">
+
+    <header class="w-full max-w-7xl glass-panel apple-stripe rounded-2xl p-6 mb-8 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-2xl">
+        <div>
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-tr from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <i data-lucide="graduation-cap" class="w-5 h-5 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">Education Point</h1>
+                    <p class="text-xs text-slate-400 font-medium tracking-wide uppercase">Core Science & Computing Dashboard</p>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <button onclick="resetDataStorage()" class="flex items-center gap-2 text-xs bg-slate-800/80 border border-slate-700/60 hover:bg-rose-500/10 hover:border-rose-500/30 hover:text-rose-400 px-4 py-2.5 rounded-xl transition-all duration-300 font-medium">
+                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset Session Progress
+            </button>
+        </div>
+    </header>
+
+    <main class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <section class="lg:col-span-8 space-y-8">
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+                <div class="glass-card p-4 rounded-xl flex flex-col justify-between">
+                    <span class="text-xs font-semibold text-slate-400 block mb-2">Total MCQs</span>
+                    <span id="stat-total" class="text-2xl font-bold text-blue-400">241</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col justify-between">
+                    <span class="text-xs font-semibold text-slate-400 block mb-2">Remaining</span>
+                    <span id="stat-remaining" class="text-2xl font-bold text-indigo-400">241</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col justify-between">
+                    <span class="text-xs font-semibold text-slate-400 block mb-2">Correct</span>
+                    <span id="stat-correct" class="text-2xl font-bold text-emerald-400">0</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col justify-between">
+                    <span class="text-xs font-semibold text-slate-400 block mb-2">Wrong</span>
+                    <span id="stat-wrong" class="text-2xl font-bold text-rose-400">0</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col justify-between">
+                    <span class="text-xs font-semibold text-slate-400 block mb-2">Accuracy</span>
+                    <span id="stat-accuracy" class="text-2xl font-bold text-amber-400">0%</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col justify-between">
+                    <span class="text-xs font-semibold text-slate-400 block mb-2">Percentage</span>
+                    <span id="stat-percentage" class="text-2xl font-bold text-fuchsia-400">0%</span>
+                </div>
+            </div>
+
+            <div class="glass-panel rounded-2xl p-6 md:p-8 shadow-xl relative min-h-[420px] flex flex-col justify-between">
+                
+                <div>
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20" id="quiz-question-tag">Question Counter</span>
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span class="text-xs text-slate-400 font-medium">Session Sync Online</span>
+                        </div>
+                    </div>
+
+                    <h2 id="quiz-question-text" class="text-lg md:text-xl font-semibold leading-relaxed mb-8 text-slate-100">
+                        Loading problem architecture context...
+                    </h2>
+
+                    <div id="quiz-options-container" class="space-y-4 mb-8">
+                        </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-6 border-t border-slate-800/80">
+                    <button onclick="navigateQuestion(-1)" id="btn-prev" class="flex items-center gap-2 text-sm bg-slate-800/60 border border-slate-700/50 hover:bg-slate-700/60 text-slate-300 px-5 py-3 rounded-xl transition-all">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i> Previous
+                    </button>
+                    
+                    <div class="w-1/3 bg-slate-800 h-2 rounded-full overflow-hidden hidden md:block">
+                        <div id="session-progress-bar" class="animated-status-bar h-full bg-gradient-to-r from-blue-500 to-indigo-500" style="width: 0%;"></div>
+                    </div>
+
+                    <button onclick="navigateQuestion(1)" id="btn-next" class="flex items-center gap-2 text-sm bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-xl shadow-lg shadow-indigo-600/20 transition-all ml-auto">
+                        Next <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <aside class="lg:col-span-4 space-y-6 w-full">
+            <div class="glass-panel rounded-2xl p-6 shadow-xl flex flex-col max-h-[620px]">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="layers" class="w-4 h-4 text-slate-400"></i>
+                        <h3 class="text-sm font-semibold text-slate-200 uppercase tracking-wider">Navigation Grid Matrix</h3>
+                    </div>
+                    <span class="text-xs bg-slate-800 text-slate-400 font-bold px-2.5 py-1 rounded-md" id="matrix-counter">0 / 241</span>
+                </div>
+
+                <div class="grid grid-cols-4 gap-1.5 mb-4 text-[10px] text-center font-semibold">
+                    <button onclick="filterMatrix('all')" class="bg-slate-800/60 py-1.5 rounded text-slate-300 hover:bg-slate-700/60 border border-transparent" id="filter-all">All</button>
+                    <button onclick="filterMatrix('correct')" class="bg-emerald-950/40 py-1.5 rounded text-emerald-400 hover:bg-emerald-900/40 border border-transparent" id="filter-correct">Correct</button>
+                    <button onclick="filterMatrix('wrong')" class="bg-rose-950/40 py-1.5 rounded text-rose-400 hover:bg-rose-900/40 border border-transparent" id="filter-wrong">Wrong</button>
+                    <button onclick="filterMatrix('unattempted')" class="bg-slate-900/80 py-1.5 rounded text-slate-400 hover:bg-slate-800/80 border border-transparent" id="filter-unattempted">Blank</button>
+                </div>
+                
+                <div id="navigation-matrix-grid" class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-5 xl:grid-cols-6 gap-2 overflow-y-auto pr-1 flex-1">
+                    </div>
+            </div>
+        </aside>
+    </main>
+
+    <script>
+        // Inline Database array structured specifically for front-end architecture
+        const dataset = [
+  {
+    "number": 1,
+    "question": "The process of creating computer programs to perform specific tasks is called:",
+    "options": ["Software installation", "Software development", "System configuration", "Software debugging"],
+    "answer": "Software development"
+  },
+  {
+    "number": 2,
+    "question": "The primary purpose of the Software Development Life Cycle (SDLC) is to:",
+    "options": ["Deliver quality software", "Design hardware", "Install operating systems", "Manage networks"],
+    "answer": "Deliver quality software"
+  },
+  {
+    "number": 3,
+    "question": "A reusable set of concepts, practices and tools that provides a structured foundation for software development is called:",
+    "options": ["IDE", "Framework", "Utility library", "Debugging tool"],
+    "answer": "Framework"
+  },
+  {
+    "number": 4,
+    "question": "Which of the following is an example of a web development framework?",
+    "options": ["UML", "C++", "Django", "Python"],
+    "answer": "Django"
+  },
+  {
+    "number": 5,
+    "question": "Which of the following is the first phase of the Software Development Life Cycle (SDLC)?",
+    "options": ["Testing", "Coding", "Requirement Gathering", "Deployment"],
+    "answer": "Requirement Gathering"
+  },
+  {
+    "number": 6,
+    "question": "Functional and non-functional requirements are collected during which phase of the SDLC?",
+    "options": ["Deployment", "Requirement Gathering", "Testing", "Maintenance"],
+    "answer": "Requirement Gathering"
+  },
+  {
+    "number": 7,
+    "question": "Which of these defines a system's specific behaviors and operations?",
+    "options": ["Non-functional requirements", "Performance requirements", "Functional requirements", "Design constraints"],
+    "answer": "Functional requirements"
+  },
+  {
+    "number": 8,
+    "question": "Which type of requirements define the quality attributes, performance criteria and constraints of a system?",
+    "options": ["Non-functional requirements", "Business requirements", "Functional requirements", "Hardware requirements"],
+    "answer": "Non-functional requirements"
+  },
+  {
+    "number": 9,
+    "question": "Which phase of SDLC focuses on how the software will look and function?",
+    "options": ["Requirements", "Design", "Deployment", "Testing"],
+    "answer": "Design"
+  },
+  {
+    "number": 10,
+    "question": "Which of the following activities is not part of the Design phase in the SDLC?",
+    "options": ["Creating diagrams", "Creating mockups", "System testing", "Planning architecture"],
+    "answer": "System testing"
+  },
+  {
+    "number": 11,
+    "question": "Which of the following is used to visually represent the steps of a program?",
+    "options": ["Flowchart", "Algorithm", "Gantt chart", "ER Diagram"],
+    "answer": "Flowchart"
+  },
+  {
+    "number": 12,
+    "question": "Which of the following is the main activity in the Development phase of the SDLC?",
+    "options": ["Planning", "Coding", "Documenting", "Testing"],
+    "answer": "Coding"
+  },
+  {
+    "number": 13,
+    "question": "In the ____ phase, programmers begin writing code to create the software.",
+    "options": ["Development", "Requirement Gathering", "Testing", "Design"],
+    "answer": "Development"
+  },
+  {
+    "number": 14,
+    "question": "Which phase comes immediately after coding in the SDLC?",
+    "options": ["Requirement Gathering", "Designing", "Coding", "Testing"],
+    "answer": "Testing"
+  },
+  {
+    "number": 15,
+    "question": "____ is the process of checking the software to identify any bugs, errors or issues.",
+    "options": ["Designing", "Coding", "Installing", "Testing"],
+    "answer": "Testing"
+  },
+  {
+    "number": 16,
+    "question": "Which SDLC phase verifies that software works correctly and meets quality standards?",
+    "options": ["Designing", "Coding", "Testing", "Requirement Gathering"],
+    "answer": "Testing"
+  },
+  {
+    "number": 17,
+    "question": "Which type of testing evaluates system behavior under high user traffic or large data volumes?",
+    "options": ["Unit testing", "Performance testing", "Visual testing", "Manual testing"],
+    "answer": "Performance testing"
+  },
+  {
+    "number": 18,
+    "question": "The term for an error in software that leads to incorrect or unexpected results is:",
+    "options": ["Patch", "Bug", "Interface", "Module"],
+    "answer": "Bug"
+  },
+  {
+    "number": 19,
+    "question": "Which type of testing validates that software behaves according to the requirements and design specification?",
+    "options": ["Compatibility testing", "Performance testing", "Functionality testing", "Unit testing"],
+    "answer": "Functionality testing"
+  },
+  {
+    "number": 20,
+    "question": "____ is the phase where the software is installed, configured, and made available to end-users.",
+    "options": ["Deployment", "Testing", "Design", "Coding"],
+    "answer": "Deployment"
+  },
+  {
+    "number": 21,
+    "question": "Which type of users typically interact with the software after deployment?",
+    "options": ["Designers", "Testers", "End users", "Programmers"],
+    "answer": "End users"
+  },
+  {
+    "number": 22,
+    "question": "Which SDLC phase involves ongoing updates and support after deployment?",
+    "options": ["Design", "Development", "Maintenance", "Testing"],
+    "answer": "Maintenance"
+  },
+  {
+    "number": 23,
+    "question": "What key aspect does a software process model help maintain during software development?",
+    "options": ["Passwords", "Graphic design", "Quality assurance", "Hardware compatibility"],
+    "answer": "Quality assurance"
+  },
+  {
+    "number": 24,
+    "question": "Which of these elements is NOT typically included in a software process model?",
+    "options": ["Planning", "User testing", "Structuring tasks", "Marketing campaigns"],
+    "answer": "Marketing campaigns"
+  },
+  {
+    "number": 25,
+    "question": "Which software process model is linear and sequential?",
+    "options": ["Agile Model", "Spiral Model", "Waterfall Model", "Prototyping Model"],
+    "answer": "Waterfall Model"
+  },
+  {
+    "number": 26,
+    "question": "Which software process model is well-suited for projects with well-defined requirements that are unlikely to change?",
+    "options": ["Agile", "Waterfall", "Prototyping", "Spiral"],
+    "answer": "Waterfall"
+  },
+  {
+    "number": 27,
+    "question": "Which software process model is a good choice for projects with constantly evolving requirements?",
+    "options": ["Waterfall Model", "Agile Model", "Prototyping Model", "V-Model"],
+    "answer": "Agile Model"
+  },
+  {
+    "number": 29,
+    "question": "The short development cycles in Agile are called:",
+    "options": ["Loops", "Sprints", "Phases", "Modules"],
+    "answer": "Sprints"
+  },
+  {
+    "number": 30,
+    "question": "The Observer Pattern is primarily used for:",
+    "options": ["Notification systems", "User logins", "Data compression", "File storage"],
+    "answer": "Notification systems"
+  },
+  {
+    "number": 31,
+    "question": "Which of the following is NOT a design pattern?",
+    "options": ["Strategy Pattern", "Observer Pattern", "Loop Pattern", "Factory Pattern"],
+    "answer": "Loop Pattern"
+  },
+  {
+    "number": 32,
+    "question": "A mistake or error that causes unexpected behavior in software is called:",
+    "options": ["Function", "Bug", "Syntax", "Module"],
+    "answer": "Bug"
+  },
+  {
+    "number": 33,
+    "question": "The process of finding and fixing errors in software is called:",
+    "options": ["Compiling", "Designing", "Debugging", "Encrypting"],
+    "answer": "Debugging"
+  },
+  {
+    "number": 34,
+    "question": "Who typically performs acceptance testing?",
+    "options": ["Developers", "End-users or clients", "Database administrators", "Security analysts"],
+    "answer": "End-users or clients"
+  },
+  {
+    "number": 35,
+    "question": "Which of the following is a code editor?",
+    "options": ["Notepad++", "Chrome", "Excel", "C++"],
+    "answer": "Notepad++"
+  },
+  {
+    "number": 36,
+    "question": "GCC is an example of a:",
+    "options": ["Code editor", "Compiler", "Debugger", "Loader"],
+    "answer": "Compiler"
+  },
+  {
+    "number": 37,
+    "question": "GCC stands for:",
+    "options": ["Global Code Compiler", "GNU Code Converter", "GNU Compiler Collection", "General Computer Compiler"],
+    "answer": "GNU Compiler Collection"
+  },
+  {
+    "number": 38,
+    "question": "IDE stands for:",
+    "options": ["Integrated Debugging Environment", "Internal Data Editor", "Integrated Development Environment", "Independent Developer Engine"],
+    "answer": "Integrated Development Environment"
+  },
+  {
+    "number": 39,
+    "question": "Which of the following IDEs is most widely used for Python development?",
+    "options": ["PyCharm", "Visual Studio", "Spyder", "IDLE"],
+    "answer": "PyCharm"
+  },
+  {
+    "number": 40,
+    "question": "Which platform is the most widely used for hosting open-source projects?",
+    "options": ["GitLab", "Bitbucket", "GitHub", "Replit"],
+    "answer": "GitHub"
+  },
+  {
+    "number": 41,
+    "question": "Which platform is used for both public and private repositories?",
+    "options": ["VS Code", "Bitbucket", "Gitpod", "Replit"],
+    "answer": "Bitbucket"
+  },
+  {
+    "number": 42,
+    "question": "Python is used in various fields such as web development, data analysis and AI that shows its:",
+    "options": ["Rigidity", "Exclusivity", "Complexity", "Versatility"],
+    "answer": "Versatility"
+  },
+  {
+    "number": 43,
+    "question": "____ is the process of creating a set of instructions for a computer to perform a task.",
+    "options": ["Programming", "Debugging", "Compiling", "Executing"],
+    "answer": "Programming"
+  },
+  {
+    "number": 44,
+    "question": "Which of the following is a valid print statement in Python?",
+    "options": ["print(Hello)", "print(\"Hello\")", "print \"Hello\"", "print(Hello)"],
+    "answer": "print(\"Hello\")"
+  },
+  {
+    "number": 45,
+    "question": "What is the output of: print(\"Hello\")?",
+    "options": ["Hello", "\"Hello\"", "print(Hello)", "Error"],
+    "answer": "Hello"
+  },
+  {
+    "number": 46,
+    "question": "Which of the following symbols is used to start a single-line comment in Python?",
+    "options": ["//", "#", "/* and */", "Using REM statements"],
+    "answer": "#"
+  },
+  {
+    "number": 48,
+    "question": "In Python, variable names can start with a:",
+    "options": ["Digit", "Letter or underscore", "Special symbol", "Space"],
+    "answer": "Letter or underscore"
+  },
+  {
+    "number": 49,
+    "question": "Which of the following is a valid variable name in Python?",
+    "options": ["1st_var", "_var1", "for", "var-name"],
+    "answer": "_var1"
+  },
+  {
+    "number": 50,
+    "question": "Which symbol can be used at the beginning of a Python variable name?",
+    "options": ["@", "_", "#", "$"],
+    "answer": "_"
+  },
+  {
+    "number": 51,
+    "question": "Which of the following is NOT a keyword in Python?",
+    "options": ["for", "while", "if", "Class"],
+    "answer": "Class"
+  },
+  {
+    "number": 52,
+    "question": "What is the data type of the variable that stores a person's name?",
+    "options": ["Integer", "Floating point", "String", "Boolean"],
+    "answer": "String"
+  },
+  {
+    "number": 53,
+    "question": "Which data type is used to represent True or False values?",
+    "options": ["Character", "Integer", "Floating point", "Boolean"],
+    "answer": "Boolean"
+  },
+  {
+    "number": 54,
+    "question": "The modulus operator in Python is:",
+    "options": ["+", "-", "//", "%"],
+    "answer": "%"
+  },
+  {
+    "number": 55,
+    "question": "The // operator in Python represents:",
+    "options": ["Exponentiation", "Modulus", "Floor division", "Logical AND"],
+    "answer": "Floor division"
+  },
+  {
+    "number": 56,
+    "question": "How many logical operators are there in Python?",
+    "options": ["2", "3", "4", "5"],
+    "answer": "3"
+  },
+  {
+    "number": 57,
+    "question": "Which operator has the highest precedence in Python?",
+    "options": ["Multiplication", "addition", "() (parentheses)", "(subtraction)"],
+    "answer": "() (parentheses)"
+  },
+  {
+    "number": 58,
+    "question": "Which has lower precedence in Python?",
+    "options": ["Addition", "Multiplication", "Modulus", "Division"],
+    "answer": "Addition"
+  },
+  {
+    "number": 59,
+    "question": "Which of the following is NOT a control structure in Python?",
+    "options": ["if-else", "for loop", "while loop", "print"],
+    "answer": "print"
+  },
+  {
+    "number": 60,
+    "question": "Which control structure is used to make decisions in a program?",
+    "options": ["for loop", "function call", "while loop", "if statement"],
+    "answer": "if statement"
+  },
+  {
+    "number": 61,
+    "question": "A block of code that can be reused to perform a specific task is called:",
+    "options": ["Function", "Variable", "List", "Constant"],
+    "answer": "Function"
+  },
+  {
+    "number": 62,
+    "question": "The keyword used to define a function in Python is:",
+    "options": ["def", "function", "define", "func"],
+    "answer": "def"
+  },
+  {
+    "number": 63,
+    "question": "What is the correct syntax for defining a Python function?",
+    "options": ["function name():", "def name():", "def name():", "define name():"],
+    "answer": "def name():"
+  },
+  {
+    "number": 64,
+    "question": "What are the values passed into a function called?",
+    "options": ["Returns", "Parameters", "Conditions", "Variables"],
+    "answer": "Parameters"
+  },
+  {
+    "number": 65,
+    "question": "In Python, a function can typically return:",
+    "options": ["One value", "Two values", "Three values", "Many values"],
+    "answer": "One value"
+  },
+  {
+    "number": 66,
+    "question": "Which Python data structure is mutable and ordered?",
+    "options": ["Tuple", "List", "String", "Dictionary"],
+    "answer": "List"
+  },
+  {
+    "number": 67,
+    "question": "Which programming approach specifically focuses on dividing a program into reusable, independent components?",
+    "options": ["Modular Programming", "Looping", "Procedural Programming", "Object-Oriented Programming"],
+    "answer": "Modular Programming"
+  },
+  {
+    "number": 68,
+    "question": "What is the file extension of Python modules?",
+    "options": [".java", ".py", ".txt", ".mod"],
+    "answer": ".py"
+  },
+  {
+    "number": 69,
+    "question": "Which method is used to write data into a file in Python?",
+    "options": ["writeline()", "print()", "write()", "put()"],
+    "answer": "write()"
+  },
+  {
+    "number": 70,
+    "question": "Which Python module is commonly used for unit testing?",
+    "options": ["pytest", "unittest", "debugger", "testpy"],
+    "answer": "unittest"
+  },
+  {
+    "number": 71,
+    "question": "Which debugging tool is built into Python?",
+    "options": ["gdb", "pdb", "jdb", "rdb"],
+    "answer": "pdb"
+  },
+  {
+    "number": 72,
+    "question": "Which of the following refers to a challenge that can be solved through a computational process involving an algorithm?",
+    "options": ["Computational problem", "Programming language", "Binary conversion", "Debugging technique"],
+    "answer": "Computational problem"
+  },
+  {
+    "number": 73,
+    "question": "A step by step set of instructions to solve a problem is called:",
+    "options": ["Algorithm", "Syntax", "Protocol", "Heuristic"],
+    "answer": "Algorithm"
+  },
+  {
+    "number": 74,
+    "question": "A problem with a \"yes\" or \"no\" output is called a:",
+    "options": ["Search problem", "Decision problem", "Optimization problem", "Counting problem"],
+    "answer": "Decision problem"
+  },
+  {
+    "number": 75,
+    "question": "A problem where the goal is to find the best solution according to specific criteria is classified as a(n):",
+    "options": ["Counting problem", "Optimization problem", "Search problem", "Decision problem"],
+    "answer": "Optimization problem"
+  },
+  {
+    "number": 76,
+    "question": "Which type of problem is characterized by clear goals, inputs and outputs?",
+    "options": ["Ill-defined problem", "Abstract problem", "Open-ended problem", "Well defined problem"],
+    "answer": "Well defined problem"
+  },
+  {
+    "number": 77,
+    "question": "A problem with open ended goals and no fixed solution is called:",
+    "options": ["Well defined", "Algorithmic", "Ill defined", "Optimization"],
+    "answer": "Ill defined"
+  },
+  {
+    "number": 78,
+    "question": "The Generate and Test algorithm is most often used in which field?",
+    "options": ["Network security", "Artificial Intelligence", "Hardware circuit design", "Financial auditing"],
+    "answer": "Artificial Intelligence"
+  },
+  {
+    "number": 79,
+    "question": "____ can be used to reduce the number of potential solutions generated in a Generate and Test algorithm.",
+    "options": ["Loops", "Heuristics", "Compilers", "Syntax rules"],
+    "answer": "Heuristics"
+  },
+  {
+    "number": 80,
+    "question": "A solvable problem in computer science must have:",
+    "options": ["Finite procedure", "At least 1000 steps", "Graphical user interface", "Cloud computing support"],
+    "answer": "Finite procedure"
+  },
+  {
+    "number": 81,
+    "question": "Which of the following is a famous example of an unsolvable problem?",
+    "options": ["Calculating square root", "Finding factorial", "Halting Problem", "Sorting numbers"],
+    "answer": "Halting Problem"
+  },
+  {
+    "number": 82,
+    "question": "Which classic computational problem involves determining whether a program will halt or run infinitely for a given input?",
+    "options": ["Halting problem", "Sorting problem", "Traveling salesman problem", "Knapsack problem"],
+    "answer": "Halting problem"
+  },
+  {
+    "number": 83,
+    "question": "Who proved that the Halting Problem is unsolvable?",
+    "options": ["Bill Gates", "Alan Turing", "Charles Babbage", "Tim Berners Lee"],
+    "answer": "Alan Turing"
+  },
+  {
+    "number": 84,
+    "question": "A problem is considered computationally tractable if it can be solved in:",
+    "options": ["Infinite time", "Exponential time", "Constant time", "Polynomial time"],
+    "answer": "Polynomial time"
+  },
+  {
+    "number": 85,
+    "question": "Which of the following is an example of a tractable problem?",
+    "options": ["Halting Problem", "Sorting a list using Merge Sort", "Traveling Salesman Problem (TSP)", "Boolean Satisfiability (SAT)"],
+    "answer": "Sorting a list using Merge Sort"
+  },
+  {
+    "number": 86,
+    "question": "The time complexity of merge sort is:",
+    "options": ["O(n!)", "O(n \\log n)", "O(2^n)", "O(n^2)"],
+    "answer": "O(n \\log n)"
+  },
+  {
+    "number": 87,
+    "question": "Which of the following sorting algorithms has polynomial time complexity in its typical implementation?",
+    "options": ["Bogo Sort", "Quick Sort", "Sleep Sort", "Brute force Sort"],
+    "answer": "Quick Sort"
+  },
+  {
+    "number": 88,
+    "question": "How does the time complexity of intractable problems typically scale with input size?",
+    "options": ["Exponentially", "Linearly", "Logarithmically", "Constant time"],
+    "answer": "Exponentially"
+  },
+  {
+    "number": 89,
+    "question": "The primary focus of algorithm analysis is studying:",
+    "options": ["Input and output formatting", "Hardware performance", "Time and space complexity", "Code readability"],
+    "answer": "Time and space complexity"
+  },
+  {
+    "number": 90,
+    "question": "Time complexity helps to understand how the running time of an algorithm changes with:",
+    "options": ["Input format", "Input size", "Output size", "Program language"],
+    "answer": "Input size"
+  },
+  {
+    "number": 91,
+    "question": "In Big O notation, what does the 'n' typically represent?",
+    "options": ["Time", "Output size", "Input size", "Memory usage"],
+    "answer": "Input size"
+  },
+  {
+    "number": 92,
+    "question": "Which of these Big O notations represents constant time complexity?",
+    "options": ["O(n)", "O(1)", "O(n^2)", "O(\\log n)"],
+    "answer": "O(1)"
+  },
+  {
+    "number": 93,
+    "question": "Which Big O notation describes an algorithm whose runtime grows linearly with input size?",
+    "options": ["O(n^2)", "O(\\log n)", "O(n)", "O(1)"],
+    "answer": "O(n)"
+  },
+  {
+    "number": 94,
+    "question": "What is the time complexity of linear search in the worst case?",
+    "options": ["O(1)", "O(\\log n)", "O(n)", "O(n^2)"],
+    "answer": "O(n)"
+  },
+  {
+    "number": 95,
+    "question": "Which technique breaks a problem into smaller subproblems, solves each one, and combines their solutions to solve the original problem?",
+    "options": ["Greedy method", "Divide and Conquer", "Dynamic Programming", "Backtracking"],
+    "answer": "Divide and Conquer"
+  },
+  {
+    "number": 96,
+    "question": "Which algorithm is a classic example of Divide and Conquer technique?",
+    "options": ["Linear search", "Bubble sort", "Merge sort", "Hashing"],
+    "answer": "Merge sort"
+  },
+  {
+    "number": 97,
+    "question": "Which method makes locally optimal choices at each step to reach a global solution?",
+    "options": ["Divide and Conquer", "Greedy method", "Dynamic Programming", "Brute Force"],
+    "answer": "Greedy method"
+  },
+  {
+    "number": 98,
+    "question": "Which technique may NOT produce optimal solutions in all cases?",
+    "options": ["Divide and Conquer", "Greedy", "Dynamic Programming", "Backtracking"],
+    "answer": "Greedy"
+  },
+  {
+    "number": 99,
+    "question": "Which method explores all possible solutions systematically?",
+    "options": ["Divide and Conquer", "Greedy", "Dynamic", "Backtracking"],
+    "answer": "Backtracking"
+  },
+  {
+    "number": 100,
+    "question": "Which sorting algorithm repeatedly compares adjacent elements and swaps them if they are in the wrong order?",
+    "options": ["Quick Sort", "Bubble Sort", "Merge Sort", "Insertion Sort"],
+    "answer": "Bubble Sort"
+  },
+  {
+    "number": 101,
+    "question": "What is the worst case time complexity of the Bubble Sort algorithm?",
+    "options": ["O(n)", "O(\\log n)", "O(n \\log n)", "O(n^2)"],
+    "answer": "O(n^2)"
+  },
+  {
+    "number": 102,
+    "question": "Which sorting algorithm works by repeatedly selecting the smallest unsorted element and swapping it into its correct position?",
+    "options": ["Quick Sort", "Selection sort", "Bubble sort", "Insertion sort"],
+    "answer": "Selection sort"
+  },
+  {
+    "number": 103,
+    "question": "What is the worst case time complexity of selection sort?",
+    "options": ["O(n)", "O(\\log n)", "O(n \\log n)", "O(n^2)"],
+    "answer": "O(n^2)"
+  },
+  {
+    "number": 104,
+    "question": "Which of the following sorting algorithms is inefficient for large datasets due to its high time complexity?",
+    "options": ["Merge Sort", "Bubble Sort", "Quick Sort", "Heap Sort"],
+    "answer": "Bubble Sort"
+  },
+  {
+    "number": 105,
+    "question": "Which algorithm is most efficient for sorting large datasets?",
+    "options": ["Merge Sort", "Bubble Sort", "Selection Sort", "Both b and c"],
+    "answer": "Merge Sort"
+  },
+  {
+    "number": 106,
+    "question": "Binary search requires the input list to be:",
+    "options": ["Unsorted", "Sorted", "Partitioned", "Hashed"],
+    "answer": "Sorted"
+  },
+  {
+    "number": 107,
+    "question": "The worst case time complexity of Linear Search is:",
+    "options": ["O(\\log n)", "O(n)", "O(n^2)", "O(1)"],
+    "answer": "O(n)"
+  },
+  {
+    "number": 108,
+    "question": "What is the time complexity of Binary Search?",
+    "options": ["O(\\log n)", "O(n)", "O(n^2)", "O(n \\log n)"],
+    "answer": "O(\\log n)"
+  },
+  {
+    "number": 109,
+    "question": "Which search algorithm is better for unsorted data?",
+    "options": ["Linear Search", "Binary Search", "Both are equally efficient", "Neither"],
+    "answer": "Linear Search"
+  },
+  {
+    "number": 110,
+    "question": "____ search algorithm halves the search space at each step",
+    "options": ["Binary", "Linear", "Bubble", "Insertion"],
+    "answer": "Binary"
+  },
+  {
+    "number": 111,
+    "question": "Which traversal algorithm explores all neighbors at current depth before going deeper?",
+    "options": ["Depth First Search", "Quick Sort", "Breadth First Search", "Merge Sort"],
+    "answer": "Breadth First Search"
+  },
+  {
+    "number": 112,
+    "question": "What data structure is essential for implementing BFS?",
+    "options": ["Queue", "Stack", "Heap", "Array"],
+    "answer": "Queue"
+  },
+  {
+    "number": 113,
+    "question": "Which graph traversal algorithm is used to find the shortest path in un-weighted graph?",
+    "options": ["DFS", "BFS", "Both", "Neither"],
+    "answer": "BFS"
+  },
+  {
+    "number": 114,
+    "question": "In DFS, when a dead end is reached, the algorithm:",
+    "options": ["Restarts", "Backtracks", "Jumps to a random node", "Terminates"],
+    "answer": "Backtracks"
+  },
+  {
+    "number": 115,
+    "question": "What data structure is used by Depth First Search (DFS)?",
+    "options": ["Queue", "Stack", "Heap", "Priority Queue"],
+    "answer": "Stack"
+  },
+  {
+    "number": 116,
+    "question": "What is the time complexity of BFS on a graph with V vertices and E edges?",
+    "options": ["O(V^2)", "O(E^2)", "O(V + E)", "O(V \\times E)"],
+    "answer": "O(V + E)"
+  },
+  {
+    "number": 117,
+    "question": "A data structure used to store multiple items in a sequence is called:",
+    "options": ["Dictionary", "Loop", "List", "Function"],
+    "answer": "List"
+  },
+  {
+    "number": 118,
+    "question": "How are elements separated in a Python list?",
+    "options": ["Semicolons", "Commas", "Periods", "Colons"],
+    "answer": "Commas"
+  },
+  {
+    "number": 119,
+    "question": "Every item in a list has a position, called an ____",
+    "options": ["Index", "Value", "Label", "Node"],
+    "answer": "Index"
+  },
+  {
+    "number": 120,
+    "question": "Which of the following are properties of a list in Python?",
+    "options": ["Dynamic Size", "Index Based Access", "Ordered Collection", "All"],
+    "answer": "All"
+  },
+  {
+    "number": 121,
+    "question": "Which method is used to insert an element at a specific position in a Python list?",
+    "options": ["add()", "insert()", "append()", "put()"],
+    "answer": "insert()"
+  },
+  {
+    "number": 122,
+    "question": "Which method removes an item from the list by value?",
+    "options": ["pop()", "delete()", "remove()", "discard()"],
+    "answer": "remove()"
+  },
+  {
+    "number": 123,
+    "question": "Which method is used to remove an item by its index?",
+    "options": ["remove()", "pop()", "delete()", "clear()"],
+    "answer": "pop()"
+  },
+  {
+    "number": 124,
+    "question": "Which operator is used to check if an item exists in a Python list?",
+    "options": ["find", "in", "has", "exist"],
+    "answer": "in"
+  },
+  {
+    "number": 125,
+    "question": "Which data structure can be implemented using a Python list to follow Last In First Out (LIFO) order?",
+    "options": ["Queue", "Dictionary", "Stack", "Tuple"],
+    "answer": "Stack"
+  },
+  {
+    "number": 126,
+    "question": "Which data structure can be implemented using a list in First In First Out (FIFO) order?",
+    "options": ["Set", "Queue", "Stack", "Matrix"],
+    "answer": "Queue"
+  },
+  {
+    "number": 127,
+    "question": "In a stack data structure, from which end are elements added and removed?",
+    "options": ["Bottom", "Middle", "Top", "Random"],
+    "answer": "Top"
+  },
+  {
+    "number": 128,
+    "question": "Which operation adds an item to the top of the stack?",
+    "options": ["insert()", "pop()", "push", "delete()"],
+    "answer": "push"
+  },
+  {
+    "number": 129,
+    "question": "In a queue data structure, new elements are always added to the:",
+    "options": ["Front", "Middle", "Rear", "Any"],
+    "answer": "Rear"
+  },
+  {
+    "number": 130,
+    "question": "Which operation removes an item from the top of the stack?",
+    "options": ["append()", "remove()", "pop", "pop"],
+    "answer": "pop"
+  },
+  {
+    "number": 131,
+    "question": "Which operation adds an item to the end (rear) of a queue?",
+    "options": ["pop", "push", "enqueue", "dequeue"],
+    "answer": "enqueue"
+  },
+  {
+    "number": 132,
+    "question": "A tree is a ____ data structure.",
+    "options": ["Random", "Hierarchical", "Sequential", "Linear"],
+    "answer": "Hierarchical"
+  },
+  {
+    "number": 133,
+    "question": "The topmost node in a tree is called:",
+    "options": ["Leaf node", "Parent node", "Root node", "Branch node"],
+    "answer": "Root node"
+  },
+  {
+    "number": 134,
+    "question": "In tree data structures, nodes without any children are called:",
+    "options": ["Root nodes", "Internal nodes", "Leaf nodes", "Edge nodes"],
+    "answer": "Leaf nodes"
+  },
+  {
+    "number": 135,
+    "question": "The number of edges from root node to the deepest leaf is called the ____ of tree.",
+    "options": ["Height", "Depth", "Distance", "Width"],
+    "answer": "Height"
+  },
+  {
+    "number": 136,
+    "question": "Which tree traversal is most suitable for creating file system backups?",
+    "options": ["In order", "Pre order", "Post order", "Level order"],
+    "answer": "Pre order"
+  },
+  {
+    "number": 137,
+    "question": "The correct traversal for safely deleting a directory and its contents is:",
+    "options": ["In order", "Post order", "Pre order", "Breadth first"],
+    "answer": "Post order"
+  },
+  {
+    "number": 138,
+    "question": "A ____ is a data structure that consists of a set of vertices (or nodes) connected by edges.",
+    "options": ["Graph", "Tree", "Array", "Stack"],
+    "answer": "Graph"
+  },
+  {
+    "number": 139,
+    "question": "Another name for a vertex in a graph is called:",
+    "options": ["Leaf", "Node", "Root", "Point"],
+    "answer": "Node"
+  },
+  {
+    "number": 140,
+    "question": "What are the individual points or entities in a graph called?",
+    "options": ["Edge", "Path", "Vertices", "Degrees"],
+    "answer": "Vertices"
+  },
+  {
+    "number": 141,
+    "question": "A connection or relationship between two vertices in a graph is called a:",
+    "options": ["Node", "Edge", "Root", "path"],
+    "answer": "Edge"
+  },
+  {
+    "number": 142,
+    "question": "Which structure is best for modeling a network of friends connected with each other?",
+    "options": ["Stack", "Tree", "Graph", "Queue"],
+    "answer": "Graph"
+  },
+  {
+    "number": 143,
+    "question": "What type of edge has a one way connection in a graph?",
+    "options": ["Undirected edge", "Weighted edge", "Directed edge", "Circular edge"],
+    "answer": "Directed edge"
+  },
+  {
+    "number": 144,
+    "question": "What type of edge has a two way connection in a graph?",
+    "options": ["Undirected", "Weighted", "Directed", "Circular"],
+    "answer": "Undirected"
+  },
+  {
+    "number": 145,
+    "question": "The primary purpose of data analytics is to:",
+    "options": ["Data analytics", "Data encryption", "Data warehousing", "Data modeling"],
+    "answer": "Data analytics"
+  },
+  {
+    "number": 146,
+    "question": "Which branch of mathematics helps in understanding and analyzing data?",
+    "options": ["Statistics", "Algebra", "Geometry", "Calculus"],
+    "answer": "Statistics"
+  },
+  {
+    "number": 147,
+    "question": "Which of the following is NOT a measure of central tendency?",
+    "options": ["Mean", "Median", "Mode", "Range"],
+    "answer": "Range"
+  },
+  {
+    "number": 148,
+    "question": "What is the mean of the numbers 50, 60, 70, 80 and 90?",
+    "options": ["65", "70", "75", "85"],
+    "answer": "70"
+  },
+  {
+    "number": 149,
+    "question": "The value that appears most often in a dataset is called:",
+    "options": ["Mean", "Median", "Mode", "Range"],
+    "answer": "Mode"
+  },
+  {
+    "number": 150,
+    "question": "The mode of 2, 3, 4, 3, 5, 3, 6 is:",
+    "options": ["2", "3", "4", "5"],
+    "answer": "3"
+  },
+  {
+    "number": 151,
+    "question": "Which of the following is a measure of dispersion?",
+    "options": ["Mean", "Median", "Mode", "Variance"],
+    "answer": "Variance"
+  },
+  {
+    "number": 152,
+    "question": "What is the probability of getting tail when flipping a fair coin?",
+    "options": ["25%", "100%", "50%", "75%"],
+    "answer": "50%"
+  },
+  {
+    "number": 153,
+    "question": "Which data collection method involves watching and recording behavior in a natural setting without interference?",
+    "options": ["Survey", "Observation", "Experiment", "Interview"],
+    "answer": "Observation"
+  },
+  {
+    "number": 154,
+    "question": "Which method is most efficient for collecting data from a large number of people?",
+    "options": ["Survey", "Observation", "Experiment", "Case study"],
+    "answer": "Survey"
+  },
+  {
+    "number": 155,
+    "question": "Which method would a teacher use to test if printed notes improve exam scores?",
+    "options": ["Survey", "Observation", "Experiment", "Interview"],
+    "answer": "Experiment"
+  },
+  {
+    "number": 156,
+    "question": "____ is a data visualization library in Python, widely used to create charts",
+    "options": ["Matplotlib", "NumPy", "SciPy", "Pandas"],
+    "answer": "Matplotlib"
+  },
+  {
+    "number": 157,
+    "question": "Which of the following is NOT typically used for creating data visualizations?",
+    "options": ["Microsoft Word", "Microsoft Excel", "Python", "Tableau"],
+    "answer": "Microsoft Word"
+  },
+  {
+    "number": 158,
+    "question": "Which of the following is a widely used tool for data visualization?",
+    "options": ["Microsoft Word", "Microsoft Excel", "Google Sheets", "b and c"],
+    "answer": "b and c"
+  },
+  {
+    "number": 159,
+    "question": "A histogram groups data into:",
+    "options": ["Time periods", "Bins or intervals", "Categories", "Rows"],
+    "answer": "Bins or intervals"
+  },
+  {
+    "number": 160,
+    "question": "What type of visualization is used to show trends over time?",
+    "options": ["Line graph", "Histogram", "Scatter plot", "Bar chart"],
+    "answer": "Line graph"
+  },
+  {
+    "number": 161,
+    "question": "Which of the following is NOT a type of data visualization?",
+    "options": ["Line graph", "Bar chart", "Scatter plot", "Spreadsheet"],
+    "answer": "Spreadsheet"
+  },
+  {
+    "number": 162,
+    "question": "Which of the following is NOT typically used for creating data visualizations?",
+    "options": ["Microsoft Word", "Microsoft Excel", "Python", "Tableau"],
+    "answer": "Microsoft Word"
+  },
+  {
+    "number": 163,
+    "question": "____ is a data visualization library in Python, widely used to create charts and graphs like bar charts, line graphs, and histograms.",
+    "options": ["Matplotlib", "NumPy", "SciPy", "Pandas"],
+    "answer": "Matplotlib"
+  },
+  {
+    "number": 164,
+    "question": "The primary purpose of data analytics is to examine data to find useful information, patterns or trends.",
+    "options": ["Data analytics", "Data encryption", "Data warehousing", "Data modeling"],
+    "answer": "Data analytics"
+  },
+  {
+    "number": 165,
+    "question": "Which of the following is NOT considered an emerging technology?",
+    "options": ["Artificial Intelligence", "Virtual Reality", "Cloud Computing", "CRT televisions"],
+    "answer": "CRT televisions"
+  },
+  {
+    "number": 166,
+    "question": "Which technology enables machines to think, learn and make decisions like humans?",
+    "options": ["Cloud Computing", "Artificial Intelligence", "Block chain", "Internet of Thing"],
+    "answer": "Artificial Intelligence"
+  },
+  {
+    "number": 167,
+    "question": "Which emerging technology is used in self driving cars?",
+    "options": ["Blockchain", "Artificial Intelligence", "Virtual Reality", "Quantum computing"],
+    "answer": "Artificial Intelligence"
+  },
+  {
+    "number": 168,
+    "question": "Which technology allows users to store and access data and applications over the Internet?",
+    "options": ["Cloud computing", "Quantum computing", "Blockchain", "Virtual Reality"],
+    "answer": "Cloud computing"
+  },
+  {
+    "number": 169,
+    "question": "Which of the following is NOT typically considered an IoT device?",
+    "options": ["Smart cars", "Smart refrigerator", "Mobile Charger", "Smart thermostat"],
+    "answer": "Mobile Charger"
+  },
+  {
+    "number": 170,
+    "question": "Which technology adds digital content to the real world environment?",
+    "options": ["Virtual Reality", "Augmented Reality", "Artificial Intelligence", "Mixed Reality"],
+    "answer": "Augmented Reality"
+  },
+  {
+    "number": 171,
+    "question": "Which technology creates a fully immersive, computer generated environment that feels real to the user?",
+    "options": ["Augmented Reality", "Virtual Reality", "Mixed Reality", "Computer Aided Design"],
+    "answer": "Virtual Reality"
+  },
+  {
+    "number": 172,
+    "question": "5G is considered the next generation of:",
+    "options": ["Electricity", "Wireless technology", "Cable networks", "Bluetooth accessories"],
+    "answer": "Wireless technology"
+  },
+  {
+    "number": 173,
+    "question": "What is one major benefit of 5G technology?",
+    "options": ["Lower bandwidth capacity", "Faster internet speed", "Higher latency", "Unlimited free data plans"],
+    "answer": "Faster internet speed"
+  },
+  {
+    "number": 174,
+    "question": "What is the basic unit of information in quantum computing?",
+    "options": ["Bit", "Byte", "Qubits", "Pixel"],
+    "answer": "Qubits"
+  },
+  {
+    "number": 175,
+    "question": "Biotechnology can improve:",
+    "options": ["Television displays", "Crop quality", "Internet speed", "Phone battery life"],
+    "answer": "Crop quality"
+  },
+  {
+    "number": 176,
+    "question": "Which technology allows one physical computer to run multiple independent virtual machines (VMs)?",
+    "options": ["Cloud Computing", "Virtualization", "Data Mining", "Machine Learning"],
+    "answer": "Virtualization"
+  },
+  {
+    "number": 177,
+    "question": "____ provides a complete development environment for building and deploying cloud applications.",
+    "options": ["IaaS", "SaaS", "PaaS", "CRM"],
+    "answer": "PaaS"
+  },
+  {
+    "number": 178,
+    "question": "PaaS (Platform as a Service) is primarily used by:",
+    "options": ["General users", "Software developers", "Hardware engineers", "Marketing teams"],
+    "answer": "Software developers"
+  },
+  {
+    "number": 179,
+    "question": "Which of the following is an example of Software as a Service (SaaS)?",
+    "options": ["Workspace", "Services (AWS)", "Engine", "Azure"],
+    "answer": "Workspace"
+  },
+  {
+    "number": 180,
+    "question": "Which of the following is NOT a cloud deployment model?",
+    "options": ["Public Cloud", "Private Cloud", "Ground Cloud", "Hybrid Cloud"],
+    "answer": "Ground Cloud"
+  },
+  {
+    "number": 181,
+    "question": "Which cloud deployment model is most cost effective?",
+    "options": ["Public cloud", "Private cloud", "Hybrid cloud", "Multi cloud"],
+    "answer": "Public cloud"
+  },
+  {
+    "number": 182,
+    "question": "A ____ refers to unauthorized access to sensitive data.",
+    "options": ["Data breach", "Data backup", "Data mining", "Data compression"],
+    "answer": "Data breach"
+  },
+  {
+    "number": 183,
+    "question": "Which term refers to processing data closer to the source instead of a central server?",
+    "options": ["Cloud routing", "Edge computing", "Hybrid hosting", "Ripple"],
+    "answer": "Edge computing"
+  },
+  {
+    "number": 184,
+    "question": "What is the term used to describe delay in data transfer or response time in edge computing?",
+    "options": ["Bandwidth", "Latency", "Throughput", "Encryption"],
+    "answer": "Latency"
+  },
+  {
+    "number": 185,
+    "question": "Which of the following allows developers to build and deploy applications without managing infrastructure?",
+    "options": ["Serverless computing", "Virtual machines", "On premise servers", "Edge computing"],
+    "answer": "Serverless computing"
+  },
+  {
+    "number": 186,
+    "question": "In a serverless model, who manages the servers?",
+    "options": ["Developers", "End users", "Cloud providers", "Hardware vendors"],
+    "answer": "Cloud providers"
+  },
+  {
+    "number": 187,
+    "question": "Which of the following is a serverless computing service?",
+    "options": ["AWS Lambda", "AWS EC2", "Azure Virtual Machines", "Google Kubernetes Engine"],
+    "answer": "AWS Lambda"
+  },
+  {
+    "number": 188,
+    "question": "Which of the following is another common name for 'Terms of Use'?",
+    "options": ["Privacy Policies", "User Guides", "Terms and Conditions", "Delivery Notices"],
+    "answer": "Terms and Conditions"
+  },
+  {
+    "number": 189,
+    "question": "The primary purpose of Terms of Use in a digital service is to establish the legal rights and obligations of both users and providers.",
+    "options": ["Technical Support", "User Guides", "Terms and Conditions", "Community Guidelines"],
+    "answer": "Terms and Conditions"
+  },
+  {
+    "number": 190,
+    "question": "Who usually sets the Terms of Use for service?",
+    "options": ["Service provider", "User", "Court of law", "Government"],
+    "answer": "Service provider"
+  },
+  {
+    "number": 191,
+    "question": "What type of document are Terms of Use considered to be?",
+    "options": ["Technical document", "Legal agreement", "Marketing material", "Instruction manual"],
+    "answer": "Legal agreement"
+  },
+  {
+    "number": 192,
+    "question": "Which clause governs the conditions for suspending or terminating user accounts?",
+    "options": ["Intellectual Property Rights", "Privacy and Data Use", "User Obligations", "Termination of Service"],
+    "answer": "Termination of Service"
+  },
+  {
+    "number": 193,
+    "question": "Which Terms of Use clause specifically outlines how user data is collected, processed, and protected?",
+    "options": ["User Obligations", "Limitations of Liability", "Privacy and Data Use", "Termination of Service"],
+    "answer": "Privacy and Data Use"
+  },
+  {
+    "number": 194,
+    "question": "What is the term for using software without proper authorization or license?",
+    "options": ["System glitch", "Software piracy", "Version update", "Fair use"],
+    "answer": "Software piracy"
+  },
+  {
+    "number": 195,
+    "question": "Software piracy is a violation of:",
+    "options": ["Marketing regulations", "Environmental policies", "Open source licenses", "Copyright laws"],
+    "answer": "Copyright laws"
+  },
+  {
+    "number": 196,
+    "question": "Which of the following is NOT a type of security threat?",
+    "options": ["Spam", "Spyware", "Phishing", "Firewall"],
+    "answer": "Firewall"
+  },
+  {
+    "number": 197,
+    "question": "Which term describes unwanted bulk messages sent to email or phones without consent?",
+    "options": ["Spyware", "Spam", "Phishing", "Cookies"],
+    "answer": "Spam"
+  },
+  {
+    "number": 198,
+    "question": "Which type of malicious software secretly monitors user activity on computer or phone?",
+    "options": ["Cookies", "Spam", "Spyware", "Phishing"],
+    "answer": "Spyware"
+  },
+  {
+    "number": 199,
+    "question": "Where are cookies typically stored?",
+    "options": ["Website servers", "User's device", "Cloud storage", "Router"],
+    "answer": "User's device"
+  },
+  {
+    "number": 200,
+    "question": "Which type of threat involves redirecting users to a fake website?",
+    "options": ["Pharming", "Spyware", "Cookies", "Phishing"],
+    "answer": "Pharming"
+  },
+  {
+    "number": 201,
+    "question": "Which of the following protects your computer from harmful programs such as viruses, spyware, and other malware?",
+    "options": ["Spam filter", "Antivirus software", "Web browser", "Phishing recognition"],
+    "answer": "Antivirus software"
+  },
+  {
+    "number": 202,
+    "question": "What does \"https://\" in a web address indicate?",
+    "options": ["Gaming website", "Unsecured connection", "Secure website", "Entertainment blog"],
+    "answer": "Secure website"
+  },
+  {
+    "number": 203,
+    "question": "Websites with HTTPS often have a ____",
+    "options": ["Star", "Padlock", "Warning triangle", "Reload"],
+    "answer": "Padlock"
+  },
+  {
+    "number": 204,
+    "question": "ICT stands for:",
+    "options": ["International Computer Technology", "Internet and Communication Techniques", "Information and Communication Technology", "Integrated Computing Tools"],
+    "answer": "Information and Communication Technology"
+  },
+  {
+    "number": 205,
+    "question": "What is a common tool for collecting user feedback?",
+    "options": ["Spreadsheet", "Email", "Online survey", "Video call"],
+    "answer": "Online survey"
+  },
+  {
+    "number": 206,
+    "question": "____ is the activity of finding information on the Internet about a particular topic.",
+    "options": ["Online browsing", "Online research", "Digital exploration", "Digital marketing"],
+    "answer": "Online research"
+  },
+  {
+    "number": 207,
+    "question": "Which of the following is NOT a type of online research?",
+    "options": ["Health research", "Academic research", "Historical fiction writing", "Market research"],
+    "answer": "Historical fiction writing"
+  },
+  {
+    "number": 208,
+    "question": "Which type of online research is used to verify the correctness of information?",
+    "options": ["Fiction writing", "General knowledge", "Health research", "Fact-checking research"],
+    "answer": "Fact-checking research"
+  },
+  {
+    "number": 209,
+    "question": "The ability to use digital tools to find, understand, create and share information is called:",
+    "options": ["Digital communication", "Digital literacy", "Digital citizenship", "Computer programming"],
+    "answer": "Digital literacy"
+  },
+  {
+    "number": 210,
+    "question": "Which device is NOT typically associated with digital literacy?",
+    "options": ["Smartphone", "Typewriter", "Tablet", "Computer"],
+    "answer": "Typewriter"
+  },
+  {
+    "number": 211,
+    "question": "Which of the following sources is usually peer-reviewed?",
+    "options": ["YouTube videos", "Blogs", "Academic journals", "Social media posts"],
+    "answer": "Academic journals"
+  },
+  {
+    "number": 212,
+    "question": "Which of the following is NOT a type of Intellectual property?",
+    "options": ["Patent", "Trademark", "Copyright", "Employment contract"],
+    "answer": "Employment contract"
+  },
+  {
+    "number": 213,
+    "question": "Which type of Intellectual property right protects new inventions and technical solutions?",
+    "options": ["Trademark", "Patent", "Copyright", "Trade secret"],
+    "answer": "Patent"
+  },
+  {
+    "number": 214,
+    "question": "Which of the following is an example of patent?",
+    "options": ["New type of solar panel", "Company logo", "Novel literary work", "Original painting"],
+    "answer": "New type of solar panel"
+  },
+  {
+    "number": 215,
+    "question": "Which of the following is NOT protected under trademarks?",
+    "options": ["Brand name", "Logo", "Slogan", "Films"],
+    "answer": "Films"
+  },
+  {
+    "number": 216,
+    "question": "Which type of Intellectual property right gives the owner the right to stop others from copying or distributing their work?",
+    "options": ["Trademark", "Patent", "Copyright", "Industrial design"],
+    "answer": "Copyright"
+  },
+  {
+    "number": 217,
+    "question": "Which of the following is NOT protected under copyright?",
+    "options": ["Secret recipe", "Books", "Music", "Software"],
+    "answer": "Secret recipe"
+  },
+  {
+    "number": 218,
+    "question": "Which of the following protects a company's secret formula or recipe?",
+    "options": ["Trademark", "Copyright", "Patent", "Trade secret"],
+    "answer": "Trade secret"
+  },
+  {
+    "number": 219,
+    "question": "Legal agreements used to protect trade secrets are called:",
+    "options": ["Public disclosure", "Confidentiality agreements", "Patent registration", "Trademark registration"],
+    "answer": "Confidentiality agreements"
+  },
+  {
+    "number": 220,
+    "question": "A unique bottle shape for a water brand can be protected under:",
+    "options": ["Trademark", "Industrial design", "Copyright", "Patent"],
+    "answer": "Industrial design"
+  },
+  {
+    "number": 221,
+    "question": "Which Pakistani organization registers intellectual property rights?",
+    "options": ["Pakistan Engineering Council", "Higher Education Commission", "IPO Pakistan", "National ICT Board"],
+    "answer": "IPO Pakistan"
+  },
+  {
+    "number": 222,
+    "question": "IPO stands for:",
+    "options": ["International Patent Office", "Intellectual Property Organization", "Innovation Protection Office", "Invention Patent Organization"],
+    "answer": "Intellectual Property Organization"
+  },
+  {
+    "number": 223,
+    "question": "How many key steps are involved in the design thinking process?",
+    "options": ["Three", "Four", "Five", "six"],
+    "answer": "Five"
+  },
+  {
+    "number": 224,
+    "question": "What is the first step in the design thinking process?",
+    "options": ["Empathize", "Ideate", "Define", "Test"],
+    "answer": "Empathize"
+  },
+  {
+    "number": 225,
+    "question": "Which stage of design thinking focuses on generating multiple creative solutions through brainstorming?",
+    "options": ["Test", "Empathize", "Ideate", "Define"],
+    "answer": "Ideate"
+  },
+  {
+    "number": 226,
+    "question": "The process of creating a simple model to test product or idea in design thinking is called:",
+    "options": ["Empathize", "Ideate", "Prototype", "Define"],
+    "answer": "Prototype"
+  },
+  {
+    "number": 227,
+    "question": "Which section of a business plan provides a brief overview of the business idea?",
+    "options": ["Business Description", "Market Analysis", "Executive Summary", "Financial Plan"],
+    "answer": "Executive Summary"
+  },
+  {
+    "number": 228,
+    "question": "Which section of a business plan outlines the company's purpose, offerings and target audience?",
+    "options": ["Business Description", "Financial Plan", "Marketing Strategy", "Executive Summary"],
+    "answer": "Business Description"
+  },
+  {
+    "number": 229,
+    "question": "Which of the following software can be used to create business plans?",
+    "options": ["PlanGuru", "Photoshop", "Zoom", "Dropbox Paper"],
+    "answer": "PlanGuru"
+  },
+  {
+    "number": 230,
+    "question": "Which of the following is an example of a collaborative tool?",
+    "options": ["Google Drive", "Windows Media Player", "PlanGuru", "Enloop"],
+    "answer": "Google Drive"
+  },
+  {
+    "number": 231,
+    "question": "Which type of research focuses on understanding customer opinions and motivations?",
+    "options": ["Mathematical Research", "Scientific Research", "Qualitative Research", "Quantitative Research"],
+    "answer": "Qualitative Research"
+  },
+  {
+    "number": 232,
+    "question": "What type of research involves collecting numerical data?",
+    "options": ["Qualitative", "Quantitative", "Subjective", "Descriptive"],
+    "answer": "Quantitative"
+  },
+  {
+    "number": 233,
+    "question": "Which qualitative research method uses a small, interactive group to explore opinions in depth?",
+    "options": ["Surveys", "Focus group", "Experiments", "Polling"],
+    "answer": "Focus group"
+  },
+  {
+    "number": 234,
+    "question": "Which of the following is a key goal of market data analysis?",
+    "options": ["Design product packaging", "Identifying trends and patterns", "Reducing staff", "Negotiate supplier contracts"],
+    "answer": "Identifying trends and patterns"
+  },
+  {
+    "number": 235,
+    "question": "Analyzing customer feedback from surveys is part of:",
+    "options": ["Predictive analysis", "Customer service", "Market data analysis", "Budget planning"],
+    "answer": "Market data analysis"
+  },
+  {
+    "number": 236,
+    "question": "A short presentation that explains a business idea to potential investors or customers is called:",
+    "options": ["Business report", "Business pitch", "Marketing survey", "Product review"],
+    "answer": "Business pitch"
+  },
+  {
+    "number": 237,
+    "question": "Which of the following is an example of verbal communication?",
+    "options": ["Eye contact", "Speaking", "Nodding", "Hand gestures"],
+    "answer": "Speaking"
+  },
+  {
+    "number": 238,
+    "question": "____ is the art of using words, visuals and emotions to create a narrative that captures the audience's attention.",
+    "options": ["Storytelling", "Marketing research", "Data analysis", "Advertising"],
+    "answer": "Storytelling"
+  },
+  {
+    "number": 239,
+    "question": "What is the process of working together to achieve a common goal called?",
+    "options": ["Competition", "Collaboration", "Delegation", "Communication"],
+    "answer": "Collaboration"
+  },
+  {
+    "number": 240,
+    "question": "____ is the process of making repeated improvements to a product, design, or idea based on feedback and testing.",
+    "options": ["Memorization", "Delegation", "Iteration", "Advertising"],
+    "answer": "Iteration"
+  },
+  {
+    "number": 241,
+    "question": "The ability to think in new and original ways is called:",
+    "options": ["Innovation", "Planning", "Creativity", "Organization"],
+    "answer": "Creativity"
+  },
+  {
+    "number": 242,
+    "question": "Who has the potential to be creative?",
+    "options": ["Only artists", "Only scientists", "Everyone", "Only engineers"],
+    "answer": "Everyone"
+  }
+];
+
+        // Architecture State Registry 
+        let currentIndex = 0;
+        let userResponses = JSON.parse(localStorage.getItem('ep_quiz_responses')) || {};
+        let activeFilter = 'all';
+
+        // Initial setup on layout generation 
+        document.addEventListener("DOMContentLoaded", () => {
+            lucide.createIcons();
+            initializeNavigationMatrix();
+            renderEngineState();
+        });
+
+        // Generate the sidebar navigation items dynamic map
+        function initializeNavigationMatrix() {
+            const container = document.getElementById("navigation-matrix-grid");
+            container.innerHTML = "";
+
+            dataset.forEach((item, index) => {
+                const element = document.createElement("button");
+                element.id = `matrix-item-${index}`;
+                element.className = `grid-item-pop text-xs font-semibold p-2.5 rounded-lg border text-center transition-all duration-200`;
+                element.innerText = index + 1;
+                element.onclick = () => selectActiveIndex(index);
+                container.appendChild(element);
+            });
+            updateNavigationMatrixStyles();
+        }
+
+        // Apply background/border styles dynamically based on selection state
+        function updateNavigationMatrixStyles() {
+            dataset.forEach((item, index) => {
+                const element = document.getElementById(`matrix-item-${index}`);
+                if (!element) return;
+
+                const status = userResponses[index];
+                
+                // Base state variables
+                let bgStyle = "bg-slate-800/40 border-slate-700/60 text-slate-400";
+                
+                if (status) {
+                    if (status.isCorrect) {
+                        bgStyle = "bg-emerald-500/10 border-emerald-500/40 text-emerald-400 font-bold";
+                    } else {
+                        bgStyle = "bg-rose-500/10 border-rose-500/40 text-rose-400 font-bold";
+                    }
+                }
+
+                // Append selection rings if matches active index context
+                if (index === currentIndex) {
+                    element.className = `grid-item-pop text-xs font-semibold p-2.5 rounded-lg border text-center transition-all duration-200 ring-2 ring-indigo-500 bg-indigo-500/20 border-indigo-400 text-white scale-105 shadow-lg shadow-indigo-500/10`;
+                } else {
+                    element.className = `grid-item-pop text-xs font-semibold p-2.5 rounded-lg border text-center transition-all duration-200 ${bgStyle}`;
+                }
+
+                // Handle filters visibility state toggles
+                let isVisible = true;
+                if (activeFilter === 'correct' && (!status || !status.isCorrect)) isVisible = false;
+                if (activeFilter === 'wrong' && (!status || status.isCorrect)) isVisible = false;
+                if (activeFilter === 'unattempted' && status) isVisible = false;
+
+                element.style.display = isVisible ? "block" : "none";
+            });
+
+            // Calculate active visible configuration variables
+            const attemptedCount = Object.keys(userResponses).length;
+            document.getElementById("matrix-counter").innerText = `${attemptedCount} / ${dataset.length}`;
+        }
+
+        // Core component screen rendering engine
+        function renderEngineState() {
+            const currentItem = dataset[currentIndex];
+            
+            // Set basic typography headers
+            document.getElementById("quiz-question-tag").innerText = `Question ${currentIndex + 1} of ${dataset.length}`;
+            document.getElementById("quiz-question-text").innerText = currentItem.question;
+
+            // Generate answer item option row components
+            const optionsContainer = document.getElementById("quiz-options-container");
+            optionsContainer.innerHTML = "";
+
+            const historicSubmission = userResponses[currentIndex];
+
+            currentItem.options.forEach((option) => {
+                const optionButton = document.createElement("button");
+                optionButton.className = `w-full text-left p-4 rounded-xl border font-medium text-sm transition-all duration-200 flex items-center justify-between glass-card group`;
+                
+                // Label component tracking
+                const labelSpan = document.createElement("span");
+                labelSpan.innerText = option;
+                optionButton.appendChild(labelSpan);
+
+                // Evaluation indicator icon matching schema
+                const statusIconContainer = document.createElement("div");
+                statusIconContainer.className = "w-5 h-5 rounded-full border border-slate-600 flex items-center justify-center transition-all";
+                optionButton.appendChild(statusIconContainer);
+
+                // Check condition parameters if item contains historical interaction records
+                if (historicSubmission) {
+                    optionButton.disabled = true;
+                    if (option === currentItem.answer) {
+                        // Mark valid absolute targets green
+                        optionButton.className = `w-full text-left p-4 rounded-xl border font-medium text-sm transition-all duration-200 flex items-center justify-between bg-emerald-500/10 border-emerald-500/50 text-emerald-400`;
+                        statusIconContainer.className = "w-5 h-5 rounded-full bg-emerald-500 border-transparent flex items-center justify-center text-slate-900";
+                        statusIconContainer.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i>`;
+                    } else if (option === historicSubmission.selectedOption) {
+                        // Mark current dynamic incorrect selection targeted by user red
+                        optionButton.className = `w-full text-left p-4 rounded-xl border font-medium text-sm transition-all duration-200 flex items-center justify-between bg-rose-500/10 border-rose-500/50 text-rose-400`;
+                        statusIconContainer.className = "w-5 h-5 rounded-full bg-rose-500 border-transparent flex items-center justify-center text-white";
+                        statusIconContainer.innerHTML = `<i data-lucide="x" class="w-3.5 h-3.5 stroke-[3]"></i>`;
+                    } else {
+                        optionButton.className = `w-full text-left p-4 rounded-xl border font-medium text-sm flex items-center justify-between border-slate-800 bg-slate-900/20 text-slate-500 opacity-60`;
+                    }
+                } else {
+                    // Active functional monitoring bindings
+                    optionButton.onclick = () => evaluationEngineTrigger(option);
+                    optionButton.className = `w-full text-left p-4 rounded-xl border font-medium text-sm transition-all duration-200 flex items-center justify-between bg-slate-800/30 border-slate-700/50 text-slate-300 hover:border-indigo-500/50 hover:bg-indigo-500/5 hover:text-white`;
+                }
+
+                optionsContainer.appendChild(optionButton);
+            });
+
+            // Adjust navigation panel layout controls status metrics
+            document.getElementById("btn-prev").disabled = (currentIndex === 0);
+            document.getElementById("btn-prev").style.opacity = (currentIndex === 0) ? "0.4" : "1";
+            
+            // Re-render vector icons matching structural requirements
+            lucide.createIcons();
+            calculateAnalyticsData();
+            updateNavigationMatrixStyles();
+        }
+
+        // Action processor tracking user choice triggers
+        function evaluationEngineTrigger(selectedOption) {
+            if (userResponses[currentIndex]) return; // Block duplication vectors
+
+            const currentItem = dataset[currentIndex];
+            const isCorrect = (selectedOption === currentItem.answer);
+
+            userResponses[currentIndex] = {
+                selectedOption: selectedOption,
+                isCorrect: isCorrect
+            };
+
+            localStorage.setItem('ep_quiz_responses', JSON.stringify(userResponses));
+            renderEngineState();
+        }
+
+        // Control relative tracking indices pagination sequence functions
+        function navigateQuestion(direction) {
+            const nextIndex = currentIndex + direction;
+            if (nextIndex >= 0 && nextIndex < dataset.length) {
+                currentIndex = nextIndex;
+                renderEngineState();
+            }
+        }
+
+        // Jumps direct matrix targets instantly via navigation sidebar indexes
+        function selectActiveIndex(targetIndex) {
+            if (targetIndex >= 0 && targetIndex < dataset.length) {
+                currentIndex = targetIndex;
+                renderEngineState();
+            }
+        }
+
+        // Dynamic analytical processing calculations engine 
+        function calculateAnalyticsData() {
+            const totalMCQs = dataset.length;
+            let correctCount = 0;
+            let wrongCount = 0;
+
+            Object.values(userResponses).forEach(response => {
+                if (response.isCorrect) correctCount++;
+                else wrongCount++;
+            });
+
+            const attemptedCount = correctCount + wrongCount;
+            const remainingCount = totalMCQs - attemptedCount;
+            
+            // Formula metrics calculations
+            const percentageValue = totalMCQs > 0 ? Math.round((correctCount / totalMCQs) * 100) : 0;
+            const accuracyValue = attemptedCount > 0 ? Math.round((correctCount / attemptedCount) * 100) : 0;
+
+            // Render updates into standard view containers
+            document.getElementById("stat-total").innerText = totalMCQs;
+            document.getElementById("stat-remaining").innerText = remainingCount;
+            document.getElementById("stat-correct").innerText = correctCount;
+            document.getElementById("stat-wrong").innerText = wrongCount;
+            document.getElementById("stat-accuracy").innerText = `${accuracyValue}%`;
+            document.getElementById("stat-percentage").innerText = `${percentageValue}%`;
+
+            // Adjust real-time horizontal process navigation elements wide bars
+            const progressWeight = (attemptedCount / totalMCQs) * 100;
+            document.getElementById("session-progress-bar").style.width = `${progressWeight}%`;
+        }
+
+        // Matrix navigation filters visibility modifiers controller action links
+        function filterMatrix(targetFilter) {
+            activeFilter = targetFilter;
+            
+            // Reset active style tags on active tab lists elements configurations
+            ['all', 'correct', 'wrong', 'unattempted'].forEach(f => {
+                const element = document.getElementById(`filter-${f}`);
+                if(f === targetFilter) {
+                    element.classList.add("border-indigo-500/50", "bg-indigo-500/10");
+                } else {
+                    element.classList.remove("border-indigo-500/50", "bg-indigo-500/10");
+                }
+            });
+
+            updateNavigationMatrixStyles();
+        }
+
+        // Absolute memory wipe clear configuration commands reset options routing
+        function resetDataStorage() {
+            if (confirm("Are you sure you want to reset all quiz progress metrics? This action cannot be undone.")) {
+                localStorage.removeItem('ep_quiz_responses');
+                userResponses = {};
+                currentIndex = 0;
+                activeFilter = 'all';
+                initializeNavigationMatrix();
+                renderEngineState();
+            }
+        }
+    </script>
+</body>
+</html>

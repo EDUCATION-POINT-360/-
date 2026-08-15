@@ -1,0 +1,10 @@
+[build]
+  publish = "."
+
+# Education Point is a client-side SPA using the History API.
+# This keeps /admin, /notes, /resources, /privacy, etc. working
+# when opened directly or refreshed.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

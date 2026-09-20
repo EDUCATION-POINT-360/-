@@ -3787,7 +3787,7 @@ async function openResourceForm(existing){
       <div class="grid grid-2">
         <div class="field"><label>Chapter #</label><input data-ch-number type="number" min="1" value="${c.chapter_number||i+1}"></div>
         <div class="field"><label>Chapter Title</label><input data-ch-title required value="${escapeHTML(c.title||'')}"></div>
-        <div class="field"><label>Chapter Google Drive Link</label><input data-ch-url type="url" value="${escapeHTML(c.file_url||'')}" placeholder="https://drive.google.com/..."></div>
+        <div class="field"><label>Chapter Google Drive Link</label><input data-ch-url type="text" value="${escapeHTML(c.file_url||'')}" placeholder="https://drive.google.com/..."></div>
         <div class="field"><label>Description (optional)</label><input data-ch-desc value="${escapeHTML(c.description||'')}"></div>
       </div>
       <button type="button" class="btn btn-ghost btn-sm" data-remove-chapter>${ICONS.trash} Remove</button>
@@ -3805,17 +3805,17 @@ async function openResourceForm(existing){
         <div class="field"><label>Resource Type</label><select id="rf-type">${types.map(t=>`<option value="${t.id}" ${r.resource_type_id===t.id?'selected':''}>${escapeHTML(t.name)}</option>`).join('')}<option value="">Other</option></select></div>
         <div class="field"><label>Class (optional)</label><select id="rf-class"><option value="">— None —</option>${classes.map(c=>`<option value="${c.id}" ${r.class_id===c.id?'selected':''}>${escapeHTML(c.name)}</option>`).join('')}</select></div>
         <div class="field"><label>Subject (optional)</label><select id="rf-subject"><option value="">— None —</option>${subjects.map(s=>`<option value="${s.id}" ${r.subject_id===s.id?'selected':''}>${escapeHTML(s.name)}</option>`).join('')}</select><span class="field-hint">Subjects are global and can be used with any class.</span></div>
-        <div class="field"><label>Board</label><input id="rf-board" value="${escapeHTML(r.board||'')}"></div>
+        <div class="field"><label>Board</label><input id="rf-board" value="${escapeHTML(r.board||'Punjab Board')}"></div>
         <div class="field"><label>Year</label><input id="rf-year" type="number" value="${r.year||''}"></div>
-        <div class="field"><label>Exam Type</label><input id="rf-exam" value="${escapeHTML(r.exam_type||'')}"></div>
+        <div class="field"><label>Exam Type</label><input id="rf-exam" value="${escapeHTML(r.exam_type||'Annual')}"></div>
       </div>
-      <div class="field"><label>Google Drive / Download Link</label><input id="rf-url" type="text" placeholder="https://drive.google.com/..." value="${escapeHTML(r.external_url||r.file_url||'')}"><span class="field-hint">You can use one main link, or add multiple files below. If you paste a link without https://, it will be fixed automatically.</span></div>
+      <div class="field"><label>Google Drive / Download Link</label><input id="rf-url" type="text" placeholder="https://drive.google.com/..." value="${escapeHTML(r.external_url||r.file_url||'')}"><span class="field-hint">Single mode: enter one main link. Multiple mode: add options below; the main link is optional. Links without https:// are fixed automatically.</span></div>
       <div class="field"><label>Thumbnail URL (optional)</label><input id="rf-thumb-url" type="url" placeholder="https://..." value="${escapeHTML(r.thumbnail_url||'')}"></div>
 
       <div class="multiple-options-toggle">
         <div class="toggle-copy">
           <div class="toggle-title">Add multiple files / options</div>
-          <span class="toggle-help">Turn this on only when this resource has more than one file or chapter. It stays off automatically for a new resource.</span>
+          <span class="toggle-help">OFF = one main link only. ON = add one or more options/chapters below; the main link becomes optional.</span>
         </div>
         <input type="checkbox" id="rf-multiple" ${existingChapters.length?'checked':''} aria-label="Add multiple files or options">
       </div>
@@ -3840,7 +3840,7 @@ async function openResourceForm(existing){
     const enabled = !!qs('#rf-multiple',box)?.checked;
     const selected = categories.find(c=>c.id===qs('#rf-cat',box).value);
     qs('#chapter-manager',box).style.display = enabled ? 'block' : 'none';
-    qs('#rf-url',box).required = !enabled;
+    qs('#rf-url',box).required = false;
     const heading = qs('#chapter-manager h3',box);
     if(heading) heading.textContent = selected?.slug === 'notes'
       ? 'Chapter-wise Notes'
@@ -3879,9 +3879,9 @@ async function openResourceForm(existing){
     };
     const normalizedUrl=normalizeLink(url);
     rows.forEach(c=>{ c.file_url=normalizeLink(c.file_url); });
-    if(!multipleEnabled && !normalizedUrl){toast('Please enter a main resource link, or turn on “Add multiple files / options”.','warning');submitBtn.disabled=false;return;}
+    if(!multipleEnabled && !normalizedUrl){toast('Please enter the Google Drive / Download Link for this single resource.','warning');submitBtn.disabled=false;return;}
     if(normalizedUrl && !/^https?:\/\//i.test(normalizedUrl)){toast('Please enter a valid resource link.','warning');submitBtn.disabled=false;return;}
-    if(multipleEnabled && !rows.length){toast('Add at least one file/option after enabling multiple files.','warning');submitBtn.disabled=false;return;}
+    if(multipleEnabled && !rows.length){toast('Multiple mode is ON. Add at least one file/option below, or turn it OFF for a single-link resource.','warning');submitBtn.disabled=false;return;}
     if(rows.length){
       const bad=rows.find(c=>!c.title || !c.file_url);
       if(bad){toast('Every additional file/option needs a title and a link.','warning');submitBtn.disabled=false;return;}

@@ -974,6 +974,7 @@ const ICONS = {
   logout:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>',
   home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
   plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>',
+  copy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
   edit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>',
   trash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
   chevronRight:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>',
@@ -1403,7 +1404,8 @@ const Service = {
   async getSubjects({classId=null, activeOnly=true}={}){
     if(!SUPABASE_READY) return [];
     let q = supabase.from('subjects').select('*').order('sort_order',{ascending:true});
-    if(classId) q = q.eq('class_id', classId);
+    // Subjects are global. The classId argument is retained for backward
+    // compatibility, but intentionally does not filter the subject list.
     if(activeOnly) q = q.eq('is_active', true);
     const { data, error } = await q;
     if(error){ console.warn(error); return []; }
@@ -1457,7 +1459,6 @@ const Service = {
       .from('subjects')
       .select('*')
       .in('id', ids)
-      .eq('class_id', classId)
       .eq('is_active', true)
       .order('sort_order',{ascending:true});
     if(error){ console.warn(error); return []; }
@@ -1552,6 +1553,10 @@ const Service = {
     if(!SUPABASE_READY) return null;
     const { data, error } = await supabase.from('resources').select('*, categories(name,slug), classes(name), subjects(name)').eq('slug', slug).eq('status','published').single();
     if(error){ console.warn(error); return null; }
+    try{
+      const { data: chapters } = await supabase.from('resource_chapters').select('*').eq('resource_id',data.id).eq('status','published').order('chapter_number',{ascending:true});
+      data.chapters = chapters||[];
+    }catch(_){}
     return data;
   },
   async getRelatedResources(resource){
@@ -1708,6 +1713,64 @@ const Service = {
     if(error) throw error;
     return { rows:data||[], count:count||0 };
   },
+  async adminListResourceChapters(resourceId){
+    if(!SUPABASE_READY || !resourceId) return [];
+    const { data, error } = await supabase.from('resource_chapters')
+      .select('*').eq('resource_id', resourceId).order('chapter_number',{ascending:true});
+    if(error) throw error;
+    return data||[];
+  },
+  async adminCreateResourceChapters(resourceId, chapters){
+    if(!SUPABASE_READY || !resourceId || !Array.isArray(chapters) || !chapters.length) return [];
+    const payload = chapters.map((c,i)=>({
+      resource_id: resourceId,
+      chapter_number: Number(c.chapter_number)||i+1,
+      title: String(c.title||'').trim(),
+      description: String(c.description||'').trim()||null,
+      file_url: String(c.file_url||'').trim(),
+      thumbnail_url: String(c.thumbnail_url||'').trim()||null,
+      status: c.status || 'published'
+    }));
+    const { data, error } = await supabase.from('resource_chapters').insert(payload).select();
+    if(error) throw error;
+    return data||[];
+  },
+  async adminReplaceResourceChapters(resourceId, chapters){
+    if(!SUPABASE_READY || !resourceId) return [];
+    const { error: delError } = await supabase.from('resource_chapters').delete().eq('resource_id',resourceId);
+    if(delError) throw delError;
+    return this.adminCreateResourceChapters(resourceId, chapters);
+  },
+  async adminDuplicateResource(resourceId){
+    if(!SUPABASE_READY || !resourceId) throw new Error('Resource ID is required.');
+    const { data: source, error: sourceError } = await supabase.from('resources').select('*').eq('id',resourceId).single();
+    if(sourceError) throw sourceError;
+    const { data: chapters, error: chapterError } = await supabase.from('resource_chapters')
+      .select('*').eq('resource_id',resourceId).order('chapter_number',{ascending:true});
+    if(chapterError && chapterError.code !== '42P01') throw chapterError;
+    const copy = {...source};
+    delete copy.id; delete copy.created_at; delete copy.updated_at;
+    copy.title = `Copy of ${source.title}`;
+    copy.slug = `${slugify(copy.title)}-${Date.now().toString(36)}`;
+    copy.view_count = 0; copy.download_count = 0;
+    const { data: duplicated, error: insertError } = await supabase.from('resources').insert(copy).select().single();
+    if(insertError) throw insertError;
+    if(chapters && chapters.length){
+      const chapterRows = chapters.map(c=>({
+        resource_id: duplicated.id,
+        chapter_number:c.chapter_number,
+        title:c.title,
+        description:c.description,
+        file_url:c.file_url,
+        thumbnail_url:c.thumbnail_url,
+        status:c.status
+      }));
+      const { error: chapterInsertError } = await supabase.from('resource_chapters').insert(chapterRows);
+      if(chapterInsertError) throw chapterInsertError;
+    }
+    return duplicated;
+  },
+
   async uploadFile(bucket, path, file, onProgress){
     const { data, error } = await supabase.storage.from(bucket).upload(path, file, { cacheControl:'3600', upsert:false });
     if(error) throw error;
@@ -2726,6 +2789,18 @@ async function renderResourceDetail(slug){
           </div>
         </div>
       </div>
+      ${Array.isArray(r.chapters) && r.chapters.length ? `
+        <div class="card" style="margin-top:34px;padding:22px">
+          <div class="flex justify-between items-center" style="margin-bottom:14px">
+            <div><h2 style="font-size:19px">Chapter-wise Notes</h2><p class="text-muted" style="font-size:12.5px;margin-top:3px">${r.chapters.length} chapters</p></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            ${r.chapters.map(c=>`<a href="${safeURL(c.file_url)}" target="_blank" rel="noopener noreferrer" class="card" style="padding:13px 15px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span><strong style="font-size:13.5px">Chapter ${escapeHTML(String(c.chapter_number))}</strong><span style="display:block;font-size:13px;color:#666;margin-top:2px">${escapeHTML(c.title)}</span></span>
+              <span class="btn btn-primary btn-sm">${ICONS.download} Open</span>
+            </a>`).join('')}
+          </div>
+        </div>` : ''}
       <div style="margin-top:48px" id="related-section"></div>
     </div>
   `;
@@ -3286,6 +3361,7 @@ async function loadAdminResourcesTable(){
         <button data-edit="${r.id}" title="Edit">${ICONS.edit}</button>
         <button data-toggle="${r.id}" title="${r.status==='published'?'Unpublish':'Publish'}">${ICONS.checkCircle}</button>
         <button data-feature="${r.id}" title="${r.featured?'Unfeature':'Feature'}">${ICONS.star}</button>
+        <button data-duplicate="${r.id}" title="Duplicate">${ICONS.copy||ICONS.file}</button>
         <button data-del="${r.id}" title="Delete">${ICONS.trash}</button>
       </div></td>
     </tr>
@@ -3293,13 +3369,28 @@ async function loadAdminResourcesTable(){
   qsa('[data-edit]',tbody).forEach(b=>b.addEventListener('click',()=>{ const r=rows.find(x=>x.id===b.dataset.edit); openResourceForm(r); }));
   qsa('[data-toggle]',tbody).forEach(b=>b.addEventListener('click',async()=>{ const r=rows.find(x=>x.id===b.dataset.toggle); try{ await Service.adminUpdateResource(r.id,{status: r.status==='published'?'draft':'published'}); toast('Status updated.','success'); loadAdminResourcesTable(); }catch(e){toast(friendlyError(e),'error');} }));
   qsa('[data-feature]',tbody).forEach(b=>b.addEventListener('click',async()=>{ const r=rows.find(x=>x.id===b.dataset.feature); try{ await Service.adminUpdateResource(r.id,{featured: !r.featured}); toast('Updated.','success'); loadAdminResourcesTable(); }catch(e){toast(friendlyError(e),'error');} }));
+  qsa('[data-duplicate]',tbody).forEach(b=>b.addEventListener('click',()=>{ const r=rows.find(x=>x.id===b.dataset.duplicate); confirmModal(`Duplicate "${r.title}" including all chapters?`, async()=>{ try{ await Service.adminDuplicateResource(r.id); toast('Resource duplicated.','success'); loadAdminResourcesTable(); }catch(e){toast(friendlyError(e),'error');} }); }));
   qsa('[data-del]',tbody).forEach(b=>b.addEventListener('click',()=>{ const r=rows.find(x=>x.id===b.dataset.del); confirmModal(`Are you sure you want to delete "${r.title}"?`, async()=>{ try{ await Service.adminDeleteResource(r.id, r.file_path, r.thumbnail_path); toast('Resource deleted.','success'); loadAdminResourcesTable(); }catch(e){toast(friendlyError(e),'error');} }); }));
   renderPagination('#ar-pagination', adminResState.page, Math.ceil(count/15), p=>{adminResState.page=p; loadAdminResourcesTable();});
 }
 async function openResourceForm(existing){
   const [categories, classes, types] = await Promise.all([Service.getCategories({activeOnly:false}), Service.getClasses({activeOnly:false}), Service.getResourceTypes()]);
   const r = existing || {};
-  const subjects = r.class_id ? await Service.getSubjects({classId:r.class_id, activeOnly:false}) : [];
+  const subjects = await Service.getSubjects({activeOnly:false});
+  const existingChapters = existing ? await Service.adminListResourceChapters(existing.id).catch(()=>[]) : [];
+  const isNotes = categories.find(c=>c.id===r.category_id)?.slug === 'notes';
+
+  const chapterRow = (c={}, i=0) => `
+    <div class="chapter-row card" style="padding:13px;margin-bottom:9px" data-chapter-row>
+      <div class="grid grid-2">
+        <div class="field"><label>Chapter #</label><input data-ch-number type="number" min="1" value="${c.chapter_number||i+1}"></div>
+        <div class="field"><label>Chapter Title</label><input data-ch-title required value="${escapeHTML(c.title||'')}"></div>
+        <div class="field"><label>Chapter Google Drive Link</label><input data-ch-url type="url" value="${escapeHTML(c.file_url||'')}" placeholder="https://drive.google.com/..."></div>
+        <div class="field"><label>Description (optional)</label><input data-ch-desc value="${escapeHTML(c.description||'')}"></div>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm" data-remove-chapter>${ICONS.trash} Remove</button>
+    </div>`;
+
   const box = openModal({ title: existing?'Edit Resource':'Add Resource', wide:true, bodyHTML:`
     <form id="res-form">
       <div class="field"><label>Title</label><input id="rf-title" required value="${escapeHTML(r.title||'')}"></div>
@@ -3307,17 +3398,26 @@ async function openResourceForm(existing){
       <div class="grid grid-2">
         <div class="field"><label>Category</label>
           <select id="rf-cat" required>${categories.map(c=>`<option value="${c.id}" ${r.category_id===c.id?'selected':''}>${escapeHTML(c.name)}</option>`).join('')}</select>
-          <span class="field-hint">This controls where the resource appears. Notes only appear in Notes; Guess Papers only appear in Guess Papers; Past Papers only appear in Past Papers.</span>
+          <span class="field-hint">This controls where the resource appears. Existing section behavior remains unchanged.</span>
         </div>
         <div class="field"><label>Resource Type</label><select id="rf-type">${types.map(t=>`<option value="${t.id}" ${r.resource_type_id===t.id?'selected':''}>${escapeHTML(t.name)}</option>`).join('')}<option value="">Other</option></select></div>
         <div class="field"><label>Class (optional)</label><select id="rf-class"><option value="">— None —</option>${classes.map(c=>`<option value="${c.id}" ${r.class_id===c.id?'selected':''}>${escapeHTML(c.name)}</option>`).join('')}</select></div>
-        <div class="field"><label>Subject (optional)</label><select id="rf-subject"><option value="">— None —</option>${subjects.map(s=>`<option value="${s.id}" ${r.subject_id===s.id?'selected':''}>${escapeHTML(s.name)}</option>`).join('')}</select></div>
+        <div class="field"><label>Subject (optional)</label><select id="rf-subject"><option value="">— None —</option>${subjects.map(s=>`<option value="${s.id}" ${r.subject_id===s.id?'selected':''}>${escapeHTML(s.name)}</option>`).join('')}</select><span class="field-hint">Subjects are global and can be used with any class.</span></div>
         <div class="field"><label>Board</label><input id="rf-board" value="${escapeHTML(r.board||'')}"></div>
         <div class="field"><label>Year</label><input id="rf-year" type="number" value="${r.year||''}"></div>
         <div class="field"><label>Exam Type</label><input id="rf-exam" value="${escapeHTML(r.exam_type||'')}"></div>
       </div>
-      <div class="field"><label>Google Drive / Download Link</label><input id="rf-url" type="url" required placeholder="https://drive.google.com/..." value="${escapeHTML(r.external_url||r.file_url||'')}"><span class="field-hint">Paste a public Google Drive link. In Google Drive set General Access to “Anyone with the link”.</span></div>
+      <div class="field"><label>Google Drive / Download Link</label><input id="rf-url" type="url" ${isNotes && existingChapters.length?'':'required'} placeholder="https://drive.google.com/..." value="${escapeHTML(r.external_url||r.file_url||'')}"><span class="field-hint">For normal resources, use the existing single link. For chapter-wise Notes, the main link can be left empty when chapters have their own links.</span></div>
       <div class="field"><label>Thumbnail URL (optional)</label><input id="rf-thumb-url" type="url" placeholder="https://..." value="${escapeHTML(r.thumbnail_url||'')}"></div>
+
+      <div id="chapter-manager" style="display:${isNotes?'block':'none'};margin:8px 0 18px">
+        <div class="flex justify-between items-center" style="margin-bottom:10px">
+          <div><h3 style="font-size:15px">Chapter-wise Notes</h3><span class="field-hint">Add unlimited chapters and submit all of them together.</span></div>
+          <button type="button" class="btn btn-ghost btn-sm" id="add-chapter-btn">${ICONS.plus} Add Chapter</button>
+        </div>
+        <div id="chapter-list">${existingChapters.length ? existingChapters.map((c,i)=>chapterRow(c,i)).join('') : chapterRow({},0)}</div>
+      </div>
+
       <div class="grid grid-2">
         <div class="field"><label>Status</label><select id="rf-status"><option value="draft" ${r.status==='draft'?'selected':''}>Draft</option><option value="published" ${r.status==='published'?'selected':''}>Published</option></select></div>
         <div class="field" style="justify-content:center"><div class="checkbox-row"><input type="checkbox" id="rf-featured" ${r.featured?'checked':''}><label for="rf-featured" style="margin:0">Featured</label></div></div>
@@ -3325,40 +3425,67 @@ async function openResourceForm(existing){
       <button class="btn btn-primary btn-block" type="submit" id="rf-submit">${existing?'Save Changes':'Create Resource'}</button>
     </form>
   `});
-  qs('#rf-class', box).addEventListener('change', async e => {
-    const subs=await Service.getSubjects({classId:e.target.value,activeOnly:false});
-    qs('#rf-subject',box).innerHTML='<option value="">— None —</option>'+subs.map(s=>`<option value="${s.id}">${escapeHTML(s.name)}</option>`).join('');
+
+  const toggleChapters = () => {
+    const selected = categories.find(c=>c.id===qs('#rf-cat',box).value);
+    const show = selected?.slug === 'notes';
+    qs('#chapter-manager',box).style.display = show ? 'block' : 'none';
+    qs('#rf-url',box).required = !show;
+  };
+  qs('#rf-cat', box).addEventListener('change', toggleChapters);
+  qs('#add-chapter-btn',box).addEventListener('click',()=>{
+    const list=qs('#chapter-list',box);
+    list.insertAdjacentHTML('beforeend',chapterRow({},list.querySelectorAll('[data-chapter-row]').length));
+    bindChapterRemove(list.lastElementChild);
   });
+  function bindChapterRemove(row){
+    qs('[data-remove-chapter]',row).addEventListener('click',()=>row.remove());
+  }
+  qsa('[data-remove-chapter]',box).forEach(btn=>btn.addEventListener('click',()=>btn.closest('[data-chapter-row]').remove()));
+
   qs('#res-form',box).addEventListener('submit',async e=>{
     e.preventDefault();
     const submitBtn=qs('#rf-submit',box); submitBtn.disabled=true;
     const title=qs('#rf-title',box).value.trim();
     const url=qs('#rf-url',box).value.trim();
-    if(!/^https?:\/\//i.test(url)){toast('Please enter a valid HTTPS/Google Drive link.','warning');submitBtn.disabled=false;return;}
-    const categoryId=qs('#rf-cat',box).value||null;
-    if(!categoryId){
-      toast('Please select a resource category.','warning');
-      submitBtn.disabled=false;
-      return;
+    const selectedCategory=categories.find(c=>c.id===qs('#rf-cat',box).value);
+    const rows=[...qsa('[data-chapter-row]',box)].map((row,i)=>({
+      chapter_number:parseInt(qs('[data-ch-number]',row).value,10)||i+1,
+      title:qs('[data-ch-title]',row).value.trim(),
+      file_url:qs('[data-ch-url]',row).value.trim(),
+      description:qs('[data-ch-desc]',row).value.trim()
+    })).filter(c=>c.title||c.file_url);
+    if(!selectedCategory){toast('Please select a resource category.','warning');submitBtn.disabled=false;return;}
+    if(!url && selectedCategory.slug!=='notes'){toast('Please enter a valid HTTPS/Google Drive link.','warning');submitBtn.disabled=false;return;}
+    if(url && !/^https?:\/\//i.test(url)){toast('Please enter a valid HTTPS/Google Drive link.','warning');submitBtn.disabled=false;return;}
+    if(selectedCategory.slug==='notes' && rows.length){
+      const bad=rows.find(c=>!c.title || !/^https?:\/\//i.test(c.file_url));
+      if(bad){toast('Every chapter needs a title and a valid HTTPS/Google Drive link.','warning');submitBtn.disabled=false;return;}
     }
     const payload={
-      title,description:qs('#rf-desc',box).value.trim(),category_id:categoryId,
+      title,description:qs('#rf-desc',box).value.trim(),category_id:selectedCategory.id,
       resource_type_id:qs('#rf-type',box).value||null,class_id:qs('#rf-class',box).value||null,
       subject_id:qs('#rf-subject',box).value||null,board:qs('#rf-board',box).value.trim()||null,
       year:qs('#rf-year',box).value?parseInt(qs('#rf-year',box).value,10):null,
       exam_type:qs('#rf-exam',box).value.trim()||null,
-      file_url:url,file_path:null,file_size:null,
-      thumbnail_path:null,thumbnail_url:qs('#rf-thumb-url',box).value.trim()||null,
-      status:qs('#rf-status',box).value,featured:qs('#rf-featured',box).checked,
-      created_by:AppState.user?.id||null,slug:existing?.slug||(slugify(title)+'-'+Date.now().toString(36))
+      file_url:url||null,file_path:null,file_size:null,thumbnail_path:null,
+      thumbnail_url:qs('#rf-thumb-url',box).value.trim()||null,status:qs('#rf-status',box).value,
+      featured:qs('#rf-featured',box).checked,created_by:AppState.user?.id||null,
+      slug:existing?.slug||(slugify(title)+'-'+Date.now().toString(36))
     };
     try{
-      if(existing) await Service.adminUpdateResource(existing.id,payload); else await Service.adminCreateResource(payload);
+      let saved;
+      if(existing){
+        saved=await Service.adminUpdateResource(existing.id,payload);
+        if(selectedCategory.slug==='notes') await Service.adminReplaceResourceChapters(existing.id,rows);
+      }else{
+        saved=await Service.adminCreateResource(payload);
+        if(selectedCategory.slug==='notes' && rows.length) await Service.adminCreateResourceChapters(saved.id,rows);
+      }
       toast(existing?'Resource updated.':'Resource created.','success');closeModal();loadAdminResourcesTable();
     }catch(err){toast(friendlyError(err,'Could not save resource.'),'error');submitBtn.disabled=false;}
   });
-}
-
+} 
 /* ---- Categories / Classes / Subjects taxonomy manager (shared UI) ---- */
 async function adminRenderTaxonomy(main, kind){
   const labels = {categories:['Categories','Category'], classes:['Classes','Class'], subjects:['Subjects','Subject']};
@@ -3371,7 +3498,7 @@ async function adminRenderTaxonomy(main, kind){
       <button class="btn btn-primary btn-sm" id="add-tax-btn">${ICONS.plus} Add ${singular}</button>
     </div>
     <div class="table-scroll admin-card" style="padding:0">
-      <table class="data-table"><thead><tr><th>Name</th>${kind==='subjects'?'<th>Class</th>':''}<th>Status</th><th>Actions</th></tr></thead><tbody id="tax-tbody"></tbody></table>
+      <table class="data-table"><thead><tr><th>Name</th>${kind==='subjects'?'<th>Scope</th>':''}<th>Status</th><th>Actions</th></tr></thead><tbody id="tax-tbody"></tbody></table>
     </div>
   `;
   function renderRows(){
@@ -3379,7 +3506,7 @@ async function adminRenderTaxonomy(main, kind){
     if(!rows.length){ tbody.innerHTML = `<tr><td colspan="4">No ${plural.toLowerCase()} yet. Add one to get started.</td></tr>`; return; }
     tbody.innerHTML = rows.map(item => `<tr>
       <td style="color:#fff;font-weight:600">${escapeHTML(item.name)}</td>
-      ${kind==='subjects'?`<td>${escapeHTML(classesForSubject.find(c=>c.id===item.class_id)?.name||'—')}</td>`:''}
+      ${kind==='subjects'?`<td><span class="badge badge-gray">All Classes</span></td>`:''}
       <td><span class="badge ${item.is_active?'badge-teal':'badge-gray'}">${item.is_active?'Active':'Inactive'}</span></td>
       <td><div class="table-actions"><button data-edit="${item.id}">${ICONS.edit}</button><button data-toggle="${item.id}">${ICONS.checkCircle}</button><button data-del="${item.id}">${ICONS.trash}</button></div></td>
     </tr>`).join('');
@@ -3401,7 +3528,7 @@ function openTaxForm(kind, singular, existing, classesForSubject, onDone){
   const box = openModal({ title:(existing?'Edit ':'Add ')+singular, bodyHTML:`
     <form id="tax-form">
       <div class="field"><label>Name</label><input id="tf-name" required value="${escapeHTML(item.name||'')}"></div>
-      ${kind==='subjects' ? `<div class="field"><label>Class</label><select id="tf-class" required>${classesForSubject.map(c=>`<option value="${c.id}" ${item.class_id===c.id?'selected':''}>${escapeHTML(c.name)}</option>`).join('')}</select></div>` : ''}
+      ${kind==='subjects' ? `<div class="field"><label>Subject Scope</label><div class="field-hint">This subject is global and will be available for every class.</div></div>` : ''}
       <div class="checkbox-row" style="margin-bottom:16px"><input type="checkbox" id="tf-active" ${existing?(item.is_active?'checked':''):'checked'}><label for="tf-active" style="margin:0">Active</label></div>
       <button class="btn btn-primary btn-block" type="submit">${existing?'Save Changes':'Create'}</button>
     </form>
@@ -3410,8 +3537,19 @@ function openTaxForm(kind, singular, existing, classesForSubject, onDone){
     e.preventDefault();
     const name = qs('#tf-name',box).value.trim();
     const payload = { name, slug: slugify(name), is_active: qs('#tf-active',box).checked };
-    if(kind==='subjects') payload.class_id = qs('#tf-class',box).value;
+    if(kind==='subjects') payload.class_id = null;
     try{
+      if(kind==='subjects'){
+        const allSubjects = await Service.getSubjects({activeOnly:false});
+        const duplicate = allSubjects.find(s =>
+          s.id !== existing?.id &&
+          String(s.name||'').trim().toLowerCase() === name.toLowerCase()
+        );
+        if(duplicate){
+          toast('This subject already exists. Use the existing global subject for any class.','warning');
+          return;
+        }
+      }
       if(existing){
         if(kind==='categories') await Service.adminUpdateCategory(existing.id,payload);
         else if(kind==='classes') await Service.adminUpdateClass(existing.id,payload);

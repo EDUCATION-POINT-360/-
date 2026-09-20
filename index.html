@@ -761,6 +761,243 @@ html.copy-guard [contenteditable="true"]{
 
 /* FINAL V14 — section-isolated taxonomy + legal pages */
 .legal-page{padding-top:58px}.legal-hero{padding:26px 28px;border-radius:24px;margin-bottom:16px}.legal-hero h1{font-size:clamp(30px,5vw,48px)}.legal-hero p{color:var(--muted);max-width:650px}.legal-content{padding:30px 32px;line-height:1.82;color:var(--text-2)}.legal-content h3{font-size:17px;color:var(--ink);margin:24px 0 8px}.legal-content p{margin:0 0 14px}.legal-callout{margin:20px 0;padding:16px 18px;border-radius:15px;background:rgba(0,0,0,.045);border:1px solid var(--line);color:var(--ink)}@media(max-width:600px){.legal-page{padding-top:40px}.legal-hero{padding:22px 19px}.legal-content{padding:22px 19px}.legal-content h3{font-size:16px}}
+
+
+
+/* FINAL FIX V2 — resource detail layout: no horizontal overflow, stack actions below preview on mobile */
+#resource-detail-grid{
+  min-width:0;
+  width:100%;
+  align-items:start;
+}
+#resource-detail-grid > div{
+  min-width:0;
+  max-width:100%;
+}
+#resource-detail-grid .card,
+#resource-detail-grid .resource-thumb,
+#resource-detail-grid iframe{
+  max-width:100%;
+}
+#resource-detail-grid iframe{
+  display:block;
+}
+@media(max-width:900px){
+  #resource-detail-grid{
+    grid-template-columns:minmax(0,1fr) !important;
+    gap:20px !important;
+  }
+  #resource-detail-grid > div{
+    width:100%;
+    min-width:0;
+  }
+  #resource-detail-grid .resource-download-panel{
+    position:relative;
+    top:auto;
+    width:100%;
+    margin-top:0;
+  }
+}
+@media(max-width:600px){
+  #resource-detail-grid{
+    gap:16px !important;
+  }
+  #resource-detail-grid > div:first-child{
+    overflow:visible;
+  }
+  #resource-detail-grid .resource-thumb{
+    width:100%;
+    margin-bottom:14px !important;
+  }
+  #resource-detail-grid h1{
+    font-size:clamp(24px,7vw,31px) !important;
+    line-height:1.16 !important;
+    overflow-wrap:anywhere;
+  }
+  #resource-detail-grid .resource-badges{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+  }
+  #resource-detail-grid .resource-badges .badge{
+    max-width:100%;
+  }
+  #resource-detail-grid .card[style*="margin-top:22px"]{
+    margin-top:18px !important;
+    padding:12px !important;
+  }
+  #resource-detail-grid .card[style*="margin-top:22px"] .flex{
+    align-items:flex-start !important;
+  }
+  #resource-detail-grid .card[style*="margin-top:22px"] iframe{
+    height:56vh !important;
+    min-height:300px;
+    max-height:620px;
+  }
+}
+@media(max-width:420px){
+  #resource-detail-grid .card[style*="margin-top:22px"] iframe{
+    height:52vh !important;
+    min-height:270px;
+  }
+}
+
+/* FINAL FIX — polished responsive resource/download experience */
+.resource-download-panel{
+  position:sticky;
+  top:calc(var(--header-h) + 16px);
+  padding:0 !important;
+  overflow:hidden;
+  border-radius:22px !important;
+}
+.download-panel-head{
+  padding:20px 20px 16px;
+  background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(248,249,251,.96));
+  border-bottom:1px solid var(--border);
+}
+.download-panel-kicker{
+  display:flex;align-items:center;gap:8px;
+  color:var(--accent);font-size:11px;font-weight:800;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.download-panel-title{
+  margin:6px 0 4px;font-size:20px;line-height:1.2;
+  letter-spacing:-.02em;color:var(--text-1);
+}
+.download-panel-subtitle{
+  margin:0;color:var(--muted);font-size:12.5px;line-height:1.55;
+}
+.download-bento{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  padding:16px 20px 18px;
+}
+.download-tile{
+  position:relative;
+  display:flex;align-items:center;gap:12px;
+  min-width:0;min-height:72px;
+  padding:13px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:var(--paper);
+  text-decoration:none;color:var(--text-1);
+  cursor:pointer;
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,background .18s ease;
+}
+.download-tile:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 30px rgba(0,0,0,.08);
+  border-color:var(--accent);
+  background:#fff;
+}
+.download-tile:active{transform:translateY(0)}
+.download-tile:focus-visible{
+  outline:3px solid rgba(37,99,235,.16);
+  outline-offset:2px;
+}
+.download-tile .tile-icon{
+  width:42px;height:42px;flex:0 0 42px;
+  display:grid;place-items:center;
+  border-radius:13px;
+  background:var(--surface-2);
+  color:var(--accent);
+}
+.download-tile .tile-icon svg{width:19px;height:19px}
+.download-tile .tile-copy{
+  min-width:0;display:flex;flex-direction:column;gap:3px;
+}
+.download-tile .tile-title{
+  font-weight:800;font-size:13px;line-height:1.25;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.download-tile .tile-sub{
+  font-size:11px;color:var(--muted);line-height:1.35;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.download-panel-meta{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:0 20px 18px;color:var(--muted);font-size:11.5px;
+}
+.download-panel-meta span{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 9px;border-radius:999px;
+  background:var(--surface-2);border:1px solid var(--border);
+}
+.download-panel-meta svg{width:14px;height:14px}
+.file-preview-shell{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:18px;
+  overflow:hidden;
+  background:#f4f6f8;
+  box-shadow:0 8px 30px rgba(0,0,0,.06);
+}
+.file-preview-top{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;
+  padding:14px 16px;
+  background:var(--paper);
+  border-bottom:1px solid var(--border);
+}
+.file-preview-top .preview-note{
+  min-width:0;font-size:12px;color:var(--muted);line-height:1.5;
+}
+.file-preview-frame{
+  display:block;width:100%;
+  height:min(72vh,760px);
+  min-height:430px;
+  border:0;background:#fff;
+}
+.file-preview-fallback{
+  padding:28px 20px;text-align:center;
+  color:var(--muted);background:var(--paper);
+}
+.modal-box.wide .modal-body{min-width:0}
+.modal-box.wide .modal-actions{
+  display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;
+}
+@media(max-width:980px){
+  .resource-download-panel{position:relative;top:auto}
+}
+@media(max-width:760px){
+  .download-panel-head{padding:17px 15px 14px}
+  .download-panel-title{font-size:18px}
+  .download-bento{
+    grid-template-columns:1fr 1fr;
+    gap:9px;padding:13px 15px 15px;
+  }
+  .download-tile{min-height:68px;padding:11px}
+  .download-tile .tile-icon{width:38px;height:38px;flex-basis:38px}
+  .download-tile .tile-title{font-size:12.5px}
+  .download-panel-meta{padding:0 15px 15px}
+  .file-preview-frame{height:58vh;min-height:300px}
+  .file-preview-top{align-items:stretch;padding:12px}
+  .file-preview-top .btn{width:100%;justify-content:center}
+  .modal-box.wide{width:calc(100vw - 16px);max-width:none}
+  .modal-box.wide .modal-body{padding:10px}
+  .modal-box.wide .modal-actions{
+    padding:10px 12px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .modal-box.wide .modal-actions .btn{
+    width:100%;min-height:44px;justify-content:center;
+  }
+}
+@media(max-width:480px){
+  .download-bento{grid-template-columns:1fr}
+  .download-tile{min-height:64px}
+  .download-panel-meta span{font-size:10.5px}
+  .file-preview-frame{height:54vh;min-height:260px}
+}
+@media(max-width:360px){
+  .download-panel-title{font-size:17px}
+  .download-bento{padding-left:12px;padding-right:12px}
+  .download-panel-head{padding-left:12px;padding-right:12px}
+  .download-panel-meta{padding-left:12px;padding-right:12px}
+  .modal-box.wide .modal-actions{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -965,6 +1202,7 @@ const ICONS = {
   shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
   graduationCap:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
   grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>',
+  externalLink:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"/><path d="M10 14L21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>',
   eye:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',
   download:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
   bookmark:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>',
@@ -1027,6 +1265,92 @@ function safeURL(u){
     if(['http:','https:','mailto:','tel:'].includes(parsed.protocol)) return u;
     return '#';
   }catch(e){ return u.startsWith('/') ? u : '#'; }
+}
+
+/* ---- RESOURCE FILE HELPERS: safe PDF viewing + reliable download links ---- */
+function extractDriveFileId(url){
+  try{
+    const u = new URL(url, window.location.origin);
+    if(!/drive\.google\.com$/i.test(u.hostname)) return null;
+    const m = u.pathname.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if(m) return m[1];
+    const id = u.searchParams.get('id');
+    return id || null;
+  }catch(_){ return null; }
+}
+function resourceViewURL(url){
+  const safe = safeURL(url);
+  if(safe==='#') return '#';
+  const id = extractDriveFileId(safe);
+  if(id) return `https://drive.google.com/file/d/${encodeURIComponent(id)}/preview`;
+  return safe;
+}
+function resourceDownloadURL(url){
+  const safe = safeURL(url);
+  if(safe==='#') return '#';
+  const id = extractDriveFileId(safe);
+  if(id) return `https://drive.google.com/uc?export=download&id=${encodeURIComponent(id)}`;
+  return safe;
+}
+function isLikelyPDF(url){
+  try{
+    const u = new URL(url, window.location.origin);
+    return /\.pdf(?:$|[?#])/i.test(u.pathname) || /drive\.google\.com$/i.test(u.hostname);
+  }catch(_){ return false; }
+}
+function openResourceFilePreview(fileURL, title, resourceId=null){
+  const safe = safeURL(fileURL);
+  if(safe==='#'){ toast('File link is not available.', 'error'); return; }
+
+  const viewURL = resourceViewURL(safe);
+  const downloadURL = resourceDownloadURL(safe);
+  const canDownload = downloadURL && downloadURL !== '#';
+  const pdf = isLikelyPDF(safe);
+
+  openModal({
+    title: `${pdf ? 'PDF' : 'File'} Preview`,
+    wide: true,
+    bodyHTML: `
+      <div class="file-preview-shell">
+        <div class="file-preview-top">
+          <div class="preview-note">
+            <strong style="color:var(--text-1)">${escapeHTML(title||'Resource')}</strong>
+            <span style="display:block;margin-top:3px">Preview the file here first. You can open it separately or download it when ready.</span>
+          </div>
+          <a class="btn btn-ghost btn-sm" href="${safeURL(viewURL)}" target="_blank" rel="noopener noreferrer">
+            ${ICONS.externalLink} Open separately
+          </a>
+        </div>
+        <iframe
+          class="file-preview-frame"
+          src="${safeURL(viewURL)}"
+          title="${escapeHTML(title||'File')} preview"
+          loading="eager"
+          allow="autoplay; fullscreen"
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+        <div class="file-preview-fallback">
+          If the embedded preview does not load on your device, use <strong>Open separately</strong> above.
+        </div>
+      </div>`,
+    actions: [
+      {label:'Close', cls:'btn-ghost', onClick: closeModal},
+      ...(canDownload ? [{
+        label:'Download File',
+        cls:'btn-primary',
+        onClick: async () => {
+          try{
+            if(resourceId) await Service.recordDownload(resourceId);
+            const w = window.open(downloadURL, '_blank', 'noopener,noreferrer');
+            if(!w) window.location.href = downloadURL;
+            toast('Download started.', 'success');
+          }catch(err){
+            toast(friendlyError(err,'Download failed.'), 'error');
+          }
+        }
+      }] : [])
+    ]
+  });
 }
 function debounce(fn, wait){
   let t;
@@ -2684,16 +3008,19 @@ async function renderResourceList(section, classSlugOrId, subjectSlugOrId){
   const meta = SECTION_META[section] || {title: section};
   const main = qs('#main');
   pageLoading(main);
-  const classes = await Service.getClasses();
-  const cls = classes.find(c => c.slug===classSlugOrId || String(c.id)===classSlugOrId);
-  if(!cls){ render404(); return; }
-  const subjects = await Service.getSubjects({classId: cls.id});
-  const subj = subjects.find(s => s.slug===subjectSlugOrId || String(s.id)===subjectSlugOrId);
-  if(!subj){ render404(); return; }
-  setMeta(`${cls.name} ${subj.name} ${meta.title}`, `${cls.name} ${subj.name} ${meta.title} — Education Point`);
+  // Resolve the category first, then resolve class and subject ONLY inside that
+  // category. This prevents a global 9th/Math subject from leaking into
+  // Guess Papers, Notes, Pairing Schemes, etc. when no resource exists there.
   const category = (AppState.categories || []).find(c => c.slug === section) ||
     await Service.getCategoryBySlug(section);
   if(!category){ render404(); return; }
+  const classes = await Service.getClassesForCategory(category.id);
+  const cls = classes.find(c => c.slug===classSlugOrId || String(c.id)===classSlugOrId);
+  if(!cls){ render404(); return; }
+  const subjects = await Service.getSubjectsForCategoryClass(category.id, cls.id);
+  const subj = subjects.find(s => s.slug===subjectSlugOrId || String(s.id)===subjectSlugOrId);
+  if(!subj){ render404(); return; }
+  setMeta(`${cls.name} ${subj.name} ${meta.title}`, `${cls.name} ${subj.name} ${meta.title} — Education Point`);
   browseState = { section, categorySlug:section, categoryId:category.id, classId:cls.id, subjectId:subj.id, page:1, sort:'latest' };
   main.innerHTML = `
     <div class="container section">
@@ -2771,47 +3098,122 @@ async function renderResourceDetail(slug){
           </div>
           <h1 style="font-size:26px;margin-bottom:12px">${escapeHTML(r.title)}</h1>
           <p class="text-muted" style="line-height:1.7;font-size:15px">${escapeHTML(r.description||'')}</p>
+          ${(() => {
+            const fileURL = r.external_url || r.file_url || '';
+            if(!fileURL) return '';
+            const viewURL = resourceViewURL(fileURL);
+            return `<div class="card" style="margin-top:22px;padding:14px;overflow:hidden">
+              <div class="flex justify-between items-center" style="margin-bottom:12px;gap:10px">
+                <div><h2 style="font-size:18px">${isLikelyPDF(fileURL)?'PDF Preview':'File Preview'}</h2><p class="text-muted" style="font-size:12px;margin-top:3px">View the file here or open it in a new tab.</p></div>
+                <a class="btn btn-ghost btn-sm" href="${safeURL(viewURL)}" target="_blank" rel="noopener noreferrer">${ICONS.externalLink} Open</a>
+              </div>
+              <iframe src="${safeURL(viewURL)}" title="${escapeHTML(r.title)} preview" style="width:100%;height:680px;border:1px solid var(--border);border-radius:12px;background:#f6f7f9" loading="lazy"></iframe>
+            </div>`;
+          })()}
         </div>
         <div>
-          <div class="card" style="padding:20px;position:sticky;top:calc(var(--header-h)+16px)">
-            <div class="resource-stats" style="margin-bottom:16px;font-size:13px">
-              <span>${ICONS.eye} ${formatNum(r.view_count||0)} views</span><span>${ICONS.download} ${formatNum(r.download_count||0)} downloads</span>
+          <div class="card resource-download-panel">
+            <div class="download-panel-head">
+              <div class="download-panel-kicker">${ICONS.file} Resource access</div>
+              <h2 class="download-panel-title">View, Open & Download</h2>
+              <p class="download-panel-subtitle">Choose an option below. Preview the file first, then download only when you are ready.</p>
             </div>
-            <div class="flex-col gap-8">
-              <button class="btn btn-primary btn-block" id="download-btn">${ICONS.download} Download</button>
-              <button class="btn btn-ghost btn-block" id="save-detail-btn">${ICONS.bookmark} ${isSaved?'Saved':'Save for later'}</button>
+            <div class="download-bento" aria-label="Resource file actions">
+              <button class="download-tile" type="button" id="download-btn">
+                <span class="tile-icon">${ICONS.eye}</span>
+                <span class="tile-copy">
+                  <span class="tile-title">Preview File</span>
+                  <span class="tile-sub">View before downloading</span>
+                </span>
+              </button>
+              <a class="download-tile" id="open-file-btn" href="#" target="_blank" rel="noopener noreferrer">
+                <span class="tile-icon">${ICONS.externalLink}</span>
+                <span class="tile-copy">
+                  <span class="tile-title">Open Separately</span>
+                  <span class="tile-sub">Use a new browser tab</span>
+                </span>
+              </a>
+              <button class="download-tile" type="button" id="save-detail-btn">
+                <span class="tile-icon">${ICONS.bookmark}</span>
+                <span class="tile-copy">
+                  <span class="tile-title">${isSaved?'Saved Resource':'Save for Later'}</span>
+                  <span class="tile-sub">Keep it in your dashboard</span>
+                </span>
+              </button>
+              <button class="download-tile" type="button" id="direct-download-btn">
+                <span class="tile-icon">${ICONS.download}</span>
+                <span class="tile-copy">
+                  <span class="tile-title">Download File</span>
+                  <span class="tile-sub">Start the file download</span>
+                </span>
+              </button>
             </div>
-            <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--text-2);display:flex;flex-direction:column;gap:8px">
-              ${r.file_type?`<div class="flex justify-between"><span>File type</span><span class="mono">${escapeHTML(r.file_type)}</span></div>`:''}
-              ${r.file_size?`<div class="flex justify-between"><span>File size</span><span class="mono">${formatFileSize(r.file_size)}</span></div>`:''}
-              <div class="flex justify-between"><span>Uploaded</span><span class="mono">${formatDate(r.created_at)}</span></div>
+            <div class="download-panel-meta">
+              ${r.file_type?`<span>${ICONS.file} ${escapeHTML(r.file_type)}</span>`:''}
+              ${r.file_size?`<span>${ICONS.layers} ${formatFileSize(r.file_size)}</span>`:''}
+              <span>${ICONS.calendar} Added ${formatDate(r.created_at)}</span>
+              <span>${ICONS.download} ${formatNum(r.download_count||0)} downloads</span>
             </div>
           </div>
         </div>
       </div>
-      ${Array.isArray(r.chapters) && r.chapters.length ? `
-        <div class="card" style="margin-top:34px;padding:22px">
-          <div class="flex justify-between items-center" style="margin-bottom:14px">
-            <div><h2 style="font-size:19px">Chapter-wise Notes</h2><p class="text-muted" style="font-size:12.5px;margin-top:3px">${r.chapters.length} chapters</p></div>
+      ${Array.isArray(r.chapters) && r.chapters.length ? (() => {
+        const catName = r.categories?.name || 'Resource';
+        const isNotesResource = String(r.categories?.slug||'').toLowerCase() === 'notes';
+        const sectionTitle = isNotesResource ? 'Chapter Notes' : `More ${catName}`;
+        const itemPrefix = isNotesResource ? 'Chapter' : catName;
+        return `
+        <div class="card multiple-options-card" style="margin-top:34px;padding:22px">
+          <div class="flex justify-between items-center" style="margin-bottom:14px;gap:12px">
+            <div><h2 style="font-size:19px">${escapeHTML(sectionTitle)}</h2><p class="text-muted" style="font-size:12.5px;margin-top:3px">${r.chapters.length} ${isNotesResource?(r.chapters.length===1?'chapter':'chapters'):(r.chapters.length===1?'option':'options')} available</p></div>
+            <span class="badge badge-gray">${escapeHTML(catName)}</span>
           </div>
-          <div style="display:flex;flex-direction:column;gap:9px">
-            ${r.chapters.map(c=>`<a href="${safeURL(c.file_url)}" target="_blank" rel="noopener noreferrer" class="card" style="padding:13px 15px;display:flex;align-items:center;justify-content:space-between;gap:12px">
-              <span><strong style="font-size:13.5px">Chapter ${escapeHTML(String(c.chapter_number))}</strong><span style="display:block;font-size:13px;color:#666;margin-top:2px">${escapeHTML(c.title)}</span></span>
-              <span class="btn btn-primary btn-sm">${ICONS.download} Open</span>
-            </a>`).join('')}
+          <div class="multiple-option-list">
+            ${r.chapters.map((c,i)=>{ const viewURL=resourceViewURL(c.file_url); const label=isNotesResource ? `Chapter ${c.chapter_number||i+1}` : `${catName} ${i+1}`; return `<div class="multiple-option-item">
+              <span class="option-copy"><span class="option-title">${escapeHTML(label)}${c.title?` — ${escapeHTML(c.title)}`:''}</span><span class="option-meta">Choose Preview or Open</span></span>
+              <span style="display:flex;gap:7px;flex-wrap:wrap">
+                <a href="${safeURL(viewURL)}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">${ICONS.externalLink} View</a>
+                <button type="button" class="btn btn-primary btn-sm" data-chapter-preview="${escapeHTML(c.file_url||'')}" data-chapter-title="${escapeHTML(c.title||label)}">${ICONS.eye} Preview</button>
+              </span>
+            </div>`;}).join('')}
           </div>
-        </div>` : ''}
+        </div>`;
+      })() : ''}
       <div style="margin-top:48px" id="related-section"></div>
     </div>
   `;
-  qs('#download-btn').addEventListener('click', async () => {
+  const resourceFileURL = r.external_url || r.file_url || (r.file_path ? await Service.getPublicUrl(BUCKETS.resources, r.file_path) : null);
+  const openFileBtn = qs('#open-file-btn');
+  if(openFileBtn){
+    if(resourceFileURL){ openFileBtn.href = resourceViewURL(resourceFileURL); }
+    else { openFileBtn.style.display='none'; }
+  }
+  qs('#download-btn').addEventListener('click', () => {
     if(!requireAuth()) return;
+    if(!resourceFileURL){ toast('File not available.', 'error'); return; }
+    openResourceFilePreview(resourceFileURL, r.title, r.id);
+  });
+  qs('#direct-download-btn').addEventListener('click', async () => {
+    if(!requireAuth()) return;
+    if(!resourceFileURL){ toast('File not available.', 'error'); return; }
     try{
+      const url = resourceDownloadURL(resourceFileURL);
+      if(!url || url==='#'){ toast('Download link is not available.', 'error'); return; }
       await Service.recordDownload(r.id);
-      const url = r.external_url || r.file_url || (r.file_path ? await Service.getPublicUrl(BUCKETS.resources, r.file_path) : null);
-      if(url) window.open(url, '_blank');
-      else toast('File not available.', 'error');
-    }catch(err){ toast(friendlyError(err,'Download failed.'), 'error'); }
+      const w = window.open(url, '_blank', 'noopener,noreferrer');
+      if(!w) window.location.href = url;
+      toast('Download started.', 'success');
+    }catch(err){
+      toast(friendlyError(err,'Download failed.'), 'error');
+    }
+  });
+  qsa('[data-chapter-preview]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if(!requireAuth()) return;
+      const url = btn.dataset.chapterPreview || '';
+      const title = btn.dataset.chapterTitle || 'Chapter';
+      openResourceFilePreview(url, title);
+    });
   });
   const saveBtn = qs('#save-detail-btn');
   saveBtn.addEventListener('click', async () => {
@@ -3407,13 +3809,21 @@ async function openResourceForm(existing){
         <div class="field"><label>Year</label><input id="rf-year" type="number" value="${r.year||''}"></div>
         <div class="field"><label>Exam Type</label><input id="rf-exam" value="${escapeHTML(r.exam_type||'')}"></div>
       </div>
-      <div class="field"><label>Google Drive / Download Link</label><input id="rf-url" type="url" ${isNotes && existingChapters.length?'':'required'} placeholder="https://drive.google.com/..." value="${escapeHTML(r.external_url||r.file_url||'')}"><span class="field-hint">For normal resources, use the existing single link. For chapter-wise Notes, the main link can be left empty when chapters have their own links.</span></div>
+      <div class="field"><label>Google Drive / Download Link</label><input id="rf-url" type="text" placeholder="https://drive.google.com/..." value="${escapeHTML(r.external_url||r.file_url||'')}"><span class="field-hint">You can use one main link, or add multiple files below. If you paste a link without https://, it will be fixed automatically.</span></div>
       <div class="field"><label>Thumbnail URL (optional)</label><input id="rf-thumb-url" type="url" placeholder="https://..." value="${escapeHTML(r.thumbnail_url||'')}"></div>
 
-      <div id="chapter-manager" style="display:${isNotes?'block':'none'};margin:8px 0 18px">
-        <div class="flex justify-between items-center" style="margin-bottom:10px">
-          <div><h3 style="font-size:15px">Chapter-wise Notes</h3><span class="field-hint">Add unlimited chapters and submit all of them together.</span></div>
-          <button type="button" class="btn btn-ghost btn-sm" id="add-chapter-btn">${ICONS.plus} Add Chapter</button>
+      <div class="multiple-options-toggle">
+        <div class="toggle-copy">
+          <div class="toggle-title">Add multiple files / options</div>
+          <span class="toggle-help">Turn this on only when this resource has more than one file or chapter. It stays off automatically for a new resource.</span>
+        </div>
+        <input type="checkbox" id="rf-multiple" ${existingChapters.length?'checked':''} aria-label="Add multiple files or options">
+      </div>
+
+      <div id="chapter-manager" style="display:${existingChapters.length?'block':'none'};margin:8px 0 18px">
+        <div class="flex justify-between items-center" style="margin-bottom:10px;gap:12px">
+          <div><h3 style="font-size:15px">${isNotes?'Chapter-wise Notes':`Multiple ${escapeHTML(categories.find(c=>c.id===r.category_id)?.name||'Resource')} Options`}</h3><span class="field-hint">Only the files you add here will appear under this resource. The selected category remains unchanged for every option.</span></div>
+          <button type="button" class="btn btn-ghost btn-sm" id="add-chapter-btn">${ICONS.plus} Add Option</button>
         </div>
         <div id="chapter-list">${existingChapters.length ? existingChapters.map((c,i)=>chapterRow(c,i)).join('') : chapterRow({},0)}</div>
       </div>
@@ -3426,13 +3836,18 @@ async function openResourceForm(existing){
     </form>
   `});
 
-  const toggleChapters = () => {
+  const updateMultipleOptionsUI = () => {
+    const enabled = !!qs('#rf-multiple',box)?.checked;
     const selected = categories.find(c=>c.id===qs('#rf-cat',box).value);
-    const show = selected?.slug === 'notes';
-    qs('#chapter-manager',box).style.display = show ? 'block' : 'none';
-    qs('#rf-url',box).required = !show;
+    qs('#chapter-manager',box).style.display = enabled ? 'block' : 'none';
+    qs('#rf-url',box).required = !enabled;
+    const heading = qs('#chapter-manager h3',box);
+    if(heading) heading.textContent = selected?.slug === 'notes'
+      ? 'Chapter-wise Notes'
+      : `Multiple ${selected?.name || 'Resource'} Options`;
   };
-  qs('#rf-cat', box).addEventListener('change', toggleChapters);
+  qs('#rf-cat', box).addEventListener('change', updateMultipleOptionsUI);
+  qs('#rf-multiple', box).addEventListener('change', updateMultipleOptionsUI);
   qs('#add-chapter-btn',box).addEventListener('click',()=>{
     const list=qs('#chapter-list',box);
     list.insertAdjacentHTML('beforeend',chapterRow({},list.querySelectorAll('[data-chapter-row]').length));
@@ -3449,18 +3864,27 @@ async function openResourceForm(existing){
     const title=qs('#rf-title',box).value.trim();
     const url=qs('#rf-url',box).value.trim();
     const selectedCategory=categories.find(c=>c.id===qs('#rf-cat',box).value);
-    const rows=[...qsa('[data-chapter-row]',box)].map((row,i)=>({
+    const multipleEnabled = !!qs('#rf-multiple',box)?.checked;
+    const rows=multipleEnabled ? [...qsa('[data-chapter-row]',box)].map((row,i)=>({
       chapter_number:parseInt(qs('[data-ch-number]',row).value,10)||i+1,
       title:qs('[data-ch-title]',row).value.trim(),
       file_url:qs('[data-ch-url]',row).value.trim(),
       description:qs('[data-ch-desc]',row).value.trim()
-    })).filter(c=>c.title||c.file_url);
+    })).filter(c=>c.title||c.file_url) : [];
     if(!selectedCategory){toast('Please select a resource category.','warning');submitBtn.disabled=false;return;}
-    if(!url && selectedCategory.slug!=='notes'){toast('Please enter a valid HTTPS/Google Drive link.','warning');submitBtn.disabled=false;return;}
-    if(url && !/^https?:\/\//i.test(url)){toast('Please enter a valid HTTPS/Google Drive link.','warning');submitBtn.disabled=false;return;}
-    if(selectedCategory.slug==='notes' && rows.length){
-      const bad=rows.find(c=>!c.title || !/^https?:\/\//i.test(c.file_url));
-      if(bad){toast('Every chapter needs a title and a valid HTTPS/Google Drive link.','warning');submitBtn.disabled=false;return;}
+    const normalizeLink = value => {
+      const v=String(value||'').trim();
+      if(!v) return '';
+      return /^https?:\/\//i.test(v) ? v : ('https://'+v.replace(/^\/+/,''));
+    };
+    const normalizedUrl=normalizeLink(url);
+    rows.forEach(c=>{ c.file_url=normalizeLink(c.file_url); });
+    if(!multipleEnabled && !normalizedUrl){toast('Please enter a main resource link, or turn on “Add multiple files / options”.','warning');submitBtn.disabled=false;return;}
+    if(normalizedUrl && !/^https?:\/\//i.test(normalizedUrl)){toast('Please enter a valid resource link.','warning');submitBtn.disabled=false;return;}
+    if(multipleEnabled && !rows.length){toast('Add at least one file/option after enabling multiple files.','warning');submitBtn.disabled=false;return;}
+    if(rows.length){
+      const bad=rows.find(c=>!c.title || !c.file_url);
+      if(bad){toast('Every additional file/option needs a title and a link.','warning');submitBtn.disabled=false;return;}
     }
     const payload={
       title,description:qs('#rf-desc',box).value.trim(),category_id:selectedCategory.id,
@@ -3468,7 +3892,7 @@ async function openResourceForm(existing){
       subject_id:qs('#rf-subject',box).value||null,board:qs('#rf-board',box).value.trim()||null,
       year:qs('#rf-year',box).value?parseInt(qs('#rf-year',box).value,10):null,
       exam_type:qs('#rf-exam',box).value.trim()||null,
-      file_url:url||null,file_path:null,file_size:null,thumbnail_path:null,
+      file_url:normalizedUrl||null,file_path:null,file_size:null,thumbnail_path:null,
       thumbnail_url:qs('#rf-thumb-url',box).value.trim()||null,status:qs('#rf-status',box).value,
       featured:qs('#rf-featured',box).checked,created_by:AppState.user?.id||null,
       slug:existing?.slug||(slugify(title)+'-'+Date.now().toString(36))
@@ -3477,10 +3901,10 @@ async function openResourceForm(existing){
       let saved;
       if(existing){
         saved=await Service.adminUpdateResource(existing.id,payload);
-        if(selectedCategory.slug==='notes') await Service.adminReplaceResourceChapters(existing.id,rows);
+        await Service.adminReplaceResourceChapters(existing.id,rows);
       }else{
         saved=await Service.adminCreateResource(payload);
-        if(selectedCategory.slug==='notes' && rows.length) await Service.adminCreateResourceChapters(saved.id,rows);
+        if(rows.length) await Service.adminCreateResourceChapters(saved.id,rows);
       }
       toast(existing?'Resource updated.':'Resource created.','success');closeModal();loadAdminResourcesTable();
     }catch(err){toast(friendlyError(err,'Could not save resource.'),'error');submitBtn.disabled=false;}
@@ -3925,3 +4349,76 @@ document.addEventListener('DOMContentLoaded', bootstrap);
 
 </body>
 </html>
+
+<style id="final-resource-mobile-overflow-fix">
+@media(max-width:600px){
+  .file-preview-top{
+    flex-direction:column !important;
+    align-items:stretch !important;
+  }
+  .file-preview-top .preview-note{
+    width:100%;
+  }
+  .file-preview-top a.btn{
+    width:100%;
+    justify-content:center;
+  }
+  .download-panel-head,
+  .download-bento,
+  .download-panel-meta{
+    min-width:0;
+  }
+  .download-tile{
+    width:100%;
+    min-width:0;
+  }
+  .download-tile .tile-copy{
+    overflow:hidden;
+  }
+  .download-tile .tile-title,
+  .download-tile .tile-sub{
+    max-width:100%;
+  }
+}
+</style>
+
+<style id="resource-multiple-options-ui">
+/* Compact, calm multi-file resource UI */
+.multiple-options-toggle{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:13px 14px;margin:10px 0 14px;border:1px solid var(--border);
+  border-radius:15px;background:var(--surface-2);
+}
+.multiple-options-toggle .toggle-copy{min-width:0}
+.multiple-options-toggle .toggle-title{font-weight:800;font-size:13px;color:var(--text-1)}
+.multiple-options-toggle .toggle-help{display:block;margin-top:3px;font-size:11px;line-height:1.45;color:var(--muted)}
+.multiple-options-toggle input{width:18px;height:18px;accent-color:var(--accent);flex:0 0 auto}
+.multiple-option-list{display:flex;flex-direction:column;gap:8px}
+.multiple-option-item{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;
+  padding:12px 13px;border:1px solid var(--border);border-radius:14px;
+  background:var(--paper);box-shadow:0 2px 10px rgba(0,0,0,.025);
+  transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;
+}
+.multiple-option-item:hover{border-color:rgba(0,0,0,.16);box-shadow:0 8px 22px rgba(0,0,0,.06);transform:translateY(-1px)}
+.multiple-option-item .option-copy{display:block;min-width:0}
+.multiple-option-item .option-title{display:block;font-weight:750;font-size:13px;line-height:1.35;overflow-wrap:anywhere;color:var(--text-1)}
+.multiple-option-item .option-meta{display:block;margin-top:3px;font-size:11px;line-height:1.35;color:var(--muted)}
+.multiple-option-item > span:last-child{display:flex!important;align-items:center;gap:6px!important;flex-wrap:nowrap!important}
+.multiple-option-item .btn{
+  display:inline-flex!important;align-items:center;justify-content:center;gap:6px;
+  min-height:38px!important;height:38px!important;padding:0 11px!important;
+  border-radius:10px!important;font-size:12px!important;line-height:1!important;
+  white-space:nowrap!important;box-shadow:none!important;
+}
+.multiple-option-item .btn svg{width:15px!important;height:15px!important;min-width:15px!important;max-width:15px!important;min-height:15px!important;max-height:15px!important}
+@media(max-width:600px){
+  .multiple-options-toggle{align-items:flex-start}
+  .multiple-option-item{grid-template-columns:minmax(0,1fr);gap:10px;padding:12px}
+  .multiple-option-item > span:last-child{width:100%;display:grid!important;grid-template-columns:1fr 1fr;gap:7px!important}
+  .multiple-option-item .btn{width:100%!important;min-height:40px!important;height:40px!important;padding:0 9px!important}
+}
+@media(max-width:360px){
+  .multiple-option-item > span:last-child{grid-template-columns:1fr}
+}
+</style>

@@ -1,3 +1,4 @@
 # Education Point — Netlify SPA fallback
-# Keep this as the LAST redirect rule.
+# Keep clean deep links working when a URL is opened directly
+# from WhatsApp, Google, browser bookmarks, etc.
 /*    /index.html   200

@@ -1630,7 +1630,7 @@ const Router = {
     // Supabase bootstrap finishes. Wait for the client before data routes
     // execute, otherwise Service.* sees SUPABASE_READY=false and returns
     // null/[] which was incorrectly shown as "Page not found".
-    const needsSupabase = !/^\\/(?:about|contact|privacy|terms|copyright-policy|copyright|disclaimer)\\/?$/.test(path);
+    const needsSupabase = !/^\/(?:about|contact|privacy|terms|copyright-policy|copyright|disclaimer)\/?$/.test(path);
     const runRoute = async (routeMatch) => {
       if(needsSupabase && typeof ensureSupabaseClient==='function'){
         await ensureSupabaseClient();

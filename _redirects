@@ -1,1 +1,4 @@
+# Education Point — Netlify SPA deep-link fallback
+# Required so direct links from WhatsApp, Google, bookmarks, etc.
+# always load the SPA entry point before the client-side router resolves the path.
 /*    /index.html   200

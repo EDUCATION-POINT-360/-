@@ -1626,9 +1626,24 @@ const Router = {
     const match=this.match(path);
     closeAllPanels();
 
+    // Direct external links can reach the SPA router before the async
+    // Supabase bootstrap finishes. Wait for the client before data routes
+    // execute, otherwise Service.* sees SUPABASE_READY=false and returns
+    // null/[] which was incorrectly shown as "Page not found".
+    const needsSupabase = !/^\\/(?:about|contact|privacy|terms|copyright-policy|copyright|disclaimer)\\/?$/.test(path);
+    const runRoute = async (routeMatch) => {
+      if(needsSupabase && typeof ensureSupabaseClient==='function'){
+        await ensureSupabaseClient();
+      }
+      return routeMatch.handler(
+        routeMatch.params,
+        new URLSearchParams(window.location.search)
+      );
+    };
+
     if(match){
       this.current=path;
-      Promise.resolve(match.handler(match.params,new URLSearchParams(window.location.search))).catch(err=>{
+      Promise.resolve(runRoute(match)).catch(err=>{
         console.error('[Education Point] Route error:',err);
         if(typeof renderRouteError==='function') renderRouteError(path,err);
         else render404();
@@ -1641,7 +1656,7 @@ const Router = {
       const hashMatch=hashPath && this.match(hashPath);
       if(hashMatch){
         this.current=hashPath;
-        Promise.resolve(hashMatch.handler(hashMatch.params,new URLSearchParams(window.location.search))).catch(err=>{
+        Promise.resolve(runRoute(hashMatch)).catch(err=>{
           console.error('[Education Point] Hash route error:',err);
           if(typeof renderRouteError==='function') renderRouteError(hashPath,err);
           else render404();

@@ -149,23 +149,53 @@
          STRUCTURED DATA — GOOGLE
     ================================= -->
     <script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
     {
-        "@context": "https://schema.org",
-        "@type": "EducationalOrganization",
-        "name": "Education Point
-        "url": "https://educationpoint360.netlify.app",
-        "logo": "https://i.ibb.co/hFq3dDXY/1786788569325-removebg-preview.png",
-        "description": "Education Point is a modern learning platform providing free educational resources including notes, keybooks, guess papers, past papers, pairing schemes, MCQs, test series and entry test preparation.",
-        "founder": {
-            "@type": "Person",
-            "name": "Muhammad Rizwan"
-        },
-        "email": "muhanmadrizwan120@gmail.com",
-        "sameAs": [
-            "https://whatsapp.com/channel/0029Vb7bYUSJUM2eWSlWfo36"
-        ]
+      "@type":"EducationalOrganization",
+      "@id":"https://educationpoint360.netlify.app/#organization",
+      "name":"Education Point",
+      "alternateName":["Education Point Online","Education Point Pakistan"],
+      "url":"https://educationpoint360.netlify.app/",
+      "logo":"https://i.ibb.co/hFq3dDXY/1786788569325-removebg-preview.png",
+      "description":"Education Point is a digital learning platform for students, providing notes, keybooks, guess papers, past papers, pairing schemes, MCQs, test series, courses, lectures and entry-test preparation resources.",
+      "founder":{"@id":"https://educationpoint360.netlify.app/#muhammad-rizwan"},
+      "owner":{"@id":"https://educationpoint360.netlify.app/#muhammad-rizwan"},
+      "telephone":"+923314220506",
+      "email":"mrizwank584@gmail.com",
+      "contactPoint":{"@type":"ContactPoint","contactType":"customer support","telephone":"+923314220506","email":"mrizwank584@gmail.com","availableLanguage":["English","Urdu"]},
+      "sameAs":[
+        "https://github.com/EDUCATION-POINT-360",
+        "https://whatsapp.com/channel/0029Vb7bYUSJUM2eWSlWfo36"
+      ],
+      "knowsAbout":["Student Notes","MCQs","Test Series","Past Papers","Pairing Schemes","Entry Test Preparation","Online Lectures","Educational Blogs"]
+    },
+    {
+      "@type":"Person",
+      "@id":"https://educationpoint360.netlify.app/#muhammad-rizwan",
+      "name":"Muhammad Rizwan",
+      "url":"https://educationpoint360.netlify.app/about",
+      "jobTitle":"Founder & Owner of Education Point",
+      "telephone":"+923314220506",
+      "email":"mrizwank584@gmail.com",
+      "sameAs":[
+        "https://github.com/EDUCATION-POINT-360",
+        "https://whatsapp.com/channel/0029Vb7bYUSJUM2eWSlWfo36"
+      ],
+      "worksFor":{"@id":"https://educationpoint360.netlify.app/#organization"}
+    },
+    {
+      "@type":"WebSite",
+      "@id":"https://educationpoint360.netlify.app/#website",
+      "name":"Education Point",
+      "url":"https://educationpoint360.netlify.app/",
+      "publisher":{"@id":"https://educationpoint360.netlify.app/#organization"},
+      "inLanguage":"en-PK"
     }
-    </script>
+  ]
+}
+</script>
 
 </head>
 <style>
@@ -1401,37 +1431,66 @@ function toast(message, type='info', duration=4200){
   const timer = setTimeout(remove, duration);
   t.addEventListener('mouseenter', ()=>clearTimeout(timer));
 }
-function friendlyError(err, fallback){
-  console.error('[Education Point] Supabase/Auth error:', err);
-
+function friendlyError(err, fallback='Something went wrong. Please try again.'){
+  // Keep technical diagnostics private. Admins can still see the exact
+  // backend error; normal users only receive a safe, human-readable message.
   const msg = String(err?.message || err?.error_description || err || '').trim();
   const code = String(err?.code || err?.status || '').trim();
+  const admin = !!(typeof isAdminUser === 'function' && isAdminUser());
 
+  console.error('[Education Point] Internal error:', {
+    message: msg, code, status: err?.status, name: err?.name,
+    details: err?.details, hint: err?.hint, error: err
+  });
+
+  if(admin){
+    return msg || fallback || 'Unknown backend error.';
+  }
+
+  if(!navigator.onLine || /network|fetch|failed to fetch|load failed|offline|timeout|timed out/i.test(msg)){
+    return 'Network error. Please check your internet connection and try again.';
+  }
   if(/already registered|user already exists/i.test(msg)){
     return 'This email is already registered. Please use Log In instead.';
   }
-  if(/email.*not.*confirmed|confirm.*email/i.test(msg)){
-    return 'Your email is not verified yet. Check your inbox and verify the email first.';
+  if(/invalid login credentials|invalid.*password|wrong password/i.test(msg)){
+    return 'Email or password is incorrect. Please try again.';
   }
-  if(/signups.*disabled|signup.*disabled|email provider.*disabled/i.test(msg)){
-    return 'Email sign-up is disabled in Supabase Authentication settings.';
+  if(/email.*not.*confirmed|confirm.*email/i.test(msg)){
+    return 'Please verify your email address and try again.';
   }
   if(/rate limit|too many requests/i.test(msg)){
     return 'Too many attempts. Please wait a few minutes and try again.';
   }
-  if(/invalid.*api|invalid.*key|apikey|jwt/i.test(msg)){
-    return 'The Supabase publishable key is invalid or does not belong to this project.';
+  if(/unauthorized|forbidden|permission|policy|RLS|row-level|jwt|apikey|api key|invalid.*key|invalid.*token|PGRST|PostgREST|Supabase/i.test(msg) || code){
+    return 'This action could not be completed. Please try again later.';
   }
-  if(/network|fetch|failed to fetch|load failed/i.test(msg)){
-    return 'Network connection to Supabase failed. If you opened this HTML directly from your phone, deploy it to HTTPS (Netlify/Vercel) and try again.';
-  }
-  if(/permission|policy|RLS|row-level/i.test(msg)){
-    return 'Supabase RLS denied this database operation.';
-  }
-
-  // Never hide an unknown Supabase error behind a generic message.
-  return `Supabase error${code ? ` (${code})` : ''}: ${msg || (fallback || 'Unknown error')}`;
+  return fallback || 'Something went wrong. Please try again.';
 }
+
+/* ---- Global privacy-safe error boundary ---- */
+(function installSafeErrorBoundary(){
+  if(window.__epSafeErrorBoundary) return;
+  window.__epSafeErrorBoundary = true;
+  let lastShown = 0;
+  const report = (err, fallback='Something went wrong. Please try again.') => {
+    console.error('[Education Point] Unhandled application error:', err);
+    const now = Date.now();
+    if(now - lastShown < 1800) return;
+    lastShown = now;
+    try{ toast(friendlyError(err, fallback), 'error', 5200); }catch(_){ }
+  };
+  window.addEventListener('error', e => {
+    if(e?.target && e.target !== window && ['SCRIPT','LINK','IMG'].includes(e.target.tagName)){
+      report(new Error('A page asset failed to load.'));
+    }else if(e?.error){
+      report(e.error);
+    }
+  }, true);
+  window.addEventListener('unhandledrejection', e => {
+    report(e?.reason || new Error('Unhandled promise rejection.'));
+  });
+})();
 
 /* ---- Modal ---- */
 function openModal({title, bodyHTML, wide=false, actions=[], onMount}){
@@ -2211,8 +2270,15 @@ function setupRealtime(){
     live.on('presence', { event:'join' }, ({ key, newPresences }) => updateRealtimePresence(live, key, newPresences));
     live.on('presence', { event:'leave' }, ({ key, leftPresences }) => updateRealtimePresence(live, key, leftPresences));
     live.subscribe(async status => {
+      const previousStatus = AppState.realtimeStatus;
       AppState.realtimeStatus = status === 'SUBSCRIBED' ? 'connected' : (status === 'CLOSED' || status === 'CHANNEL_ERROR' ? 'disconnected' : 'connecting');
       updateRealtimeIndicator();
+      if(AppState.realtimeStatus === 'disconnected' && previousStatus !== 'disconnected'){
+        toast('Network error. Live updates are temporarily disconnected.', 'warning', 5200);
+      }
+      if(AppState.realtimeStatus === 'connected' && previousStatus === 'disconnected'){
+        toast('Live updates reconnected.', 'success', 3000);
+      }
       if(status === 'SUBSCRIBED'){
         try { await live.track({ user_id:AppState.user?.id || null, role:AppState.isAdmin?'admin':'student', online_at:new Date().toISOString() }); } catch(e) {}
         window.dispatchEvent(new CustomEvent('educationpoint:realtime-connected'));
@@ -2248,6 +2314,7 @@ function handleRealtimeNotification(n){
   AppState.unreadNotifCount = Math.max(0, Number(AppState.unreadNotifCount||0)) + 1;
   updateNotifBadge();
   toast(n.title || 'New notification', 'info');
+  showBrowserNotification(n);
   const panel = qs('#notif-panel-el');
   if(panel) setTimeout(() => toggleNotifPanel(), 250);
 }
@@ -2356,6 +2423,8 @@ const NAV_MORE = [
   {label:'Announcements', href:'/announcements'},
   {label:'About', href:'/about'},
   {label:'Contact', href:'/contact'},
+  {label:'Blogs', href:'/blogs'},
+  {label:'Lectures', href:'/lectures'},
 ];
 
 function renderShell(){
@@ -2473,12 +2542,41 @@ function toggleAccountMenu(){
   setTimeout(()=>document.addEventListener('click', function h(e){ if(!panel.contains(e.target) && e.target.id!=='avatar-btn'){ panel.remove(); document.removeEventListener('click',h); } }),0);
 }
 
+async function enableBrowserNotifications(){
+  if(!('Notification' in window)) { toast('Browser notifications are not supported on this device.', 'info'); return false; }
+  try{
+    const permission = Notification.permission === 'granted' ? 'granted' : await Notification.requestPermission();
+    if(permission === 'granted'){
+      toast('Browser notifications enabled.', 'success');
+      return true;
+    }
+    toast('Browser notifications are blocked. You can enable them in browser settings.', 'info');
+  }catch(err){
+    console.error('[Education Point] Notification permission error:', err);
+    toast('Browser notifications could not be enabled.', 'info');
+  }
+  return false;
+}
+function showBrowserNotification(n){
+  if(!n || !('Notification' in window) || Notification.permission !== 'granted') return;
+  try{
+    const title = n.title || 'Education Point';
+    const body = n.message || 'You have a new notification.';
+    const notification = new Notification(title, { body, tag:`education-point-${n.id||Date.now()}`, icon: n.icon_url || undefined });
+    notification.onclick = () => {
+      try{ window.focus(); }catch(_){}
+      if(n.link) go(n.link);
+      notification.close();
+    };
+  }catch(err){ console.warn('[Education Point] Browser notification unavailable:', err); }
+}
+
 async function toggleNotifPanel(){
   let panel = qs('#notif-panel-el');
   if(panel){ panel.remove(); return; }
   panel = el('div',{class:'notif-panel open', id:'notif-panel-el'});
   panel.innerHTML = `
-    <div class="notif-panel-header"><h4>Notifications</h4><button class="btn btn-ghost btn-sm" id="mark-all-read">Mark all read</button></div>
+    <div class="notif-panel-header"><h4>Notifications</h4><div style="display:flex;gap:6px;align-items:center"><button class="btn btn-ghost btn-sm" id="enable-browser-notifs" title="Enable device notifications">Alerts</button><button class="btn btn-ghost btn-sm" id="mark-all-read">Mark all read</button></div></div>
     <div class="notif-list" id="notif-list"><div style="padding:24px;text-align:center;color:var(--text-3);font-size:13px">Loading…</div></div>
   `;
   qs('#notif-btn').parentElement.appendChild(panel);
@@ -2503,6 +2601,8 @@ async function toggleNotifPanel(){
       if(n && n.link) go(n.link);
     }));
   }
+  qs('#enable-browser-notifs', panel).addEventListener('click', enableBrowserNotifications);
+  if('Notification' in window && Notification.permission === 'granted') qs('#enable-browser-notifs', panel).textContent='Alerts On';
   qs('#mark-all-read', panel).addEventListener('click', async () => {
     await Service.markAllNotificationsRead(AppState.user.id, list.map(n=>n.id));
     qsa('.notif-item', listEl).forEach(i=>i.classList.remove('unread'));
@@ -2578,7 +2678,7 @@ function openAuthModal(mode='login'){
   qs('#auth-form', box).addEventListener('submit', async e => {
     e.preventDefault();
     if(!(await ensureSupabaseClient())){
-      toast('Supabase connection failed: ' + (SUPABASE_INIT_ERROR || 'Unknown error'), 'warning', 9000);
+      toast('Network error. Please try again later.', 'warning', 6500);
       return;
     }
     const submitBtn = qs('#auth-submit', box);
@@ -3647,6 +3747,8 @@ const ADMIN_TABS = [
   {id:'classes', label:'Classes', icon:'graduationCap'},
   {id:'subjects', label:'Subjects', icon:'book'},
   {id:'tests', label:'Test Series', icon:'award'},
+  {id:'blogs', label:'Blogs', icon:'file'},
+  {id:'lectures', label:'Lectures', icon:'play'},
   {id:'announcements', label:'Announcements', icon:'megaphone'},
   {id:'notifications', label:'Notifications', icon:'bell'},
   {id:'students', label:'Students', icon:'users'},
@@ -4027,6 +4129,7 @@ async function openTestForm(existing){
       <div class="field"><label>Title</label><input id="tf-title" required value="${escapeHTML(t.title||'')}"></div>
       <div class="field"><label>Description</label><textarea id="tf-desc">${escapeHTML(t.description||'')}</textarea></div>
       <div class="grid grid-2">
+        <div class="field"><label>Class</label><select id="tf-class"><option value="">— None —</option></select></div>
         <div class="field"><label>Subject</label><select id="tf-subj"><option value="">— None —</option>${subjects.map(s=>`<option value="${s.id}" ${t.subject_id===s.id?'selected':''}>${escapeHTML(s.name)}</option>`).join('')}</select></div>
         <div class="field"><label>Exam Type</label><input id="tf-exam" value="${escapeHTML(t.exam_type||'')}"></div>
         <div class="field"><label>Duration (minutes)</label><input id="tf-dur" type="number" value="${t.duration_minutes||30}"></div>
@@ -4035,9 +4138,10 @@ async function openTestForm(existing){
       <button class="btn btn-primary btn-block" type="submit">${existing?'Save Changes':'Create Test'}</button>
     </form>
   `});
+  try{ const __classes = await Service.getClasses({activeOnly:false}); const __sel=qs('#tf-class',box); if(__sel) __sel.innerHTML='<option value="">— None —</option>'+__classes.map(c=>`<option value="${c.id}" ${t.class_id===c.id?'selected':''}>${escapeHTML(c.name)}</option>`).join(''); }catch(_){ }
   qs('#test-form',box).addEventListener('submit', async e => {
     e.preventDefault();
-    const payload = { title: qs('#tf-title',box).value.trim(), description: qs('#tf-desc',box).value.trim(), subject_id: qs('#tf-subj',box).value||null, exam_type: qs('#tf-exam',box).value.trim()||null, duration_minutes: parseInt(qs('#tf-dur',box).value)||30, status: qs('#tf-status',box).value };
+    const payload = { title: qs('#tf-title',box).value.trim(), description: qs('#tf-desc',box).value.trim(), subject_id: qs('#tf-subj',box).value||null, class_id: qs('#tf-class',box).value||null, exam_type: qs('#tf-exam',box).value.trim()||null, duration_minutes: parseInt(qs('#tf-dur',box).value)||30, status: qs('#tf-status',box).value };
     try{
       if(existing) await Service.adminUpdateTest(existing.id, payload); else await Service.adminCreateTest(payload);
       toast(existing?'Saved.':'Test created.','success'); closeModal(); loadAdminTests();
@@ -4222,6 +4326,165 @@ window.EducationPointSupabase = {
   }
 }
 
+
+/* ================================================================
+   V16 ADDITIVE MODULES — BLOGS / LECTURES / AI TEST IMPORT / SEO
+   These modules use the existing Supabase client, auth and realtime layer.
+   Existing resource/test logic is intentionally preserved.
+   ================================================================ */
+
+function epBlogSlug(value){
+  return String(value||'').toLowerCase().trim().replace(/[^a-z0-9\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').slice(0,120) || `post-${Date.now()}`;
+}
+function epYoutubeEmbed(url){
+  try{ const u=new URL(url); let id=''; if(u.hostname.includes('youtu.be')) id=u.pathname.slice(1); else id=u.searchParams.get('v') || (u.pathname.match(/\/embed\/([^/]+)/)||[])[1] || (u.pathname.match(/\/shorts\/([^/]+)/)||[])[1]; return id ? `https://www.youtube.com/embed/${encodeURIComponent(id)}` : null; }catch(_){ return null; }
+}
+function epDriveEmbed(url){
+  try{ const u=new URL(url); const m=u.pathname.match(/\/file\/d\/([^/]+)/); const id=m?m[1]:u.searchParams.get('id'); return id ? `https://drive.google.com/file/d/${encodeURIComponent(id)}/preview` : null; }catch(_){ return null; }
+}
+function epSafeBlogImage(url){ return safeURL(url||'#'); }
+function epBlogContentHTML(text){
+  return escapeHTML(String(text||'')).replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>');
+}
+
+/* Extend the existing Service object without replacing any existing methods. */
+Object.assign(Service, {
+  async getBlogs({publishedOnly=true,limit=50}={}){
+    if(!SUPABASE_READY) return [];
+    let q=supabase.from('blog_posts').select('*, blog_comments(count), blog_reactions(count)').order('created_at',{ascending:false}).limit(limit);
+    if(publishedOnly) q=q.eq('status','published');
+    const {data,error}=await q; if(error){console.warn(error);return [];} return data||[];
+  },
+  async getBlogBySlug(slug){
+    if(!SUPABASE_READY) return null;
+    const {data,error}=await supabase.from('blog_posts').select('*, blog_comments(id,post_id,user_id,parent_comment_id,content,created_at), blog_reactions(id,user_id,post_id)').eq('slug',slug).maybeSingle();
+    if(error){console.warn(error);return null;} return data;
+  },
+  async adminListBlogs(){
+    const {data,error}=await supabase.from('blog_posts').select('*, blog_reactions(count), blog_comments(count)').order('created_at',{ascending:false}); if(error) throw error; return data||[];
+  },
+  async adminCreateBlog(payload){ const {data,error}=await supabase.from('blog_posts').insert(payload).select().single(); if(error) throw error; return data; },
+  async adminUpdateBlog(id,payload){ const {data,error}=await supabase.from('blog_posts').update(payload).eq('id',id).select().single(); if(error) throw error; return data; },
+  async adminDeleteBlog(id){ const {error}=await supabase.from('blog_posts').delete().eq('id',id); if(error) throw error; },
+  async addBlogReaction(postId){ const {error}=await supabase.from('blog_reactions').insert({post_id:postId,user_id:AppState.user.id}); if(error && error.code!=='23505') throw error; },
+  async removeBlogReaction(postId){ const {error}=await supabase.from('blog_reactions').delete().eq('post_id',postId).eq('user_id',AppState.user.id); if(error) throw error; },
+  async addBlogComment(postId,content,parentCommentId=null){ const {data,error}=await supabase.from('blog_comments').insert({post_id:postId,user_id:AppState.user.id,user_name:AppState.profile?.full_name||AppState.user?.email?.split('@')[0]||'Student',content,parent_comment_id:parentCommentId}).select().single(); if(error) throw error; return data; },
+  async deleteBlogComment(id){ const {error}=await supabase.from('blog_comments').delete().eq('id',id); if(error) throw error; },
+  async getLectures({publishedOnly=true,limit=100}={}){ if(!SUPABASE_READY)return []; let q=supabase.from('lectures').select('*, classes(name), subjects(name)').order('created_at',{ascending:false}).limit(limit); if(publishedOnly)q=q.eq('status','published'); const {data,error}=await q; if(error){console.warn(error);return [];} return data||[]; },
+  async adminListLectures(){ const {data,error}=await supabase.from('lectures').select('*, classes(name), subjects(name)').order('created_at',{ascending:false}); if(error)throw error; return data||[]; },
+  async adminCreateLecture(payload){ const {data,error}=await supabase.from('lectures').insert(payload).select().single(); if(error)throw error; return data; },
+  async adminUpdateLecture(id,payload){ const {data,error}=await supabase.from('lectures').update(payload).eq('id',id).select().single(); if(error)throw error; return data; },
+  async adminDeleteLecture(id){ const {error}=await supabase.from('lectures').delete().eq('id',id); if(error)throw error; },
+  async uploadBlogImage(file){ if(!file) return null; const ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,''); const path=`${AppState.user.id}/${Date.now()}-${crypto.randomUUID()}.${ext}`; const {error}=await supabase.storage.from('blog-images').upload(path,file,{upsert:false,contentType:file.type||'image/jpeg'}); if(error)throw error; const {data}=supabase.storage.from('blog-images').getPublicUrl(path); return data.publicUrl; },
+  async getTestWithQuestions(testId){
+    if(!SUPABASE_READY)return null;
+    const {data:test,error:e1}=await supabase.from('tests').select('*, subjects(name), classes(name)').eq('id',testId).single(); if(e1){console.warn(e1);return null;}
+    const {data:questions,error:e2}=await supabase.from('questions').select('id,test_id,question,option_a,option_b,option_c,option_d,correct_answer,marks,negative_marks,difficulty,explanation,sort_order').eq('test_id',testId).order('sort_order',{ascending:true}); if(e2){console.warn(e2);return null;}
+    return {...test,questions:questions||[]};
+  },
+  async adminListTests({page=1,pageSize=15}={}){ const from=(page-1)*pageSize,to=from+pageSize-1; const {data,error,count}=await supabase.from('tests').select('*, subjects(name), classes(name)',{count:'exact'}).order('created_at',{ascending:false}).range(from,to); if(error)throw error; return {rows:data||[],count:count||0}; }
+});
+
+function epAdminOnly(){ if(!AppState.user || !AppState.isAdmin){toast('Admin access required.','warning');return false;} return true; }
+
+async function adminRenderBlogs(main){
+  if(!epAdminOnly())return;
+  const rows=await Service.adminListBlogs();
+  main.innerHTML=`<div class="flex justify-between items-center" style="margin-bottom:18px"><div><h2 style="color:#fff;font-size:22px;font-family:var(--font-display)">Blogs</h2><p style="color:#999;font-size:12px;margin-top:4px">Write, publish, edit and delete student-help articles in real time.</p></div><button class="btn btn-primary btn-sm" id="ep-add-blog">${ICONS.plus} New Blog</button></div><div class="table-scroll admin-card" style="padding:0"><table class="data-table"><thead><tr><th>Title</th><th>Status</th><th>Reactions</th><th>Comments</th><th>Created</th><th>Actions</th></tr></thead><tbody>${rows.length?rows.map(r=>`<tr><td style="color:#fff;font-weight:650">${escapeHTML(r.title)}</td><td><span class="badge">${escapeHTML(r.status)}</span></td><td>${r.blog_reactions?.[0]?.count||0}</td><td>${r.blog_comments?.[0]?.count||0}</td><td>${formatDate(r.created_at)}</td><td><div class="table-actions"><button data-blog-edit="${r.id}" title="Edit">${ICONS.edit}</button><button data-blog-toggle="${r.id}" title="Publish/Unpublish">${ICONS.checkCircle}</button><button data-blog-del="${r.id}" title="Delete">${ICONS.trash}</button></div></td></tr>`).join(''):'<tr><td colspan="6">No blogs yet.</td></tr>'}</tbody></table></div>`;
+  qs('#ep-add-blog').addEventListener('click',()=>epOpenBlogForm());
+  qsa('[data-blog-edit]',main).forEach(b=>b.addEventListener('click',()=>epOpenBlogForm(rows.find(x=>x.id===b.dataset.blogEdit))));
+  qsa('[data-blog-toggle]',main).forEach(b=>b.addEventListener('click',async()=>{const r=rows.find(x=>x.id===b.dataset.blogToggle);try{await Service.adminUpdateBlog(r.id,{status:r.status==='published'?'draft':'published',published_at:r.status==='published'?null:new Date().toISOString()});toast('Blog status updated.','success');adminRenderBlogs(main);}catch(e){toast(friendlyError(e),'error');}}));
+  qsa('[data-blog-del]',main).forEach(b=>b.addEventListener('click',()=>confirmModal('Delete this blog and its comments?',async()=>{try{await Service.adminDeleteBlog(b.dataset.blogDel);toast('Blog deleted.','success');adminRenderBlogs(main);}catch(e){toast(friendlyError(e),'error');}})));
+}
+
+async function epOpenBlogForm(existing=null){
+  const b=existing||{};
+  const box=openModal({title:existing?'Edit Blog':'Write New Blog',wide:true,bodyHTML:`<form id="ep-blog-form"><div class="field"><label>Blog Title</label><input id="epb-title" required value="${escapeHTML(b.title||'')}"></div><div class="field"><label>Short Excerpt</label><textarea id="epb-excerpt" rows="3">${escapeHTML(b.excerpt||'')}</textarea></div><div class="field"><label>Blog Content</label><textarea id="epb-content" rows="16" required placeholder="Write the complete student-help article here…">${escapeHTML(b.content||'')}</textarea></div><div class="grid grid-2"><div class="field"><label>Cover Picture (optional)</label><input id="epb-image" type="file" accept="image/*"><span class="field-hint">Optional. Image is uploaded to Supabase Storage.</span></div><div class="field"><label>Cover Image URL (optional)</label><input id="epb-image-url" value="${escapeHTML(b.image_url||'')}" placeholder="https://…"></div><div class="field"><label>Status</label><select id="epb-status"><option value="draft" ${b.status!=='published'?'selected':''}>Draft</option><option value="published" ${b.status==='published'?'selected':''}>Published</option></select></div><div class="field"><label>Tags</label><input id="epb-tags" value="${escapeHTML((b.tags||[]).join(', '))}" placeholder="math, exams, study tips"></div></div><button class="btn btn-primary btn-block" type="submit">${existing?'Save Blog':'Create Blog'}</button></form>`});
+  qs('#ep-blog-form',box).addEventListener('submit',async e=>{e.preventDefault();const btn=e.submitter;btn.disabled=true;try{let image=qs('#epb-image-url',box).value.trim()||b.image_url||null;const f=qs('#epb-image',box).files?.[0];if(f)image=await Service.uploadBlogImage(f);const title=qs('#epb-title',box).value.trim();const payload={title,slug:existing?.slug||epBlogSlug(title),excerpt:qs('#epb-excerpt',box).value.trim()||null,content:qs('#epb-content',box).value,status:qs('#epb-status',box).value,image_url:image,tags:qs('#epb-tags',box).value.split(',').map(x=>x.trim()).filter(Boolean),published_at:qs('#epb-status',box).value==='published'?(b.published_at||new Date().toISOString()):null,updated_at:new Date().toISOString()};if(existing)await Service.adminUpdateBlog(existing.id,payload);else await Service.adminCreateBlog(payload);toast('Blog saved in real time.','success');closeModal();adminRenderBlogs(qs('#admin-main'));}catch(err){toast(friendlyError(err),'error');}finally{btn.disabled=false;}});
+}
+
+function epBlogCommentsHTML(comments,depth=0){
+  const children=(comments||[]).filter(c=>(c.parent_comment_id||null)===null); const all=comments||[];
+  return children.map(c=>`<div class="ep-comment" style="margin-left:${Math.min(depth,3)*22}px"><div class="ep-comment-body"><strong>${escapeHTML(c.user_name||'Student')}</strong><span>${timeAgo(c.created_at)}</span><p>${escapeHTML(c.content)}</p><button class="btn btn-ghost btn-sm" data-reply-comment="${c.id}">Reply</button>${AppState.isAdmin||c.user_id===AppState.user?.id?`<button class="btn btn-ghost btn-sm" data-delete-comment="${c.id}">Delete</button>`:''}</div>${epBlogCommentsHTML(all.filter(x=>x.parent_comment_id===c.id),depth+1)}</div>`).join('');
+}
+
+async function renderBlogsPage(){
+  setMeta('Blogs','Student-help articles, study tips and educational guides from Education Point.'); const main=qs('#main'); pageLoading(main); const rows=await Service.getBlogs();
+  main.innerHTML=`<div class="container section"><div class="page-header"><span class="eyebrow">Education Point Journal</span><h1>Blogs</h1><p>Helpful articles, study strategies, exam guidance and educational resources for students.</p></div><div class="grid grid-3" id="ep-blog-grid"></div></div>`;
+  const grid=qs('#ep-blog-grid'); if(!rows.length){grid.innerHTML=emptyStateHTML('file','No blogs yet','New student-help articles will appear here.');return;}
+  grid.innerHTML=rows.map(r=>`<article class="card" style="padding:0;overflow:hidden"><a href="/blog/${encodeURIComponent(r.slug)}" data-link><div class="resource-thumb">${r.image_url?`<img src="${epSafeBlogImage(r.image_url)}" alt="${escapeHTML(r.title)}">`:ICONS.file}</div><div style="padding:18px"><span class="badge">${formatDate(r.created_at)}</span><h2 style="font-size:19px;margin:10px 0 7px">${escapeHTML(r.title)}</h2><p class="text-muted" style="font-size:13px">${escapeHTML(r.excerpt||String(r.content||'').slice(0,150))}</p></div></a></article>`).join('');
+}
+async function renderBlogDetail(slug){
+  const post=await Service.getBlogBySlug(slug); if(!post||post.status!=='published'){render404();return;} setMeta(post.title,post.excerpt||'Education Point educational blog.'); const comments=post.blog_comments||[]; const reactions=post.blog_reactions||[]; const reacted=!!AppState.user&&reactions.some(x=>x.user_id===AppState.user.id);
+  const main=qs('#main'); main.innerHTML=`<div class="container section"><div style="max-width:900px;margin:auto"><a href="/blogs" data-link class="btn btn-ghost btn-sm">← All Blogs</a><article class="card" style="margin-top:18px;padding:28px"><span class="eyebrow">Student Help</span><h1 style="font-size:clamp(30px,5vw,54px);margin:10px 0">${escapeHTML(post.title)}</h1><p class="text-muted">${formatDate(post.published_at||post.created_at)} · ${reactions.length} reactions · ${comments.length} comments</p>${post.image_url?`<img src="${epSafeBlogImage(post.image_url)}" alt="${escapeHTML(post.title)}" style="width:100%;max-height:520px;object-fit:cover;border-radius:18px;margin:22px 0">`:''}<div class="ep-blog-content"><p>${epBlogContentHTML(post.content)}</p></div><div class="ep-blog-actions"><button id="ep-react" class="btn ${reacted?'btn-primary':'btn-ghost'}">♥ ${reacted?'Reacted':'React'} <span>${reactions.length}</span></button><button id="ep-comment-focus" class="btn btn-ghost">Comment</button></div></article><section class="card" style="padding:22px;margin-top:18px"><h2 style="font-size:20px;margin-bottom:15px">Comments & Replies</h2><form id="ep-comment-form"><div class="field"><label id="ep-reply-label">Your comment</label><textarea id="ep-comment-text" required placeholder="Share a useful question or response…"></textarea></div><input type="hidden" id="ep-parent-id"><div class="flex gap-8"><button class="btn btn-primary" type="submit">Post Comment</button><button class="btn btn-ghost hidden" id="ep-cancel-reply" type="button">Cancel Reply</button></div></form><div id="ep-comments" style="margin-top:22px">${comments.length?epBlogCommentsHTML(comments):'<p class="text-muted">No comments yet.</p>'}</div></section></div></div>`;
+  qs('#ep-react').addEventListener('click',async()=>{if(!requireAuth())return;try{if(reacted)await Service.removeBlogReaction(post.id);else await Service.addBlogReaction(post.id);renderBlogDetail(slug);}catch(e){toast(friendlyError(e),'error');}});
+  qs('#ep-comment-focus').addEventListener('click',()=>qs('#ep-comment-text').focus());
+  qsa('[data-reply-comment]').forEach(b=>b.addEventListener('click',()=>{if(!requireAuth())return;qs('#ep-parent-id').value=b.dataset.replyComment;qs('#ep-reply-label').textContent='Replying to comment';qs('#ep-cancel-reply').classList.remove('hidden');qs('#ep-comment-text').focus();}));
+  qs('#ep-cancel-reply').addEventListener('click',()=>{qs('#ep-parent-id').value='';qs('#ep-reply-label').textContent='Your comment';qs('#ep-cancel-reply').classList.add('hidden');});
+  qsa('[data-delete-comment]').forEach(b=>b.addEventListener('click',()=>confirmModal('Delete this comment?',async()=>{try{await Service.deleteBlogComment(b.dataset.deleteComment);toast('Comment deleted.','success');renderBlogDetail(slug);}catch(e){toast(friendlyError(e),'error');}})));
+  qs('#ep-comment-form').addEventListener('submit',async e=>{e.preventDefault();if(!requireAuth())return;try{await Service.addBlogComment(post.id,qs('#ep-comment-text').value.trim(),qs('#ep-parent-id').value||null);toast('Comment posted.','success');renderBlogDetail(slug);}catch(err){toast(friendlyError(err),'error');}});
+}
+
+async function adminRenderLectures(main){
+  const rows=await Service.adminListLectures(); main.innerHTML=`<div class="flex justify-between items-center" style="margin-bottom:18px"><div><h2 style="color:#fff;font-size:22px;font-family:var(--font-display)">Lectures</h2><p style="color:#999;font-size:12px">Add YouTube or Google Drive lecture links; publishing is realtime.</p></div><button class="btn btn-primary btn-sm" id="ep-add-lecture">${ICONS.plus} Add Lecture</button></div><div class="table-scroll admin-card" style="padding:0"><table class="data-table"><thead><tr><th>Title</th><th>Provider</th><th>Class</th><th>Subject</th><th>Status</th><th>Actions</th></tr></thead><tbody>${rows.length?rows.map(r=>`<tr><td style="color:#fff;font-weight:650">${escapeHTML(r.title)}</td><td>${escapeHTML(r.provider||'')}</td><td>${escapeHTML(r.classes?.name||'—')}</td><td>${escapeHTML(r.subjects?.name||'—')}</td><td>${escapeHTML(r.status)}</td><td><div class="table-actions"><button data-le-edit="${r.id}">${ICONS.edit}</button><button data-le-del="${r.id}">${ICONS.trash}</button></div></td></tr>`).join(''):'<tr><td colspan="6">No lectures yet.</td></tr>'}</tbody></table></div>`;
+  qs('#ep-add-lecture').addEventListener('click',()=>epOpenLectureForm()); qsa('[data-le-edit]',main).forEach(b=>b.addEventListener('click',()=>epOpenLectureForm(rows.find(x=>x.id===b.dataset.leEdit)))); qsa('[data-le-del]',main).forEach(b=>b.addEventListener('click',()=>confirmModal('Delete this lecture?',async()=>{try{await Service.adminDeleteLecture(b.dataset.leDel);toast('Lecture deleted.','success');adminRenderLectures(main);}catch(e){toast(friendlyError(e),'error');}})));
+}
+async function epOpenLectureForm(existing=null){
+  const [classes,subjects]=await Promise.all([Service.getClasses({activeOnly:false}),Service.getSubjects({activeOnly:false})]); const r=existing||{};
+  const box=openModal({title:existing?'Edit Lecture':'Add Lecture',bodyHTML:`<form id="ep-le-form"><div class="field"><label>Lecture Title</label><input id="epl-title" required value="${escapeHTML(r.title||'')}"></div><div class="field"><label>Lecture Link</label><input id="epl-url" required placeholder="YouTube or Google Drive URL" value="${escapeHTML(r.url||'')}"></div><div class="grid grid-2"><div class="field"><label>Class</label><select id="epl-class"><option value="">— None —</option>${classes.map(c=>`<option value="${c.id}" ${r.class_id===c.id?'selected':''}>${escapeHTML(c.name)}</option>`).join('')}</select></div><div class="field"><label>Subject</label><select id="epl-subj"><option value="">— None —</option>${subjects.map(c=>`<option value="${c.id}" ${r.subject_id===c.id?'selected':''}>${escapeHTML(c.name)}</option>`).join('')}</select></div><div class="field"><label>Status</label><select id="epl-status"><option value="published" ${r.status!=='draft'?'selected':''}>Published</option><option value="draft" ${r.status==='draft'?'selected':''}>Draft</option></select></div><div class="field"><label>Thumbnail URL (optional)</label><input id="epl-thumb" value="${escapeHTML(r.thumbnail_url||'')}"></div></div><div class="field"><label>Description (optional)</label><textarea id="epl-desc">${escapeHTML(r.description||'')}</textarea></div><button class="btn btn-primary btn-block" type="submit">Save Lecture</button></form>`});
+  qs('#ep-le-form',box).addEventListener('submit',async e=>{e.preventDefault();try{const url=qs('#epl-url',box).value.trim();const provider=epYoutubeEmbed(url)?'YouTube':(epDriveEmbed(url)?'Google Drive':'External');const payload={title:qs('#epl-title',box).value.trim(),url,provider,class_id:qs('#epl-class',box).value||null,subject_id:qs('#epl-subj',box).value||null,status:qs('#epl-status',box).value,thumbnail_url:qs('#epl-thumb',box).value.trim()||null,description:qs('#epl-desc',box).value.trim()||null};if(existing)await Service.adminUpdateLecture(existing.id,payload);else await Service.adminCreateLecture(payload);toast('Lecture saved.','success');closeModal();adminRenderLectures(qs('#admin-main'));}catch(err){toast(friendlyError(err),'error');}});
+}
+async function renderLecturesPage(){setMeta('Lectures','Online lectures from Education Point.');const main=qs('#main');pageLoading(main);const rows=await Service.getLectures();main.innerHTML=`<div class="container section"><div class="page-header"><span class="eyebrow">Video Learning</span><h1>Lectures</h1><p>YouTube and Google Drive lectures organized for students.</p></div><div class="grid grid-3" id="ep-lecture-grid"></div></div>`;const grid=qs('#ep-lecture-grid');if(!rows.length){grid.innerHTML=emptyStateHTML('play','No lectures yet','Lectures will appear here when published.');return;}grid.innerHTML=rows.map(r=>{const embed=epYoutubeEmbed(r.url)||epDriveEmbed(r.url);return `<article class="card" style="padding:14px"><div class="resource-thumb" style="aspect-ratio:16/9">${embed?`<iframe src="${safeURL(embed)}" title="${escapeHTML(r.title)}" style="width:100%;height:100%;border:0" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`:(r.thumbnail_url?`<img src="${safeURL(r.thumbnail_url)}" alt="">`:ICONS.play)}</div><div style="padding:7px 2px"><h2 style="font-size:16px;margin:8px 0">${escapeHTML(r.title)}</h2><p class="text-muted" style="font-size:12px">${escapeHTML(r.classes?.name||'')} ${r.subjects?.name?'· '+escapeHTML(r.subjects.name):''}</p></div></article>`}).join('');}
+
+async function epImportTestFromFile(){
+  if(!epAdminOnly())return;
+  const box=openModal({title:'Import Test / MCQs',wide:true,bodyHTML:`<div class="field"><label>Class</label><select id="eti-class"><option value="">— Select class —</option></select></div><div class="field"><label>Subject</label><select id="eti-subj"><option value="">— Select subject —</option></select></div><div class="grid grid-2"><div class="field"><label>Test Title</label><input id="eti-title" placeholder="Class 10 Physics Test"></div><div class="field"><label>Duration (minutes)</label><input id="eti-duration" type="number" value="30"></div></div><div class="field"><label>MCQ/File</label><input id="eti-file" type="file" accept=".txt,.csv,.json,.html,.htm,.pdf,.docx,text/plain,text/csv,application/json,text/html,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"><span class="field-hint">JSON/CSV/TXT/HTML/PDF. The importer normalizes MCQs into the existing Test Series format.</span></div><div class="field"><label>OpenRouter API Key (optional)</label><input id="eti-key" type="password" placeholder="Used only in this browser session; not saved to Supabase"></div><div class="field"><label>OpenRouter Model</label><input id="eti-model" value="openai/gpt-4o-mini"></div><div id="eti-status" style="font-size:12px;color:#999">Choose a file. AI is optional; deterministic parsing works without an API key.</div><button class="btn btn-primary btn-block" id="eti-run">Create Test From File</button>`});
+  const [classes,subjects]=await Promise.all([Service.getClasses({activeOnly:false}),Service.getSubjects({activeOnly:false})]);qs('#eti-class',box).innerHTML='<option value="">— Select class —</option>'+classes.map(c=>`<option value="${c.id}">${escapeHTML(c.name)}</option>`).join('');qs('#eti-subj',box).innerHTML='<option value="">— Select subject —</option>'+subjects.map(c=>`<option value="${c.id}">${escapeHTML(c.name)}</option>`).join('');
+  qs('#eti-run',box).addEventListener('click',async()=>{const f=qs('#eti-file',box).files?.[0];if(!f){toast('Select a file first.','warning');return;}const status=qs('#eti-status',box);status.textContent='Reading and normalizing questions…';try{let text=await epReadImportFile(f);let questions=epParseMCQs(text);const key=qs('#eti-key',box).value.trim();if(key && questions.length<2){status.textContent='Sending source text to OpenRouter…';questions=await epOpenRouterMCQ(key,qs('#eti-model',box).value.trim(),text);}if(!questions.length)throw new Error('No MCQs could be detected. Use JSON/CSV/TXT/HTML with question, options and correct answer.');const title=qs('#eti-title',box).value.trim()||f.name.replace(/\.[^.]+$/,'');const payload={title,description:`Imported from ${f.name}`,subject_id:qs('#eti-subj',box).value||null,class_id:qs('#eti-class',box).value||null,duration_minutes:parseInt(qs('#eti-duration',box).value)||30,status:'draft',source_file_name:f.name};const test=await Service.adminCreateTest(payload);for(let i=0;i<questions.length;i++)await Service.adminCreateQuestion({...questions[i],test_id:test.id,sort_order:i+1});const html=epBuildTestHTML(payload,questions);await Service.adminUpdateTest(test.id,{generated_html:html});status.textContent=`Created ${questions.length} MCQs. Opening Test Series…`;toast(`Test created with ${questions.length} MCQs.`,'success');closeModal();loadAdminTests();}catch(err){console.error(err);status.textContent=friendlyError(err);toast(friendlyError(err),'error');}});
+}
+async function epReadImportFile(file){if(file.type==='application/pdf'||/\.pdf$/i.test(file.name)){if(!window.pdfjsLib){await new Promise((resolve,reject)=>{const sc=document.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';sc.onload=resolve;sc.onerror=reject;document.head.appendChild(sc);});}if(!window.pdfjsLib)throw new Error('PDF.js could not load.');const buf=await file.arrayBuffer();const pdf=await window.pdfjsLib.getDocument({data:buf}).promise;let out='';for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i);const tc=await page.getTextContent();out+=tc.items.map(x=>x.str).join(' ')+'\n';}return out;}if(/\.docx$/i.test(file.name)){if(!window.mammoth){await new Promise((resolve,reject)=>{const sc=document.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js';sc.onload=resolve;sc.onerror=reject;document.head.appendChild(sc);});}if(!window.mammoth)throw new Error('DOCX parser could not load.');const r=await window.mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});return r.value||'';}return await file.text();}
+function epParseMCQs(text){let raw=String(text||'').trim();try{const j=JSON.parse(raw);const arr=Array.isArray(j)?j:(j.questions||j.mcqs||[]);return arr.map((q,i)=>({question:String(q.question||q.text||'').trim(),option_a:String(q.option_a||q.a||q.options?.A||q.options?.a||'').trim(),option_b:String(q.option_b||q.b||q.options?.B||q.options?.b||'').trim(),option_c:String(q.option_c||q.c||q.options?.C||q.options?.c||'').trim()||null,option_d:String(q.option_d||q.d||q.options?.D||q.options?.d||'').trim()||null,correct_answer:String(q.correct_answer||q.answer||q.correct||'a').toLowerCase().replace(/[^a-d]/g,'').slice(0,1)||'a',difficulty:q.difficulty||'medium',marks:Number(q.marks)||1,negative_marks:Number(q.negative_marks)||0,explanation:q.explanation||null})).filter(q=>q.question&&q.option_a&&q.option_b);}catch(_){}
+  const lines=raw.replace(/\r/g,'').split('\n').map(x=>x.trim()).filter(Boolean);const out=[];let q=null;for(const line of lines){const qm=line.match(/^(?:Q(?:uestion)?\s*)?(\d+)[.)\-:]\s*(.+)$/i);const om=line.match(/^([A-Da-d])[.)\-:]\s*(.+)$/);const am=line.match(/^(?:answer|correct)\s*[:\-]\s*([A-Da-d])/i);if(qm){if(q&&q.question&&q.option_a&&q.option_b)out.push(q);q={question:qm[2],option_a:'',option_b:'',option_c:'',option_d:'',correct_answer:'a',difficulty:'medium',marks:1,negative_marks:0,explanation:null};}else if(q&&om){q['option_'+om[1].toLowerCase()]=om[2];}else if(q&&am){q.correct_answer=am[1].toLowerCase();}}if(q&&q.question&&q.option_a&&q.option_b)out.push(q);return out;}
+async function epOpenRouterMCQ(key,model,text){const prompt=`Convert the following educational source into JSON array of MCQs. Each item must have question, option_a, option_b, option_c, option_d, correct_answer (a/b/c/d), difficulty, marks, negative_marks, explanation. Do not invent missing answers; if an answer is unavailable, infer only when unambiguous. Source:\n${String(text).slice(0,50000)}`;const res=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${key}`,'HTTP-Referer':location.origin,'X-Title':'Education Point Test Import'},body:JSON.stringify({model,temperature:0.1,messages:[{role:'user',content:prompt}],response_format:{type:'json_object'}})});if(!res.ok)throw new Error(`OpenRouter error ${res.status}`);const j=await res.json();const content=j.choices?.[0]?.message?.content||'{}';const parsed=JSON.parse(content);return epParseMCQs(JSON.stringify(parsed.questions||parsed.mcqs||parsed));}
+function epBuildTestHTML(meta,questions){return `<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHTML(meta.title)}</title><style>body{font-family:Inter,Arial,sans-serif;background:#f5f5f7;color:#111;margin:0;padding:24px}.wrap{max-width:850px;margin:auto}.card{background:#fff;border:1px solid #ddd;border-radius:18px;padding:20px;margin:14px 0}h1{margin:0 0 6px}label{display:block;padding:10px;border:1px solid #ddd;border-radius:10px;margin:8px 0;cursor:pointer}button{padding:12px 18px;border:0;border-radius:10px;background:#111;color:#fff;font-weight:700}</style></head><body><main class="wrap"><h1>${escapeHTML(meta.title)}</h1><p>${escapeHTML(meta.description||'')} · Duration: ${meta.duration_minutes} minutes</p>${questions.map((q,i)=>`<section class="card"><strong>${i+1}. ${escapeHTML(q.question)}</strong>${['a','b','c','d'].map(l=>q['option_'+l]?`<label><input type="radio" name="q${i}" value="${l}"> ${escapeHTML(q['option_'+l])}</label>`:'').join('')}</section>`).join('')}<button type="button" onclick="alert('This standalone preview contains the imported MCQs. Use the Education Point Test Series for timed submission.')">Preview Complete Test</button></main></body></html>`;}
+
+async function epOpenGeneratedTestPreview(test){const html=test.generated_html||'';if(!html){toast('Generated HTML is not available for this test.','warning');return;}const w=window.open('about:blank','_blank');if(!w){toast('Popup blocked. Allow popups to preview.','warning');return;}w.document.open();w.document.write(html);w.document.close();}
+
+/* Additive test admin UI: preserves existing manual test/question manager. */
+const __epOriginalAdminRenderTests = adminRenderTests;
+adminRenderTests = async function(main){
+  await __epOriginalAdminRenderTests(main);
+  const head=main.querySelector('h2'); if(head){const wrap=head.parentElement;const b=document.createElement('button');b.className='btn btn-ghost btn-sm';b.id='ep-import-test';b.innerHTML='↥ Import MCQs / AI';wrap.appendChild(b);b.addEventListener('click',epImportTestFromFile);}
+  qsa('[data-ep-preview-test]',main).forEach(()=>{});
+};
+
+/* Route registrations are additive and use the existing SPA router. */
+Router.add('/blogs',()=>{renderShell();renderBlogsPage();});
+Router.add('/blog/:slug',p=>{renderShell();renderBlogDetail(p.slug);});
+Router.add('/lectures',()=>{renderShell();renderLecturesPage();});
+
+/* Admin tab dispatcher extension. */
+const __epOriginalLoadAdminTab=loadAdminTab;
+loadAdminTab=async function(tab){
+  if(tab==='blogs'){const main=qs('#admin-main');main.innerHTML='<div class="skeleton skel-card"></div>';try{await adminRenderBlogs(main);}catch(e){main.innerHTML=`<div class="admin-card"><p style="color:#ff8589">${escapeHTML(friendlyError(e))}</p></div>`;}return;}
+  if(tab==='lectures'){const main=qs('#admin-main');main.innerHTML='<div class="skeleton skel-card"></div>';try{await adminRenderLectures(main);}catch(e){main.innerHTML=`<div class="admin-card"><p style="color:#ff8589">${escapeHTML(friendlyError(e))}</p></div>`;}return;}
+  return __epOriginalLoadAdminTab(tab);
+};
+
+/* Extend realtime for new modules. The existing channel remains intact. */
+const __epOriginalSetupRealtime=setupRealtime;
+setupRealtime=function(){
+  __epOriginalSetupRealtime();
+  if(!SUPABASE_READY||!AppState.realtimeChannels.main)return;
+  const live=AppState.realtimeChannels.main;
+  const refresh=()=>{if(Router.current==='/blogs')renderBlogsPage();else if(Router.current?.startsWith('/blog/'))renderBlogDetail(Router.current.split('/').pop());else if(Router.current==='/lectures')renderLecturesPage();else if(Router.current?.startsWith('/admin/blogs'))adminRenderBlogs(qs('#admin-main'));else if(Router.current?.startsWith('/admin/lectures'))adminRenderLectures(qs('#admin-main'));else if(Router.current?.startsWith('/admin/tests'))loadAdminTests();};
+  ['blog_posts','blog_comments','blog_reactions','lectures'].forEach(table=>{live.on('postgres_changes',{event:'*',schema:'public',table},refresh);});
+};
+
+/* ================================================================
+   END V16 ADDITIVE MODULES
+   ================================================================ */
+
 /* ----------------------------------------------------------------
    10. APP BOOTSTRAP & ROUTE REGISTRATION
    ---------------------------------------------------------------- */
@@ -4280,7 +4543,7 @@ async function bootstrap(){
       <div style="min-height:100vh;display:grid;place-items:center;padding:24px;background:#f5f5f7;font-family:Inter,system-ui,sans-serif">
         <div style="max-width:560px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:24px;padding:32px;box-shadow:0 20px 60px rgba(0,0,0,.12)">
           <h1 style="margin-bottom:10px">Education Point</h1>
-          <p style="color:#666;margin-bottom:18px">The interface could not start. Open the browser console for the exact error.</p>
+          <p style="color:#666;margin-bottom:18px">Something went wrong while starting Education Point. Please refresh the page and try again.</p>
           <button onclick="location.reload()" style="border:0;border-radius:12px;padding:12px 18px;background:#111;color:#fff;cursor:pointer">Reload</button>
         </div>
       </div>`;

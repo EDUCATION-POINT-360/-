@@ -1041,8 +1041,7 @@ html.copy-guard [contenteditable="true"]{
 <script>
 /* EDUCATION POINT — copy/inspect deterrence
    This only discourages casual copying. It cannot make client-side HTML/JS
-   impossible to inspect; real protection comes from Supabase RLS and never
-   exposing service-role credentials. */
+   impossible to inspect; never expose privileged credentials in the browser. */
 (function(){
   document.documentElement.classList.add('copy-guard');
   document.addEventListener('contextmenu', function(e){
@@ -1431,7 +1430,7 @@ function toast(message, type='info', duration=4200){
   const timer = setTimeout(remove, duration);
   t.addEventListener('mouseenter', ()=>clearTimeout(timer));
 }
-function friendlyError(err, fallback='Something went wrong. Please try again.'){
+function friendlyError(err, fallback='Unable to complete this action right now.'){
   // Keep technical diagnostics private. Admins can still see the exact
   // backend error; normal users only receive a safe, human-readable message.
   const msg = String(err?.message || err?.error_description || err || '').trim();
@@ -1462,34 +1461,26 @@ function friendlyError(err, fallback='Something went wrong. Please try again.'){
   if(/rate limit|too many requests/i.test(msg)){
     return 'Too many attempts. Please wait a few minutes and try again.';
   }
-  if(/unauthorized|forbidden|permission|policy|RLS|row-level|jwt|apikey|api key|invalid.*key|invalid.*token|PGRST|PostgREST|Supabase/i.test(msg) || code){
+  if(/unauthorized|forbidden|permission|policy|row-level|jwt|apikey|api key|invalid.*key|invalid.*token|PGRST|PostgREST|backend/i.test(msg) || code){
     return 'This action could not be completed. Please try again later.';
   }
-  return fallback || 'Something went wrong. Please try again.';
+  return fallback || 'Unable to complete this action right now.';
 }
 
-/* ---- Global privacy-safe error boundary ---- */
+/* ---- Global silent error boundary ---- */
 (function installSafeErrorBoundary(){
   if(window.__epSafeErrorBoundary) return;
   window.__epSafeErrorBoundary = true;
-  let lastShown = 0;
-  const report = (err, fallback='Something went wrong. Please try again.') => {
-    console.error('[Education Point] Unhandled application error:', err);
-    const now = Date.now();
-    if(now - lastShown < 1800) return;
-    lastShown = now;
-    try{ toast(friendlyError(err, fallback), 'error', 5200); }catch(_){ }
+  const report = (err) => {
+    console.error('[Education Point] Application error:', err);
   };
   window.addEventListener('error', e => {
-    if(e?.target && e.target !== window && ['SCRIPT','LINK','IMG'].includes(e.target.tagName)){
+    if(e?.error) report(e.error);
+    else if(e?.target && e.target !== window && ['SCRIPT','LINK','IMG'].includes(e.target.tagName)){
       report(new Error('A page asset failed to load.'));
-    }else if(e?.error){
-      report(e.error);
     }
   }, true);
-  window.addEventListener('unhandledrejection', e => {
-    report(e?.reason || new Error('Unhandled promise rejection.'));
-  });
+  window.addEventListener('unhandledrejection', e => report(e?.reason || new Error('Unhandled promise rejection.')));
 })();
 
 /* ---- Modal ---- */
@@ -1734,7 +1725,6 @@ async function initAuth(){
   AppState.user = session ? session.user : null;
 
   // Establish admin state immediately from the verified Auth email.
-  // The email is never a substitute for database RLS; it only controls
   // whether the admin UI is shown to the designated owner account.
   AppState.isAdmin = isSuperAdminEmail(AppState.user?.email);
 
@@ -1772,7 +1762,6 @@ async function initAuth(){
 }
 
 async function loadProfile(){
-  // Preserve owner admin access even if a profile SELECT is blocked by RLS.
   AppState.isAdmin = isSuperAdminEmail(AppState.user?.email);
 
   try{
@@ -1793,7 +1782,6 @@ async function loadProfile(){
   }catch(e){
     console.warn('[Education Point] Could not load profile:', e);
 
-    // Do NOT downgrade the owner account to student because of an RLS
     // profile-read failure.
     AppState.profile = null;
     AppState.isAdmin = isSuperAdminEmail(AppState.user?.email);
@@ -2779,7 +2767,6 @@ function openAuthModal(mode='login'){
 
         const createdUser = result.data?.user;
 
-        // Profile creation is intentionally best-effort. RLS should not make
         // an otherwise successful Supabase Auth signup look like an Auth error.
         if(createdUser){
           try{
@@ -4402,7 +4389,56 @@ function epDriveEmbed(url){
 }
 function epSafeBlogImage(url){ return safeURL(url||'#'); }
 function epBlogContentHTML(text){
-  return escapeHTML(String(text||'')).replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>');
+  // Blog content is stored as plain text in Supabase. Markdown-style tables
+  // are converted to real responsive HTML tables here, so admins can paste
+  // the same table format used by normal education articles.
+  const src = String(text || '').replace(/\r\n?/g,'\n').trim();
+  if(!src) return '';
+  const lines = src.split('\n');
+  const out = [];
+  let para = [];
+  const flushPara = () => {
+    if(!para.length) return;
+    const joined = para.join('\n').trim();
+    if(joined) out.push('<p>'+escapeHTML(joined).replace(/\n/g,'<br>')+'</p>');
+    para=[];
+  };
+  const isSep = line => /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?\s*$/.test(line);
+  const splitCells = line => {
+    let x=line.trim();
+    if(x.startsWith('|')) x=x.slice(1);
+    if(x.endsWith('|')) x=x.slice(0,-1);
+    return x.split('|').map(c=>escapeHTML(c.trim()));
+  };
+  for(let i=0;i<lines.length;){
+    if(i+1<lines.length && lines[i].includes('|') && isSep(lines[i+1])){
+      flushPara();
+      const headers=splitCells(lines[i]);
+      const rows=[]; i+=2;
+      while(i<lines.length && lines[i].includes('|') && lines[i].trim()){
+        rows.push(splitCells(lines[i])); i++;
+      }
+      out.push('<div class="ep-blog-table-wrap"><table class="ep-blog-table"><thead><tr>'+headers.map(h=>'<th>'+h+'</th>').join('')+'</tr></thead><tbody>'+rows.map(row=>'<tr>'+headers.map((_,j)=>'<td>'+(row[j]||'')+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>');
+      continue;
+    }
+    const line=lines[i];
+    if(!line.trim()){ flushPara(); i++; continue; }
+    if(/^#{1,3}\s+/.test(line)){
+      flushPara(); const m=line.match(/^(#{1,3})\s+(.+)$/); const level=m[1].length;
+      out.push('<h'+(level+1)+'>'+escapeHTML(m[2].trim())+'</h'+(level+1)+'>'); i++; continue;
+    }
+    if(/^[-*]\s+/.test(line)){
+      flushPara(); const items=[]; while(i<lines.length && /^[-*]\s+/.test(lines[i])){items.push('<li>'+escapeHTML(lines[i].replace(/^[-*]\s+/,''))+'</li>');i++;}
+      out.push('<ul>'+items.join('')+'</ul>'); continue;
+    }
+    if(/^\d+\.\s+/.test(line)){
+      flushPara(); const items=[]; while(i<lines.length && /^\d+\.\s+/.test(lines[i])){items.push('<li>'+escapeHTML(lines[i].replace(/^\d+\.\s+/,''))+'</li>');i++;}
+      out.push('<ol>'+items.join('')+'</ol>'); continue;
+    }
+    para.push(line); i++;
+  }
+  flushPara();
+  return out.join('');
 }
 
 /* Extend the existing Service object without replacing any existing methods. */
@@ -4474,7 +4510,7 @@ async function renderBlogsPage(){
 }
 async function renderBlogDetail(slug){
   const post=await Service.getBlogBySlug(slug); if(!post||post.status!=='published'){render404();return;} setMeta(post.title,post.excerpt||'Education Point educational blog.'); const comments=post.blog_comments||[]; const reactions=post.blog_reactions||[]; const reacted=!!AppState.user&&reactions.some(x=>x.user_id===AppState.user.id);
-  const main=qs('#main'); main.innerHTML=`<div class="container section"><div style="max-width:900px;margin:auto"><a href="/blogs" data-link class="btn btn-ghost btn-sm">← All Blogs</a><article class="card" style="margin-top:18px;padding:28px"><span class="eyebrow">Student Help</span><h1 style="font-size:clamp(30px,5vw,54px);margin:10px 0">${escapeHTML(post.title)}</h1><p class="text-muted">${formatDate(post.published_at||post.created_at)} · ${reactions.length} reactions · ${comments.length} comments</p>${post.image_url?`<img src="${epSafeBlogImage(post.image_url)}" alt="${escapeHTML(post.title)}" style="width:100%;max-height:520px;object-fit:cover;border-radius:18px;margin:22px 0">`:''}<div class="ep-blog-content"><p>${epBlogContentHTML(post.content)}</p></div><div class="ep-blog-actions"><button id="ep-react" class="btn ${reacted?'btn-primary':'btn-ghost'}">♥ ${reacted?'Reacted':'React'} <span>${reactions.length}</span></button><button id="ep-comment-focus" class="btn btn-ghost">Comment</button></div></article><section class="card" style="padding:22px;margin-top:18px"><h2 style="font-size:20px;margin-bottom:15px">Comments & Replies</h2><form id="ep-comment-form"><div class="field"><label id="ep-reply-label">Your comment</label><textarea id="ep-comment-text" required placeholder="Share a useful question or response…"></textarea></div><input type="hidden" id="ep-parent-id"><div class="flex gap-8"><button class="btn btn-primary" type="submit">Post Comment</button><button class="btn btn-ghost hidden" id="ep-cancel-reply" type="button">Cancel Reply</button></div></form><div id="ep-comments" style="margin-top:22px">${comments.length?epBlogCommentsHTML(comments):'<p class="text-muted">No comments yet.</p>'}</div></section></div></div>`;
+  const main=qs('#main'); main.innerHTML=`<div class="container section"><div style="max-width:900px;margin:auto"><a href="/blogs" data-link class="btn btn-ghost btn-sm">← All Blogs</a><article class="card" style="margin-top:18px;padding:28px"><span class="eyebrow">Student Help</span><h1 style="font-size:clamp(30px,5vw,54px);margin:10px 0">${escapeHTML(post.title)}</h1><p class="text-muted">${formatDate(post.published_at||post.created_at)} · ${reactions.length} reactions · ${comments.length} comments</p>${post.image_url?`<img src="${epSafeBlogImage(post.image_url)}" alt="${escapeHTML(post.title)}" style="width:100%;max-height:520px;object-fit:cover;border-radius:18px;margin:22px 0">`:''}<div class="ep-blog-content">${epBlogContentHTML(post.content)}</div><div class="ep-blog-actions"><button id="ep-react" class="btn ${reacted?'btn-primary':'btn-ghost'}">♥ ${reacted?'Reacted':'React'} <span>${reactions.length}</span></button><button id="ep-comment-focus" class="btn btn-ghost">Comment</button></div></article><section class="card" style="padding:22px;margin-top:18px"><h2 style="font-size:20px;margin-bottom:15px">Comments & Replies</h2><form id="ep-comment-form"><div class="field"><label id="ep-reply-label">Your comment</label><textarea id="ep-comment-text" required placeholder="Share a useful question or response…"></textarea></div><input type="hidden" id="ep-parent-id"><div class="flex gap-8"><button class="btn btn-primary" type="submit">Post Comment</button><button class="btn btn-ghost hidden" id="ep-cancel-reply" type="button">Cancel Reply</button></div></form><div id="ep-comments" style="margin-top:22px">${comments.length?epBlogCommentsHTML(comments):'<p class="text-muted">No comments yet.</p>'}</div></section></div></div>`;
   qs('#ep-react').addEventListener('click',async()=>{if(!requireAuth())return;try{if(reacted)await Service.removeBlogReaction(post.id);else await Service.addBlogReaction(post.id);renderBlogDetail(slug);}catch(e){toast(friendlyError(e),'error');}});
   qs('#ep-comment-focus').addEventListener('click',()=>qs('#ep-comment-text').focus());
   qsa('[data-reply-comment]').forEach(b=>b.addEventListener('click',()=>{if(!requireAuth())return;qs('#ep-parent-id').value=b.dataset.replyComment;qs('#ep-reply-label').textContent='Replying to comment';qs('#ep-cancel-reply').classList.remove('hidden');qs('#ep-comment-text').focus();}));
@@ -4492,8 +4528,54 @@ async function epOpenLectureForm(existing=null){
   const box=openModal({title:existing?'Edit Lecture':'Add Lecture',bodyHTML:`<form id="ep-le-form"><div class="field"><label>Lecture Title</label><input id="epl-title" required value="${escapeHTML(r.title||'')}"></div><div class="field"><label>Lecture Link</label><input id="epl-url" required placeholder="YouTube or Google Drive URL" value="${escapeHTML(r.url||'')}"></div><div class="grid grid-2"><div class="field"><label>Class</label><select id="epl-class"><option value="">— None —</option>${classes.map(c=>`<option value="${c.id}" ${r.class_id===c.id?'selected':''}>${escapeHTML(c.name)}</option>`).join('')}</select></div><div class="field"><label>Subject</label><select id="epl-subj"><option value="">— None —</option>${subjects.map(c=>`<option value="${c.id}" ${r.subject_id===c.id?'selected':''}>${escapeHTML(c.name)}</option>`).join('')}</select></div><div class="field"><label>Status</label><select id="epl-status"><option value="published" ${r.status!=='draft'?'selected':''}>Published</option><option value="draft" ${r.status==='draft'?'selected':''}>Draft</option></select></div><div class="field"><label>Thumbnail URL (optional)</label><input id="epl-thumb" value="${escapeHTML(r.thumbnail_url||'')}"></div></div><div class="field"><label>Description (optional)</label><textarea id="epl-desc">${escapeHTML(r.description||'')}</textarea></div><button class="btn btn-primary btn-block" type="submit">Save Lecture</button></form>`});
   qs('#ep-le-form',box).addEventListener('submit',async e=>{e.preventDefault();try{const url=qs('#epl-url',box).value.trim();const provider=epYoutubeEmbed(url)?'YouTube':(epDriveEmbed(url)?'Google Drive':'External');const payload={title:qs('#epl-title',box).value.trim(),url,provider,class_id:qs('#epl-class',box).value||null,subject_id:qs('#epl-subj',box).value||null,status:qs('#epl-status',box).value,thumbnail_url:qs('#epl-thumb',box).value.trim()||null,description:qs('#epl-desc',box).value.trim()||null};if(existing)await Service.adminUpdateLecture(existing.id,payload);else await Service.adminCreateLecture(payload);toast('Lecture saved.','success');closeModal();adminRenderLectures(qs('#admin-main'));}catch(err){toast(friendlyError(err),'error');}});
 }
-async function renderLecturesPage(){setMeta('Lectures','Online lectures from Education Point.');const main=qs('#main');pageLoading(main);const rows=await Service.getLectures();main.innerHTML=`<div class="container section"><div class="page-header"><span class="eyebrow">Video Learning</span><h1>Lectures</h1><p>YouTube and Google Drive lectures organized for students.</p></div><div class="grid grid-3" id="ep-lecture-grid"></div></div>`;const grid=qs('#ep-lecture-grid');if(!rows.length){grid.innerHTML=emptyStateHTML('play','No lectures yet','Lectures will appear here when published.');return;}grid.innerHTML=rows.map(r=>{const embed=epYoutubeEmbed(r.url)||epDriveEmbed(r.url);return `<article class="card" style="padding:14px"><div class="resource-thumb" style="aspect-ratio:16/9">${embed?`<iframe src="${safeURL(embed)}" title="${escapeHTML(r.title)}" style="width:100%;height:100%;border:0" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`:(r.thumbnail_url?`<img src="${safeURL(r.thumbnail_url)}" alt="">`:ICONS.play)}</div><div style="padding:7px 2px"><h2 style="font-size:16px;margin:8px 0">${escapeHTML(r.title)}</h2><p class="text-muted" style="font-size:12px">${escapeHTML(r.classes?.name||'')} ${r.subjects?.name?'· '+escapeHTML(r.subjects.name):''}</p></div></article>`}).join('');}
-
+async function renderLecturesPage(){
+  setMeta('Lectures','Online lectures organized class-wise, subject-wise and lecture-wise.');
+  const main=qs('#main');
+  pageLoading(main);
+  const [rows, classRows, subjectRows] = await Promise.all([
+    Service.getLectures(),
+    Service.getClasses({activeOnly:true}),
+    Service.getSubjects({activeOnly:true})
+  ]);
+  const classMap=new Map((classRows||[]).map(c=>[String(c.id),c]));
+  const subjectMap=new Map((subjectRows||[]).map(s=>[String(s.id),s]));
+  const groups=new Map();
+  (rows||[]).forEach(r=>{
+    const classId=String(r.class_id||'__none__');
+    const className=classMap.get(classId)?.name || r.classes?.name || 'General / Other';
+    if(!groups.has(classId)) groups.set(classId,{id:r.class_id||'',name:className,lectures:[]});
+    const subjectId=String(r.subject_id||'__none__');
+    const subjectName=subjectMap.get(subjectId)?.name || r.subjects?.name || 'General';
+    groups.get(classId).lectures.push({...r,__className:className,__subjectName:subjectName});
+  });
+  const classes=[...groups.values()].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:'base'}));
+  main.innerHTML=`<div class="container section"><div class="page-header"><span class="eyebrow">Video Learning</span><h1>Lectures</h1><p>Browse lectures in a clear <strong>Class → Subject → Lecture</strong> structure.</p></div><div id="ep-lecture-stage"></div></div>`;
+  const stage=qs('#ep-lecture-stage');
+  if(!classes.length){stage.innerHTML=emptyStateHTML('play','No lectures available','Published lectures will appear here, organized by class and subject.');return;}
+  const renderClasses=()=>{
+    stage.innerHTML=`<div class="lecture-hierarchy-head"><div><span class="eyebrow">Step 1</span><h2>Select Class</h2><p class="text-muted">Choose the class first. Its subjects and lectures will appear next.</p></div></div><div class="grid grid-3 lecture-choice-grid">${classes.map((c,i)=>`<button type="button" class="card lecture-choice" data-lecture-class="${i}"><span class="lecture-choice-icon">${ICONS.book}</span><span><strong>${escapeHTML(c.name)}</strong><small>${c.lectures.length} lecture${c.lectures.length===1?'':'s'}</small></span><span class="lecture-arrow">${ICONS.chevronRight||'›'}</span></button>`).join('')}</div>`;
+    qsa('[data-lecture-class]',stage).forEach(b=>b.addEventListener('click',()=>renderSubjects(classes[Number(b.dataset.lectureClass)])));
+  };
+  const renderSubjects=(cls)=>{
+    const subjectGroups=new Map();
+    cls.lectures.forEach(r=>{
+      const id=String(r.subject_id||'__none__');
+      if(!subjectGroups.has(id)) subjectGroups.set(id,{id:r.subject_id||'',name:r.__subjectName||'General',lectures:[]});
+      subjectGroups.get(id).lectures.push(r);
+    });
+    const subjects=[...subjectGroups.values()].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:'base'}));
+    stage.innerHTML=`<div class="lecture-breadcrumb"><button type="button" class="btn btn-ghost btn-sm" id="ep-lecture-back-class">← Classes</button><span>${escapeHTML(cls.name)}</span></div><div class="lecture-hierarchy-head"><div><span class="eyebrow">Step 2</span><h2>${escapeHTML(cls.name)} — Subjects</h2><p class="text-muted">Select a subject to view its lectures.</p></div></div><div class="grid grid-3 lecture-choice-grid">${subjects.map((sub,i)=>`<button type="button" class="card lecture-choice" data-lecture-subject="${i}"><span class="lecture-choice-icon">${ICONS.book}</span><span><strong>${escapeHTML(sub.name)}</strong><small>${sub.lectures.length} lecture${sub.lectures.length===1?'':'s'}</small></span><span class="lecture-arrow">${ICONS.chevronRight||'›'}</span></button>`).join('')}</div>`;
+    qs('#ep-lecture-back-class').addEventListener('click',renderClasses);
+    qsa('[data-lecture-subject]',stage).forEach(b=>b.addEventListener('click',()=>renderLectureList(cls,subjects[Number(b.dataset.lectureSubject)])));
+  };
+  const renderLectureList=(cls,sub)=>{
+    stage.innerHTML=`<div class="lecture-breadcrumb"><button type="button" class="btn btn-ghost btn-sm" id="ep-lecture-back-subject">← Subjects</button><span>${escapeHTML(cls.name)} · ${escapeHTML(sub.name)}</span></div><div class="lecture-hierarchy-head"><div><span class="eyebrow">Step 3</span><h2>${escapeHTML(sub.name)} Lectures</h2><p class="text-muted">Class: <strong>${escapeHTML(cls.name)}</strong> · Subject: <strong>${escapeHTML(sub.name)}</strong></p></div></div><div class="grid grid-3" id="ep-lecture-grid"></div>`;
+    qs('#ep-lecture-back-subject').addEventListener('click',()=>renderSubjects(cls));
+    const grid=qs('#ep-lecture-grid');
+    grid.innerHTML=sub.lectures.map(r=>{const embed=epYoutubeEmbed(r.url)||epDriveEmbed(r.url);return `<article class="card lecture-card"><div class="resource-thumb lecture-thumb">${embed?`<iframe src="${safeURL(embed)}" title="${escapeHTML(r.title)}" style="width:100%;height:100%;border:0" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`:(r.thumbnail_url?`<img src="${safeURL(r.thumbnail_url)}" alt="">`:ICONS.play)}</div><div class="lecture-card-copy"><div class="lecture-meta-line"><span>${escapeHTML(cls.name)}</span><span>•</span><span>${escapeHTML(sub.name)}</span></div><h3>${escapeHTML(r.title)}</h3>${r.description?`<p class="text-muted">${escapeHTML(r.description)}</p>`:''}</div></article>`}).join('');
+  };
+  renderClasses();
+}
 async function epImportTestFromFile(){
   if(!epAdminOnly())return;
   const box=openModal({title:'Import Test / MCQs',wide:true,bodyHTML:`<div class="field"><label>Class</label><select id="eti-class"><option value="">— Select class —</option></select></div><div class="field"><label>Subject</label><select id="eti-subj"><option value="">— Select subject —</option></select></div><div class="grid grid-2"><div class="field"><label>Test Title</label><input id="eti-title" placeholder="Class 10 Physics Test"></div><div class="field"><label>Duration (minutes)</label><input id="eti-duration" type="number" value="30"></div></div><div class="field"><label>MCQ/File</label><input id="eti-file" type="file" accept=".txt,.csv,.json,.html,.htm,.pdf,.docx,text/plain,text/csv,application/json,text/html,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"><span class="field-hint">JSON/CSV/TXT/HTML/PDF. The importer normalizes MCQs into the existing Test Series format.</span></div><div class="field"><label>OpenRouter API Key (optional)</label><input id="eti-key" type="password" placeholder="Used only in this browser session; not saved to Supabase"></div><div class="field"><label>OpenRouter Model</label><input id="eti-model" value="openai/gpt-4o-mini"></div><div id="eti-status" style="font-size:12px;color:#999">Choose a file. AI is optional; deterministic parsing works without an API key.</div><button class="btn btn-primary btn-block" id="eti-run">Create Test From File</button>`});
@@ -4601,7 +4683,7 @@ async function bootstrap(){
       <div style="min-height:100vh;display:grid;place-items:center;padding:24px;background:#f5f5f7;font-family:Inter,system-ui,sans-serif">
         <div style="max-width:560px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:24px;padding:32px;box-shadow:0 20px 60px rgba(0,0,0,.12)">
           <h1 style="margin-bottom:10px">Education Point</h1>
-          <p style="color:#666;margin-bottom:18px">Something went wrong while starting Education Point. Please refresh the page and try again.</p>
+          <p style="color:#666;margin-bottom:18px">Education Point could not finish loading this page. Please reload to continue.</p>
           <button onclick="location.reload()" style="border:0;border-radius:12px;padding:12px 18px;background:#111;color:#fff;cursor:pointer">Reload</button>
         </div>
       </div>`;
@@ -4668,6 +4750,20 @@ async function bootstrap(){
 document.addEventListener('DOMContentLoaded', bootstrap);
 </script>
 
+
+<style id="final-blog-lecture-icon-refinement">
+.ep-blog-content{font-size:16px;line-height:1.8;color:var(--ink)}
+.ep-blog-content p{margin:0 0 18px}.ep-blog-content h2,.ep-blog-content h3,.ep-blog-content h4{margin:28px 0 12px;line-height:1.25}.ep-blog-content ul,.ep-blog-content ol{margin:0 0 20px 22px}.ep-blog-content li{margin:6px 0}
+.ep-blog-table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:22px 0;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:0 8px 30px rgba(0,0,0,.045)}
+.ep-blog-table{width:100%;min-width:620px;border-collapse:collapse;font-size:14px}.ep-blog-table th{background:#f1f1f3;color:#111;font-weight:750;text-align:left;padding:13px 14px;border-bottom:1px solid var(--line-2);white-space:nowrap}.ep-blog-table td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}.ep-blog-table tr:last-child td{border-bottom:0}.ep-blog-table tbody tr:nth-child(even){background:#fafafa}
+.lecture-hierarchy-head{margin:8px 0 22px}.lecture-hierarchy-head h2{font-size:clamp(24px,3vw,32px);margin-top:6px}.lecture-choice-grid{align-items:stretch}.lecture-choice{width:100%;border:1px solid var(--line);text-align:left;display:grid;grid-template-columns:42px minmax(0,1fr) 24px;align-items:center;gap:12px;cursor:pointer;transition:transform .18s,box-shadow .18s,border-color .18s}.lecture-choice:hover{transform:translateY(-2px);box-shadow:0 14px 35px rgba(0,0,0,.08);border-color:var(--line-2)}.lecture-choice-icon{width:42px;height:42px;border-radius:12px;background:#f1f1f3;color:#111;display:flex;align-items:center;justify-content:center}.lecture-choice-icon svg{width:20px;height:20px}.lecture-choice strong{display:block;font-size:16px}.lecture-choice small{display:block;color:var(--muted);font-size:12px;margin-top:3px}.lecture-arrow{display:flex;justify-content:flex-end;color:#888}.lecture-arrow svg{width:18px;height:18px}.lecture-breadcrumb{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px;color:var(--muted);font-size:13px}.lecture-card{padding:14px;overflow:hidden}.lecture-thumb{aspect-ratio:16/9}.lecture-card-copy{padding:8px 2px 2px}.lecture-card-copy h3{font-size:16px;margin:6px 0}.lecture-card-copy p{font-size:12px;margin:5px 0;line-height:1.55}
+/* Consistent icon scale across desktop, tablets and phones. */
+svg{max-width:100%;flex:none}.btn svg,.header-actions svg,.mobile-nav svg,.admin-sidebar svg,.admin-header svg{width:16px;height:16px}.icon-btn svg{width:18px;height:18px}.stat-icon{width:34px;height:34px}.stat-icon svg{width:18px;height:18px}.table-actions button svg{width:15px;height:15px}.brand-mark svg{width:20px;height:20px}.modal-close svg{width:17px;height:17px}
+.admin-sidebar a{min-height:40px}.admin-sidebar a svg{width:16px;height:16px}.admin-stat .stat-top{min-height:34px}.admin-stat{padding:16px}.admin-main .btn{min-height:34px}.admin-main .btn svg{width:15px;height:15px}
+@media(max-width:900px){.lecture-choice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-body{grid-template-columns:1fr}.admin-sidebar{padding:8px 10px}.admin-sidebar a{min-height:38px}.admin-sidebar a svg{width:15px;height:15px}}
+@media(max-width:600px){.lecture-choice-grid{grid-template-columns:1fr}.lecture-choice{grid-template-columns:38px minmax(0,1fr) 20px;padding:14px}.lecture-choice-icon{width:38px;height:38px}.lecture-choice-icon svg{width:18px;height:18px}.lecture-card{padding:10px}.ep-blog-content{font-size:15px}.ep-blog-table{min-width:560px;font-size:13px}.ep-blog-table th,.ep-blog-table td{padding:10px 11px}.btn svg,.header-actions svg,.mobile-nav svg,.admin-sidebar svg,.admin-header svg{width:15px;height:15px}.icon-btn svg{width:17px;height:17px}.table-actions button{width:29px;height:29px}.table-actions button svg{width:14px;height:14px}.stat-icon{width:32px;height:32px}.stat-icon svg{width:17px;height:17px}}
+@media(max-width:390px){.admin-sidebar a{padding:9px 10px;font-size:12px}.admin-sidebar a svg{width:14px;height:14px}.lecture-choice strong{font-size:14px}}
+</style>
 </body>
 </html>
 
@@ -4742,4 +4838,12 @@ document.addEventListener('DOMContentLoaded', bootstrap);
 @media(max-width:360px){
   .multiple-option-item > span:last-child{grid-template-columns:1fr}
 }
+</style>
+<style id="final-lecture-hierarchy-polish">
+.lecture-meta-line{display:flex;align-items:center;gap:6px;flex-wrap:wrap;color:var(--muted);font-size:11px;margin:4px 0 2px}
+.lecture-meta-line span:first-child,.lecture-meta-line span:last-child{font-weight:650;color:var(--text)}
+</style>
+<style id="final-lecture-hierarchy-polish">
+.lecture-meta-line{display:flex;align-items:center;gap:6px;flex-wrap:wrap;color:var(--muted);font-size:11px;margin:4px 0 2px}
+.lecture-meta-line span:first-child,.lecture-meta-line span:last-child{font-weight:650;color:var(--text)}
 </style>

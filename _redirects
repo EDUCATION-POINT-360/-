@@ -1,4 +1,7 @@
-# Education Point — Netlify SPA fallback
-# Keep clean deep links working when a URL is opened directly
-# from WhatsApp, Google, browser bookmarks, etc.
-/*    /index.html   200
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

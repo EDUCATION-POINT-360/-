@@ -1567,8 +1567,11 @@ const Router = {
   },
   currentPath(){
     const h = String(location.hash || '').replace(/^#/, '');
-    if(h && h.startsWith('/')) return h;
-    return window.location.pathname || '/';
+    let path = (h && h.startsWith('/')) ? h : (window.location.pathname || '/');
+    // Netlify and shared links may append a trailing slash. Normalize it so
+    // /blog/my-post and /blog/my-post/ resolve to the same SPA route.
+    if(path.length > 1) path = path.replace(/\/+$/, '');
+    return path || '/';
   },
   navigate(path, replace=false){
     path = path || '/';

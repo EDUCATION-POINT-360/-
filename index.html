@@ -1545,103 +1545,143 @@ function confirmModal(message, onConfirm, title='Are you sure?'){
 const Router = {
   routes: [],
   current: null,
-  add(pattern, handler){ this.routes.push({pattern, handler, regex: this._toRegex(pattern)}); return this; },
-  _toRegex(pattern){
-    const paramNames = [];
-    const regexStr = pattern.replace(/:[a-zA-Z]+/g, (m) => { paramNames.push(m.slice(1)); return '([^/]+)'; });
-    return { regex: new RegExp('^'+regexStr+'$'), paramNames };
+
+  add(pattern, handler){
+    this.routes.push({pattern, handler, regex:this._toRegex(pattern)});
+    return this;
   },
+
+  _toRegex(pattern){
+    const paramNames=[];
+    const regexStr=pattern
+      .replace(/\/+$/,'')
+      .replace(/:[a-zA-Z]+/g, m=>{ paramNames.push(m.slice(1)); return '([^/]+)'; });
+    return {regex:new RegExp('^'+(regexStr||'/')+'$'),paramNames};
+  },
+
+  normalizePath(path){
+    path=String(path||'/').trim();
+    if(!path) return '/';
+    if(path.startsWith('#')) path=path.slice(1);
+    if(!path.startsWith('/')) path='/'+path;
+    // Ignore trailing slashes so /resource/x and /resource/x/ are identical.
+    path=path.replace(/\/{2,}/g,'/');
+    if(path.length>1) path=path.replace(/\/+$/,'');
+    return path||'/';
+  },
+
+  currentPath(){
+    const h=String(location.hash||'').replace(/^#/,'');
+    if(h && h.startsWith('/')) return this.normalizePath(h);
+    return this.normalizePath(window.location.pathname||'/');
+  },
+
   match(path){
+    path=this.normalizePath(path);
     for(const r of this.routes){
-      const m = path.match(r.regex.regex);
+      const m=path.match(r.regex.regex);
       if(m){
-        const params = {};
-        r.regex.paramNames.forEach((name,i) => params[name] = decodeURIComponent(m[i+1]));
-        return { handler: r.handler, params };
+        const params={};
+        r.regex.paramNames.forEach((name,i)=>{
+          try{ params[name]=decodeURIComponent(m[i+1]); }
+          catch(_){ params[name]=m[i+1]; }
+        });
+        return {handler:r.handler,params};
       }
     }
     return null;
   },
-  isLocalContext(){
-    return location.protocol === 'file:' || location.protocol === 'content:';
-  },
-  currentPath(){
-    const h = String(location.hash || '').replace(/^#/, '');
-    let path = (h && h.startsWith('/')) ? h : (window.location.pathname || '/');
-    // Netlify and shared links may append a trailing slash. Normalize it so
-    // /blog/my-post and /blog/my-post/ resolve to the same SPA route.
-    if(path.length > 1) path = path.replace(/\/+$/, '');
-    return path || '/';
-  },
-  navigate(path, replace=false){
-    path = path || '/';
 
-    // Android Chrome/content:// and local HTML files cannot reliably
-    // serve clean History API routes such as /admin. Use the hash as
-    // the transport layer while keeping the same internal SPA routes.
+  isLocalContext(){
+    return location.protocol==='file:' || location.protocol==='content:';
+  },
+
+  navigate(path,replace=false){
+    path=this.normalizePath(path);
+
     if(this.isLocalContext()){
-      const hash = path === '/' ? '' : '#' + path;
+      const hash=path==='/'?'':'#'+path;
       try{
-        if(replace) location.replace(location.pathname + location.search + hash);
-        else location.hash = hash.slice(1);
+        if(replace) location.replace(location.pathname+location.search+hash);
+        else location.hash=hash.slice(1);
       }catch(e){}
-      this.current = path;
+      this.current=path;
       this.resolve(path);
-      window.scrollTo({top:0, behavior:'auto'});
+      window.scrollTo({top:0,behavior:'auto'});
       return;
     }
 
     try{
-      if(replace) history.replaceState({path}, '', path);
-      else history.pushState({path}, '', path);
+      if(replace) history.replaceState({path},'',path);
+      else history.pushState({path},'',path);
     }catch(e){
-      // Fallback for restricted webviews.
-      try{ location.hash = path === '/' ? '' : path; }catch(_){}
+      try{ location.hash=path==='/'?'':path; }catch(_){}
     }
     this.resolve(path);
-    window.scrollTo({top:0, behavior:'auto'});
+    window.scrollTo({top:0,behavior:'auto'});
   },
-  resolve(path){
-    path = path || this.currentPath();
-    if(this.isLocalContext() && path === '/'){
-      const h = String(location.hash || '').replace(/^#/, '');
-      if(h) path = h;
-    }
-    if(!path.startsWith('/')) path = '/' + path;
 
-    const match = this.match(path);
+  resolve(path){
+    path=this.normalizePath(path||this.currentPath());
+    const match=this.match(path);
     closeAllPanels();
+
     if(match){
-      this.current = path;
-      Promise.resolve(match.handler(match.params, new URLSearchParams(window.location.search))).catch(err=>{
-        console.error('[Education Point] Route error:', err);
-        render404();
+      this.current=path;
+      Promise.resolve(match.handler(match.params,new URLSearchParams(window.location.search))).catch(err=>{
+        console.error('[Education Point] Route error:',err);
+        if(typeof renderRouteError==='function') renderRouteError(path,err);
+        else render404();
       });
-    } else {
+    }else{
+      // A second chance for browser/webview environments that preserve a
+      // route in the hash while also exposing a pathname.
+      const h=String(location.hash||'').replace(/^#/,'');
+      const hashPath=h && h.startsWith('/') ? this.normalizePath(h) : null;
+      const hashMatch=hashPath && this.match(hashPath);
+      if(hashMatch){
+        this.current=hashPath;
+        Promise.resolve(hashMatch.handler(hashMatch.params,new URLSearchParams(window.location.search))).catch(err=>{
+          console.error('[Education Point] Hash route error:',err);
+          if(typeof renderRouteError==='function') renderRouteError(hashPath,err);
+          else render404();
+        });
+        updateActiveNavLinks(hashPath);
+        return;
+      }
       render404();
     }
     updateActiveNavLinks(path);
   },
+
   init(){
-    window.addEventListener('popstate', () => { this.resolve(this.currentPath()); });
-    window.addEventListener('hashchange', () => {
-      if(this.isLocalContext()) this.resolve(this.currentPath());
-    });
-    document.body.addEventListener('click', (e) => {
-      const a = e.target.closest('a[data-link]');
-      if(a){
-        const href = a.getAttribute('href') || '/';
-        // Only intercept internal SPA routes.
-        if(href.startsWith('/')){
-          e.preventDefault();
-          e.stopPropagation();
-          this.navigate(href);
-        }
+    window.addEventListener('popstate',()=>this.resolve(this.currentPath()));
+    window.addEventListener('hashchange',()=>this.resolve(this.currentPath()));
+
+    document.body.addEventListener('click',e=>{
+      const a=e.target.closest('a[data-link]');
+      if(!a) return;
+      const href=a.getAttribute('href')||'/';
+      if(href.startsWith('/') && !href.startsWith('//')){
+        e.preventDefault();
+        e.stopPropagation();
+        this.navigate(href);
       }
     });
+
+    // Critical for external links from WhatsApp, Google, Facebook, etc.:
+    // resolve the browser's existing pathname immediately after index.html
+    // has been loaded by Netlify's SPA rewrite.
     this.resolve(this.currentPath());
   }
 };
+
+function renderRouteError(path,err){
+  const main=qs('#main');
+  if(!main) return render404();
+  console.error('[Education Point] Failed route:',path,err);
+  main.innerHTML=`<div class="container section"><div class="empty-state card" style="padding:34px;text-align:center"><div style="font-size:34px;margin-bottom:10px">⚠️</div><h1 style="font-size:24px;margin-bottom:8px">This page could not be loaded</h1><p class="text-muted" style="max-width:620px;margin:0 auto 18px">The route exists, but the page data could not be loaded right now. Please refresh the page or return to the homepage.</p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><a href="/" data-link class="btn btn-primary">Go Home</a><button class="btn btn-ghost" onclick="location.reload()">Refresh</button></div></div></div>`;
+}
 function go(path){ Router.navigate(path); }
 function closeAllPanels(){
   qsa('.notif-panel.open').forEach(p=>p.classList.remove('open'));

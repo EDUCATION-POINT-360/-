@@ -297,6 +297,33 @@ svg{max-width:100%;}
   .resource-chapter-group-head{align-items:flex-start;flex-direction:column}
 }
 </style>
+<style id="final-html-preview-fix">
+/* FINAL HTML PREVIEW FIX: full-width/full-height mobile rendering */
+.ep-html-loading{opacity:.55;background:linear-gradient(90deg,#fff,#f5f7fb,#fff);}
+.ep-html-fullscreen{
+  position:relative!important;
+  width:100%!important;
+  min-height:calc(100vh - 150px)!important;
+  height:calc(100vh - 150px)!important;
+  border:0!important;
+  border-radius:0!important;
+  background:#fff!important;
+  display:block!important;
+}
+.ep-html-preview-page{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+}
+@media(max-width:600px){
+  .ep-html-fullscreen{
+    min-height:calc(100vh - 130px)!important;
+    height:calc(100vh - 130px)!important;
+  }
+}
+
+</style>
 </head>
 <style>
 /* ============================================================
@@ -1399,6 +1426,7 @@ function safeURL(u){
   }catch(e){ return u.startsWith('/') ? u : '#'; }
 }
 
+
 /* ---- RESOURCE FILE HELPERS: safe PDF viewing + reliable download links ---- */
 function extractDriveFileId(url){
   try{
@@ -1436,6 +1464,97 @@ function isLikelyHTML(url){
     return /\.html?(?:$|[?#])/i.test(u.pathname) || /\.htm(?:$|[?#])/i.test(u.pathname);
   }catch(_){ return false; }
 }
+async function epLoadHTMLIntoFrame(frame, url){
+  if(!frame || !url || url==='#') return;
+  try{
+    frame.dataset.loading='1';
+    frame.classList.add('ep-html-loading');
+
+    /*
+      Do NOT rely only on iframe.src or srcdoc. Supabase Storage can serve
+      uploaded HTML with headers/content-disposition that make mobile Chrome
+      show a blank iframe. Fetch the file, create a same-page Blob URL and
+      render that Blob in the iframe instead.
+    */
+    const res=await fetch(url,{
+      method:'GET',
+      cache:'no-store',
+      credentials:'omit',
+      mode:'cors'
+    });
+
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    let html=await res.text();
+    if(!html || !html.trim()) throw new Error('The HTML file is empty.');
+
+    /* Remove page-level policies which can prevent an uploaded document
+       from rendering when it is embedded. */
+    html=html
+      .replace(/<meta[^>]+http-equiv=["']Content-Security-Policy["'][^>]*>/gi,'')
+      .replace(/<meta[^>]+http-equiv=["']X-Frame-Options["'][^>]*>/gi,'')
+      .replace(/<meta[^>]+http-equiv=["']Content-Disposition["'][^>]*>/gi,'');
+
+    const baseTag=`<base href="${String(url).replace(/"/g,'&quot;')}" target="_self">`;
+    if(!/<base\s/i.test(html)){
+      if(/<head[^>]*>/i.test(html)){
+        html=html.replace(/<head[^>]*>/i,m=>m+baseTag);
+      }else{
+        html=`<!doctype html><html><head>${baseTag}<meta name="viewport" content="width=device-width,initial-scale=1"></head><body>${html}</body></html>`;
+      }
+    }
+
+    /* Make the uploaded page fill the preview viewport. */
+    const epStyle=`<style id="ep-preview-normalize">
+      html,body{margin:0!important;padding:0!important;width:100%!important;min-height:100%!important;}
+      body{overflow:auto!important;box-sizing:border-box;}
+      img,video,canvas,svg,iframe{max-width:100%;} 
+    </style>`;
+    if(/<head[^>]*>/i.test(html)) html=html.replace(/<head[^>]*>/i,m=>m+epStyle);
+    else html=epStyle+html;
+
+    const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+    const blobURL=URL.createObjectURL(blob);
+
+    /* Revoke the previous blob URL created by this frame. */
+    if(frame.dataset.epBlobUrl){
+      try{URL.revokeObjectURL(frame.dataset.epBlobUrl);}catch(_){}
+    }
+    frame.dataset.epBlobUrl=blobURL;
+    frame.removeAttribute('srcdoc');
+    frame.src=blobURL;
+    frame.dataset.loading='0';
+    frame.classList.remove('ep-html-loading');
+
+    /* Give mobile browsers enough time to paint the document. */
+    setTimeout(()=>{
+      try{
+        if(frame.contentDocument && frame.contentDocument.body){
+          frame.style.height=Math.max(
+            620,
+            frame.contentDocument.documentElement.scrollHeight || 620
+          )+'px';
+        }
+      }catch(_){}
+    },700);
+
+  }catch(err){
+    frame.dataset.loading='0';
+    frame.classList.remove('ep-html-loading');
+    frame.removeAttribute('srcdoc');
+    frame.src=url;
+    frame.title=`${frame.title||'HTML'} — direct preview`;
+    console.warn('Education Point HTML inline preview fallback:',err);
+  }
+}
+
+function epPrepareHTMLFrames(root=document){
+  qsa('iframe[data-ep-html-url]',root).forEach(frame=>{
+    const url=frame.getAttribute('data-ep-html-url');
+    epLoadHTMLIntoFrame(frame,url);
+  });
+}
+
 function openResourceFilePreview(fileURL, title, resourceId=null){
   const safe = safeURL(fileURL);
   if(safe==='#'){ toast('File link is not available.', 'error'); return; }
@@ -1464,12 +1583,12 @@ function openResourceFilePreview(fileURL, title, resourceId=null){
         </div>
         <iframe
           class="file-preview-frame"
-          src="${safeURL(viewURL)}"
+          ${html ? `data-ep-html-url="${safeURL(viewURL)}"` : `src="${safeURL(viewURL)}"`}
           title="${escapeHTML(title||'Resource')} preview"
           loading="eager"
           allow="autoplay; fullscreen"
           referrerpolicy="strict-origin-when-cross-origin"
-          style="width:100%;min-height:68vh;border:1px solid var(--border);border-radius:14px;background:#fff">
+          style="width:100%;height:calc(100vh - 210px);min-height:560px;border:1px solid var(--border);border-radius:14px;background:#fff">
         </iframe>
         <div class="file-preview-fallback">
           ${html
@@ -3504,7 +3623,7 @@ async function renderResourceDetail(slug){
               </div>
               <button type="button" class="btn btn-ghost btn-sm" data-resource-preview="${escapeHTML(primaryURL)}" data-resource-title="${escapeHTML(r.title)}">${ICONS.eye} Preview</button>
             </div>
-            <iframe src="${safeURL(resourceViewURL(primaryURL))}" title="${escapeHTML(r.title)} preview" style="width:100%;height:680px;border:1px solid var(--border);border-radius:12px;background:#fff" loading="lazy"></iframe>
+            <iframe ${primaryHTML ? `data-ep-html-url="${safeURL(resourceViewURL(primaryURL))}"` : `src="${safeURL(resourceViewURL(primaryURL))}"`} title="${escapeHTML(r.title)} preview" style="width:100%;height:680px;border:1px solid var(--border);border-radius:12px;background:#fff" loading="lazy"></iframe>
           </div>` : ''}
         </div>
 
@@ -5119,11 +5238,12 @@ async function renderResourcePreviewPage(params){
         <div><span class="eyebrow">Education Point Preview</span><h1 style="font-size:24px;margin-top:7px">${escapeHTML(title)}</h1></div>
         <a class="btn btn-ghost btn-sm" href="${safeURL(safe)}" target="_blank" rel="noopener noreferrer">${ICONS.externalLink} Open Raw / New Tab</a>
       </div>
-      <div class="card" style="padding:10px;overflow:hidden">
-        <iframe src="${safeURL(safe)}" title="${escapeHTML(title)}" style="width:100%;height:calc(100vh - 190px);min-height:620px;border:0;border-radius:12px;background:#fff" loading="eager" allow="autoplay;fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <div class="ep-html-preview-page">
+        <iframe class="${isLikelyHTML(safe)?'ep-html-fullscreen':''}" ${isLikelyHTML(safe) ? `data-ep-html-url="${safeURL(safe)}"` : `src="${safeURL(safe)}"`} title="${escapeHTML(title)}" style="width:100%;height:calc(100vh - 150px);min-height:620px;border:0;border-radius:0;background:#fff;display:block" loading="eager" allow="autoplay;fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
       </div>
     </div>
   </div>`;
+  if(isLikelyHTML(safe)) setTimeout(()=>epPrepareHTMLFrames(main),0);
 }
 
 async function renderBlogDetail(slug){

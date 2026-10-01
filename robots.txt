@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /take-test/
+Disallow: /test-result/
+Sitemap: https://educationpoint360.netlify.app/sitemap.xml

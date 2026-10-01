@@ -326,7 +326,21 @@ svg{max-width:100%;}
 }
 
 </style>
-</head>
+
+<style id="ep-inline-html-viewer-fix">
+.ep-inline-html-viewer{width:100%;overflow:hidden;background:var(--surface,#fff);border-radius:16px;}
+.ep-inline-html-viewer iframe{display:block!important;width:100%!important;min-height:680px!important;background:#fff!important;}
+.ep-html-loading{opacity:.98;}
+</style>
+<style id="ep-html-viewer-final">
+.ep-inline-html-viewer{width:100%;height:calc(100vh - 105px);min-height:650px;background:#fff;border-radius:14px;overflow:hidden}
+.ep-html-fullscreen{display:block;width:100%!important;height:100%!important;min-height:650px!important;border:0!important;background:#fff}
+.ep-html-loading{opacity:.98}
+@media(max-width:700px){
+ .ep-inline-html-viewer{height:calc(100vh - 125px);min-height:520px;border-radius:10px}
+ .ep-html-fullscreen{min-height:520px!important}
+}
+</style></head>
 <style>
 /* ============================================================
    EDUCATION POINT — APPLE / STRIPE GLASS DESIGN SYSTEM
@@ -1462,91 +1476,87 @@ function isLikelyPDF(url){
 }
 function isLikelyHTML(url){
   try{
-    const u = new URL(url, window.location.origin);
-    return /\.html?(?:$|[?#])/i.test(u.pathname) || /\.htm(?:$|[?#])/i.test(u.pathname);
-  }catch(_){ return false; }
+    const raw=String(url||'');
+    const u = new URL(raw, window.location.origin);
+    return /\.html?(?:$|[?#])/i.test(u.pathname) || /\.htm(?:$|[?#])/i.test(u.pathname) || /resource-html(?:\/|$)/i.test(u.pathname) || /(?:^|[?&])(type|format)=html(?:&|$)/i.test(u.search);
+  }catch(_){ return /\.html?(?:$|[?#])/i.test(String(url||'')); }
 }
-async function epLoadHTMLIntoFrame(frame, url){
+async function epFetchHTMLDocument(url){
+  const direct=safeURL(url);
+  if(direct==='#') throw new Error('Invalid HTML file URL');
+  const res=await fetch(direct,{method:'GET',cache:'no-store',credentials:'omit',mode:'cors'});
+  if(!res.ok) throw new Error(`HTTP ${res.status}`);
+  let html=await res.text();
+  if(!html.trim()) throw new Error('Empty HTML document');
+
+  /* Never expose the source as visible text. Always turn it into a real HTML document. */
+  html=html
+    .replace(/<meta[^>]+http-equiv=["']Content-Security-Policy["'][^>]*>/gi,'')
+    .replace(/<meta[^>]+http-equiv=["']X-Frame-Options["'][^>]*>/gi,'')
+    .replace(/<meta[^>]+http-equiv=["']Content-Disposition["'][^>]*>/gi,'');
+
+  const base=`<base href="${direct.replace(/"/g,'&quot;')}" target="_self">`;
+  const style=`<style id="ep-viewer-normalize">
+    html,body{margin:0!important;padding:0!important;width:100%!important;min-height:100%!important;}
+    body{overflow:auto!important;box-sizing:border-box;}
+    img,video,canvas,svg,iframe{max-width:100%;}
+  </style>`;
+
+  if(/<head[^>]*>/i.test(html)){
+    html=html.replace(/<head[^>]*>/i,m=>m+base+style);
+  }else{
+    html=`<!doctype html><html><head>${base}${style}<meta name="viewport" content="width=device-width,initial-scale=1"></head><body>${html}</body></html>`;
+  }
+  return html;
+}
+
+function epHtmlBlobURL(html){
+  return URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));
+}
+
+async function epLoadHTMLIntoFrame(frame,url){
   if(!frame || !url || url==='#') return;
+  const direct=safeURL(url);
+  if(direct==='#') return;
+  if(frame.dataset.epBlobUrl){try{URL.revokeObjectURL(frame.dataset.epBlobUrl);}catch(_){}}
+
+  frame.dataset.loading='1';
+  frame.classList.add('ep-html-loading');
+  frame.removeAttribute('src');
+
   try{
-    frame.dataset.loading='1';
-    frame.classList.add('ep-html-loading');
-
-    /*
-      Do NOT rely only on iframe.src or srcdoc. Supabase Storage can serve
-      uploaded HTML with headers/content-disposition that make mobile Chrome
-      show a blank iframe. Fetch the file, create a same-page Blob URL and
-      render that Blob in the iframe instead.
-    */
-    const res=await fetch(url,{
-      method:'GET',
-      cache:'no-store',
-      credentials:'omit',
-      mode:'cors'
-    });
-
-    if(!res.ok) throw new Error(`HTTP ${res.status}`);
-
-    let html=await res.text();
-    if(!html || !html.trim()) throw new Error('The HTML file is empty.');
-
-    /* Remove page-level policies which can prevent an uploaded document
-       from rendering when it is embedded. */
-    html=html
-      .replace(/<meta[^>]+http-equiv=["']Content-Security-Policy["'][^>]*>/gi,'')
-      .replace(/<meta[^>]+http-equiv=["']X-Frame-Options["'][^>]*>/gi,'')
-      .replace(/<meta[^>]+http-equiv=["']Content-Disposition["'][^>]*>/gi,'');
-
-    const baseTag=`<base href="${String(url).replace(/"/g,'&quot;')}" target="_self">`;
-    if(!/<base\s/i.test(html)){
-      if(/<head[^>]*>/i.test(html)){
-        html=html.replace(/<head[^>]*>/i,m=>m+baseTag);
-      }else{
-        html=`<!doctype html><html><head>${baseTag}<meta name="viewport" content="width=device-width,initial-scale=1"></head><body>${html}</body></html>`;
-      }
-    }
-
-    /* Make the uploaded page fill the preview viewport. */
-    const epStyle=`<style id="ep-preview-normalize">
-      html,body{margin:0!important;padding:0!important;width:100%!important;min-height:100%!important;}
-      body{overflow:auto!important;box-sizing:border-box;}
-      img,video,canvas,svg,iframe{max-width:100%;} 
-    </style>`;
-    if(/<head[^>]*>/i.test(html)) html=html.replace(/<head[^>]*>/i,m=>m+epStyle);
-    else html=epStyle+html;
-
-    const blob=new Blob([html],{type:'text/html;charset=utf-8'});
-    const blobURL=URL.createObjectURL(blob);
-
-    /* Revoke the previous blob URL created by this frame. */
-    if(frame.dataset.epBlobUrl){
-      try{URL.revokeObjectURL(frame.dataset.epBlobUrl);}catch(_){}
-    }
+    const html=await epFetchHTMLDocument(direct);
+    const blobURL=epHtmlBlobURL(html);
     frame.dataset.epBlobUrl=blobURL;
-    frame.removeAttribute('srcdoc');
     frame.src=blobURL;
     frame.dataset.loading='0';
     frame.classList.remove('ep-html-loading');
-
-    /* Give mobile browsers enough time to paint the document. */
-    setTimeout(()=>{
-      try{
-        if(frame.contentDocument && frame.contentDocument.body){
-          frame.style.height=Math.max(
-            620,
-            frame.contentDocument.documentElement.scrollHeight || 620
-          )+'px';
-        }
-      }catch(_){}
-    },700);
-
   }catch(err){
+    console.error('Education Point HTML viewer failed:',err);
     frame.dataset.loading='0';
     frame.classList.remove('ep-html-loading');
-    frame.removeAttribute('srcdoc');
-    frame.src=url;
-    frame.title=`${frame.title||'HTML'} — direct preview`;
-    console.warn('Education Point HTML inline preview fallback:',err);
+    frame.srcdoc=`<!doctype html><html><body style="margin:0;font-family:Arial,sans-serif;background:#fff;color:#111;display:flex;align-items:center;justify-content:center;min-height:70vh;padding:24px;box-sizing:border-box"><div style="max-width:680px;text-align:center"><h2 style="margin:0 0 10px">HTML could not be displayed</h2><p style="margin:0;color:#666">The HTML file could not be read from storage. Please check the uploaded file and Supabase Storage access.</p></div></body></html>`;
+  }
+}
+
+async function epOpenHTMLSeparately(url,title){
+  const direct=safeURL(url);
+  if(direct==='#'){toast('HTML file link is not available.','error');return;}
+  /* Open a blank tab synchronously so popup blockers do not interfere. */
+  const win=window.open('about:blank','_blank');
+  if(!win){toast('Please allow pop-ups for Education Point.','warning');return;}
+  try{
+    win.document.title=title||'Education Point';
+    win.document.body.innerHTML='<p style="font-family:Arial;padding:24px">Loading…</p>';
+    const html=await epFetchHTMLDocument(direct);
+    const blobURL=epHtmlBlobURL(html);
+    win.location.replace(blobURL);
+    /* Keep the blob alive while the new tab is using it. */
+    setTimeout(()=>{},30000);
+  }catch(err){
+    console.error('Education Point separate HTML open failed:',err);
+    try{win.close();}catch(_){ }
+    toast('HTML file could not be opened.','error');
   }
 }
 
@@ -1561,62 +1571,64 @@ function openResourceFilePreview(fileURL, title, resourceId=null){
   const safe = safeURL(fileURL);
   if(safe==='#'){ toast('File link is not available.', 'error'); return; }
 
-  const viewURL = resourceViewURL(safe);
-  const downloadURL = resourceDownloadURL(safe);
   const html = isLikelyHTML(safe);
   const pdf = isLikelyPDF(safe);
-  const canDownload = !html && downloadURL && downloadURL !== '#';
+  const viewURL = resourceViewURL(safe);
+  const downloadURL = resourceDownloadURL(safe);
 
+  /* HTML resources are intentionally shown as a clean in-site document.
+     No "Preview", "Open HTML" or raw-link controls are exposed. */
+  if(html){
+    openModal({
+      title: title || 'Education Point',
+      wide: true,
+      bodyHTML: `
+        <div style="display:flex;justify-content:flex-end;gap:8px;margin:0 0 10px">
+          <a class="btn btn-ghost btn-sm" href="${safeURL(safe)}" target="_blank" rel="noopener noreferrer">${ICONS.externalLink} Open Separately</a>
+        </div>
+        <div class="ep-inline-html-viewer">
+          <iframe
+            class="ep-html-fullscreen"
+            data-ep-html-url="${safeURL(safe)}"
+            title="${escapeHTML(title||'Education Point')}"
+            loading="eager"
+            allow="autoplay; fullscreen"
+            referrerpolicy="strict-origin-when-cross-origin"
+            style="width:100%;height:100%;min-height:650px;border:0;background:#fff;display:block">
+          </iframe>
+        </div>`,
+      onOpen: (box)=>setTimeout(()=>epPrepareHTMLFrames(box),20)
+    });
+    return;
+  }
+
+  const canDownload = downloadURL && downloadURL !== '#';
   openModal({
-    title: `${html ? 'HTML' : (pdf ? 'PDF' : 'File')} Preview`,
+    title: `${pdf ? 'PDF' : 'File'} Preview`,
     wide: true,
     bodyHTML: `
       <div class="file-preview-shell">
         <div class="file-preview-top">
           <div class="preview-note">
             <strong style="color:var(--text-1)">${escapeHTML(title||'Resource')}</strong>
-            <span style="display:block;margin-top:3px">${html
-              ? 'The HTML resource opens directly inside Education Point. Use the page controls inside the preview to access your notes/files.'
-              : 'Preview the file here first. You can open it separately or download it when ready.'}</span>
+            <span style="display:block;margin-top:3px">Preview the resource here. You can open it separately or download it when ready.</span>
           </div>
-          <a class="btn btn-ghost btn-sm" href="${safeURL(viewURL)}" target="_blank" rel="noopener noreferrer">
-            ${ICONS.externalLink} Open separately
-          </a>
+          <a class="btn btn-ghost btn-sm" href="${safeURL(viewURL)}" target="_blank" rel="noopener noreferrer">${ICONS.externalLink} Open separately</a>
         </div>
         <iframe
           class="file-preview-frame"
-          ${html ? `data-ep-html-url="${safeURL(viewURL)}"` : `src="${safeURL(viewURL)}"`}
+          src="${safeURL(viewURL)}"
           title="${escapeHTML(title||'Resource')} preview"
           loading="eager"
           allow="autoplay; fullscreen"
           referrerpolicy="strict-origin-when-cross-origin"
           style="width:100%;height:calc(100vh - 210px);min-height:560px;border:1px solid var(--border);border-radius:14px;background:#fff">
         </iframe>
-        <div class="file-preview-fallback">
-          ${html
-            ? 'If the HTML preview does not load, use <strong>Open separately</strong> above.'
-            : 'If the embedded preview does not load on your device, use <strong>Open separately</strong> above.'}
-        </div>
-      </div>`,
-    actions: [
-      {label:'Close', cls:'btn-ghost', onClick: closeModal},
-      ...(canDownload ? [{
-        label:'Download File',
-        cls:'btn-primary',
-        onClick: async () => {
-          try{
-            if(resourceId) await Service.recordDownload(resourceId);
-            const w = window.open(downloadURL, '_blank', 'noopener,noreferrer');
-            if(!w) window.location.href = downloadURL;
-            toast('Download started.', 'success');
-          }catch(err){
-            toast(friendlyError(err,'Download failed.'), 'error');
-          }
-        }
-      }] : [])
-    ]
+        ${canDownload ? `<div style="display:flex;justify-content:flex-end;margin-top:10px"><a class="btn btn-primary btn-sm" href="${safeURL(downloadURL)}" download>${ICONS.download} Download</a></div>`:''}
+      </div>`
   });
 }
+
 function normalizeResourceLink(value){
   const v=String(value||'').trim();
   if(!v) return '';
@@ -3589,11 +3601,11 @@ async function renderResourceDetail(slug){
   const linkButtonHTML=(url,title='Open',cls='btn btn-ghost btn-sm')=>{
     if(!url) return '';
     const html=isLikelyHTML(url);
-    return `<button type="button" class="${cls}" data-resource-preview="${escapeHTML(url)}" data-resource-title="${escapeHTML(title)}">${html?ICONS.file:ICONS.eye} ${escapeHTML(html?'Open HTML':title)}</button>`;
+    return `<button type="button" class="${cls}" data-resource-preview="${escapeHTML(url)}" data-resource-title="${escapeHTML(title)}">${html?ICONS.file:ICONS.eye} ${html?'Open':escapeHTML(title)}</button>`;
   };
   const externalButtonHTML=(url,title)=>{
-    if(!url || isLikelyHTML(url)) return '';
-    return `<a href="${safeURL(resourceViewURL(url))}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">${ICONS.externalLink} Open</a>`;
+    if(!url) return '';
+    return isLikelyHTML(url) ? `<button type="button" class="btn btn-ghost btn-sm" data-html-separate="${escapeHTML(url)}" data-html-title="${escapeHTML(title)}">${ICONS.externalLink} Open Separately</button>` : `<a href="${safeURL(resourceViewURL(url))}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">${ICONS.externalLink} Open Separately</a>`;
   };
 
   const mainLinkCards=mainLinks.map((c,i)=>{
@@ -3664,12 +3676,12 @@ async function renderResourceDetail(slug){
           <div class="card" style="margin-top:22px;padding:14px;overflow:hidden">
             <div class="flex justify-between items-center" style="margin-bottom:12px;gap:10px">
               <div>
-                <h2 style="font-size:18px">${primaryHTML?'HTML Notes Preview':(isLikelyPDF(primaryURL)?'PDF Preview':'Main Resource Preview')}</h2>
-                <p class="text-muted" style="font-size:12px;margin-top:3px">${primaryHTML?'This HTML file is displayed directly inside Education Point.':'View the main resource here or open it separately.'}</p>
+                <h2 style="font-size:18px">${primaryHTML?'':(isLikelyPDF(primaryURL)?'PDF Preview':'Main Resource Preview')}</h2>
+                <p class="text-muted" style="font-size:12px;margin-top:3px">${primaryHTML?'':'View the main resource here or open it separately.'}</p>
               </div>
-              ${primaryHTML ? `<button type="button" class="btn btn-primary btn-sm" data-resource-preview="${escapeHTML(primaryURL)}" data-resource-title="${escapeHTML(r.title)}">${ICONS.file} Open HTML</button>` : `<button type="button" class="btn btn-ghost btn-sm" data-resource-preview="${escapeHTML(primaryURL)}" data-resource-title="${escapeHTML(r.title)}">${ICONS.eye} Preview</button>`}
+              ${primaryHTML ? '' : `<button type="button" class="btn btn-ghost btn-sm" data-resource-preview="${escapeHTML(primaryURL)}" data-resource-title="${escapeHTML(r.title)}">${ICONS.eye} Preview</button>`}
             </div>
-            <iframe ${primaryHTML ? `data-ep-html-url="${safeURL(resourceViewURL(primaryURL))}"` : `src="${safeURL(resourceViewURL(primaryURL))}"`} title="${escapeHTML(r.title)} preview" style="width:100%;height:680px;border:1px solid var(--border);border-radius:12px;background:#fff" loading="lazy"></iframe>
+            <iframe ${primaryHTML ? `data-ep-html-url="${safeURL(primaryURL)}"` : `src="${safeURL(resourceViewURL(primaryURL))}"`} title="${escapeHTML(r.title)} preview" style="width:100%;height:680px;border:1px solid var(--border);border-radius:12px;background:#fff" loading="eager"></iframe>
           </div>` : ''}
         </div>
 
@@ -3686,10 +3698,7 @@ async function renderResourceDetail(slug){
                 <span class="tile-icon">${ICONS.eye}</span>
                 <span class="tile-copy"><span class="tile-title">${primaryHTML?'Open HTML':'Preview File'}</span><span class="tile-sub">${primaryHTML?'Open inside this website':'View before downloading'}</span></span>
               </button>
-              ${!primaryHTML ? `<a class="download-tile" id="open-file-btn" href="/resource-preview?url=${encodeURIComponent(resourceViewURL(primaryURL))}&title=${encodeURIComponent(r.title)}" target="_blank" rel="noopener noreferrer">
-                <span class="tile-icon">${ICONS.externalLink}</span>
-                <span class="tile-copy"><span class="tile-title">Open Separately</span><span class="tile-sub">Use a new browser tab</span></span>
-              </a>` : ''}
+              ${primaryHTML ? `<button class="download-tile" type="button" id="open-file-btn"><span class="tile-icon">${ICONS.externalLink}</span><span class="tile-copy"><span class="tile-title">Open Separately</span><span class="tile-sub">Open the rendered HTML in a new tab</span></span></button>` : `<a class="download-tile" id="open-file-btn" href="${safeURL(resourceViewURL(primaryURL))}" target="_blank" rel="noopener noreferrer"><span class="tile-icon">${ICONS.externalLink}</span><span class="tile-copy"><span class="tile-title">Open Separately</span><span class="tile-sub">Use a new browser tab</span></span></a>`}
               ${!primaryHTML ? `<button class="download-tile" type="button" id="direct-download-btn">
                 <span class="tile-icon">${ICONS.download}</span>
                 <span class="tile-copy"><span class="tile-title">Download File</span><span class="tile-sub">Start the file download</span></span>
@@ -3738,6 +3747,10 @@ async function renderResourceDetail(slug){
       openResourceFilePreview(btn.dataset.resourcePreview||'',btn.dataset.resourceTitle||r.title,r.id);
     });
   });
+
+  qsa('[data-html-separate]').forEach(btn=>btn.addEventListener('click',()=>{ if(!requireAuth()) return; epOpenHTMLSeparately(btn.dataset.htmlSeparate,btn.dataset.htmlTitle||r.title); }));
+
+  qs('#open-file-btn')?.addEventListener('click',e=>{ if(primaryHTML){ e.preventDefault(); if(requireAuth()) epOpenHTMLSeparately(primaryURL,r.title); } });
 
   const saveBtn=qs('#save-detail-btn');
   if(saveBtn){
@@ -5376,9 +5389,8 @@ async function renderResourcePreviewPage(params){
   const main=qs('#main');
   main.innerHTML=`<div class="container section">
     <div style="max-width:1180px;margin:auto">
-      <div class="flex justify-between items-center" style="gap:12px;flex-wrap:wrap;margin-bottom:16px">
-        <div><span class="eyebrow">Education Point Preview</span><h1 style="font-size:24px;margin-top:7px">${escapeHTML(title)}</h1></div>
-        <a class="btn btn-ghost btn-sm" href="${safeURL(safe)}" target="_blank" rel="noopener noreferrer">${ICONS.externalLink} Open Raw / New Tab</a>
+      <div style="margin-bottom:16px">
+        <div><span class="eyebrow">Education Point</span><h1 style="font-size:24px;margin-top:7px">${escapeHTML(title)}</h1></div>
       </div>
       <div class="ep-html-preview-page">
         <iframe class="${isLikelyHTML(safe)?'ep-html-fullscreen':''}" ${isLikelyHTML(safe) ? `data-ep-html-url="${safeURL(safe)}"` : `src="${safeURL(safe)}"`} title="${escapeHTML(title)}" style="width:100%;height:calc(100vh - 150px);min-height:620px;border:0;border-radius:0;background:#fff;display:block" loading="eager" allow="autoplay;fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>

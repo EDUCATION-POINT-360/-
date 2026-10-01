@@ -229,6 +229,8 @@ svg{max-width:100%;}
   .admin-sidebar a{padding:9px 10px;font-size:11.5px;}
   .admin-main .btn{max-width:100%;}
 }
+.storage-file-path{word-break:break-all}
+@media(max-width:700px){.storage-file-path{max-width:220px}}
 </style>
 
 <style id="resource-link-manager-v15">
@@ -2478,6 +2480,45 @@ const Service = {
     const { data } = supabase.storage.from(bucket).getPublicUrl(path);
     return data ? data.publicUrl : null;
   },
+  async adminListStorageFiles(bucket='resources'){
+    if(!SUPABASE_READY) return [];
+    const storage = supabase.storage.from(bucket);
+    const out=[];
+    const walk=async(prefix='')=>{
+      const {data,error}=await storage.list(prefix,{limit:1000,offset:0,sortBy:{column:'created_at',order:'desc'}});
+      if(error) throw error;
+      for(const item of (data||[])){
+        const name=String(item.name||'');
+        if(!name) continue;
+        const path=prefix ? `${prefix}/${name}` : name;
+        const isFolder=item.id===null || item.metadata===null;
+        if(isFolder) await walk(path);
+        else out.push({...item,path,bucket});
+      }
+    };
+    await walk('');
+    return out;
+  },
+  async adminDeleteStorageFile(bucket, path){
+    if(!SUPABASE_READY || !bucket || !path) throw new Error('Storage file path is required.');
+    const {error}=await supabase.storage.from(bucket).remove([path]);
+    if(error) throw error;
+    return true;
+  },
+  async adminDeleteStorageFileAndDetach(bucket, path){
+    const publicUrl=await this.getPublicUrl(bucket,path);
+    if(!publicUrl) throw new Error('Could not resolve the file URL.');
+    await this.adminDeleteStorageFile(bucket,path);
+    if(bucket==='resources'){
+      try{
+        await supabase.from('resources').update({file_url:null,file_path:null,file_size:null}).eq('file_url',publicUrl);
+      }catch(e){ console.warn('Could not detach resource URL:',e); }
+      try{
+        await supabase.from('resource_chapters').update({file_url:''}).eq('file_url',publicUrl);
+      }catch(e){ console.warn('Could not detach chapter URL:',e); }
+    }
+    return publicUrl;
+  },
   async adminCreateCategory(payload){ const {data,error}=await supabase.from('categories').insert(payload).select().single(); if(error) throw error; return data; },
   async adminUpdateCategory(id,payload){ const {data,error}=await supabase.from('categories').update(payload).eq('id',id).select().single(); if(error) throw error; return data; },
   async adminDeleteCategory(id){ const {error}=await supabase.from('categories').delete().eq('id',id); if(error) throw error; },
@@ -3547,7 +3588,12 @@ async function renderResourceDetail(slug){
 
   const linkButtonHTML=(url,title='Open',cls='btn btn-ghost btn-sm')=>{
     if(!url) return '';
-    return `<button type="button" class="${cls}" data-resource-preview="${escapeHTML(url)}" data-resource-title="${escapeHTML(title)}">${ICONS.eye} ${escapeHTML(title)}</button>`;
+    const html=isLikelyHTML(url);
+    return `<button type="button" class="${cls}" data-resource-preview="${escapeHTML(url)}" data-resource-title="${escapeHTML(title)}">${html?ICONS.file:ICONS.eye} ${escapeHTML(html?'Open HTML':title)}</button>`;
+  };
+  const externalButtonHTML=(url,title)=>{
+    if(!url || isLikelyHTML(url)) return '';
+    return `<a href="${safeURL(resourceViewURL(url))}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">${ICONS.externalLink} Open</a>`;
   };
 
   const mainLinkCards=mainLinks.map((c,i)=>{
@@ -3559,7 +3605,7 @@ async function renderResourceDetail(slug){
       </span>
       <span style="display:flex;gap:7px;flex-wrap:wrap">
         ${linkButtonHTML(c.file_url,label,'btn btn-primary btn-sm')}
-        <a href="/resource-preview?url=${encodeURIComponent(resourceViewURL(c.file_url))}&title=${encodeURIComponent(label)}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">${ICONS.externalLink} Open</a>
+        ${externalButtonHTML(c.file_url,label)}
       </span>
     </div>`;
   }).join('');
@@ -3590,7 +3636,7 @@ async function renderResourceDetail(slug){
             </span>
             <span style="display:flex;gap:7px;flex-wrap:wrap">
               ${linkButtonHTML(c.file_url,label,'btn btn-primary btn-sm')}
-              <a href="/resource-preview?url=${encodeURIComponent(resourceViewURL(c.file_url))}&title=${encodeURIComponent(label)}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">${ICONS.externalLink} Open</a>
+              ${externalButtonHTML(c.file_url,label)}
             </span>
           </div>`;
         }).join('')}
@@ -3621,7 +3667,7 @@ async function renderResourceDetail(slug){
                 <h2 style="font-size:18px">${primaryHTML?'HTML Notes Preview':(isLikelyPDF(primaryURL)?'PDF Preview':'Main Resource Preview')}</h2>
                 <p class="text-muted" style="font-size:12px;margin-top:3px">${primaryHTML?'This HTML file is displayed directly inside Education Point.':'View the main resource here or open it separately.'}</p>
               </div>
-              <button type="button" class="btn btn-ghost btn-sm" data-resource-preview="${escapeHTML(primaryURL)}" data-resource-title="${escapeHTML(r.title)}">${ICONS.eye} Preview</button>
+              ${primaryHTML ? `<button type="button" class="btn btn-primary btn-sm" data-resource-preview="${escapeHTML(primaryURL)}" data-resource-title="${escapeHTML(r.title)}">${ICONS.file} Open HTML</button>` : `<button type="button" class="btn btn-ghost btn-sm" data-resource-preview="${escapeHTML(primaryURL)}" data-resource-title="${escapeHTML(r.title)}">${ICONS.eye} Preview</button>`}
             </div>
             <iframe ${primaryHTML ? `data-ep-html-url="${safeURL(resourceViewURL(primaryURL))}"` : `src="${safeURL(resourceViewURL(primaryURL))}"`} title="${escapeHTML(r.title)} preview" style="width:100%;height:680px;border:1px solid var(--border);border-radius:12px;background:#fff" loading="lazy"></iframe>
           </div>` : ''}
@@ -3640,10 +3686,10 @@ async function renderResourceDetail(slug){
                 <span class="tile-icon">${ICONS.eye}</span>
                 <span class="tile-copy"><span class="tile-title">${primaryHTML?'Open HTML':'Preview File'}</span><span class="tile-sub">${primaryHTML?'Open inside this website':'View before downloading'}</span></span>
               </button>
-              <a class="download-tile" id="open-file-btn" href="/resource-preview?url=${encodeURIComponent(resourceViewURL(primaryURL))}&title=${encodeURIComponent(r.title)}" target="_blank" rel="noopener noreferrer">
+              ${!primaryHTML ? `<a class="download-tile" id="open-file-btn" href="/resource-preview?url=${encodeURIComponent(resourceViewURL(primaryURL))}&title=${encodeURIComponent(r.title)}" target="_blank" rel="noopener noreferrer">
                 <span class="tile-icon">${ICONS.externalLink}</span>
                 <span class="tile-copy"><span class="tile-title">Open Separately</span><span class="tile-sub">Use a new browser tab</span></span>
-              </a>
+              </a>` : ''}
               ${!primaryHTML ? `<button class="download-tile" type="button" id="direct-download-btn">
                 <span class="tile-icon">${ICONS.download}</span>
                 <span class="tile-copy"><span class="tile-title">Download File</span><span class="tile-sub">Start the file download</span></span>
@@ -4155,6 +4201,7 @@ function render404(){
 const ADMIN_TABS = [
   {id:'dashboard', label:'Dashboard', icon:'layout'},
   {id:'resources', label:'Resources', icon:'file'},
+  {id:'storage', label:'Uploaded Files', icon:'layers'},
   {id:'categories', label:'Categories', icon:'grid'},
   {id:'classes', label:'Classes', icon:'graduationCap'},
   {id:'subjects', label:'Subjects', icon:'book'},
@@ -4205,6 +4252,7 @@ async function loadAdminTab(tab){
   try{
     if(tab==='dashboard') await adminRenderDashboard(main);
     else if(tab==='resources') await adminRenderResources(main);
+    else if(tab==='storage') await adminRenderStorage(main);
     else if(tab==='categories') await adminRenderTaxonomy(main,'categories');
     else if(tab==='classes') await adminRenderTaxonomy(main,'classes');
     else if(tab==='subjects') await adminRenderTaxonomy(main,'subjects');
@@ -4386,6 +4434,7 @@ async function openResourceForm(existing){
             <label>Upload Main HTML File</label>
             <input id="rf-main-file" type="file" accept=".html,.htm,text/html">
             <span class="field-hint">Upload your HTML notes directly. Education Point will preview the HTML inside the website.</span>
+            ${existing && isLikelyHTML(r.external_url||r.file_url||'') ? `<button type="button" class="btn btn-ghost btn-sm" id="clear-primary-file">${ICONS.trash} Remove current HTML file</button>` : ''}
           </div>
         </div>
       </div>
@@ -4442,6 +4491,12 @@ async function openResourceForm(existing){
     list.insertAdjacentHTML('beforeend',rowHTML({},list.querySelectorAll('[data-resource-row]').length,'chapter'));
     bindRemove(list.lastElementChild);
   });
+  qs('#clear-primary-file',box)?.addEventListener('click',()=>{
+    qs('#rf-url',box).value='';
+    const input=qs('#rf-main-file',box); if(input) input.value='';
+    qs('#clear-primary-file',box).dataset.cleared='true';
+    toast('Current HTML file marked for removal. Save changes to confirm.','info');
+  });
 
   qs('#res-form',box).addEventListener('submit',async e=>{
     e.preventDefault();
@@ -4451,7 +4506,8 @@ async function openResourceForm(existing){
 
     const title=qs('#rf-title',box).value.trim();
     const selectedCategory=categories.find(c=>c.id===qs('#rf-cat',box).value);
-    const primaryURL=normalizeResourceLink(qs('#rf-url',box).value);
+    const primaryCleared=qs('#clear-primary-file',box)?.dataset.cleared==='true';
+    const primaryURL=primaryCleared ? '' : normalizeResourceLink(qs('#rf-url',box).value);
     const primaryFile=qs('#rf-main-file',box)?.files?.[0] || null;
 
     if(!title){toast('Please enter a resource title.','warning');submitBtn.disabled=false;submitBtn.textContent=existing?'Save Changes':'Create Resource';return;}
@@ -4540,6 +4596,10 @@ async function openResourceForm(existing){
         saved=await Service.adminUpdateResource(saved.id,{file_url:resolvedPrimaryURL,file_path:null,file_size:primaryFile.size});
       }
 
+      const oldStoredUrls=[
+        ...(existing ? [String(existing.external_url||existing.file_url||'').trim()] : []),
+        ...(existingChapters||[]).map(c=>String(c.file_url||'').trim())
+      ].filter(Boolean);
       const chapterPayload=[];
       let mainIndex=0;
       for(const item of [...mainExtras,...chapterLinks]){
@@ -4560,6 +4620,24 @@ async function openResourceForm(existing){
 
       await Service.adminReplaceResourceChapters(saved.id,chapterPayload);
 
+      const newStoredUrls=[String(saved.file_url||'').trim(),...chapterPayload.map(x=>String(x.file_url||'').trim())].filter(Boolean);
+      for(const oldURL of oldStoredUrls){
+        if(!oldURL || newStoredUrls.includes(oldURL)) continue;
+        try{
+          const marker='/storage/v1/object/public/';
+          const idx=oldURL.indexOf(marker);
+          if(idx>=0){
+            const rest=oldURL.slice(idx+marker.length);
+            const slash=rest.indexOf('/');
+            if(slash>0){
+              const bucket=rest.slice(0,slash);
+              const path=decodeURIComponent(rest.slice(slash+1));
+              if(bucket===BUCKETS.resources || bucket===BUCKETS.thumbnails) await Service.adminDeleteStorageFile(bucket,path);
+            }
+          }
+        }catch(cleanErr){ console.warn('Old resource file cleanup failed:',cleanErr); }
+      }
+
       toast(existing?'Resource updated successfully.':'Resource created successfully.','success');
       closeModal();
       loadAdminResourcesTable();
@@ -4571,6 +4649,70 @@ async function openResourceForm(existing){
     }
   });
 } 
+/* ---- Supabase Storage manager ---- */
+async function adminRenderStorage(main){
+  let bucket='resources';
+  let query='';
+  const render=async()=>{
+    main.innerHTML=`
+      <div class="flex justify-between items-center" style="margin-bottom:18px;gap:12px;flex-wrap:wrap">
+        <div><h2 style="color:#fff;font-size:22px;font-family:var(--font-display);margin-bottom:4px">Uploaded Files</h2><p style="color:var(--text-inverse-2);font-size:12px">Everything currently stored in your Supabase Storage.</p></div>
+        <button class="btn btn-ghost btn-sm" id="storage-refresh">${ICONS.refresh||ICONS.activity} Refresh</button>
+      </div>
+      <div class="filter-bar" style="background:var(--ink-soft);border-color:var(--ink-border);display:flex;gap:10px;flex-wrap:wrap">
+        <select id="storage-bucket" style="min-width:170px;background:rgba(255,255,255,.04);color:#fff;border-color:var(--ink-border)">
+          <option value="resources" ${bucket==='resources'?'selected':''}>Resources</option>
+          <option value="thumbnails" ${bucket==='thumbnails'?'selected':''}>Thumbnails</option>
+        </select>
+        <div class="search-mini" style="flex:1;min-width:220px">${ICONS.search}<input id="storage-search" value="${escapeHTML(query)}" placeholder="Search uploaded files…" style="background:rgba(255,255,255,.04);border-color:var(--ink-border);color:#fff"></div>
+      </div>
+      <div class="admin-card" id="storage-summary" style="margin-bottom:16px;color:var(--text-inverse-2)">Loading…</div>
+      <div class="table-scroll admin-card" style="padding:0"><table class="data-table"><thead><tr><th>File</th><th>Type</th><th>Size</th><th>Uploaded</th><th>Actions</th></tr></thead><tbody id="storage-tbody"><tr><td colspan="5">Loading…</td></tr></tbody></table></div>
+    `;
+    qs('#storage-bucket').addEventListener('change',e=>{bucket=e.target.value; render();});
+    qs('#storage-search').addEventListener('input',debounce(e=>{query=e.target.value; renderRows();},250));
+    qs('#storage-refresh').addEventListener('click',render);
+    let files=[];
+    async function renderRows(){
+      const tbody=qs('#storage-tbody');
+      const filtered=files.filter(f=>!query || String(f.path||'').toLowerCase().includes(query.toLowerCase()));
+      qs('#storage-summary').innerHTML=`${filtered.length} file${filtered.length===1?'':'s'} shown · ${bucket==='resources'?'Resource files / HTML / PDFs / documents':'Thumbnail files'}`;
+      if(!filtered.length){tbody.innerHTML='<tr><td colspan="5">No uploaded files found.</td></tr>';return;}
+      tbody.innerHTML=filtered.map(f=>{
+        const type=f.metadata?.mimetype||f.metadata?.contentType||'File';
+        const size=f.metadata?.size||0;
+        const url=Service.getPublicUrl(bucket,f.path);
+        return `<tr>
+          <td style="color:#fff;font-weight:600;max-width:360px;word-break:break-all">${escapeHTML(f.path)}</td>
+          <td><span class="badge badge-gray">${escapeHTML(type)}</span></td>
+          <td class="mono">${formatFileSize(Number(size)||0)||'—'}</td>
+          <td>${f.created_at?escapeHTML(formatDate(f.created_at)):'—'}</td>
+          <td><div class="table-actions">
+            <a href="${safeURL(url||'#')}" target="_blank" rel="noopener noreferrer" title="Open">${ICONS.externalLink}</a>
+            <button data-storage-delete="${escapeHTML(f.path)}" title="Delete">${ICONS.trash}</button>
+          </div></td>
+        </tr>`;
+      }).join('');
+      qsa('[data-storage-delete]',tbody).forEach(btn=>btn.addEventListener('click',()=>{
+        const path=btn.dataset.storageDelete;
+        confirmModal(`Delete uploaded file "${path}"? If this file is used by a resource, its stored link will also be cleared.`,async()=>{
+          try{
+            await Service.adminDeleteStorageFileAndDetach(bucket,path);
+            toast('File deleted from Supabase Storage.','success');
+            await loadFiles();
+          }catch(err){toast(friendlyError(err,'Could not delete file.'),'error');}
+        });
+      }));
+    }
+    async function loadFiles(){
+      try{ files=await Service.adminListStorageFiles(bucket); renderRows(); }
+      catch(err){ qs('#storage-tbody').innerHTML=`<tr><td colspan="5" style="color:#ff8589">${escapeHTML(friendlyError(err))}</td></tr>`; }
+    }
+    await loadFiles();
+  };
+  await render();
+}
+
 /* ---- Categories / Classes / Subjects taxonomy manager (shared UI) ---- */
 async function adminRenderTaxonomy(main, kind){
   const labels = {categories:['Categories','Category'], classes:['Classes','Class'], subjects:['Subjects','Subject']};

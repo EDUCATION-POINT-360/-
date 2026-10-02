@@ -340,7 +340,26 @@ svg{max-width:100%;}
  .ep-inline-html-viewer{height:calc(100vh - 125px);min-height:520px;border-radius:10px}
  .ep-html-fullscreen{min-height:520px!important}
 }
-</style></head>
+</style>
+<style id="ep-access-performance-v2">
+  /* Compact access controls: only these modal icons are resized. */
+  #ep-access-login svg,#ep-access-signup svg,#ep-access-guest svg{width:18px!important;height:18px!important;max-width:18px!important;max-height:18px!important;flex:0 0 18px;}
+  #ep-access-login,#ep-access-signup,#ep-access-guest{min-height:44px;}
+  /* Keep the existing visual system; only reduce unnecessary rendering work. */
+  .download-tile,.resource-card,.btn{contain:layout paint;}
+  .file-preview-frame,.ep-html-fullscreen{content-visibility:auto;}
+  @media(max-width:700px){
+    .glass,.card,.site-header,.modal-box,.notif-panel,.mobile-menu-panel{
+      -webkit-backdrop-filter:blur(16px);
+      backdrop-filter:blur(16px);
+    }
+  }
+  @media(prefers-reduced-motion:reduce){
+    .download-tile,.resource-card,.btn{transition:none!important;}
+  }
+</style>
+
+</head>
 <style>
 /* ============================================================
    EDUCATION POINT — APPLE / STRIPE GLASS DESIGN SYSTEM
@@ -2072,6 +2091,68 @@ function requireAuth(redirectPath){
 }
 
 /* ----------------------------------------------------------------
+   STUDENT-FRIENDLY ACCESS
+   - Database-changing/personal actions remain authenticated.
+   - Resource viewing/opening stays public.
+   - Downloads may continue as a guest; the first download offers
+     Login / Sign Up / Continue as Guest.
+   ---------------------------------------------------------------- */
+function isGuestSession(){
+  try { return sessionStorage.getItem('education_point_guest') === '1'; }
+  catch(_) { return false; }
+}
+function setGuestSession(){
+  try { sessionStorage.setItem('education_point_guest','1'); } catch(_) {}
+}
+function clearGuestSession(){
+  try { sessionStorage.removeItem('education_point_guest'); } catch(_) {}
+}
+
+function openGuestAccessModal(action){
+  const box = openModal({
+    title: 'Continue with Education Point',
+    bodyHTML: `
+      <div style="text-align:center;padding:4px 0 2px">
+        <div class="icon-wrap" style="width:48px;height:48px;margin:0 auto 14px;border-radius:15px;background:#f0f0f2;color:#111;display:flex;align-items:center;justify-content:center">
+          <span style="display:flex;width:24px;height:24px;align-items:center;justify-content:center">${ICONS.download}</span>
+        </div>
+        <h3 style="font-size:19px;margin-bottom:8px">How would you like to continue?</h3>
+        <p class="text-muted" style="font-size:13px;line-height:1.6;max-width:360px;margin:0 auto">
+          You can download educational resources without an account. Login or sign up only if you want account-based features such as saving, commenting and reacting.
+        </p>
+        <div style="display:grid;gap:9px;margin-top:20px">
+          <button class="btn btn-primary btn-block" id="ep-access-login">${ICONS.lock} Login</button>
+          <button class="btn btn-ghost btn-block" id="ep-access-signup">Create Account</button>
+          <button class="btn btn-ghost btn-block" id="ep-access-guest">Continue as Guest</button>
+        </div>
+      </div>
+    `
+  });
+
+  qs('#ep-access-login', box)?.addEventListener('click', ()=>{
+    closeModal();
+    openAuthModal('login');
+  });
+  qs('#ep-access-signup', box)?.addEventListener('click', ()=>{
+    closeModal();
+    openAuthModal('signup');
+  });
+  qs('#ep-access-guest', box)?.addEventListener('click', ()=>{
+    setGuestSession();
+    closeModal();
+    try { action?.(); } catch(err) { console.error('[Education Point] Guest action failed:', err); }
+  });
+}
+
+function withDownloadAccess(action){
+  if(AppState.user || isGuestSession()){
+    return Promise.resolve().then(()=>action?.());
+  }
+  openGuestAccessModal(action);
+  return Promise.resolve(false);
+}
+
+/* ----------------------------------------------------------------
    6. DATA SERVICE LAYER — every Supabase query goes through here
    ---------------------------------------------------------------- */
 const Service = {
@@ -3681,7 +3762,7 @@ async function renderResourceDetail(slug){
               </div>
               ${primaryHTML ? '' : `<button type="button" class="btn btn-ghost btn-sm" data-resource-preview="${escapeHTML(primaryURL)}" data-resource-title="${escapeHTML(r.title)}">${ICONS.eye} Preview</button>`}
             </div>
-            <iframe ${primaryHTML ? `data-ep-html-url="${safeURL(primaryURL)}"` : `src="${safeURL(resourceViewURL(primaryURL))}"`} title="${escapeHTML(r.title)} preview" style="width:100%;height:680px;border:1px solid var(--border);border-radius:12px;background:#fff" loading="eager"></iframe>
+            <iframe ${primaryHTML ? `data-ep-html-url="${safeURL(primaryURL)}"` : `src="${safeURL(resourceViewURL(primaryURL))}"`} title="${escapeHTML(r.title)} preview" style="width:100%;height:680px;border:1px solid var(--border);border-radius:12px;background:#fff" loading="lazy"></iframe>
           </div>` : ''}
         </div>
 
@@ -3690,7 +3771,7 @@ async function renderResourceDetail(slug){
             <div class="download-panel-head">
               <div class="download-panel-kicker">${ICONS.file} Resource access</div>
               <h2 class="download-panel-title">View, Open & Download</h2>
-              <p class="download-panel-subtitle">${primaryHTML?'HTML files open directly inside Education Point instead of being downloaded.':'Choose a resource link and preview it before downloading when supported.'}</p>
+              <p class="download-panel-subtitle">${primaryHTML?'HTML files open directly inside Education Point instead of being downloaded.':'Choose a resource link and preview it before downloading when supported.'} Downloads are available to students without an account.</p>
             </div>
             <div class="download-bento" aria-label="Resource file actions">
               ${primaryURL ? `
@@ -3743,14 +3824,20 @@ async function renderResourceDetail(slug){
 
   qsa('[data-resource-preview]').forEach(btn=>{
     btn.addEventListener('click',()=>{
-      if(!requireAuth()) return;
       openResourceFilePreview(btn.dataset.resourcePreview||'',btn.dataset.resourceTitle||r.title,r.id);
     });
   });
 
-  qsa('[data-html-separate]').forEach(btn=>btn.addEventListener('click',()=>{ if(!requireAuth()) return; epOpenHTMLSeparately(btn.dataset.htmlSeparate,btn.dataset.htmlTitle||r.title); }));
+  qsa('[data-html-separate]').forEach(btn=>btn.addEventListener('click',()=>{
+    epOpenHTMLSeparately(btn.dataset.htmlSeparate,btn.dataset.htmlTitle||r.title);
+  }));
 
-  qs('#open-file-btn')?.addEventListener('click',e=>{ if(primaryHTML){ e.preventDefault(); if(requireAuth()) epOpenHTMLSeparately(primaryURL,r.title); } });
+  qs('#open-file-btn')?.addEventListener('click',e=>{
+    if(primaryHTML){
+      e.preventDefault();
+      epOpenHTMLSeparately(primaryURL,r.title);
+    }
+  });
 
   const saveBtn=qs('#save-detail-btn');
   if(saveBtn){
@@ -3766,16 +3853,21 @@ async function renderResourceDetail(slug){
 
   const directBtn=qs('#direct-download-btn');
   if(directBtn && primaryURL){
-    directBtn.addEventListener('click',async()=>{
-      if(!requireAuth()) return;
-      try{
-        const url=resourceDownloadURL(primaryURL);
-        if(!url||url==='#'){toast('Download link is not available.','error');return;}
-        await Service.recordDownload(r.id);
-        const w=window.open(url,'_blank','noopener,noreferrer');
-        if(!w) window.location.href=url;
-        toast('Download started.','success');
-      }catch(err){toast(friendlyError(err,'Download failed.'),'error');}
+    directBtn.addEventListener('click',()=>{
+      withDownloadAccess(async()=>{
+        try{
+          const url=resourceDownloadURL(primaryURL);
+          if(!url||url==='#'){toast('Download link is not available.','error');return;}
+          /* Download history is account-aware; the RPC may still count a
+             public/guest download when the backend permits it. */
+          await Service.recordDownload(r.id);
+          const w=window.open(url,'_blank','noopener,noreferrer');
+          if(!w) window.location.href=url;
+          toast(isGuestSession() && !AppState.user
+            ? 'Download started as guest.'
+            : 'Download started.','success');
+        }catch(err){toast(friendlyError(err,'Download failed.'),'error');}
+      });
     });
   }
 
@@ -4188,8 +4280,17 @@ function renderContactPage(){
       </div>
     </div>`;
   qs('#ep-contact-form').addEventListener('submit',async e=>{
-    e.preventDefault(); const btn=e.submitter; btn.disabled=true;
-    try{ await Service.submitContactMessage({name:qs('#ec-name').value.trim(),email:qs('#ec-email').value.trim(),message:qs('#ec-message').value.trim()}); e.target.reset(); toast('Message sent successfully.','success'); }
+    e.preventDefault();
+    if(!requireAuth()) return;
+    const btn=e.submitter; btn.disabled=true;
+    try{
+      const name=qs('#ec-name').value.trim();
+      const email=qs('#ec-email').value.trim();
+      const message=qs('#ec-message').value.trim();
+      await Service.submitContactMessage({name,email,message});
+      e.target.reset();
+      toast('Message sent successfully.','success');
+    }
     catch(err){ toast(friendlyError(err,'Could not send your message.'),'error'); }
     finally{btn.disabled=false;}
   });

@@ -5669,6 +5669,25 @@ function wireStandardRoutes(){
     Router.add(`/${sec}/:cls`, (p) => { renderShell(); renderClassSection(sec, p.cls); });
     Router.add(`/${sec}/:cls/:subject`, (p) => { renderShell(); renderResourceList(sec, p.cls, p.subject); });
   });
+
+  // Dynamic category routing:
+  // Supports categories created later from Admin Panel without requiring
+  // their slugs to be manually added to the fixed sections list.
+  // These generic routes are registered AFTER all specific routes so
+  // existing pages such as /resource/:slug, /admin/:tab and /blog/:slug
+  // continue to take priority.
+  Router.add('/:section', (p) => {
+    renderShell();
+    renderCategorySection(p.section);
+  });
+  Router.add('/:section/:cls', (p) => {
+    renderShell();
+    renderClassSection(p.section, p.cls);
+  });
+  Router.add('/:section/:cls/:subject', (p) => {
+    renderShell();
+    renderResourceList(p.section, p.cls, p.subject);
+  });
 }
 
 async function bootstrap(){

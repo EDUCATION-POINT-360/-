@@ -7,6 +7,12 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://vumkvxkldndwecfxeapm.supabase.co">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://esm.sh">
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -196,6 +202,16 @@
       "url":"https://educationpoint360.netlify.app/",
       "publisher":{"@id":"https://educationpoint360.netlify.app/#organization"},
       "inLanguage":"en-PK"
+    },
+    {
+      "@type":"WebPage",
+      "@id":"https://educationpoint360.netlify.app/#webpage",
+      "url":"https://educationpoint360.netlify.app/",
+      "name":"Education Point | Learn • Prepare • Succeed",
+      "description":"A student learning platform with notes, keybooks, past papers, pairing schemes, MCQs, tests and entry-test preparation resources.",
+      "isPartOf":{"@id":"https://educationpoint360.netlify.app/#website"},
+      "about":{"@id":"https://educationpoint360.netlify.app/#organization"},
+      "inLanguage":"en-PK"
     }
   ]
 }
@@ -231,6 +247,67 @@ svg{max-width:100%;}
 }
 .storage-file-path{word-break:break-all}
 @media(max-width:700px){.storage-file-path{max-width:220px}}
+
+/* Student focus timer and alarm suite */
+.ep-alarm-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.ep-clock-face{font:700 clamp(34px,7vw,56px)/1.1 var(--mono);letter-spacing:-2px;text-align:center;padding:22px 10px;background:var(--surface-2);border:1px solid var(--line);border-radius:18px;margin:14px 0}.ep-timer-actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}.ep-alarm-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.ep-alarm-row:last-child{border-bottom:0}.ep-alarm-meta{display:flex;flex-direction:column;gap:4px}.ep-alarm-meta small{color:var(--text-3)}.ep-focus-live{display:inline-flex;align-items:center;gap:7px;color:var(--green);font-size:12px;font-weight:700}.ep-focus-live:before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 0 4px rgba(22,163,74,.12)}
+@media(max-width:760px){.ep-alarm-grid{grid-template-columns:1fr}}
+
+
+/* Home page student tools shortcuts */
+.ep-home-tools-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.ep-home-tool-card{display:flex;align-items:center;gap:16px;min-height:132px;padding:22px;border:1px solid var(--line);border-radius:22px;background:var(--surface,#fff);color:var(--text-1);text-decoration:none;box-shadow:0 12px 35px rgba(0,0,0,.055);transition:transform .2s,box-shadow .2s,border-color .2s}
+.ep-home-tool-card:hover{transform:translateY(-3px);box-shadow:0 18px 42px rgba(0,0,0,.1);border-color:var(--text-3)}
+.ep-home-tool-icon{width:54px;height:54px;flex:0 0 54px;display:grid;place-items:center;border-radius:17px;background:var(--bg,#f3f4f6);font-size:24px}
+.ep-home-tool-icon svg{width:27px;height:27px}.ep-home-tool-copy{display:flex;flex-direction:column;gap:6px;min-width:0}.ep-home-tool-copy strong{font-size:18px}.ep-home-tool-copy small{font-size:13px;line-height:1.5;color:var(--muted)}.ep-home-tool-arrow{margin-left:auto;font-size:22px}
+@media(max-width:650px){.ep-home-tools-grid{grid-template-columns:1fr;gap:12px}.ep-home-tool-card{min-height:108px;padding:17px}.ep-home-tool-copy strong{font-size:16px}}
+/* Education Point embedded learning tools */
+.ep-tool-page{padding:34px 0 56px;min-height:65vh}
+.ep-tool-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.ep-tool-head h1{font-size:clamp(27px,4vw,40px);letter-spacing:-.04em;margin:0 0 5px}
+.ep-ai-frame-wrap{overflow:hidden;border:1px solid var(--line);border-radius:22px;background:var(--surface,#fff);box-shadow:0 16px 45px rgba(0,0,0,.07)}
+.ep-ai-frame{display:block;width:100%;height:min(78vh,900px);min-height:650px;border:0;background:#fff}
+.ep-calc-mode-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}.ep-calc-mode{border:1px solid var(--line);border-radius:12px;padding:12px 10px;background:var(--bg,#f7f7f8);color:var(--text-1);font-weight:750;cursor:pointer}.ep-calc-mode.active{background:#111;color:#fff;border-color:#111}.ep-calc-grid[hidden]{display:none!important}.ep-calc-basic-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.ep-calc-scientific-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+.ep-calc{max-width:760px;margin:0 auto;border:1px solid var(--line);border-radius:24px;background:var(--surface,#fff);padding:clamp(14px,3vw,24px);box-shadow:0 18px 55px rgba(0,0,0,.07)}
+.ep-calc-display{width:100%;min-height:104px;border:1px solid var(--line);border-radius:16px;background:var(--bg,#f7f7f8);padding:15px 17px;margin-bottom:14px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.ep-calc-expression{width:100%;border:0!important;outline:0!important;background:transparent!important;color:var(--text-1)!important;font-size:clamp(23px,5vw,32px)!important;font-weight:650!important;text-align:right;padding:0!important;box-shadow:none!important}
+.ep-calc-result{text-align:right;color:var(--muted);font-size:15px;min-height:20px;overflow-wrap:anywhere}
+.ep-calc-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px;flex-wrap:wrap}
+.ep-calc-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}
+.ep-calc-key{min-height:54px;border:1px solid var(--line);border-radius:13px;background:var(--surface,#fff);color:var(--text-1);font-size:16px;font-weight:650;cursor:pointer;transition:transform .12s,background .12s;touch-action:manipulation}
+.ep-calc-key:hover{background:var(--bg,#f5f5f5);transform:translateY(-1px)}
+.ep-calc-key.fn{background:var(--bg,#f5f5f5);font-size:14px}
+.ep-calc-key.op{background:rgba(0,0,0,.055)}
+.ep-calc-key.equal{background:#111;color:#fff;border-color:#111}
+.ep-calc-key.danger{color:#b42318}
+.ep-calc-help{font-size:12px;color:var(--muted);margin:13px 2px 0}
+@media(max-width:560px){.ep-tool-page{padding:24px 0 40px}.ep-ai-frame{height:76vh;min-height:560px}.ep-calc-grid{gap:6px}.ep-calc-key{min-height:49px;border-radius:11px;font-size:15px}.ep-calc-key.fn{font-size:12px}}
+
+
+/* Education Point cinematic home — GPU-friendly, no continuous heavy animation */
+.ep-cinematic-hero{
+  position:relative;isolation:isolate;overflow:hidden;
+  background:
+    radial-gradient(ellipse at 82% 18%,rgba(129,140,248,.22),transparent 36%),
+    radial-gradient(ellipse at 12% 90%,rgba(56,189,248,.12),transparent 38%),
+    linear-gradient(125deg,#080b16 0%,#111827 52%,#090d18 100%);
+}
+.ep-cinematic-hero:before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.22;
+  background-image:linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
+  background-size:46px 46px;mask-image:linear-gradient(to bottom,black,transparent 90%);
+}
+.ep-cinematic-hero .hero-inner{position:relative}
+.ep-cinematic-hero .hero-eyebrow{letter-spacing:.24em;text-transform:uppercase;color:#c7d2fe}
+.ep-cinematic-hero h1{max-width:900px;text-wrap:balance}
+.ep-cinematic-hero h1 em{background:linear-gradient(90deg,#fff,#c7d2fe 55%,#93c5fd);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ep-cinematic-hero .hero-search{box-shadow:0 18px 55px rgba(0,0,0,.24);border:1px solid rgba(255,255,255,.14)}
+.ep-cinematic-hero .hero-stats>div{border-color:rgba(255,255,255,.14)}
+.ep-cinematic-hero .hero-inner>*{animation:epHomeReveal .55s ease both}
+.ep-cinematic-hero .hero-inner>*:nth-child(2){animation-delay:.06s}
+.ep-cinematic-hero .hero-inner>*:nth-child(3){animation-delay:.12s}
+@keyframes epHomeReveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.ep-cinematic-hero .hero-inner>*{animation:none!important;transition:none!important}}
+
 </style>
 
 <style id="resource-link-manager-v15">
@@ -357,6 +434,19 @@ svg{max-width:100%;}
   @media(prefers-reduced-motion:reduce){
     .download-tile,.resource-card,.btn{transition:none!important;}
   }
+</style>
+
+
+<style id="ep-student-dashboard-v2">
+.ep-student-shell{padding-top:38px}.ep-student-welcome{border:1px solid rgba(0,0,0,.08);border-radius:24px;overflow:hidden;background:#fff;margin-bottom:22px;box-shadow:0 12px 38px rgba(0,0,0,.055)}
+.ep-profile-cover{min-height:178px;padding:28px;display:flex;align-items:center;gap:20px;position:relative;background:radial-gradient(circle at 90% 0%,rgba(255,255,255,.17),transparent 36%),linear-gradient(120deg,#101012,#29292d);color:#fff}
+.ep-profile-avatar{width:76px;height:76px;border-radius:23px;background:#fff;color:#111;display:grid;place-items:center;font-size:25px;font-weight:800;flex-shrink:0;box-shadow:0 12px 30px rgba(0,0,0,.2)}
+.ep-profile-heading{min-width:0}.ep-profile-heading .eyebrow{color:#aaa}.ep-profile-heading h1{color:#fff;font-size:clamp(24px,4vw,34px);margin:6px 0}.ep-profile-heading p{color:#bbb;font-size:13px}.ep-account-pill{margin-left:auto;align-self:flex-start;border:1px solid rgba(255,255,255,.2);padding:7px 11px;border-radius:99px;color:#eee;font-size:10px;font-weight:800;letter-spacing:.08em;white-space:nowrap}
+.ep-identity-strip{display:flex;gap:0;flex-wrap:wrap;padding:15px 23px;background:#fafafa}.ep-identity-strip span{display:flex;flex-direction:column;gap:3px;padding:0 22px;border-right:1px solid #e8e8e8;min-width:150px}.ep-identity-strip span:first-child{padding-left:0}.ep-identity-strip span:last-child{border:0}.ep-identity-strip small{font-size:9px;color:#999;letter-spacing:.09em;font-weight:800}.ep-identity-strip b{font-size:12px;color:#222}
+.ep-dash-layout{grid-template-columns:235px minmax(0,1fr);gap:20px}.ep-dash-nav{display:flex;flex-direction:column;min-width:0}.ep-dash-nav a{white-space:normal}.ep-nav-bottom{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}.ep-nav-bottom .btn{font-size:12px}.ep-dash-content{min-width:0}.ep-section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:19px}.ep-section-heading h2{font-size:23px;margin:4px 0}.ep-section-heading p{font-size:13px;color:#777}.ep-live-dot{font-size:10px;font-weight:800;letter-spacing:.07em;color:#444;white-space:nowrap}.ep-live-dot:first-letter{color:#111}
+.ep-stats-grid{margin-bottom:18px}.ep-stats-grid .stat-card{min-width:0}.ep-stats-grid .stat-num{font-size:clamp(20px,3vw,26px);overflow-wrap:anywhere}.ep-overview-grid{align-items:start}.ep-panel{padding:21px}.ep-panel h3{font-size:16px;margin-bottom:14px}.ep-panel-head{display:flex;justify-content:space-between;gap:10px;align-items:center}.ep-panel-head h3{margin:3px 0 0}.ep-task-progress{display:flex;justify-content:space-between;font-size:11px;color:#666;margin:15px 0 8px}.ep-mini-task,.ep-activity-row{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:12px}.ep-mini-task small{color:#888}.ep-activity-row span{color:#777}.ep-activity-row b{font-size:11px;text-align:right;overflow-wrap:anywhere}.ep-task-done{text-decoration:line-through;color:#999}.ep-list-heading{font-size:12px;font-weight:800;margin:17px 0 8px}.ep-planner-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}.ep-planner-item>div{display:flex;flex-direction:column;gap:3px}.ep-planner-item b,.ep-task-label b{font-size:12px}.ep-planner-item small,.ep-task-label small{display:block;color:#888;font-size:10.5px;margin-top:3px}.ep-remove{width:28px;height:28px;border:1px solid var(--line);background:#fff;border-radius:9px;font-size:18px;color:#666}.ep-task-label{display:flex;align-items:center;gap:10px;min-width:0}.ep-task-label input{width:17px;height:17px;accent-color:#111}.ep-light-table{background:#fff;border-radius:13px;overflow:hidden}.ep-light-table th{color:#777;border-color:var(--line)}.ep-light-table td{color:#555;border-color:var(--line)}.ep-note{font-size:11px;color:#888;line-height:1.6;margin-top:14px}
+@media(max-width:900px){.ep-dash-layout{grid-template-columns:1fr}.ep-dash-nav{display:flex;flex-direction:row;overflow-x:auto;align-items:center}.ep-dash-nav a{flex:0 0 auto}.ep-nav-bottom{margin:0 0 0 auto;padding:0 0 0 8px;border:0;min-width:145px}.ep-nav-bottom .btn{white-space:nowrap}}
+@media(max-width:600px){.ep-student-shell{padding-top:24px}.ep-profile-cover{padding:20px;min-height:150px;gap:13px;flex-wrap:wrap}.ep-profile-avatar{width:58px;height:58px;border-radius:18px;font-size:20px}.ep-account-pill{position:absolute;right:14px;top:14px;font-size:8px;padding:5px 8px}.ep-profile-heading{padding-top:22px}.ep-profile-heading h1{font-size:23px}.ep-profile-heading p{font-size:11px}.ep-identity-strip{padding:12px;gap:12px}.ep-identity-strip span{min-width:calc(50% - 8px);padding:0;border:0}.ep-identity-strip span:last-child{min-width:100%}.ep-section-heading{align-items:flex-start;flex-direction:column}.ep-section-heading h2{font-size:21px}.ep-panel{padding:16px}.ep-overview-grid{grid-template-columns:1fr}.ep-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px}.ep-stats-grid .stat-card{padding:13px}.ep-stats-grid .stat-num{font-size:21px}.ep-dash-nav{gap:3px}.ep-dash-nav a{font-size:11px;padding:9px}.ep-nav-bottom{min-width:130px}.ep-nav-bottom .btn{font-size:10px;padding:9px 7px}}
 </style>
 
 </head>
@@ -1273,6 +1363,109 @@ html.copy-guard [contenteditable="true"]{
 
 </head>
 <body>
+<style id="ep-startup-screen-styles">
+  /* Independent, lightweight startup presentation. No backend/API dependencies. */
+  #ep-startup-screen{
+    position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;
+    overflow:hidden;isolation:isolate;background:#f5f5f7;color:#101014;
+    opacity:1;visibility:visible;pointer-events:auto;
+    transition:opacity .72s cubic-bezier(.22,.75,.25,1),visibility .72s;
+    -webkit-font-smoothing:antialiased;
+  }
+  #ep-startup-screen.ep-startup-hidden{opacity:0;visibility:hidden;pointer-events:none}
+  #ep-startup-screen:before,#ep-startup-screen:after{content:"";position:absolute;z-index:-1;pointer-events:none;border-radius:50%}
+  #ep-startup-screen:before{
+    width:min(76vw,540px);aspect-ratio:1;
+    background:radial-gradient(circle,rgba(54,119,255,.13) 0%,rgba(54,119,255,.055) 38%,transparent 70%);
+    animation:epStartupAura 4.8s ease-in-out infinite alternate;
+  }
+  #ep-startup-screen:after{
+    width:min(92vw,680px);aspect-ratio:1;border:1px solid rgba(50,112,235,.055);
+    box-shadow:0 0 0 34px rgba(50,112,235,.018),0 0 0 68px rgba(50,112,235,.012);
+    animation:epStartupOrbit 18s linear infinite;
+  }
+  .ep-startup-content{
+    width:min(88vw,440px);padding:28px 20px;display:flex;flex-direction:column;
+    align-items:center;text-align:center;transform:translateZ(0);
+    animation:epStartupEnter .85s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .ep-startup-icon{
+    width:86px;height:86px;border-radius:26px;display:grid;place-items:center;
+    background:#101014;color:#fff;font:800 43px/1 system-ui,-apple-system,"Segoe UI",sans-serif;
+    letter-spacing:-.07em;box-shadow:0 18px 48px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.12);
+    animation:epStartupLogo .95s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .ep-startup-title{
+    margin:24px 0 0;font:780 clamp(26px,5.8vw,36px)/1.12 system-ui,-apple-system,"Segoe UI",sans-serif;
+    letter-spacing:-.052em;color:#101014;
+  }
+  .ep-startup-subtitle{
+    margin:10px 0 0;color:#777b84;font:600 10px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;
+    letter-spacing:.2em;text-transform:uppercase;
+  }
+  .ep-startup-track{
+    position:relative;width:min(230px,64vw);height:3px;margin-top:34px;overflow:hidden;
+    border-radius:99px;background:rgba(38,105,225,.14);box-shadow:0 0 0 1px rgba(38,105,225,.025);
+  }
+  .ep-startup-track:after{
+    content:"";position:absolute;inset:0 auto 0 0;width:40%;border-radius:inherit;
+    background:linear-gradient(90deg,#2468df 0%,#48a4ff 55%,#8bcaff 100%);
+    box-shadow:0 0 15px rgba(49,132,245,.38);will-change:transform;
+    animation:epStartupProgress 1.35s cubic-bezier(.62,.02,.35,.98) infinite;
+  }
+  .ep-startup-founder{
+    margin:19px 0 0;color:#92959c;font:500 12px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;
+    letter-spacing:.025em;
+  }
+  @keyframes epStartupProgress{0%{transform:translate3d(-110%,0,0)}100%{transform:translate3d(285%,0,0)}}
+  @keyframes epStartupAura{0%{transform:scale(.9);opacity:.65}100%{transform:scale(1.08);opacity:1}}
+  @keyframes epStartupOrbit{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes epStartupEnter{from{opacity:0;transform:translate3d(0,18px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+  @keyframes epStartupLogo{0%{opacity:0;transform:scale(.78) rotate(-8deg)}70%{opacity:1;transform:scale(1.035) rotate(1deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+  @media(max-width:480px){.ep-startup-icon{width:78px;height:78px;border-radius:23px;font-size:39px}.ep-startup-title{margin-top:21px}.ep-startup-track{margin-top:29px}}
+  @media(prefers-reduced-motion:reduce){
+    #ep-startup-screen:before,#ep-startup-screen:after,.ep-startup-content,.ep-startup-icon,.ep-startup-track:after{animation:none!important}
+    #ep-startup-screen{transition:opacity .2s linear,visibility .2s linear}
+  }
+</style>
+
+
+<div id="ep-startup-screen" role="status" aria-label="Loading Education Point">
+  <div class="ep-startup-content">
+    <div class="ep-startup-icon" aria-hidden="true">E</div>
+    <div class="ep-startup-title">Education Point</div>
+    <div class="ep-startup-subtitle">Learn · Grow · Succeed</div>
+    <div class="ep-startup-track" aria-hidden="true"></div>
+    <div class="ep-startup-founder">Founded by Muhammad Rizwan</div>
+  </div>
+</div>
+<script id="ep-startup-screen-script">
+(function(){
+  'use strict';
+  var screen=document.getElementById('ep-startup-screen');
+  if(!screen) return;
+  var finished=false;
+  function finishStartup(){
+    if(finished) return;
+    finished=true;
+    screen.classList.add('ep-startup-hidden');
+    window.setTimeout(function(){
+      if(screen && screen.parentNode) screen.parentNode.removeChild(screen);
+    },760);
+  }
+  /* Visual-only intro. It never waits for, calls, or modifies Supabase/app code. */
+  window.setTimeout(finishStartup,2400);
+  window.addEventListener('error',function(){
+    /* A page error must never leave the splash covering the application. */
+    finishStartup();
+  },{once:true});
+  window.addEventListener('unhandledrejection',function(){
+    finishStartup();
+  },{once:true});
+})();
+</script>
+
+
 <a href="#main" class="skip-link">Skip to main content</a>
 
 <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
@@ -1601,7 +1794,9 @@ async function epFetchHTMLDocument(url){
   if(/<head[^>]*>/i.test(html)){
     html=html.replace(/<head[^>]*>/i,m=>m+base+style);
   }else{
-    html=`<!doctype html><html><head>${base}${style}<meta name="viewport" content="width=device-width,initial-scale=1"></head><body>${html}</body></html>`;
+    html=`<!doctype html><html><head>${base}${style}<meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head><body>${html}</body></html>`;
   }
   return html;
 }
@@ -2175,14 +2370,15 @@ function requireAuth(redirectPath){
      Login / Sign Up / Continue as Guest.
    ---------------------------------------------------------------- */
 function isGuestSession(){
-  try { return sessionStorage.getItem('education_point_guest') === '1'; }
+  try { return localStorage.getItem('education_point_guest') === '1'; }
   catch(_) { return false; }
 }
 function setGuestSession(){
-  try { sessionStorage.setItem('education_point_guest','1'); } catch(_) {}
+  try { localStorage.setItem('education_point_guest','1'); } catch(_) {}
+  try { getGuestId(); if(typeof startStudentTracking==='function') startStudentTracking(); } catch(_) {}
 }
 function clearGuestSession(){
-  try { sessionStorage.removeItem('education_point_guest'); } catch(_) {}
+  try { localStorage.removeItem('education_point_guest'); } catch(_) {}
 }
 
 function openGuestAccessModal(action){
@@ -2216,6 +2412,7 @@ function openGuestAccessModal(action){
   });
   qs('#ep-access-guest', box)?.addEventListener('click', ()=>{
     setGuestSession();
+    renderHeader();
     closeModal();
     try { action?.(); } catch(err) { console.error('[Education Point] Guest action failed:', err); }
   });
@@ -2245,6 +2442,19 @@ const Service = {
     if(!SUPABASE_READY) return null;
     const { data, error } = await supabase.rpc('get_dashboard_stats');
     if(error){ console.warn(error); return null; }
+    // The public-facing learner total is genuine unique records only:
+    // registered student profiles + persistent, de-duplicated guest IDs.
+    // If the optional count RPC has not been installed yet, preserve the
+    // existing dashboard stats rather than breaking the page.
+    try{
+      const countResult = await supabase.rpc('get_public_student_count');
+      if(!countResult.error && countResult.data !== null && countResult.data !== undefined){
+        return {...(data||{}), total_students:Number(countResult.data)||0};
+      }
+      if(countResult.error) console.warn('[Education Point] Combined learner count is not installed yet:',countResult.error.message||countResult.error);
+    }catch(countError){
+      console.warn('[Education Point] Combined learner count unavailable:',countError);
+    }
     return data;
   },
   async getCategories({activeOnly=true}={}){
@@ -2775,7 +2985,7 @@ function setupRealtime(){
       if(payload.eventType === 'INSERT' && payload.new?.status === 'published') toast(`New course available: ${payload.new.title || 'New course'}`, 'info');
       safeRealtimeRefresh('courses');
     });
-    watch('notifications','*', payload => { handleRealtimeNotification(payload.new); safeRealtimeRefresh('admin-notifications'); });
+    watch('notifications','*', payload => { if(payload.eventType === 'INSERT') handleRealtimeNotification(payload.new); safeRealtimeRefresh('admin-notifications'); });
     watch('notification_reads','*', payload => {
       if(AppState.user && payload.new?.user_id === AppState.user.id) refreshNotifCount();
     });
@@ -2785,6 +2995,12 @@ function setupRealtime(){
     });
     watch('profiles','UPDATE', payload => {
       if(AppState.user && payload.new?.id === AppState.user.id) refreshCurrentProfile(payload.new);
+    });
+    watch('student_workspaces','UPDATE', payload => {
+      if(AppState.user && payload.new?.user_id === AppState.user.id){
+        hydrateStudentWorkspace();
+        if(Router.current === '/dashboard' && window.__epCurrentDashTab === 'alarms') loadDashboardTab('alarms');
+      }
     });
     watch('saved_resources','*', payload => {
       if(AppState.user && (payload.new?.user_id === AppState.user.id || payload.old?.user_id === AppState.user.id)) safeRealtimeRefresh('saved_resources');
@@ -2943,6 +3159,8 @@ const NAV_LINKS = [
   {label:'Courses', href:'/courses'},
 ];
 const NAV_MORE = [
+  {label:'Education AI', href:'/education-ai'},
+  {label:'Scientific Calculator', href:'/calculator'},
   {label:'Keybooks / Guide Books', href:'/keybooks'},
   {label:'Pairing Schemes', href:'/pairing-schemes'},
   {label:'MCQs', href:'/mcqs'},
@@ -2969,7 +3187,8 @@ function renderShell(){
 function renderHeader(){
   const wrap = qs('#header-inner');
   if(!wrap) return;
-  const initials = AppState.profile && AppState.profile.full_name ? AppState.profile.full_name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase() : (AppState.user ? AppState.user.email[0].toUpperCase() : '');
+  const initials = AppState.profile && AppState.profile.full_name ? AppState.profile.full_name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase() : (AppState.user ? AppState.user.email[0].toUpperCase() : (isGuestSession() ? 'G' : ''));
+  const guestActive = !AppState.user && isGuestSession();
   wrap.innerHTML = `
     <a href="/" data-link class="brand"><span class="brand-mark">E</span><span class="brand-name">Education Point</span></a><span class="founder-chip">Muhammad Rizwan</span>
     <nav class="main-nav" aria-label="Primary">
@@ -2977,19 +3196,19 @@ function renderHeader(){
       <div class="nav-more-wrap">
         <a href="#" id="nav-more-btn" role="button" aria-haspopup="true">More ${ICONS.chevronRight}</a>
         <div class="nav-more-panel" id="nav-more-panel">
-          ${NAV_MORE.map(l=>`<a href="${l.href}" data-link data-nav-link>${l.label}</a>`).join('')}
+          ${NAV_MORE.map(l=>`<a href="${l.href}" ${l.external?'target="_blank" rel="noopener noreferrer"':'data-link'} data-nav-link>${l.label}</a>`).join('')}
         </div>
       </div>
     </nav>
     <div class="header-actions">
       <span id="rt-indicator" style="width:7px;height:7px;border-radius:50%;background:var(--text-3)" title="Connecting…"></span>
-      ${AppState.user ? `
+      ${AppState.user || guestActive ? `
         ${AppState.isAdmin ? `
           <a href="#/admin" data-link class="btn btn-primary btn-sm admin-header-btn" title="Open Admin Panel" onclick="event.preventDefault(); go('/admin');">
             ${ICONS.settings} Admin Panel
           </a>
         ` : ''}
-        <button class="icon-btn" id="notif-btn" aria-label="Notifications" aria-haspopup="true">${ICONS.bell}<span class="notif-dot hidden" id="notif-dot"></span></button>
+        ${AppState.user ? `<button class="icon-btn" id="notif-btn" aria-label="Notifications" aria-haspopup="true">${ICONS.bell}<span class="notif-dot hidden" id="notif-dot"></span></button>` : `<span class="badge badge-gray" style="margin-right:8px">GUEST STUDENT</span>`}
         <div style="position:relative">
           <button class="avatar-btn" id="avatar-btn" aria-label="Account menu">${escapeHTML(initials)}</button>
         </div>
@@ -3006,10 +3225,9 @@ function renderHeader(){
     if(panel && panel.classList.contains('open') && !panel.contains(e.target) && e.target!==btn) panel.classList.remove('open');
   });
   qs('#hamburger-btn').addEventListener('click', openMobileMenu);
-  if(AppState.user){
-    qs('#notif-btn').addEventListener('click', toggleNotifPanel);
+  if(AppState.user || guestActive){
+    if(AppState.user){qs('#notif-btn').addEventListener('click', toggleNotifPanel);refreshNotifCount();}
     qs('#avatar-btn').addEventListener('click', toggleAccountMenu);
-    refreshNotifCount();
   } else {
     qs('#login-btn').addEventListener('click', ()=>openAuthModal('login'));
     qs('#signup-btn').addEventListener('click', ()=>openAuthModal('signup'));
@@ -3031,13 +3249,18 @@ function openMobileMenu(){
         <span class="brand"><span class="brand-mark">E</span><span class="brand-name">Education Point</span></span>
         <button class="icon-btn" id="mm-close" aria-label="Close menu">${ICONS.close}</button>
       </div>
-      ${allLinks.map(l=>`<a href="${l.href}" data-link data-nav-link>${l.label}</a>`).join('')}
+      ${allLinks.map(l=>`<a href="${l.href}" ${l.external?'target="_blank" rel="noopener noreferrer"':'data-link'} data-nav-link>${l.label}</a>`).join('')}
       <div class="mobile-menu-section-label">Account</div>
       ${AppState.user ? `
         <a href="/dashboard" data-link>My Dashboard</a>
         ${AppState.isAdmin ? `<a href="#/admin" data-link style="font-weight:800" onclick="event.preventDefault(); go('/admin');">Admin Panel${isSuperAdminEmail(AppState.user?.email)?' · SUPER ADMIN':''}</a>` : ''}
         <a href="#" id="mm-logout">Log Out</a>
+      ` : isGuestSession() ? `
+        <a href="/dashboard" data-link>My Dashboard</a>
+        <a href="/dashboard?tab=profile" data-link>Guest Student Profile</a>
+        <a href="#" id="mm-end-guest">End Guest Session</a>
       ` : `
+        <a href="#" id="mm-guest-dashboard">Use as Guest</a>
         <a href="#" id="mm-login">Login</a>
         <a href="#" id="mm-signup">Sign Up</a>
       `}
@@ -3046,13 +3269,10 @@ function openMobileMenu(){
   mm.classList.add('open');
   qs('.mobile-menu-backdrop', mm).addEventListener('click', ()=>mm.classList.remove('open'));
   qs('#mm-close', mm).addEventListener('click', ()=>mm.classList.remove('open'));
-  qsa('a[data-link]', mm).forEach(a => a.addEventListener('click', ()=>mm.classList.remove('open')));
-  if(AppState.user){
-    qs('#mm-logout', mm).addEventListener('click', e=>{ e.preventDefault(); mm.classList.remove('open'); logout(); });
-  } else {
-    qs('#mm-login', mm).addEventListener('click', e=>{ e.preventDefault(); mm.classList.remove('open'); openAuthModal('login'); });
-    qs('#mm-signup', mm).addEventListener('click', e=>{ e.preventDefault(); mm.classList.remove('open'); openAuthModal('signup'); });
-  }
+  qsa('a', mm).forEach(a => a.addEventListener('click', ()=>mm.classList.remove('open')));
+  if(AppState.user){qs('#mm-logout', mm).addEventListener('click', e=>{e.preventDefault();mm.classList.remove('open');logout();});}
+  else if(isGuestSession()){qs('#mm-end-guest',mm)?.addEventListener('click',e=>{e.preventDefault();mm.classList.remove('open');clearGuestSession();renderHeader();go('/');});}
+  else {qs('#mm-guest-dashboard',mm)?.addEventListener('click',e=>{e.preventDefault();mm.classList.remove('open');setGuestSession();renderHeader();go('/dashboard');});qs('#mm-login',mm).addEventListener('click',e=>{e.preventDefault();mm.classList.remove('open');openAuthModal('login');});qs('#mm-signup',mm).addEventListener('click',e=>{e.preventDefault();mm.classList.remove('open');openAuthModal('signup');});}
 }
 
 function toggleAccountMenu(){
@@ -3060,12 +3280,13 @@ function toggleAccountMenu(){
   if(panel){ panel.remove(); return; }
   panel = el('div',{class:'notif-panel open', id:'account-menu-panel', style:'width:220px;padding:8px'});
   panel.innerHTML = `
-    <a href="/dashboard" data-link style="display:block;padding:11px 14px;border-radius:10px;font-weight:600;font-size:14px;color:var(--text-1)">My Dashboard</a>
+    <a href="/dashboard" data-link style="display:block;padding:11px 14px;border-radius:10px;font-weight:600;font-size:14px;color:var(--text-1)">${AppState.user?'My Dashboard':'Guest Student Dashboard'}</a>
+    ${!AppState.user ? `<a href="/dashboard" data-link style="display:block;padding:11px 14px;border-radius:10px;font-weight:600;font-size:14px;color:var(--text-1)">Study Timer & Alarms</a>` : ''}
     ${AppState.isAdmin ? `<a href="#/admin" data-link style="display:block;padding:11px 14px;border-radius:10px;font-weight:600;font-size:14px;color:var(--text-1)" onclick="event.preventDefault(); go('/admin');">Admin Panel ${isSuperAdminEmail(AppState.user?.email)?'<span class="badge" style="margin-left:6px">SUPER ADMIN</span>':''}</a>` : ''}
-    <a href="#" id="acct-logout" style="display:block;padding:11px 14px;border-radius:10px;font-weight:600;font-size:14px;color:var(--red)">Log Out</a>
+    <a href="#" id="acct-logout" style="display:block;padding:11px 14px;border-radius:10px;font-weight:600;font-size:14px;color:var(--red)">${AppState.user?'Log Out':'End Guest Session'}</a>
   `;
   qs('#avatar-btn').parentElement.appendChild(panel);
-  qs('#acct-logout', panel).addEventListener('click', e=>{ e.preventDefault(); panel.remove(); logout(); });
+  qs('#acct-logout', panel).addEventListener('click', e=>{e.preventDefault();panel.remove();if(AppState.user)logout();else{clearGuestSession();renderHeader();go('/');}});
   qsa('a[data-link]', panel).forEach(a=>a.addEventListener('click', ()=>panel.remove()));
   setTimeout(()=>document.addEventListener('click', function h(e){ if(!panel.contains(e.target) && e.target.id!=='avatar-btn'){ panel.remove(); document.removeEventListener('click',h); } }),0);
 }
@@ -3201,7 +3422,17 @@ function openAuthModal(mode='login'){
           : mode==='signup' ? `Already have an account? <a href="#" id="to-login">Log in</a>`
           : `<a href="#" id="to-login">Back to login</a>`}
       </div>
+      ${mode==='login' ? `<div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line);text-align:center"><button type="button" class="btn btn-ghost btn-block" id="ep-auth-guest">Use as a Guest</button></div>` : ''}
     `
+  });
+  qs('#ep-auth-guest')?.addEventListener('click',()=>{
+    setGuestSession();
+    getGuestId();
+    startStudentTracking();
+    renderHeader();
+    closeModal();
+    toast('Guest access activated. Your Student ID is '+getGuestId(),'success',6500);
+    go('/dashboard');
   });
   qs('#auth-form', box).addEventListener('submit', async e => {
     e.preventDefault();
@@ -3340,7 +3571,7 @@ async function renderHome(){
   setMeta('', 'Your complete platform for learning, preparation & success. Notes, guess papers, past papers, keybooks, MCQs, test series and entry test preparation.');
   const main = qs('#main');
   main.innerHTML = `
-    <section class="hero">
+    <section class="hero ep-cinematic-hero">
       <div class="container hero-inner">
         <div class="hero-eyebrow">Education Point</div>
         <h1>Your complete platform for <em>learning, preparation</em> &amp; success</h1>
@@ -3359,9 +3590,25 @@ async function renderHome(){
       </div>
     </section>
 
-    <section class="section container">
+    <section class="section container" id="categories-section">
       <div class="page-header"><span class="eyebrow">Explore</span><h1 style="margin-top:8px">Browse by category</h1></div>
       <div class="bento-grid" id="home-bento">${Array(8).fill('<div class="skeleton skel-card" style="min-height:150px"></div>').join('')}</div>
+    </section>
+
+    <section class="section container" id="student-tools-section">
+      <div class="page-header"><span class="eyebrow">Student Tools</span><h1 style="margin-top:8px">Study smarter with Education Point</h1></div>
+      <div class="ep-home-tools-grid">
+        <a class="ep-home-tool-card ep-home-tool-ai" href="/education-ai" data-link>
+          <span class="ep-home-tool-icon">${ICONS.sparkles||ICONS.graduationCap}</span>
+          <span class="ep-home-tool-copy"><strong>Education AI Assistant</strong><small>Get help with concepts, questions and study topics</small></span>
+          <span class="ep-home-tool-arrow">↗</span>
+        </a>
+        <a class="ep-home-tool-card ep-home-tool-calc" href="/calculator" data-link>
+          <span class="ep-home-tool-icon">${ICONS.calculator||ICONS.grid}</span>
+          <span class="ep-home-tool-copy"><strong>Calculator</strong><small>Basic and scientific calculator for your studies</small></span>
+          <span class="ep-home-tool-arrow">↗</span>
+        </a>
+      </div>
     </section>
 
     <section class="section container" id="featured-section">
@@ -3376,7 +3623,7 @@ async function renderHome(){
 
     <section class="section container" id="home-blogs-section">
       <div class="page-header"><span class="eyebrow">Student Help</span><h1 style="margin-top:8px">Latest Blogs</h1><p class="text-muted">Helpful articles, study guidance and student-focused updates.</p></div>
-      <div class="grid grid-3" id="home-blogs-grid">${Array(3).fill('<div class="skeleton skel-card" style="min-height:190px"></div>').join('')}</div>
+      <div class="grid grid-3" id="home-blogs-grid">${Array(2).fill('<div class="skeleton skel-card" style="min-height:190px"></div>').join('')}</div>
       <div style="margin-top:18px"><a class="btn btn-primary" href="/blogs" data-link>View All Blogs</a></div>
     </section>
   `;
@@ -3410,7 +3657,7 @@ async function loadHomeBlogs(){
   const wrap=qs('#home-blogs-grid');
   if(!wrap) return;
   try{
-    const rows=await Service.getBlogs({publishedOnly:true,limit:3});
+    const rows=await Service.getBlogs({publishedOnly:true,limit:2});
     if(!rows.length){
       wrap.innerHTML=emptyStateHTML('file','No blogs yet','New student-help articles will appear here.');
       return;
@@ -3443,7 +3690,7 @@ async function loadHomeStats(){
   if(!wrap) return;
   const items = [
     {label:'Resources', val: stats ? stats.total_resources : 0},
-    {label:'Students', val: stats ? stats.total_students : 0},
+    {label:'Students & Guests', val: stats ? stats.total_students : 0},
     {label:'Downloads', val: stats ? stats.total_downloads : 0},
     {label:'Categories', val: stats ? stats.total_categories : 0},
   ];
@@ -3528,15 +3775,14 @@ function bindResourceCardEvents(container){
   qsa('[data-save-id]', container).forEach(btn => {
     btn.addEventListener('click', async e => {
       e.preventDefault(); e.stopPropagation();
-      if(!requireAuth()) return;
       const id = btn.dataset.saveId;
       const wasSaved = btn.classList.contains('saved');
       btn.classList.toggle('saved');
       try{
-        if(wasSaved) await Service.unsaveResource(AppState.user.id, id);
-        else await Service.saveResource(AppState.user.id, id);
-        toast(wasSaved ? 'Removed from saved' : 'Saved to your dashboard', 'success');
-      }catch(err){ btn.classList.toggle('saved'); toast(friendlyError(err), 'error'); }
+        if(!AppState.user && isGuestSession()){const w=getStudentWorkspace();w.savedResources=w.savedResources||[];const card=btn.closest('.resource-card')||btn.parentElement.parentElement;const title=card?.querySelector('.resource-title')?.textContent?.trim()||'Educational resource';const href=card?.querySelector('.resource-title')?.getAttribute('href')||'';if(wasSaved)w.savedResources=w.savedResources.filter(x=>x.id!==id);else w.savedResources.push({id,title,slug:href.split('/').pop(),savedAt:new Date().toISOString()});saveStudentWorkspace(w);toast(wasSaved?'Removed from saved':'Saved to your guest dashboard','success');}
+        else if(!AppState.user){if(!requireAuth())return;}
+        else {if(wasSaved)await Service.unsaveResource(AppState.user.id,id);else await Service.saveResource(AppState.user.id,id);toast(wasSaved?'Removed from saved':'Saved to your dashboard','success');}
+      }catch(err){btn.classList.toggle('saved');toast(friendlyError(err),'error');}
     });
   });
 }
@@ -3748,7 +3994,7 @@ async function renderResourceDetail(slug){
   if(AppState.user){
     const saved = await Service.getSavedResources(AppState.user.id);
     isSaved = saved.some(s=>s.resource_id===r.id);
-  }
+  }else if(isGuestSession()){isSaved=(getStudentWorkspace().savedResources||[]).some(x=>x.id===r.id);}
 
   const allLinks=Array.isArray(r.chapters)?r.chapters:[];
   const mainLinks=allLinks.filter(c=>Number(c.chapter_number)===0 || String(c.description||'')==='__EP_MAIN_LINK__');
@@ -3931,7 +4177,8 @@ async function renderResourceDetail(slug){
         if(isDriveFolderURL(sourceURL)){toast('This is a Google Drive folder. Open it separately to access its files.','error');return;}
         const url=epExternalDownloadURL(sourceURL) || resourceDownloadURL(sourceURL);
         if(!url||url==='#'){toast('Download link is not available.','error');return;}
-        await Service.recordDownload(r.id);
+        try{await Service.recordDownload(r.id);}catch(logErr){console.warn('[Education Point] Download event could not sync:',logErr);}
+        if(isGuestSession()&&!AppState.user){const w=getStudentWorkspace();w.downloads=w.downloads||[];w.downloads.push({resourceId:r.id,title:r.title,downloadedAt:new Date().toISOString()});saveStudentWorkspace(w);}
         window.location.href=url;
         toast(isGuestSession() && !AppState.user ? 'Download started as guest.' : 'Download started.','success');
       }catch(err){
@@ -3951,9 +4198,10 @@ async function renderResourceDetail(slug){
   const saveBtn=qs('#save-detail-btn');
   if(saveBtn){
     saveBtn.addEventListener('click',async()=>{
-      if(!requireAuth()) return;
       try{
-        if(isSaved){await Service.unsaveResource(AppState.user.id,r.id);isSaved=false;toast('Removed from saved','success');}
+        if(!AppState.user && isGuestSession()){const w=getStudentWorkspace();w.savedResources=w.savedResources||[];if(isSaved)w.savedResources=w.savedResources.filter(x=>x.id!==r.id);else w.savedResources.push({id:r.id,title:r.title,slug:r.slug,savedAt:new Date().toISOString()});saveStudentWorkspace(w);isSaved=!isSaved;toast(isSaved?'Saved to guest dashboard':'Removed from saved','success');}
+        else if(!AppState.user){if(!requireAuth())return;}
+        else if(isSaved){await Service.unsaveResource(AppState.user.id,r.id);isSaved=false;toast('Removed from saved','success');}
         else{await Service.saveResource(AppState.user.id,r.id);isSaved=true;toast('Saved to your dashboard','success');}
         saveBtn.querySelector('.tile-title').textContent=isSaved?'Saved Resource':'Save for Later';
       }catch(err){toast(friendlyError(err),'error');}
@@ -3969,7 +4217,9 @@ async function renderResourceDetail(slug){
           if(!url||url==='#'){toast('Download link is not available.','error');return;}
           /* Download history is account-aware; the RPC may still count a
              public/guest download when the backend permits it. */
-          await Service.recordDownload(r.id);
+          try{ await Service.recordDownload(r.id); }
+          catch(logErr){ console.warn('[Education Point] Download history could not be synced; continuing download.',logErr); }
+          if(isGuestSession()&&!AppState.user){const wdata=getStudentWorkspace();wdata.downloads=wdata.downloads||[];wdata.downloads.push({resourceId:r.id,title:r.title,downloadedAt:new Date().toISOString()});saveStudentWorkspace(wdata);}
           const w=window.open(url,'_blank','noopener,noreferrer');
           if(!w) window.location.href=url;
           toast(isGuestSession() && !AppState.user
@@ -4025,106 +4275,252 @@ async function loadSearchResults(){
 
 /* ---- STUDENT DASHBOARD ---- */
 const DASH_TABS = [
-  {id:'overview', label:'Overview', icon:'layout'},
-  {id:'saved', label:'Saved Resources', icon:'bookmark'},
-  {id:'downloads', label:'Download History', icon:'download'},
-  {id:'tests', label:'Test Results', icon:'award'},
-  {id:'profile', label:'Profile', icon:'user'},
+  {id:'overview',label:'Overview',icon:'layout'},
+  {id:'planner',label:'Study Planner',icon:'calendar'},
+  {id:'alarms',label:'Study Timer & Alarms',icon:'clock'},
+  {id:'activity',label:'Activity & Progress',icon:'activity'},
+  {id:'saved',label:'Saved Resources',icon:'bookmark'},
+  {id:'downloads',label:'Download History',icon:'download'},
+  {id:'tests',label:'Test Results',icon:'award'},
+  {id:'profile',label:'My Profile',icon:'user'},
 ];
-async function renderDashboard(params, tab='overview'){
-  if(!requireAuth()) { go('/'); return; }
-  setMeta('My Dashboard', 'Your Education Point student dashboard.');
-  const main = qs('#main');
-  main.innerHTML = `
-    <div class="container section">
-      <div class="page-header"><h1>My Dashboard</h1><p>Welcome back${AppState.profile&&AppState.profile.full_name?', '+escapeHTML(AppState.profile.full_name):''}.</p></div>
-      <div class="dash-layout">
-        <nav class="dash-sidebar">${DASH_TABS.map(t=>`<a href="#" data-tab="${t.id}" class="${t.id===tab?'active':''}">${ICONS[t.icon]} ${t.label}</a>`).join('')}</nav>
-        <div id="dash-content"></div>
+const EP_STUDENT_KEY='ep_student_workspace_v2';
+function epStudentKey(){
+  return AppState.user ? `user:${AppState.user.id}` : `guest:${getGuestId()}`;
+}
+function getGuestId(){
+  try{
+    let id=localStorage.getItem('ep_guest_student_id');
+    if(!id){ id='EP-G-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,7).toUpperCase(); localStorage.setItem('ep_guest_student_id',id); }
+    return id;
+  }catch(_){ return 'EP-G-'+Date.now().toString(36).toUpperCase(); }
+}
+function getGuestWorkspaceToken(){
+  try{let t=localStorage.getItem('ep_guest_workspace_token');if(!t){t=(crypto?.randomUUID?crypto.randomUUID():('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return(c==='x'?r:(r&3|8)).toString(16)})));localStorage.setItem('ep_guest_workspace_token',t);}return t;}catch(_){return getGuestId();}
+}
+function defaultStudentWorkspace(){return {sessions:[],totalSeconds:0,lastActive:null,firstSeen:new Date().toISOString(),tasks:[],routine:[],studyLogs:[],downloads:[],savedResources:[],testAttempts:[],alarms:[],focusSessions:[],activeCountdown:null,activeStopwatchStartedAt:null};}
+function getStudentWorkspace(){
+  try{const all=JSON.parse(localStorage.getItem(EP_STUDENT_KEY)||'{}');const data=all[epStudentKey()]||{};return {...defaultStudentWorkspace(),...data};}
+  catch(_){return defaultStudentWorkspace();}
+}
+let epWorkspaceSyncTimer=null, epWorkspaceRealtime=null, epWorkspaceHydrated=false;
+function saveStudentWorkspace(data){
+  try{const all=JSON.parse(localStorage.getItem(EP_STUDENT_KEY)||'{}');all[epStudentKey()]=data;localStorage.setItem(EP_STUDENT_KEY,JSON.stringify(all));}
+  catch(e){console.warn('[Education Point] Local student data could not be saved',e);}
+  queueStudentWorkspaceSync(data);
+}
+function queueStudentWorkspaceSync(data){
+  if(!SUPABASE_READY)return;
+  clearTimeout(epWorkspaceSyncTimer);
+  epWorkspaceSyncTimer=setTimeout(async()=>{
+    try{
+      if(AppState.user){const {error}=await supabase.from('student_workspaces').upsert({user_id:AppState.user.id,workspace:data,updated_at:new Date().toISOString()},{onConflict:'user_id'});if(error)throw error;}
+      else if(isGuestSession()){const {error}=await supabase.rpc('save_guest_student_workspace',{p_guest_id:getGuestId(),p_guest_token:getGuestWorkspaceToken(),p_workspace:data});if(error)throw error;}
+    }catch(e){console.warn('[Education Point] Cloud workspace sync pending:',e.message||e);}
+  },450);
+}
+async function hydrateStudentWorkspace(){
+  if(epWorkspaceHydrated||!SUPABASE_READY)return;
+  epWorkspaceHydrated=true;
+  try{
+    let remote=null;
+    if(AppState.user){const {data,error}=await supabase.from('student_workspaces').select('workspace').eq('user_id',AppState.user.id).maybeSingle();if(error)throw error;remote=data?.workspace||null;}
+    else if(isGuestSession()){const {data,error}=await supabase.rpc('get_guest_student_workspace',{p_guest_id:getGuestId(),p_guest_token:getGuestWorkspaceToken()});if(error)throw error;remote=data||null;}
+    if(remote&&typeof remote==='object'){
+      const local=getStudentWorkspace();
+      // Server state is authoritative after the first successful cloud load.
+      const merged={...defaultStudentWorkspace(),...remote};
+      if((local.lastActive||'')>(merged.lastActive||'')) Object.assign(merged,local);
+      const all=JSON.parse(localStorage.getItem(EP_STUDENT_KEY)||'{}');all[epStudentKey()]=merged;localStorage.setItem(EP_STUDENT_KEY,JSON.stringify(all));
+      if(Router.current==='/dashboard'&&!document.querySelector('#dash-content form:focus-within'))loadDashboardTab(window.__epCurrentDashTab||'overview');
+    }else{queueStudentWorkspaceSync(getStudentWorkspace());}
+  }catch(e){console.warn('[Education Point] Workspace cloud load unavailable:',e.message||e);}
+  if(AppState.user&&supabase){try{if(epWorkspaceRealtime)supabase.removeChannel(epWorkspaceRealtime);epWorkspaceRealtime=supabase.channel('ep-student-workspace-'+AppState.user.id).on('postgres_changes',{event:'*',schema:'public',table:'student_workspaces',filter:'user_id=eq.'+AppState.user.id},payload=>{const remote=payload.new?.workspace;if(remote){const all=JSON.parse(localStorage.getItem(EP_STUDENT_KEY)||'{}');all[epStudentKey()]={...defaultStudentWorkspace(),...remote};localStorage.setItem(EP_STUDENT_KEY,JSON.stringify(all));if(Router.current==='/dashboard'&&!document.querySelector('#dash-content form:focus-within'))loadDashboardTab(window.__epCurrentDashTab||'overview');}}).subscribe();}catch(e){console.warn('Workspace realtime subscription failed',e);}}
+  else if(isGuestSession()&&SUPABASE_READY){if(window.__epGuestWorkspacePoll)clearInterval(window.__epGuestWorkspacePoll);window.__epGuestWorkspacePoll=setInterval(async()=>{try{const {data}=await supabase.rpc('get_guest_student_workspace',{p_guest_id:getGuestId(),p_guest_token:getGuestWorkspaceToken()});if(data){const all=JSON.parse(localStorage.getItem(EP_STUDENT_KEY)||'{}');all[epStudentKey()]={...defaultStudentWorkspace(),...data};localStorage.setItem(EP_STUDENT_KEY,JSON.stringify(all));if(Router.current==='/dashboard'&&!document.querySelector('#dash-content form:focus-within'))loadDashboardTab(window.__epCurrentDashTab||'overview');}}catch(_){}},5000);}
+}
+function startStudentTracking(){
+  if(window.__epStudentTrackingStarted) return;
+  window.__epStudentTrackingStarted=true;
+  const now=new Date().toISOString();
+  let data=getStudentWorkspace();
+  data.sessions=data.sessions||[];
+  let session=data.sessions[data.sessions.length-1];
+  if(!session || session.endedAt){
+    session={startedAt:now,lastHeartbeat:now,seconds:0,endedAt:null};
+    data.sessions.push(session);
+  }
+  data.lastActive=now;
+  saveStudentWorkspace(data);
+  hydrateStudentWorkspace();
+  if(window.__epAlarmCheckTimer)clearInterval(window.__epAlarmCheckTimer);window.__epAlarmCheckTimer=setInterval(epCheckScheduledAlarms,10000);
+  const heartbeat=()=>{
+    const current=getStudentWorkspace();
+    const active=current.sessions[current.sessions.length-1];
+    if(!active || active.endedAt) return;
+    const stamp=Date.now(), prev=new Date(active.lastHeartbeat||active.startedAt).getTime();
+    const delta=Math.max(0,Math.min(60,Math.floor((stamp-prev)/1000)));
+    if(!document.hidden && delta<=45){active.seconds=(active.seconds||0)+delta;current.totalSeconds=(current.totalSeconds||0)+delta;}
+    active.lastHeartbeat=new Date(stamp).toISOString();
+    current.lastActive=new Date(stamp).toISOString();
+    saveStudentWorkspace(current);
+  };
+  window.__epStudentHeartbeat=setInterval(heartbeat,15000);
+  document.addEventListener('visibilitychange',heartbeat);
+  window.addEventListener('pagehide',()=>{
+    heartbeat();
+    const current=getStudentWorkspace(),active=current.sessions[current.sessions.length-1];
+    if(active&&!active.endedAt){active.endedAt=new Date().toISOString();saveStudentWorkspace(current);}
+  });
+}
+let epFocusInterval=null, epStopwatchStart=null, epStopwatchInterval=null, epCountdownEnd=null, epCountdownRemaining=0, epCountdownRunning=false;
+function epPlayAlarmTone(){try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const ctx=new C();[0,0.35,0.7].forEach((delay)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=880;o.connect(g);g.connect(ctx.destination);g.gain.setValueAtTime(0.0001,ctx.currentTime+delay);g.gain.exponentialRampToValueAtTime(0.18,ctx.currentTime+delay+0.03);g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+delay+0.22);o.start(ctx.currentTime+delay);o.stop(ctx.currentTime+delay+0.24);});setTimeout(()=>ctx.close(),1400);}catch(e){console.warn('Alarm audio unavailable',e);}}
+function epNotifyAlarm(title,body){epPlayAlarmTone();if('Notification'in window&&Notification.permission==='granted'){try{new Notification(title,{body,tag:'ep-alarm-'+Date.now()});}catch(_){}}else toast(title+(body?' — '+body:''),'success',9000);}
+function epCheckScheduledAlarms(){if(!isGuestSession()&&!AppState.user)return;const w=getStudentWorkspace(),now=new Date(),today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0'),time=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');let changed=false;(w.alarms||[]).forEach(a=>{if(a.enabled===false||a.time!==time||a.lastFiredDate===today)return;const day=now.getDay();if(a.repeat==='weekdays'&&(day===0||day===6))return;if(a.repeat==='once'&&a.date&&a.date!==today)return;a.lastFiredDate=today;if(a.repeat==='once')a.enabled=false;changed=true;epNotifyAlarm(a.title||'Study Alarm',a.note||'It is time for your scheduled study session.');});if(changed)saveStudentWorkspace(w);}
+function bindStudyAlarmEvents(ws){
+ const cdFace=qs('#ep-countdown-face'),swFace=qs('#ep-stopwatch-face');
+ if(!epStopwatchStart&&ws.activeStopwatchStartedAt)epStopwatchStart=new Date(ws.activeStopwatchStartedAt).getTime();
+ if(!epCountdownRunning&&ws.activeCountdown?.remainingSeconds&&!ws.activeCountdown.endAt)epCountdownRemaining=Number(ws.activeCountdown.remainingSeconds)||0;
+ if(!epCountdownRunning&&ws.activeCountdown?.endAt){if(Number(ws.activeCountdown.endAt)>Date.now()){epCountdownEnd=Number(ws.activeCountdown.endAt);epCountdownRemaining=Math.ceil((epCountdownEnd-Date.now())/1000);epCountdownRunning=true;}else{const expired=ws.activeCountdown;ws.focusSessions=ws.focusSessions||[];ws.focusSessions.push({label:'Countdown focus session',startedAt:expired.startedAt||new Date(Number(expired.endAt)-Number(expired.durationSeconds||0)*1000).toISOString(),endedAt:new Date().toISOString(),seconds:Number(expired.durationSeconds)||0});delete ws.activeCountdown;saveStudentWorkspace(ws);epNotifyAlarm('Study session complete','Your countdown finished while you were away.');}}
+ const fmt=(n)=>{n=Math.max(0,Math.floor(n));return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');};
+ const renderCd=()=>{if(cdFace)cdFace.textContent=fmt(epCountdownRunning?Math.ceil((epCountdownEnd-Date.now())/1000):epCountdownRemaining);};
+ const renderSw=()=>{if(swFace){const n=epStopwatchStart?Math.floor((Date.now()-epStopwatchStart)/1000):0;swFace.textContent=[Math.floor(n/3600),Math.floor(n%3600/60),n%60].map(x=>String(x).padStart(2,'0')).join(':');}};
+ qs('#ep-cd-start')?.addEventListener('click',()=>{if(!epCountdownRunning){if(epCountdownRemaining<=0){const h=Math.max(0,Math.min(23,Number(qs('#ep-cd-hours').value)||0)),m=Math.max(0,Math.min(59,Number(qs('#ep-cd-mins').value)||0));epCountdownRemaining=(h*60+m)*60;}else if(ws.activeCountdown?.remainingSeconds){epCountdownRemaining=Number(ws.activeCountdown.remainingSeconds)||epCountdownRemaining;}if(epCountdownRemaining<=0){toast('Choose a countdown duration first.','warning');return;}epCountdownEnd=Date.now()+epCountdownRemaining*1000;epCountdownRunning=true;ws.activeCountdown={endAt:epCountdownEnd,startedAt:new Date(epCountdownEnd-epCountdownRemaining*1000).toISOString(),durationSeconds:epCountdownRemaining};saveStudentWorkspace(ws);qs('#ep-focus-status').textContent='Focus timer is running.';}renderCd();});
+ qs('#ep-cd-pause')?.addEventListener('click',()=>{if(epCountdownRunning){epCountdownRemaining=Math.max(0,Math.ceil((epCountdownEnd-Date.now())/1000));epCountdownRunning=false;if(ws.activeCountdown)ws.activeCountdown.remainingSeconds=epCountdownRemaining;delete ws.activeCountdown.endAt;saveStudentWorkspace(ws);qs('#ep-focus-status').textContent='Timer paused.';renderCd();}});
+ qs('#ep-cd-reset')?.addEventListener('click',()=>{epCountdownRunning=false;epCountdownRemaining=0;epCountdownEnd=null;delete ws.activeCountdown;saveStudentWorkspace(ws);renderCd();qs('#ep-focus-status').textContent='Timer reset.';});
+ qs('#ep-sw-start')?.addEventListener('click',()=>{if(!epStopwatchStart){epStopwatchStart=Date.now();ws.activeStopwatchStartedAt=new Date(epStopwatchStart).toISOString();saveStudentWorkspace(ws);renderSw();}});
+ qs('#ep-sw-stop')?.addEventListener('click',()=>{if(!epStopwatchStart)return;const seconds=Math.max(1,Math.floor((Date.now()-epStopwatchStart)/1000));ws.focusSessions=ws.focusSessions||[];ws.focusSessions.push({label:'Stopwatch study session',startedAt:new Date(epStopwatchStart).toISOString(),endedAt:new Date().toISOString(),seconds});ws.studyLogs=ws.studyLogs||[];ws.studyLogs.push({subject:'Self-study',minutes:Math.round(seconds/60),date:new Date().toISOString().slice(0,10),createdAt:new Date().toISOString()});delete ws.activeStopwatchStartedAt;saveStudentWorkspace(ws);epStopwatchStart=null;renderSw();toast('Study session saved.','success');});
+ qs('#ep-sw-reset')?.addEventListener('click',()=>{epStopwatchStart=null;delete ws.activeStopwatchStartedAt;saveStudentWorkspace(ws);renderSw();});
+ qs('#ep-alarm-form')?.addEventListener('submit',e=>{e.preventDefault();const time=qs('#ep-alarm-time').value;if(!time){toast('Choose an alarm time.','warning');return;}ws.alarms=ws.alarms||[];ws.alarms.push({id:'alarm-'+Date.now(),title:qs('#ep-alarm-title').value.trim(),time,repeat:qs('#ep-alarm-repeat').value,note:qs('#ep-alarm-note').value.trim(),enabled:true,createdAt:new Date().toISOString()});saveStudentWorkspace(ws);loadDashboardTab('alarms');toast('Study alarm saved.','success');});
+ qs('#ep-enable-alerts')?.addEventListener('click',enableBrowserNotifications);
+ qsa('[data-alarm-toggle]').forEach(b=>b.addEventListener('click',()=>{const a=ws.alarms[Number(b.dataset.alarmToggle)];a.enabled=a.enabled===false;saveStudentWorkspace(ws);loadDashboardTab('alarms');}));
+ qsa('[data-alarm-delete]').forEach(b=>b.addEventListener('click',()=>{ws.alarms.splice(Number(b.dataset.alarmDelete),1);saveStudentWorkspace(ws);loadDashboardTab('alarms');}));
+ if(epFocusInterval)clearInterval(epFocusInterval);epFocusInterval=setInterval(()=>{if(epCountdownRunning){const left=Math.ceil((epCountdownEnd-Date.now())/1000);epCountdownRemaining=Math.max(0,left);renderCd();if(left<=0){epCountdownRunning=false;epNotifyAlarm('Study session complete','Your countdown has finished.');const w=getStudentWorkspace();w.focusSessions=w.focusSessions||[];const active=w.activeCountdown||{};w.focusSessions.push({label:'Countdown focus session',startedAt:active.startedAt||new Date().toISOString(),endedAt:new Date().toISOString(),seconds:Number(active.durationSeconds)||Math.max(1,Number(epCountdownRemaining)||1)});delete w.activeCountdown;saveStudentWorkspace(w);if(qs('#ep-focus-status'))qs('#ep-focus-status').textContent='Completed! Your study session has been saved.';}}renderSw();epCheckScheduledAlarms();},1000);
+}
+function formatStudyDuration(seconds){
+  seconds=Math.max(0,Number(seconds)||0);
+  const h=Math.floor(seconds/3600),m=Math.floor((seconds%3600)/60);
+  return h?`${h}h ${m}m`:`${m}m`;
+}
+function studentDisplayName(){
+  return AppState.user?(AppState.profile?.full_name||AppState.user.email?.split('@')[0]||'Student'):(getStudentWorkspace().name||'Guest Student');
+}
+async function renderDashboard(params,tab='overview'){
+  if(!AppState.user&&!isGuestSession()){openAuthModal('login');go('/');return;}
+  startStudentTracking();
+  hydrateStudentWorkspace();
+  setMeta('Student Dashboard','Your Education Point student profile, study planner and learning progress.');
+  const guest=!AppState.user, name=studentDisplayName(), workspace=getStudentWorkspace();
+  const studentId=guest?getGuestId():(AppState.profile?.student_id||AppState.user.id.slice(0,8).toUpperCase());
+  const main=qs('#main');
+  main.innerHTML=`
+    <div class="container section ep-student-shell">
+      <div class="ep-student-welcome">
+        <div class="ep-profile-cover">
+          <div class="ep-profile-avatar">${escapeHTML(name.split(/\s+/).map(x=>x[0]).slice(0,2).join('').toUpperCase()||'S')}</div>
+          <div class="ep-profile-heading"><span class="eyebrow">EDUCATION POINT • STUDENT SPACE</span><h1>Welcome, ${escapeHTML(name)}!</h1><p>Your learning journey, progress and daily study life — all in one place.</p></div>
+          <span class="ep-account-pill">${guest?'GUEST STUDENT':'REGISTERED STUDENT'}</span>
+        </div>
+        <div class="ep-identity-strip"><span><small>STUDENT ID</small><b>${escapeHTML(studentId)}</b></span><span><small>ACCOUNT TYPE</small><b>${guest?'Guest Access':'Student Account'}</b></span><span><small>LAST ACTIVE</small><b>${workspace.lastActive?new Date(workspace.lastActive).toLocaleString():'Just now'}</b></span></div>
       </div>
-    </div>
-  `;
-  qsa('[data-tab]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); qsa('[data-tab]').forEach(x=>x.classList.remove('active')); a.classList.add('active'); loadDashboardTab(a.dataset.tab); }));
+      <div class="dash-layout ep-dash-layout">
+        <nav class="dash-sidebar ep-dash-nav">${DASH_TABS.map(t=>`<a href="#" data-tab="${t.id}" class="${t.id===tab?'active':''}">${ICONS[t.icon]} ${t.label}</a>`).join('')}
+          <div class="ep-nav-bottom">${guest?`<div class="ep-guest-account-state"><span class="badge badge-gray">✓ GUEST ACCOUNT ACTIVE</span><small>Your student workspace is ready</small></div><button class="btn btn-ghost btn-block" id="ep-end-guest">End Guest Session</button>`:`<button class="btn btn-ghost btn-block" id="ep-student-logout">Log Out</button>`}</div>
+        </nav>
+        <div id="dash-content" class="ep-dash-content"></div>
+      </div>
+    </div>`;
+  qsa('[data-tab]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();qsa('[data-tab]').forEach(x=>x.classList.remove('active'));a.classList.add('active');loadDashboardTab(a.dataset.tab);}));
+  qs('#ep-upgrade-account')?.addEventListener('click',()=>openAuthModal('signup'));
+  qs('#ep-student-logout')?.addEventListener('click',logout);
+  qs('#ep-end-guest')?.addEventListener('click',()=>{clearGuestSession();renderHeader();go('/');});
   loadDashboardTab(tab);
 }
 async function loadDashboardTab(tab){
-  const content = qs('#dash-content');
-  content.innerHTML = `<div class="grid grid-3">${Array(3).fill('<div class="skeleton skel-stat"></div>').join('')}</div>`;
+  window.__epCurrentDashTab=tab;
+  const content=qs('#dash-content');if(!content)return;
+  const guest=!AppState.user, ws=getStudentWorkspace();
+  content.innerHTML='<div class="grid grid-3"><div class="skeleton skel-stat"></div><div class="skeleton skel-stat"></div><div class="skeleton skel-stat"></div></div>';
   if(tab==='overview'){
-    const [saved, downloads, attempts] = await Promise.all([Service.getSavedResources(AppState.user.id), Service.getDownloadHistory(AppState.user.id), Service.getMyTestAttempts(AppState.user.id)]);
-    content.innerHTML = `
-      <div class="grid grid-3" style="margin-bottom:24px">
-        <div class="stat-card"><div class="stat-top"><span class="stat-icon">${ICONS.bookmark}</span></div><div class="stat-num">${saved.length}</div><div class="stat-label">Saved Resources</div></div>
-        <div class="stat-card"><div class="stat-top"><span class="stat-icon">${ICONS.download}</span></div><div class="stat-num">${downloads.length}</div><div class="stat-label">Downloads</div></div>
-        <div class="stat-card"><div class="stat-top"><span class="stat-icon">${ICONS.award}</span></div><div class="stat-num">${attempts.length}</div><div class="stat-label">Tests Taken</div></div>
+    let saved=[],downloads=[],attempts=[];
+    if(AppState.user){[saved,downloads,attempts]=await Promise.all([Service.getSavedResources(AppState.user.id),Service.getDownloadHistory(AppState.user.id),Service.getMyTestAttempts(AppState.user.id)]);}
+    const tasks=ws.tasks||[],done=tasks.filter(t=>t.done).length,manualStudyMinutes=(ws.studyLogs||[]).reduce((n,x)=>n+(Number(x.minutes)||0),0);
+    content.innerHTML=`
+      <div class="ep-section-heading"><div><span class="eyebrow">YOUR LEARNING SNAPSHOT</span><h2>Student Overview</h2><p>A quick look at your learning activity and daily goals.</p></div><span class="ep-live-dot">● ACTIVE SESSION</span></div>
+      <div class="grid grid-3 ep-stats-grid">
+        <div class="stat-card"><div class="stat-top"><span class="stat-icon">${ICONS.clock}</span></div><div class="stat-num">${formatStudyDuration(ws.totalSeconds)}</div><div class="stat-label">Total Time on Education Point</div><div class="text-muted" style="font-size:10px">Manual study logged: ${formatStudyDuration(manualStudyMinutes*60)}</div></div>
+        <div class="stat-card"><div class="stat-top"><span class="stat-icon">${ICONS.activity}</span></div><div class="stat-num">${ws.sessions.length}</div><div class="stat-label">Sessions Started</div></div>
+        <div class="stat-card"><div class="stat-top"><span class="stat-icon">${ICONS.checklist}</span></div><div class="stat-num">${done}/${tasks.length}</div><div class="stat-label">Tasks Completed</div></div>
+        <div class="stat-card"><div class="stat-top"><span class="stat-icon">${ICONS.download}</span></div><div class="stat-num">${guest?'—':downloads.length}</div><div class="stat-label">Downloads ${guest?'(account history)':''}</div></div>
+        <div class="stat-card"><div class="stat-top"><span class="stat-icon">${ICONS.bookmark}</span></div><div class="stat-num">${guest?'—':saved.length}</div><div class="stat-label">Saved Resources</div></div>
+        <div class="stat-card"><div class="stat-top"><span class="stat-icon">${ICONS.award}</span></div><div class="stat-num">${guest?'—':attempts.length}</div><div class="stat-label">Tests Taken</div></div>
       </div>
-      <h3 style="font-size:17px;margin-bottom:14px">Recently viewed</h3>
-      <div class="grid grid-3" id="ov-recent"></div>
-    `;
-    const rw = qs('#ov-recent');
-    if(!downloads.length) rw.outerHTML = emptyStateHTML('eye','Nothing here yet','Resources you view will show up here.');
-    else { rw.innerHTML = downloads.slice(0,3).map(d=>d.resources?resourceCardHTML(d.resources):'').join(''); bindResourceCardEvents(rw); }
-  }
-  else if(tab==='saved'){
-    const saved = await Service.getSavedResources(AppState.user.id);
-    if(!saved.length){ content.innerHTML = emptyStateHTML('bookmark','No saved resources','Save resources while browsing to find them here later.'); return; }
-    content.innerHTML = `<div class="grid grid-3">${saved.map(s=>s.resources?resourceCardHTML({...s.resources, id:s.resources.id}):'').join('')}</div>`;
-    bindResourceCardEvents(content);
-  }
-  else if(tab==='downloads'){
-    const downloads = await Service.getDownloadHistory(AppState.user.id);
-    if(!downloads.length){ content.innerHTML = emptyStateHTML('download','No download history','Resources you download will be logged here.'); return; }
-    content.innerHTML = `<div class="table-scroll"><table class="data-table" style="background:var(--paper);border-radius:14px;overflow:hidden"><thead><tr><th>Resource</th><th>Downloaded</th></tr></thead><tbody>${downloads.map(d=>`<tr><td style="color:var(--text-1)">${escapeHTML(d.resources?d.resources.title:'—')}</td><td>${formatDate(d.created_at)}</td></tr>`).join('')}</tbody></table></div>`;
-    qsa('.data-table td', content).forEach(td=>td.style.color='var(--text-2)');
-  }
-  else if(tab==='tests'){
-    const attempts = await Service.getMyTestAttempts(AppState.user.id);
-    if(!attempts.length){ content.innerHTML = emptyStateHTML('award','No test attempts yet','Take a test from Test Series to see your results here.'); return; }
-    content.innerHTML = `<div class="grid grid-2">${attempts.map(a=>`
-      <a href="/test-result/${a.id}" data-link class="card card-shelf" style="padding:18px">
-        <div class="flex justify-between items-center"><h4 style="font-family:var(--font-body);font-size:15px">${escapeHTML(a.tests?a.tests.title:'Test')}</h4><span class="badge ${a.percentage>=50?'badge-teal':'badge-red'}">${a.percentage!=null?a.percentage.toFixed(0)+'%':'—'}</span></div>
-        <div class="text-dim" style="font-size:12.5px;margin-top:6px">${formatDate(a.completed_at)}</div>
-      </a>`).join('')}</div>`;
-  }
-  else if(tab==='profile'){
-    const p = AppState.profile || {};
-    content.innerHTML = `
-      <div class="card" style="padding:24px;max-width:480px">
-        <form id="profile-form">
-          <div class="field"><label>Full name</label><input id="pf-name" value="${escapeHTML(p.full_name||'')}"></div>
-          <div class="field"><label>Email</label><input value="${escapeHTML(AppState.user.email||'')}" disabled></div>
-          <button class="btn btn-primary" type="submit">Update Profile</button>
-        </form>
-        <hr style="margin:22px 0;border:none;border-top:1px solid var(--border)">
-        <form id="password-form">
-          <div class="field"><label>New password</label><input id="pf-pass" type="password" minlength="6" placeholder="••••••••"></div>
-          <button class="btn btn-ghost" type="submit">Change Password</button>
-        </form>
+      <div class="grid grid-2 ep-overview-grid">
+        <section class="card ep-panel"><div class="ep-panel-head"><div><span class="eyebrow">TODAY</span><h3>Daily Study Goals</h3></div><button class="btn btn-ghost btn-sm" data-jump="planner">Manage</button></div>
+          <div class="ep-task-progress"><b>${done} of ${tasks.length} tasks completed</b><span>${tasks.length?Math.round(done/tasks.length*100):0}%</span></div><div class="progress-bar"><div class="progress-bar-fill" style="width:${tasks.length?done/tasks.length*100:0}%"></div></div>
+          ${(tasks.slice(0,4).map(t=>`<div class="ep-mini-task"><span class="${t.done?'ep-task-done':''}">${escapeHTML(t.title)}</span><small>${t.done?'Completed':'Pending'}</small></div>`).join(''))||'<p class="text-muted" style="font-size:13px;margin-top:14px">No tasks added yet. Create your first study task.</p>'}
+        </section>
+        <section class="card ep-panel"><div class="ep-panel-head"><div><span class="eyebrow">RECENT ACTIVITY</span><h3>Time & Sessions</h3></div><button class="btn btn-ghost btn-sm" data-jump="activity">View all</button></div>
+          <div class="ep-activity-row"><span>First visit</span><b>${new Date(ws.firstSeen).toLocaleDateString()}</b></div>
+          <div class="ep-activity-row"><span>Last active</span><b>${ws.lastActive?new Date(ws.lastActive).toLocaleString():'Now'}</b></div>
+          <div class="ep-activity-row"><span>Current session</span><b>${formatStudyDuration(ws.sessions[ws.sessions.length-1]?.seconds||0)}</b></div>
+          <div class="ep-activity-row"><span>Total time</span><b>${formatStudyDuration(ws.totalSeconds)}</b></div>
+        </section>
+      </div>`;
+    qsa('[data-jump]',content).forEach(b=>b.addEventListener('click',()=>{qsa('[data-tab]').forEach(x=>x.classList.toggle('active',x.dataset.tab===b.dataset.jump));loadDashboardTab(b.dataset.jump);}));
+  }else if(tab==='planner'){
+    const tasks=ws.tasks||[],routine=ws.routine||[];
+    content.innerHTML=`
+      <div class="ep-section-heading"><div><span class="eyebrow">PLAN • FOCUS • COMPLETE</span><h2>My Study Planner</h2><p>Build a routine and keep your daily study tasks organized.</p></div></div>
+      <div class="grid grid-2">
+        <section class="card ep-panel"><h3>Log Actual Study Time</h3><form id="ep-studylog-form"><div class="field"><label>Subject / Study session</label><input id="ep-studylog-subject" required placeholder="e.g. Physics revision"></div><div class="grid grid-2"><div class="field"><label>Minutes studied</label><input id="ep-studylog-minutes" type="number" min="1" max="1440" required placeholder="60"></div><div class="field"><label>Date</label><input id="ep-studylog-date" type="date" required value="${new Date().toISOString().slice(0,10)}"></div></div><button class="btn btn-primary" type="submit">Save Study Time</button></form><div class="ep-list-heading">Study time entries (${(ws.studyLogs||[]).length})</div><div>${(ws.studyLogs||[]).slice().reverse().map((l,i)=>`<div class="ep-planner-item"><div><b>${escapeHTML(l.subject)}</b><small>${escapeHTML(l.date)} · ${Number(l.minutes)||0} minutes</small></div><button class="ep-remove" data-studylog-remove="${(ws.studyLogs||[]).length-1-i}" aria-label="Delete study entry">×</button></div>`).join('')||'<p class="text-muted">No manual study-time entries yet.</p>'}</div></section><section class="card ep-panel"><h3>Daily Study Routine</h3><form id="ep-routine-form"><div class="field"><label>Study activity / subject</label><input id="ep-routine-title" required placeholder="e.g. Physics — Chapter 3"></div><div class="grid grid-2"><div class="field"><label>Start time</label><input id="ep-routine-start" type="time" required></div><div class="field"><label>End time</label><input id="ep-routine-end" type="time" required></div></div><button class="btn btn-primary" type="submit">Add to Routine</button></form>
+        <div class="ep-list-heading">Your routine</div><div id="ep-routine-list">${routine.length?routine.map((r,i)=>`<div class="ep-planner-item"><div><b>${escapeHTML(r.title)}</b><small>${escapeHTML(r.start)} – ${escapeHTML(r.end)}</small></div><button class="ep-remove" data-routine-remove="${i}" aria-label="Remove">×</button></div>`).join(''):'<p class="text-muted">Your study routine is empty.</p>'}</div></section>
+        <section class="card ep-panel"><h3>Daily Tasks</h3><form id="ep-task-form"><div class="field"><label>Task title</label><input id="ep-task-title" required placeholder="What do you want to complete?"></div><div class="grid grid-2"><div class="field"><label>Subject</label><input id="ep-task-subject" placeholder="e.g. Chemistry"></div><div class="field"><label>Due date</label><input id="ep-task-date" type="date"></div></div><button class="btn btn-primary" type="submit">Add Task</button></form>
+        <div class="ep-list-heading">My tasks (${tasks.filter(t=>!t.done).length} pending)</div><div id="ep-task-list">${tasks.length?tasks.map((t,i)=>`<div class="ep-planner-item"><label class="ep-task-label"><input type="checkbox" data-task-toggle="${i}" ${t.done?'checked':''}><span class="${t.done?'ep-task-done':''}"><b>${escapeHTML(t.title)}</b><small>${escapeHTML(t.subject||'General')} ${t.due?'• '+escapeHTML(t.due):''}</small></span></label><button class="ep-remove" data-task-remove="${i}" aria-label="Delete task">×</button></div>`).join(''):'<p class="text-muted">No tasks yet. Add your first task above.</p>'}</div></section>
+      </div>`;
+    qs('#ep-studylog-form')?.addEventListener('submit',e=>{e.preventDefault();const minutes=Number(qs('#ep-studylog-minutes').value);if(!Number.isFinite(minutes)||minutes<1||minutes>1440){toast('Enter study time from 1 to 1440 minutes.','warning');return;}ws.studyLogs=ws.studyLogs||[];ws.studyLogs.push({subject:qs('#ep-studylog-subject').value.trim(),minutes,date:qs('#ep-studylog-date').value,createdAt:new Date().toISOString()});saveStudentWorkspace(ws);loadDashboardTab('planner');toast('Study time saved.','success');});
+    qsa('[data-studylog-remove]').forEach(x=>x.addEventListener('click',()=>{ws.studyLogs.splice(Number(x.dataset.studylogRemove),1);saveStudentWorkspace(ws);loadDashboardTab('planner');}));
+    qs('#ep-routine-form').addEventListener('submit',e=>{e.preventDefault();const title=qs('#ep-routine-title').value.trim(),start=qs('#ep-routine-start').value,end=qs('#ep-routine-end').value;if(end<=start){toast('End time must be after start time.','warning');return;}ws.routine.push({title,start,end});saveStudentWorkspace(ws);loadDashboardTab('planner');toast('Routine updated.','success');});
+    qs('#ep-task-form').addEventListener('submit',e=>{e.preventDefault();ws.tasks.push({title:qs('#ep-task-title').value.trim(),subject:qs('#ep-task-subject').value.trim(),due:qs('#ep-task-date').value,done:false,createdAt:new Date().toISOString()});saveStudentWorkspace(ws);loadDashboardTab('planner');toast('Task added.','success');});
+    qsa('[data-task-toggle]').forEach(x=>x.addEventListener('change',()=>{ws.tasks[Number(x.dataset.taskToggle)].done=x.checked;saveStudentWorkspace(ws);loadDashboardTab('planner');}));
+    qsa('[data-task-remove]').forEach(x=>x.addEventListener('click',()=>{ws.tasks.splice(Number(x.dataset.taskRemove),1);saveStudentWorkspace(ws);loadDashboardTab('planner');}));
+    qsa('[data-routine-remove]').forEach(x=>x.addEventListener('click',()=>{ws.routine.splice(Number(x.dataset.routineRemove),1);saveStudentWorkspace(ws);loadDashboardTab('planner');}));
+  }else if(tab==='alarms'){
+    const alarms=ws.alarms||[], logs=ws.focusSessions||[];
+    content.innerHTML=`<div class="ep-section-heading"><div><span class="eyebrow">FOCUS • SCHEDULE • REMIND</span><h2>Study Timer & Alarms</h2><p>Set a study countdown, run a stopwatch, and schedule daily study alarms.</p></div><span class="ep-focus-live">READY TO FOCUS</span></div>
+      <div class="ep-alarm-grid">
+        <section class="card ep-panel"><h3>Study Countdown</h3><div class="grid grid-2"><div class="field"><label>Hours</label><input type="number" id="ep-cd-hours" min="0" max="23" value="0"></div><div class="field"><label>Minutes</label><input type="number" id="ep-cd-mins" min="1" max="59" value="25"></div></div><div class="ep-clock-face" id="ep-countdown-face">25:00</div><div class="ep-timer-actions"><button class="btn btn-primary" id="ep-cd-start">Start Focus</button><button class="btn btn-ghost" id="ep-cd-pause">Pause</button><button class="btn btn-ghost" id="ep-cd-reset">Reset</button></div></section>
+        <section class="card ep-panel"><h3>Study Stopwatch</h3><div class="ep-clock-face" id="ep-stopwatch-face">00:00:00</div><div class="ep-timer-actions"><button class="btn btn-primary" id="ep-sw-start">Start</button><button class="btn btn-ghost" id="ep-sw-stop">Stop & Save</button><button class="btn btn-ghost" id="ep-sw-reset">Reset</button></div></section>
       </div>
-    `;
-    qs('#profile-form').addEventListener('submit', async e => {
-      e.preventDefault();
-      try{
-        const { error } = await supabase.from('profiles').update({ full_name: qs('#pf-name').value.trim() }).eq('id', AppState.user.id);
-        if(error) throw error;
-        await loadProfile(); renderHeader();
-        toast('Profile updated.', 'success');
-      }catch(err){ toast(friendlyError(err),'error'); }
-    });
-    qs('#password-form').addEventListener('submit', async e => {
-      e.preventDefault();
-      const val = qs('#pf-pass').value;
-      if(!val || val.length<6){ toast('Password must be at least 6 characters.','warning'); return; }
-      try{
-        const { error } = await supabase.auth.updateUser({ password: val });
-        if(error) throw error;
-        toast('Password changed successfully.', 'success');
-        qs('#pf-pass').value='';
-      }catch(err){ toast(friendlyError(err),'error'); }
-    });
+      <div class="grid grid-2" style="margin-top:18px"><section class="card ep-panel"><h3>Create Study Alarm</h3><form id="ep-alarm-form"><div class="field"><label>Alarm title</label><input id="ep-alarm-title" required maxlength="70" placeholder="e.g. Physics study time"></div><div class="grid grid-2"><div class="field"><label>Time</label><input id="ep-alarm-time" type="time" required></div><div class="field"><label>Repeat</label><select id="ep-alarm-repeat"><option value="once">Once</option><option value="daily">Every day</option><option value="weekdays">Weekdays</option></select></div></div><div class="field"><label>Reminder note (optional)</label><input id="ep-alarm-note" maxlength="120" placeholder="Open your book and start studying"></div><button class="btn btn-primary" type="submit">Save Alarm</button> <button class="btn btn-ghost" type="button" id="ep-enable-alerts">Enable Device Notifications</button></form></section>
+      <section class="card ep-panel"><h3>My Alarms</h3><div id="ep-alarm-list">${alarms.length?alarms.map((a,i)=>`<div class="ep-alarm-row"><div class="ep-alarm-meta"><b>${escapeHTML(a.time)} · ${escapeHTML(a.title)}</b><small>${escapeHTML(a.repeat||'once')} ${a.enabled===false?'· Paused':''}${a.note?' · '+escapeHTML(a.note):''}</small></div><div class="flex items-center gap-8"><button class="btn btn-ghost btn-sm" data-alarm-toggle="${i}">${a.enabled===false?'Enable':'Pause'}</button><button class="ep-remove" data-alarm-delete="${i}">×</button></div></div>`).join(''):'<p class="text-muted">No alarms scheduled yet.</p>'}</div></section></div>
+      <section class="card ep-panel" style="margin-top:18px"><h3>Recent Focus Sessions</h3>${logs.slice().reverse().slice(0,8).map(x=>`<div class="ep-alarm-row"><div class="ep-alarm-meta"><b>${escapeHTML(x.label||'Study session')}</b><small>${new Date(x.startedAt).toLocaleString()}</small></div><b>${formatStudyDuration(x.seconds||0)}</b></div>`).join('')||'<p class="text-muted">Your completed study sessions will appear here.</p>'}</section>`;
+    bindStudyAlarmEvents(ws);
+  }else if(tab==='activity'){
+    const sessions=ws.sessions||[],manualMinutes=(ws.studyLogs||[]).reduce((n,x)=>n+(Number(x.minutes)||0),0)+(ws.focusSessions||[]).reduce((n,x)=>n+(Number(x.seconds)||0)/60,0);
+    content.innerHTML=`<div class="ep-section-heading"><div><span class="eyebrow">YOUR DIGITAL FOOTPRINT</span><h2>Activity & Progress</h2><p>Usage time and session history for this browser and student profile.</p></div></div>
+      <div class="grid grid-3 ep-stats-grid"><div class="stat-card"><div class="stat-num">${formatStudyDuration(ws.totalSeconds)}</div><div class="stat-label">Total Active Time</div></div><div class="stat-card"><div class="stat-num">${sessions.length}</div><div class="stat-label">Total Sessions</div></div><div class="stat-card"><div class="stat-num">${ws.lastActive?new Date(ws.lastActive).toLocaleDateString():'—'}</div><div class="stat-label">Last Active Date</div></div><div class="stat-card"><div class="stat-num">${formatStudyDuration(manualMinutes*60)}</div><div class="stat-label">Manually Logged Study Time</div></div></div>
+      <section class="card ep-panel" style="margin-top:18px"><h3>Session History</h3><div class="table-scroll"><table class="data-table ep-light-table"><thead><tr><th>#</th><th>Login / Opened At</th><th>Closed / Last Seen</th><th>Duration</th><th>Status</th></tr></thead><tbody>${sessions.slice().reverse().map((x,i)=>`<tr><td>${sessions.length-i}</td><td>${new Date(x.startedAt).toLocaleString()}</td><td>${x.endedAt?new Date(x.endedAt).toLocaleString():'Currently active'}</td><td>${formatStudyDuration(x.seconds)}</td><td>${x.endedAt?'Ended':'Active'}</td></tr>`).join('')||'<tr><td colspan="5">No session history yet.</td></tr>'}</tbody></table></div></section>`;
+  }else if(tab==='saved'){
+    if(!AppState.user){const saved=ws.savedResources||[];content.innerHTML=`<div class="ep-section-heading"><div><h2>Saved Resources</h2><p>Your bookmarks saved in this Guest Student workspace.</p></div></div><div class="grid grid-2">${saved.map(x=>`<a class="card ep-panel" href="/resource/${encodeURIComponent(x.slug||'')}" data-link><b>${escapeHTML(x.title||'Educational resource')}</b><small class="text-muted">Saved ${new Date(x.savedAt).toLocaleString()}</small></a>`).join('')||'<div class="card ep-panel">No saved resources yet. Use the bookmark icon on any resource.</div>'}</div>`;return;}
+    const saved=await Service.getSavedResources(AppState.user.id);if(!saved.length){content.innerHTML=emptyStateHTML('bookmark','No saved resources','Save resources while browsing to find them here later.');return;}
+    content.innerHTML=`<div class="ep-section-heading"><div><h2>Saved Resources</h2><p>Your bookmarked learning material.</p></div></div><div class="grid grid-3">${saved.map(x=>x.resources?resourceCardHTML({...x.resources,id:x.resources.id}):'').join('')}</div>`;bindResourceCardEvents(content);
+  }else if(tab==='downloads'){
+    if(!AppState.user){const gd=ws.downloads||[];content.innerHTML=`<div class="ep-section-heading"><div><h2>Guest Download History</h2><p>Your downloads saved under this guest profile.</p></div><button class="btn btn-primary" id="ep-download-browse">Browse Resources</button></div><div class="card ep-panel"><div class="ep-list-heading">${gd.length} downloads recorded</div>${gd.length?gd.slice().reverse().map(d=>`<div class="ep-planner-item"><div><b>${escapeHTML(d.title||'Educational resource')}</b><small>${new Date(d.downloadedAt).toLocaleString()}</small></div></div>`).join(''):'<p class="text-muted">No guest downloads recorded yet.</p>'}</div>`;qs('#ep-download-browse').onclick=()=>go('/notes');return;}
+    const downloads=await Service.getDownloadHistory(AppState.user.id);if(!downloads.length){content.innerHTML=emptyStateHTML('download','No download history','Resources you download will be logged here.');return;}
+    content.innerHTML=`<div class="ep-section-heading"><div><h2>Download History</h2><p>Your downloaded learning resources.</p></div></div><div class="table-scroll"><table class="data-table ep-light-table"><thead><tr><th>Resource</th><th>Downloaded</th></tr></thead><tbody>${downloads.map(d=>`<tr><td>${escapeHTML(d.resources?.title||'—')}</td><td>${formatDate(d.created_at)}</td></tr>`).join('')}</tbody></table></div>`;
+  }else if(tab==='tests'){
+    if(!AppState.user){const attempts=(ws.testAttempts||[]).slice().reverse();content.innerHTML=`<div class="ep-section-heading"><div><h2>Test Results</h2><p>Practice test results saved to this Guest Student profile.</p></div><a class="btn btn-primary" href="/tests" data-link>Browse Tests</a></div><div class="grid grid-2">${attempts.map(a=>`<div class="card ep-panel"><h3>${escapeHTML(a.title)}</h3><div class="stat-num">${Number(a.percentage||0).toFixed(0)}%</div><p>${a.score} / ${a.total} marks</p><small class="text-muted">${new Date(a.completedAt).toLocaleString()}</small></div>`).join('')||'<div class="card ep-panel">No test attempts yet. Start a practice test to save your result here.</div>'}</div>`;return;}
+    const attempts=await Service.getMyTestAttempts(AppState.user.id);if(!attempts.length){content.innerHTML=emptyStateHTML('award','No test attempts yet','Take a test from Test Series to see your results here.');return;}
+    content.innerHTML=`<div class="ep-section-heading"><div><h2>Test Results</h2><p>Your completed test attempts and scores.</p></div></div><div class="grid grid-2">${attempts.map(a=>`<a href="/test-result/${a.id}" data-link class="card ep-panel"><div class="flex justify-between items-center"><h4>${escapeHTML(a.tests?.title||'Test')}</h4><span class="badge">${a.percentage!=null?a.percentage.toFixed(0)+'%':'—'}</span></div><div class="text-dim" style="font-size:12px;margin-top:7px">${formatDate(a.completed_at)}</div></a>`).join('')}</div>`;
+  }else if(tab==='profile'){
+    const p=AppState.profile||{},guestName=ws.name||'Guest Student';
+    content.innerHTML=`<div class="ep-section-heading"><div><span class="eyebrow">YOUR ACCOUNT</span><h2>My Student Profile</h2><p>Manage your personal student information.</p></div></div>
+      <div class="grid grid-2"><section class="card ep-panel"><h3>Profile Information</h3><form id="ep-profile-form"><div class="field"><label>Full name</label><input id="ep-profile-name" value="${escapeHTML(AppState.user?(p.full_name||''):guestName)}" required></div><div class="field"><label>Student ID</label><input value="${escapeHTML(AppState.user?(p.student_id||AppState.user.id.slice(0,8).toUpperCase()):getGuestId())}" disabled></div>${AppState.user?`<div class="field"><label>Email</label><input value="${escapeHTML(AppState.user.email||'')}" disabled></div>`:`<div class="field"><label>Account type</label><input value="Guest Student" disabled></div>`}<div class="field"><label>Class / Grade (optional)</label><input id="ep-profile-class" value="${escapeHTML(ws.className||'')}" placeholder="e.g. 2nd Year"></div><div class="field"><label>Board / Institute (optional)</label><input id="ep-profile-board" value="${escapeHTML(ws.board||'')}" placeholder="e.g. BISE Sargodha"></div><button class="btn btn-primary" type="submit">Save Profile</button></form></section>
+      <section class="card ep-panel"><h3>Account & Privacy</h3>${guest?'<span class="badge badge-gray">✓ GUEST STUDENT ACCOUNT ACTIVE</span>':'<div class="field" style="margin-top:20px"><label>Change password</label><input id="ep-profile-password" type="password" minlength="6" placeholder="New password"></div><button class="btn btn-ghost" id="ep-profile-password-save">Update Password</button>'}</section></div>`;
+    qs('#ep-profile-form').addEventListener('submit',async e=>{e.preventDefault();const name=qs('#ep-profile-name').value.trim();if(guest){ws.name=name;ws.className=qs('#ep-profile-class').value.trim();ws.board=qs('#ep-profile-board').value.trim();saveStudentWorkspace(ws);toast('Guest profile saved.','success');renderDashboard({},'profile');}else{try{const {error}=await supabase.from('profiles').update({full_name:name}).eq('id',AppState.user.id);if(error)throw error;await loadProfile();toast('Profile updated.','success');renderDashboard({},'profile');}catch(err){toast(friendlyError(err),'error');}}});
+    qs('#ep-profile-password-save')?.addEventListener('click',async()=>{const val=qs('#ep-profile-password').value;if(val.length<6){toast('Password must be at least 6 characters.','warning');return;}try{const {error}=await supabase.auth.updateUser({password:val});if(error)throw error;toast('Password updated.','success');}catch(err){toast(friendlyError(err),'error');}});
   }
 }
-
 /* ---- TEST SERIES: list, take, result ---- */
 let testListState = { page:1 };
 async function renderTestList(){
@@ -4156,13 +4552,13 @@ async function loadTestList(){
       <button class="btn btn-primary btn-block" data-test-id="${t.id}">Start Test</button>
     </div>
   `).join('');
-  qsa('[data-test-id]', grid).forEach(btn => btn.addEventListener('click', () => { if(!requireAuth()) return; go('/take-test/'+btn.dataset.testId); }));
+  qsa('[data-test-id]', grid).forEach(btn => btn.addEventListener('click', () => { if(!AppState.user&&!isGuestSession()){openGuestAccessModal(()=>go('/take-test/'+btn.dataset.testId));return;} go('/take-test/'+btn.dataset.testId); }));
   renderPagination('#test-pagination', testListState.page, Math.ceil(count/9), p=>{ testListState.page=p; loadTestList(); });
 }
 
 let activeTest = { data:null, answers:{}, startedAt:null, timerInterval:null, remainingSeconds:0 };
 async function renderTakeTest(testId){
-  if(!requireAuth()){ go('/tests'); return; }
+  if(!AppState.user&&!isGuestSession()){openGuestAccessModal(()=>go('/take-test/'+testId));return;}
   const main = qs('#main');
   pageLoading(main);
   const test = await Service.getTestWithQuestions(testId);
@@ -4199,6 +4595,10 @@ function questionCardHTML(q, i){
 }
 async function submitActiveTest(){
   clearInterval(activeTest.timerInterval);
+  if(!AppState.user && isGuestSession()){
+    const questions=activeTest.data?.questions||[];let score=0;const answers=[];questions.forEach(q=>{const selected=activeTest.answers[q.id]||null;const correct=String(q.correct_answer||'').toLowerCase();const isCorrect=selected&&String(selected).toLowerCase()===correct;if(isCorrect)score++;answers.push({question:q.question,selected,correct,isCorrect});});
+    const w=getStudentWorkspace();w.testAttempts=w.testAttempts||[];w.testAttempts.push({id:'guest-test-'+Date.now(),title:activeTest.data?.title||'Practice Test',score,total:questions.length,percentage:questions.length?score/questions.length*100:0,completedAt:new Date().toISOString(),answers});saveStudentWorkspace(w);toast('Test completed. Result saved to your Guest Dashboard.','success');go('/dashboard');loadDashboardTab('tests');return;
+  }
   const btn = qs('#submit-test-btn');
   if(btn){ btn.disabled = true; btn.innerHTML = `<span class="spinner"></span>`; }
   try{
@@ -4414,8 +4814,15 @@ function renderAccessDenied(){
   main.innerHTML = `<div class="full-screen-msg" style="min-height:60vh;background:transparent"><div class="icon-big" style="background:rgba(229,72,77,0.1);color:var(--red)">${ICONS.lock}</div><h1 style="color:var(--text-1)">Access Denied</h1><p style="color:var(--text-2)">You don't have permission to view the admin panel.</p><button class="btn btn-primary" onclick="go('/')">Return Home</button></div>`;
 }
 function render404(){
+  // Friendly fallback: never strand a student on a dead-end error screen.
+  // Keep the requested URL intact for diagnostics, but show the real homepage.
   const main = qs('#main') || qs('#app-root');
-  main.innerHTML = `<div class="full-screen-msg" style="min-height:60vh;background:transparent"><div class="icon-big" style="background:rgba(91,95,239,0.1);color:var(--indigo)">${ICONS.compass}</div><h1 style="color:var(--text-1)">Page not found</h1><p style="color:var(--text-2)">The page you're looking for doesn't exist or may have moved.</p><button class="btn btn-primary" onclick="go('/')">Return Home</button></div>`;
+  if(main){
+    renderHome().catch(err=>{
+      console.warn('[Education Point] Home fallback failed:',err);
+      main.innerHTML = `<section class="hero ep-cinematic-hero"><div class="container hero-inner"><span class="hero-eyebrow">Education Point</span><h1>Learn. Prepare. <em>Succeed.</em></h1><p>Your learning space is ready.</p><button class="btn btn-primary" onclick="go('/')">Open Home</button></div></section>`;
+    });
+  }
 }
 
 /* ================================================================
@@ -4494,14 +4901,14 @@ async function adminRenderDashboard(main){
   const stats = await Service.getDashboardStats();
   const s = stats || {};
   const cards = [
-    ['Total Students', s.total_students, 'users'], ['Total Resources', s.total_resources, 'file'],
+    ['Students & Guests', s.total_students, 'users'], ['Total Resources', s.total_resources, 'file'],
     ['Total Downloads', s.total_downloads, 'download'], ['Total Views', s.total_views, 'eye'],
     ['Total Categories', s.total_categories, 'grid'], ['Total Tests', s.total_tests, 'award'],
     ['Total MCQs', s.total_questions, 'checklist'], ['Test Attempts', s.total_test_attempts, 'activity'],
   ];
   main.innerHTML = `
     <h2 style="color:#fff;font-size:22px;margin-bottom:18px;font-family:var(--font-display)">Dashboard</h2>
-    <div class="grid grid-4" style="margin-bottom:24px">${cards.map(c=>`<div class="admin-stat"><div class="stat-top"><span class="stat-icon">${ICONS[c[2]]}</span></div><div class="stat-num">${formatNum(c[1]||0)}</div><div class="stat-label">${c[0]}</div></div>`).join('')}</div>
+    <div class="grid grid-4" style="margin-bottom:24px">${cards.map(c=>`<div class="admin-stat"><div class="stat-top"><span class="stat-icon">${ICONS[c[2]]}</span></div><div class="stat-num">${formatNum(c[1]||0)}</div><div class="stat-label" title="Unique registered student accounts plus persistent guest IDs">${c[0]}</div></div>`).join('')}</div>
     <div class="grid grid-2">
       <div class="admin-card"><h3>Recent Uploads</h3><div id="ad-recent">${ICONS.file} <span style="color:var(--text-inverse-2)">Loading…</span></div></div>
       <div class="admin-card"><h3>Popular Resources</h3><div id="ad-popular"><span style="color:var(--text-inverse-2)">Loading…</span></div></div>
@@ -5629,6 +6036,86 @@ async function renderBlogDetail(slug){
    ================================================================ */
 
 /* ----------------------------------------------------------------
+   EDUCATION AI — embedded inside Education Point (same tab / SPA route)
+   The hosted AI interface is embedded so students remain inside this portal.
+   ---------------------------------------------------------------- */
+function renderEducationAI(){
+  const main=qs('#main');
+  setMeta('Education AI','Ask questions and learn with Education Point AI.');
+  main.innerHTML=`<div class="container ep-tool-page">
+    <div class="ep-tool-head"><div><div class="eyebrow">STUDENT LEARNING ASSISTANT</div><h1>Education AI</h1><p class="text-muted" style="margin:0">Ask questions, understand concepts and get study support.</p></div><a class="btn btn-ghost btn-sm" href="/calculator" data-link>Open Scientific Calculator</a></div>
+    <div class="ep-ai-frame-wrap"><iframe class="ep-ai-frame" src="https://edupointai.netlify.app/" title="Education Point AI" loading="eager" referrerpolicy="strict-origin-when-cross-origin" allow="clipboard-read; clipboard-write; microphone"></iframe></div>
+  </div>`;
+}
+
+/* ----------------------------------------------------------------
+   FULL SCIENTIFIC CALCULATOR — safe parser, no eval/Function execution
+   ---------------------------------------------------------------- */
+function epCalculateExpression(source, degrees, previousAnswer){
+  const input=String(source||'').replace(/π/g,'pi').replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-').replace(/√/g,'sqrt');
+  const tokens=[]; const re=/\s*(?:(\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?|([A-Za-z]+)|(\*\*|[+\-*/%^(),!]))/gy;
+  let pos=0;
+  while(pos<input.length){re.lastIndex=pos;const m=re.exec(input);if(!m)throw Error('Invalid expression');tokens.push(m[1]!==undefined?{t:'num',v:Number(m[0].trim())}:m[2]!==undefined?{t:'id',v:m[2].toLowerCase()}:{t:m[3],v:m[3]});pos=re.lastIndex;}
+  let i=0; const peek=()=>tokens[i]?.t; const take=()=>tokens[i++]; const expect=t=>{if(peek()!==t)throw Error('Check brackets or operators');take();};
+  const toRad=x=>degrees?x*Math.PI/180:x, fromRad=x=>degrees?x*180/Math.PI:x;
+  function primary(){
+    const t=take(); if(!t)throw Error('Enter a number');
+    if(t.t==='num')return t.v;
+    if(t.t==='('){const v=add();expect(')');return v;}
+    if(t.t==='id'){
+      if(t.v==='pi')return Math.PI;if(t.v==='e')return Math.E;if(t.v==='ans')return Number(previousAnswer)||0;
+      if(peek()!=='(')throw Error('Unknown value: '+t.v);take();const a=add();expect(')');
+      const f={sin:x=>Math.sin(toRad(x)),cos:x=>Math.cos(toRad(x)),tan:x=>Math.tan(toRad(x)),asin:x=>fromRad(Math.asin(x)),acos:x=>fromRad(Math.acos(x)),atan:x=>fromRad(Math.atan(x)),sqrt:Math.sqrt,cbrt:Math.cbrt,abs:Math.abs,ln:Math.log,log:Math.log10,log2:Math.log2,exp:Math.exp,floor:Math.floor,ceil:Math.ceil,round:Math.round,sinh:Math.sinh,cosh:Math.cosh,tanh:Math.tanh};
+      if(!f[t.v])throw Error('Unknown function: '+t.v);return f[t.v](a);
+    }
+    throw Error('Unexpected input');
+  }
+  function postfix(){let v=primary();while(peek()==='!'){take();if(v<0||v>170||!Number.isInteger(v))throw Error('Factorial requires a whole number from 0 to 170');let n=1;for(let k=2;k<=v;k++)n*=k;v=n;}return v;}
+  function power(){let v=postfix();if(peek()==='^'||peek()==='**'){take();v=Math.pow(v,unary());}return v;}
+  function unary(){if(peek()==='+'){take();return unary();}if(peek()==='-'){take();return -unary();}return power();}
+  function mul(){let v=unary();while(['*','/','%'].includes(peek())){const op=take().t,b=unary();v=op==='*'?v*b:op==='/'?v/b:v%b;}return v;}
+  function add(){let v=mul();while(peek()==='+'||peek()==='-'){const op=take().t,b=mul();v=op==='+'?v+b:v-b;}return v;}
+  if(!tokens.length)throw Error('Enter a calculation');const result=add();if(i!==tokens.length)throw Error('Check your expression');if(!Number.isFinite(result))throw Error('Result is undefined');return result;
+}
+function renderScientificCalculator(){
+  const main=qs('#main');setMeta('Calculator','Basic and scientific calculator for students.');
+  main.innerHTML=`<div class="container ep-tool-page"><div class="ep-tool-head"><div><div class="eyebrow">STUDENT TOOLS</div><h1>Calculator</h1><p class="text-muted" style="margin:0">Choose basic or scientific mode.</p></div><a class="btn btn-ghost btn-sm" href="/education-ai" data-link>Education AI</a></div>
+  <section class="ep-calc" aria-label="Student calculator">
+    <div class="ep-calc-mode-tabs" role="tablist" aria-label="Calculator mode"><button type="button" class="ep-calc-mode active" data-mode="basic" role="tab" aria-selected="true">Basic Calculator</button><button type="button" class="ep-calc-mode" data-mode="scientific" role="tab" aria-selected="false">Scientific Mode</button></div>
+    <div class="ep-calc-display"><input id="ep-calc-expression" class="ep-calc-expression" type="text" inputmode="none" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Calculation" placeholder="0" readonly><div id="ep-calc-result" class="ep-calc-result" aria-live="polite">Ready</div></div>
+    <div class="ep-calc-toolbar"><span class="badge badge-gray" id="ep-calc-mode-label">Basic mode</span><button type="button" class="btn btn-ghost btn-sm" id="ep-calc-angle" hidden>DEG</button></div>
+    <div class="ep-calc-grid ep-calc-basic-grid" id="ep-calc-basic-keys">
+      ${[['AC','danger'],['DEL','danger'],['%','op'],['÷','op'],['7',''],['8',''],['9',''],['×','op'],['4',''],['5',''],['6',''],['−','op'],['1',''],['2',''],['3',''],['+','op'],['±','op'],['0',''],['.',''],['=','equal']].map(([v,c])=>`<button type="button" class="ep-calc-key ${c}" data-calc="${v}">${v}</button>`).join('')}
+    </div>
+    <div class="ep-calc-grid ep-calc-scientific-grid" id="ep-calc-scientific-keys" hidden>
+      ${[['2nd','fn'],['π','fn'],['e','fn'],['AC','danger'],['DEL','danger'],['sin(','fn'],['cos(','fn'],['tan(','fn'],['(','op'],[')','op'],['asin(','fn'],['acos(','fn'],['atan(','fn'],['√(','fn'],['x!','fn'],['ln(','fn'],['log(','fn'],['log₂(','fn'],['exp(','fn'],['abs(','fn'],['sinh(','fn'],['cosh(','fn'],['tanh(','fn'],['cbrt(','fn'],['^','op'],['%','op'],['7',''],['8',''],['9',''],['÷','op'],['×','op'],['4',''],['5',''],['6',''],['−','op'],['+','op'],['1',''],['2',''],['3',''],['Ans','fn'],['⌫','danger'],['floor(','fn'],['ceil(','fn'],['round(','fn'],['0',''],['.',''],['±','op'],['x²','op'],['=','equal']].map(([v,c])=>`<button type="button" class="ep-calc-key ${c}" data-calc="${v}">${v}</button>`).join('')}
+    </div>
+    <p class="ep-calc-help">Use the on-screen keys. Your phone keyboard will stay closed to avoid interruptions.</p>
+  </section></div>`;
+  const input=qs('#ep-calc-expression'),out=qs('#ep-calc-result'),angle=qs('#ep-calc-angle');
+  const basic=qs('#ep-calc-basic-keys'),scientific=qs('#ep-calc-scientific-keys'),modeLabel=qs('#ep-calc-mode-label');
+  let degrees=true,ans=0,second=false,mode='basic';
+  const setExpression=v=>{input.value=v;};
+  const append=v=>{input.value+=v;};
+  const clear=()=>{input.value='';out.textContent='Ready';out.style.color='var(--muted)';};
+  function calculate(){try{const normalized=input.value.replace(/log₂\(/g,'log2(');const value=epCalculateExpression(normalized,degrees,ans);ans=value;out.textContent='= '+Number(value.toPrecision(12)).toLocaleString(undefined,{maximumFractionDigits:10});out.style.color='var(--text-1)';}catch(e){out.textContent=e.message||'Invalid calculation';out.style.color='var(--red,#b42318)';}}
+  function setMode(next){mode=next;basic.hidden=next!=='basic';scientific.hidden=next!=='scientific';angle.hidden=next!=='scientific';modeLabel.textContent=next==='basic'?'Basic mode':'Scientific mode';qsa('.ep-calc-mode').forEach(b=>{const active=b.dataset.mode===next;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});}
+  qsa('.ep-calc-mode').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
+  function handleKey(k){
+    if(k==='AC'){clear();return;}
+    if(k==='DEL'||k==='⌫'){setExpression(input.value.slice(0,-1));return;}
+    if(k==='='){calculate();return;}
+    if(k==='±'){if(!input.value)append('-');else if(input.value.startsWith('-(')&&input.value.endsWith(')'))setExpression(input.value.slice(2,-1));else setExpression('-('+input.value+')');return;}
+    if(k==='2nd'){second=!second;const b=scientific.querySelector('[data-calc="2nd"]');if(b)b.textContent=second?'1st':'2nd';return;}
+    const map={'π':'pi','÷':'/','×':'*','−':'-','√(':(second?'cbrt(':'sqrt('),'x!':'!','x²':'^2','Ans':'ans','log₂(':'log2('};
+    if(k==='sin('&&second)append('asin(');else if(k==='cos('&&second)append('acos(');else if(k==='tan('&&second)append('atan(');else append(map[k]||k);
+  }
+  [basic,scientific].forEach(grid=>grid.addEventListener('click',e=>{const b=e.target.closest('[data-calc]');if(!b)return;handleKey(b.dataset.calc);}));
+  angle.addEventListener('click',()=>{degrees=!degrees;angle.textContent=degrees?'DEG':'RAD';});
+  setMode('basic');
+}
+
+/* ----------------------------------------------------------------
    10. APP BOOTSTRAP & ROUTE REGISTRATION
    ---------------------------------------------------------------- */
 function wireStandardRoutes(){
@@ -5642,6 +6129,8 @@ function wireStandardRoutes(){
   Router.add('/blog/:slug', (p) => { renderShell(); renderBlogDetail(p.slug); });
   Router.add('/announcements', () => { renderShell(); renderAnnouncementsPage(); });
   Router.add('/dashboard', (p) => { renderShell(); renderDashboard(p,'overview'); });
+  Router.add('/education-ai', () => { renderShell(); renderEducationAI(); });
+  Router.add('/calculator', () => { renderShell(); renderScientificCalculator(); });
   Router.add('/resource/:slug', (p) => { renderShell(); renderResourceDetail(p.slug); });
   Router.add('/resource-preview', (p, sp) => { renderShell(); renderResourcePreviewPage(sp); });
   Router.add('/category/:slug', (p) => { renderShell(); renderCategorySection(p.slug); });
@@ -5701,6 +6190,7 @@ async function bootstrap(){
   try{
     wireStandardRoutes();
     renderShell();
+    if(isGuestSession()) startStudentTracking();
     Router.init();
   }catch(e){
     console.error('[Education Point] Initial UI render failed:', e);

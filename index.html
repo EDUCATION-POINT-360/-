@@ -3114,23 +3114,48 @@ const Service = {
   async adminDeleteAnnouncement(id){ const {error}=await supabase.from('announcements').delete().eq('id',id); if(error) throw error; },
   async adminCreateNotification(payload){ const {data,error}=await supabase.from('notifications').insert(payload).select().single(); if(error) throw error; return data; },
   async adminListStudents({page=1,pageSize=15,query=''}={}){
-    let q = supabase.from('profiles').select('*',{count:'exact'}).eq('role','student').order('created_at',{ascending:false});
-    if(query) q = q.ilike('full_name', `%${query}%`);
-    const from=(page-1)*pageSize, to=from+pageSize-1;
-    q = q.range(from,to);
-    const { data, error, count } = await q;
+    const { data, error } = await supabase.from('profiles').select('*').order('created_at',{ascending:false});
     if(error) throw error;
-    const rows=data||[];
+
+    const allRows = (data||[]).filter(row=>{
+      const profileData = row.profile_data && typeof row.profile_data === 'object' ? row.profile_data : {};
+      const email = String(row.email || profileData.email || '').trim().toLowerCase();
+      const role = String(row.role || '').trim().toLowerCase();
+      return email !== SUPER_ADMIN_EMAIL && !['admin','super_admin','superadmin'].includes(role);
+    });
+
+    const needle = String(query||'').trim().toLowerCase();
+    const filtered = needle ? allRows.filter(row=>{
+      const d = row.profile_data && typeof row.profile_data === 'object' ? row.profile_data : {};
+      return [row.full_name, row.email, d.email, d.full_name, d.name, d.class_name, d.board]
+        .some(value=>String(value||'').toLowerCase().includes(needle));
+    }) : allRows;
+
+    const count = filtered.length;
+    const from = (page-1)*pageSize;
+    const rows = filtered.slice(from, from+pageSize);
+
     if(rows.length){
+      const ids = rows.map(row=>row.id).filter(Boolean);
+      // A workspace/RLS failure must not hide profiles already loaded successfully.
       try{
-        const ids=rows.map(r=>r.id).filter(Boolean);
-        const {data:workspaces,error:workspaceError}=await supabase.from('student_workspaces').select('user_id,workspace,updated_at').in('user_id',ids);
+        const {data:workspaces,error:workspaceError} = await supabase
+          .from('student_workspaces')
+          .select('user_id,workspace,updated_at')
+          .in('user_id',ids);
         if(workspaceError) throw workspaceError;
-        const byUser=new Map((workspaces||[]).map(w=>[w.user_id,w]));
-        rows.forEach(r=>{const w=byUser.get(r.id);r.student_workspace=w?.workspace||null;r.workspace_updated_at=w?.updated_at||null;});
-      }catch(workspaceErr){console.warn('[Education Point] Admin study timeline unavailable:',workspaceErr.message||workspaceErr);}
+        const byUser = new Map((workspaces||[]).map(item=>[item.user_id,item]));
+        rows.forEach(row=>{
+          const workspace = byUser.get(row.id);
+          row.student_workspace = workspace?.workspace || null;
+          row.workspace_updated_at = workspace?.updated_at || null;
+        });
+      }catch(workspaceError){
+        console.warn('[Education Point] Student profiles loaded, but study workspaces could not be read:',workspaceError);
+        rows.forEach(row=>{ row.student_workspace = null; row.workspace_updated_at = null; });
+      }
     }
-    return { rows, count:count||0 };
+    return {rows,count};
   },
   async adminGetActivityLog({page=1,pageSize=20}={}){
     let q = supabase.from('admin_activity_logs').select('*, profiles(full_name)',{count:'exact'}).order('created_at',{ascending:false});
@@ -5174,7 +5199,7 @@ async function loadDashboardTab(tab){
         if(isStudentDashboardRoute() && window.__epCurrentDashTab==='profile' && !document.querySelector('#dash-content form:focus-within')){
           loadDashboardTab('profile');
         }
-        if(!quiet)toast('Your profile has been saved to Supabase.','success');
+        if(!quiet)toast('Profile updated.','success');
         return true;
       }catch(err){
         console.error('[Education Point] Profile autosave failed:',err);
@@ -6354,25 +6379,41 @@ let adminStudentsState = {page:1, query:''};
 async function adminRenderStudents(main){
   adminStudentsState = {page:1, query:''};
   main.innerHTML = `
-    <h2 style="color:#fff;font-size:22px;margin-bottom:18px;font-family:var(--font-display)">Students</h2>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px">
+      <h2 style="color:#fff;font-size:22px;margin:0;font-family:var(--font-display)">Students</h2>
+      <button class="btn btn-ghost btn-sm" id="as-refresh" type="button">Refresh students</button>
+    </div>
     <div class="filter-bar" style="background:var(--ink-soft);border-color:var(--ink-border)"><div class="search-mini">${ICONS.search}<input id="as-search" placeholder="Search students…" style="background:rgba(255,255,255,0.04);border-color:var(--ink-border);color:#fff"></div></div>
     <div class="table-scroll admin-card" style="padding:0"><table class="data-table"><thead><tr><th>Student</th><th>Email</th><th>Class / Board</th><th>Joined</th><th>Full Profile</th></tr></thead><tbody id="as-tbody"></tbody></table></div>
     <div class="pagination" id="as-pagination"></div>
   `;
   qs('#as-search').addEventListener('input', debounce(e=>{adminStudentsState.query=e.target.value; adminStudentsState.page=1; loadAdminStudents();},350));
+  qs('#as-refresh')?.addEventListener('click',()=>loadAdminStudents());
   loadAdminStudents();
 }
 async function loadAdminStudents(){
   const tbody = qs('#as-tbody');
-  const { rows, count } = await Service.adminListStudents({page:adminStudentsState.page, query:adminStudentsState.query});
-  tbody.innerHTML = rows.length ? rows.map((s,i)=>{const d=s.profile_data||{};const w=s.student_workspace||{};const avatar=d.avatar_url?`<img src="${escapeHTML(d.avatar_url)}" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px" onerror="this.style.display='none'">`:'';const sessions=Array.isArray(w.sessions)?w.sessions:[];const logs=Array.isArray(w.studyLogs)?w.studyLogs:[];const tasks=Array.isArray(w.tasks)?w.tasks:[];const dayMap=new Map();sessions.forEach(x=>{const day=(x.startedAt||'').slice(0,10)||'Unknown date';const v=dayMap.get(day)||{seconds:0,sessions:0};v.seconds+=Number(x.seconds)||0;v.sessions++;dayMap.set(day,v);});logs.forEach(x=>{const day=(x.date||x.createdAt||x.timestamp||'').slice(0,10)||'Unknown date';const v=dayMap.get(day)||{seconds:0,sessions:0,manualMinutes:0,subjects:[]};v.manualMinutes=(v.manualMinutes||0)+(Number(x.minutes)||0);if(x.subject)v.subjects.push(x.subject);dayMap.set(day,v);});const daily=[...dayMap.entries()].sort((a,b)=>b[0].localeCompare(a[0])).slice(0,30);const dailyHtml=daily.length?daily.map(([day,v])=>`<div style="padding:9px 0;border-top:1px solid rgba(255,255,255,.08)"><strong style="color:#fff">${escapeHTML(day)}</strong><div style="color:var(--text-3);font-size:12px;margin-top:3px">Tracked: ${formatStudyDuration(v.seconds||0)} · Manual: ${formatStudyDuration((v.manualMinutes||0)*60)} · Sessions: ${v.sessions||0}${v.subjects?.length?' · '+escapeHTML([...new Set(v.subjects)].join(', ')):''}</div></div>`).join(''):'<p style="color:var(--text-3)">No daily study records synced yet.</p>';const fields=[['Full name',s.full_name],['Email',s.email||d.email],['Bio',d.bio],['Class / Grade',d.class_name],['Board / Institute',d.board],['Favourite subjects',d.favorite_subjects],['Study goal',d.study_goal],['Phone',d.phone],['WhatsApp',d.whatsapp],['City',d.city],['Preferred language',d.preferred_language],['Profile photo',d.avatar_url?'Available':'Not added'],['Total tracked study time',formatStudyDuration(w.totalSeconds||0)],['Study sessions',sessions.length],['Manual study logs',logs.length],['Study tasks',tasks.length],['Last study activity',w.lastActive?new Date(w.lastActive).toLocaleString():'—'],['Workspace last synced',s.workspace_updated_at?new Date(s.workspace_updated_at).toLocaleString():'Not synced']];return `<tr><td style="color:#fff;font-weight:600">${avatar}${escapeHTML(s.full_name||'—')}</td><td>${escapeHTML(s.email||d.email||'—')}</td><td>${escapeHTML([d.class_name,d.board].filter(Boolean).join(' · ')||'—')}</td><td>${formatDate(s.created_at)}</td><td><button class="btn btn-ghost btn-sm" type="button" data-student-details="${i}">View details</button></td></tr><tr id="as-detail-${i}" style="display:none"><td colspan="5"><div style="padding:14px;background:rgba(255,255,255,.04);border-radius:12px"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">${fields.map(([k,v])=>`<div><small style="display:block;color:var(--text-3);margin-bottom:4px">${escapeHTML(k)}</small><strong style="color:#fff;overflow-wrap:anywhere">${escapeHTML(String(v||'—'))}</strong></div>`).join('')}</div><h4 style="color:#fff;margin:18px 0 8px">Daily Study Timeline</h4>${dailyHtml}</div></td></tr>`}).join('') : '<tr><td colspan="5">No students found.</td></tr>';
+  if(!tbody) return;
+  tbody.innerHTML = '<tr><td colspan="5">Loading students…</td></tr>';
+  let rows=[], count=0;
+  try{
+    const result = await Service.adminListStudents({page:adminStudentsState.page, query:adminStudentsState.query});
+    rows = result.rows || [];
+    count = result.count || 0;
+  }catch(error){
+    console.error('[Education Point] Could not load admin students:', error);
+    tbody.innerHTML = `<tr><td colspan="5" style="color:#fca5a5;padding:18px">Could not load students: ${escapeHTML(error?.message || 'Database permission/query error')}. Check Supabase RLS policies and SQL setup.</td></tr>`;
+    const pagination=qs('#as-pagination'); if(pagination) pagination.innerHTML='';
+    return;
+  }
+  tbody.innerHTML = rows.length ? rows.map((s,i)=>{const d=s.profile_data||{};const w=s.student_workspace||{};const avatar=d.avatar_url?`<img src="${escapeHTML(d.avatar_url)}" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px" onerror="this.style.display='none'">`:'';const sessions=Array.isArray(w.sessions)?w.sessions:[];const logs=Array.isArray(w.studyLogs)?w.studyLogs:[];const tasks=Array.isArray(w.tasks)?w.tasks:[];const dayMap=new Map();sessions.forEach(x=>{const day=(x.startedAt||'').slice(0,10)||'Unknown date';const v=dayMap.get(day)||{seconds:0,sessions:0};v.seconds+=Number(x.seconds)||0;v.sessions++;dayMap.set(day,v);});logs.forEach(x=>{const day=(x.date||x.createdAt||x.timestamp||'').slice(0,10)||'Unknown date';const v=dayMap.get(day)||{seconds:0,sessions:0,manualMinutes:0,subjects:[]};v.manualMinutes=(v.manualMinutes||0)+(Number(x.minutes)||0);if(x.subject)v.subjects.push(x.subject);dayMap.set(day,v);});const daily=[...dayMap.entries()].sort((a,b)=>b[0].localeCompare(a[0])).slice(0,30);const dailyHtml=daily.length?daily.map(([day,v])=>`<div style="padding:9px 0;border-top:1px solid rgba(255,255,255,.08)"><strong style="color:#fff">${escapeHTML(day)}</strong><div style="color:var(--text-3);font-size:12px;margin-top:3px">Tracked: ${formatStudyDuration(v.seconds||0)} · Manual: ${formatStudyDuration((v.manualMinutes||0)*60)} · Sessions: ${v.sessions||0}${v.subjects?.length?' · '+escapeHTML([...new Set(v.subjects)].join(', ')):''}</div></div>`).join(''):'<p style="color:var(--text-3)">No daily study records synced yet.</p>';const fields=[['Full name',s.full_name],['Email',s.email||d.email],['Bio',d.bio],['Class / Grade',d.class_name],['Board / Institute',d.board],['Favourite subjects',d.favorite_subjects],['Study goal',d.study_goal],['Phone',d.phone],['WhatsApp',d.whatsapp],['City',d.city],['Preferred language',d.preferred_language],['Profile photo',d.avatar_url?'Available':'Not added'],['Total tracked study time',formatStudyDuration(w.totalSeconds||0)],['Study sessions',sessions.length],['Manual study logs',logs.length],['Study tasks',tasks.length],['Last study activity',w.lastActive?new Date(w.lastActive).toLocaleString():'—']];return `<tr><td style="color:#fff;font-weight:600">${avatar}${escapeHTML(s.full_name||'—')}</td><td>${escapeHTML(s.email||d.email||'—')}</td><td>${escapeHTML([d.class_name,d.board].filter(Boolean).join(' · ')||'—')}</td><td>${formatDate(s.created_at)}</td><td><button class="btn btn-ghost btn-sm" type="button" data-student-details="${i}">View details</button></td></tr><tr id="as-detail-${i}" style="display:none"><td colspan="5"><div style="padding:14px;background:rgba(255,255,255,.04);border-radius:12px"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">${fields.map(([k,v])=>`<div><small style="display:block;color:var(--text-3);margin-bottom:4px">${escapeHTML(k)}</small><strong style="color:#fff;overflow-wrap:anywhere">${escapeHTML(String(v||'—'))}</strong></div>`).join('')}</div><h4 style="color:#fff;margin:18px 0 8px">Daily Study Timeline</h4>${dailyHtml}</div></td></tr>`}).join('') : '<tr><td colspan="5">No students found.</td></tr>';
   tbody.querySelectorAll('[data-student-details]').forEach(btn=>btn.addEventListener('click',()=>{const row=qs('#as-detail-'+btn.dataset.studentDetails);if(row)row.style.display=row.style.display==='none'?'table-row':'none';}));
   renderPagination('#as-pagination', adminStudentsState.page, Math.ceil(count/15), p=>{adminStudentsState.page=p; loadAdminStudents();});
   if(AppState.isAdmin&&SUPABASE_READY&&!window.__epAdminStudentRealtime){
     try{
       window.__epAdminStudentRealtime=supabase.channel('ep-admin-student-live')
         .on('postgres_changes',{event:'*',schema:'public',table:'student_workspaces'},()=>{if(Router.current==='/admin/students')loadAdminStudents();})
-        .on('postgres_changes',{event:'UPDATE',schema:'public',table:'profiles'},()=>{if(Router.current==='/admin/students')loadAdminStudents();})
+        .on('postgres_changes',{event:'*',schema:'public',table:'profiles'},()=>{if(Router.current==='/admin/students')loadAdminStudents();})
         .subscribe();
     }catch(e){console.warn('[Education Point] Admin student realtime unavailable:',e.message||e);}
   }
